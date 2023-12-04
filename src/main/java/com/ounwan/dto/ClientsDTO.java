@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Builder
 @ToString
-public class ClientDTO {
+public class ClientsDTO {
 	private String clientId;
 	private String name;
 	private String password;
