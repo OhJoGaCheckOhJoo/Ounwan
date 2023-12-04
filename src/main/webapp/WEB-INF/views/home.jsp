@@ -4,13 +4,18 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<title>Home</title>
+	<title>ounwan</title>
 </head>
 <body>
+<c:set var="path" value="${pageContext.request.contextPath}"></c:set>
 <h1>
-	Hello world!  
+	home
 </h1>
-
+	<form action="${path}/client/login.do">
+		<input type="submit" value="로그인이동">
+	</form>
+	<button onclick="">login page</button>
+	
 <P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>
