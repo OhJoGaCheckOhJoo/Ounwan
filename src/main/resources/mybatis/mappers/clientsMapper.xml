@@ -12,4 +12,7 @@
         #{zipCode},#{privacyTerms},#{emailCheck},#{activationCheck},#{qualifiedCheck},
         #{profileURL},#{emailAuth},#{socialType},#{socialId})
     </insert>
+    <select id="checkLogin" parameterType="client">
+    	select * from clients where (client_id=#{clientId} and password = #{password})
+    </select>
 </mapper>
