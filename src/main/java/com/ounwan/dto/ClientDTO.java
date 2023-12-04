@@ -24,4 +24,7 @@ public class ClientDTO {
 	private boolean activationCheck;
 	private boolean qualifiedCheck;
 	private String profileURL;
+	private String emailAuth;
+	private String socialType;
+	private String socialId;
 }
