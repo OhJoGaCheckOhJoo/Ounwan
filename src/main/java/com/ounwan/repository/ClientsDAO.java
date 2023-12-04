@@ -26,5 +26,5 @@ public class ClientsDAO {
 		mapData.put("password", password);
 		return sqlSession.selectOne(NAMESPACE + "checkLogin", mapData);
 	}
-
+	
 }
