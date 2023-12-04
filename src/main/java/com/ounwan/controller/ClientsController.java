@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import com.ounwan.entity.Clients;
 import com.ounwan.service.ClientsService;
 
+@RequestMapping("/clients")
 public class ClientsController {
 
 	@Autowired
