@@ -1,5 +1,6 @@
 package com.ounwan.service;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +18,21 @@ public class ClientsService {
 		return clientsDAO.createAccount(change(client));
 	}
 	
+	public boolean checkId(String clientId) {
+		int result = clientsDAO.checkId(clientId);
+		return (result > 0) ? true : false;
+	}
 	
+	public boolean checkEmail(String email) {
+		int result = clientsDAO.checkEmail(email);
+		return (result > 0) ? true : false;
+	}
 	
 	public Clients change(ClientsDTO client) {
 		return Clients.builder()
 				.clientId(client.getClientId())
 				.name(client.getName())
-				.password(client.getPassword())
+				.password(hashPassword(client.getPassword()))
 				.email(client.getEmail())
 				.birthday(client.getBirthday())
 				.phone(client.getPhone())
@@ -42,15 +51,10 @@ public class ClientsService {
 	}
 
 	
-	public boolean checkId(String clientId) {
-		int result = clientsDAO.checkId(clientId);
-		return (result > 0) ? true : false;
-	}
-	
-	public boolean checkEmail(String email) {
-		int result = clientsDAO.checkEmail(email);
-		return (result > 0) ? true : false;
-	}
+	public String hashPassword(String plainTextPassword) {
+        // 문자열 암호화해서 반환
+        return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
+    }
 
 	
 
