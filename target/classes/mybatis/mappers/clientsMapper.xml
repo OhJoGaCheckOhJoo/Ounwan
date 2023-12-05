@@ -24,4 +24,8 @@
     <update id="updatePassword" parameterType="clients">
     	UPDATE CLIENTS SET PASSWORD = #{password} WHERE CLIENT_ID = #{clientId}
     </update>
+    
+    <update id="withdrawal" parameterType="clients">
+    	UPDATE CLIENTS SET WITHDRAWAL_DATE = NOW(), ACTIVATION_CHECK = 1, PRIVACY_TERMS = #{privacyTerms} WHERE CLIENT_ID = #{clientId}
+    </update>
 </mapper>

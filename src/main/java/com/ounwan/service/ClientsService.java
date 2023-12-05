@@ -47,6 +47,15 @@ public class ClientsService {
 		}
 	}
 	
+	public String withdrawalClient(ClientsDTO clientsDTO) {
+		int result = dao.withdrawalClient(change(clientsDTO));
+		if(result > 0) {
+			return "탈퇴에 성공하였습니다.";
+		} else {
+			return "탈퇴에 실패하였습니다.";
+		}
+	}
+	
 	public Clients change(ClientsDTO client) {
 		return Clients.builder()
 				.clientId(client.getClientId())
@@ -70,8 +79,6 @@ public class ClientsService {
 	}
 	
 	public void sendMail(String email, String newPassword) {
-		email = "yu4923@naver.com";
-		
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(email); // 수신자
 		message.setSubject("오운완 테스트"); // 제목
@@ -116,5 +123,7 @@ public class ClientsService {
 		// System.out.println(newPw);
 		return newPw.toString();
 	}
+
+	
 
 }

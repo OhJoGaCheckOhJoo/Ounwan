@@ -11,7 +11,7 @@ import com.ounwan.dto.ClientsDTO;
 import com.ounwan.service.ClientsService;
 
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/clients")
 public class ClientsController {
 	
 	@Autowired
@@ -30,6 +30,14 @@ public class ClientsController {
 	public String findPassword(@RequestParam("id") String id, @RequestParam("email") String email) {
 		ClientsDTO clientsDTO = new ClientsDTO().builder().clientId(id).email(email).build();
 		String result = clientsService.findPassword(clientsDTO);
+		return result;
+	}
+	
+	@SuppressWarnings("static-access")
+	@RequestMapping("/withdrawal")
+	public String withdrawal(@RequestParam("clientId") String clientId, @RequestParam("privacyTerms") int privacyTerms) {
+		ClientsDTO clientsDTO = new ClientsDTO().builder().clientId(clientId).privacyTerms(privacyTerms).build();
+		String result = clientsService.withdrawalClient(clientsDTO);
 		return result;
 	}
 	

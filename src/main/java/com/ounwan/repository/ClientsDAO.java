@@ -29,4 +29,8 @@ public class ClientsDAO {
 		return sqlSession.update(NAMESPACE + "updatePassword", client);
 	}
 
+	public int withdrawalClient(Clients client) {
+		return sqlSession.update(NAMESPACE + "withdrawal", client);
+	}
+
 }
