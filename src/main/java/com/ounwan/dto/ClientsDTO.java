@@ -25,10 +25,10 @@ public class ClientsDTO {
 	private String address;
 	private String addressDetail;
 	private String zipCode;
-	private int privacyTerms;
-	private boolean emailCheck;
-	private boolean activationCheck;
-	private boolean qualifiedCheck;
+	private Integer privacyTerms;
+	private Boolean emailCheck;
+	private Boolean activationCheck;
+	private Boolean qualifiedCheck;
 	private String profileURL;
 	private String emailAuth;
 	private String socialType;
