@@ -12,4 +12,9 @@
         #{zipCode},#{privacyTerms},#{emailCheck},#{activationCheck},#{qualifiedCheck},
         #{profileURL},#{emailAuth},#{socialType},#{socialId})
     </insert>
+    
+    
+    <select id="checkClientId" parameterType="String" resultType="int">
+    select count(*) from clients where client_id = #{clientId}
+    </select>
 </mapper>

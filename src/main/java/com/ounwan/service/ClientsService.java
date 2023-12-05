@@ -17,6 +17,11 @@ public class ClientsService {
 		return clientsDAO.createAccount(change(client));
 	}
 	
+	public boolean checkId(String clientId) {
+		int result = clientsDAO.checkId(clientId);
+		return (result > 0) ? true : false;
+	}
+	
 	public Clients change(ClientsDTO client) {
 		return Clients.builder()
 				.clientId(client.getClientId())
@@ -38,5 +43,9 @@ public class ClientsService {
 				.socialId(client.getSocialId())
 				.build();
 	}
+
+	
+
+	
 
 }

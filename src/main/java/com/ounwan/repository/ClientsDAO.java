@@ -16,5 +16,8 @@ public class ClientsDAO {
 	public int createAccount(Clients client) {
 		return sqlSession.insert(NAMESPACE + "insertClient", client);
 	}
+	public int checkId(String checkId ) {
+		return sqlSession.selectOne(NAMESPACE + "checkClientId", checkId);
+	}
 
 }
