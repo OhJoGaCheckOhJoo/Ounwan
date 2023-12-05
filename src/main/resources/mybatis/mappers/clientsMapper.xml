@@ -14,10 +14,6 @@
     </insert>
     
     <select id="selectForFindId" parameterType="clients" resultType="clients">
-    	SELECT * FROM CLIENTS WHERE NAME = '#{name}' AND email = #{email}
-    </select>
-    
-    <select id="selectAll" resultType="clients">
-    	select * from CLIENTS order by 1
+    	SELECT * FROM CLIENTS WHERE NAME = #{name} AND email = #{email}
     </select>
 </mapper>
