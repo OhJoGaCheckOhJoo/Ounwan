@@ -21,7 +21,7 @@
     	SELECT COUNT(*) FROM CLIENTS WHERE CLIENT_ID = #{clientId} AND EMAIL = #{email}
     </select>
     
-    <update id="updateRandomPassword" parameterType="clients">
+    <update id="updatePassword" parameterType="clients">
     	UPDATE CLIENTS SET PASSWORD = #{password} WHERE CLIENT_ID = #{clientId}
     </update>
 </mapper>

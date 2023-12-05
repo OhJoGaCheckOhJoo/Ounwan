@@ -26,7 +26,7 @@ public class ClientsDAO {
 	}
 
 	public int updateRandomPassword(Clients client) {
-		return sqlSession.update(NAMESPACE + "updateRandomPassword", client);
+		return sqlSession.update(NAMESPACE + "updatePassword", client);
 	}
 
 }

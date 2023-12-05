@@ -22,23 +22,21 @@ public class ClientsService {
 	MailSender sender;
 	
 	public String findClientId(ClientsDTO clientDTO) {
-		Clients client = change(clientDTO);
-		Clients findClient = dao.findClientId(client);
-		if(findClient == null) {
+		Clients client = dao.findClientId(change(clientDTO));
+		if(client == null) {
 			return null;
 		} else {
-			return findClient.getClientId();
+			return client.getClientId();
 		}
 	}
 	
 	public String findPassword(ClientsDTO clientsDTO) {
-		Clients client = change(clientsDTO);
-		int result = dao.findPassword(client);
+		int result = dao.findPassword(change(clientsDTO));
 		if(result > 0) {
 			String newPassword = resetPassword();
-			sendMail(client.getEmail(), newPassword);
-			client.setPassword(hashPassword(newPassword));
-			result = dao.updateRandomPassword(client);
+			sendMail(clientsDTO.getEmail(), newPassword);
+			clientsDTO.setPassword(hashPassword(newPassword));
+			result = dao.updateRandomPassword(change(clientsDTO));
 			if(result > 0) {
 				return "새 비밀번호 생성 성공";
 			} else {
@@ -61,9 +59,9 @@ public class ClientsService {
 				.addressDetail(client.getAddressDetail())
 				.zipCode(client.getZipCode())
 				.privacyTerms(client.getPrivacyTerms())
-				.emailCheck(false)
-				.activationCheck(true)
-				.qualifiedCheck(false)
+				.emailCheck(client.getEmailCheck())
+				.activationCheck(client.getActivationCheck())
+				.qualifiedCheck(client.getQualifiedCheck())
 				.profileURL(client.getProfileURL())
 				.emailAuth(client.getEmailAuth())
 				.socialType(client.getSocialType())
@@ -72,6 +70,8 @@ public class ClientsService {
 	}
 	
 	public void sendMail(String email, String newPassword) {
+		email = "yu4923@naver.com";
+		
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(email); // 수신자
 		message.setSubject("오운완 테스트"); // 제목
