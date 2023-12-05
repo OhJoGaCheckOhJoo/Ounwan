@@ -23,6 +23,9 @@ public class ClientsService {
 
 	public int createAccount(ClientsDTO client) {
 		client.setEmailAuth(UUID.randomUUID().toString());
+		client.setEmailCheck(false);
+		client.setQualifiedCheck(false);
+		client.setActivationCheck(false);
 		int result = clientsDAO.createAccount(change(client));
 		if (result > 0) {
 			sendEmailAuths(client.getEmail(), client.getEmailAuth());
