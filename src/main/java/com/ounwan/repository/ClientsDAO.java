@@ -20,11 +20,8 @@ public class ClientsDAO {
 		return sqlSession.insert(NAMESPACE + "insertClient", client);
 	}
 
-	public Clients checkLogin(String id, String password) {
-		Map<String, Object> mapData = new HashMap<>();
-		mapData.put("clientId", id);
-		mapData.put("password", password);
-		return sqlSession.selectOne(NAMESPACE + "checkLogin", mapData);
+	public String checkLogin(String id) {
+		return sqlSession.selectOne(NAMESPACE + "checkLogin", id);
 	}
 	
 }
