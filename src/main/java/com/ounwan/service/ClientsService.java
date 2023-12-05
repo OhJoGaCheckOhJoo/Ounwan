@@ -2,6 +2,7 @@ package com.ounwan.service;
 
 import java.util.Random;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -36,9 +37,15 @@ public class ClientsService {
 		if(result > 0) {
 			String newPassword = resetPassword();
 			sendMail(client.getEmail(), newPassword);
-			return "성공";
+			client.setPassword(hashPassword(newPassword));
+			result = dao.updateRandomPassword(client);
+			if(result > 0) {
+				return "새 비밀번호 생성 성공";
+			} else {
+				return "새 비밀번호 생성 실패";
+			}
 		} else {
-			return "실패";
+			return "회원정보 불일치";
 		}
 	}
 	
@@ -64,17 +71,19 @@ public class ClientsService {
 				.build();
 	}
 	
-	public String sendMail(String email, String newPassword) {
-
+	public void sendMail(String email, String newPassword) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(email); // 수신자
-		message.setSubject("오운완 테스트");
-		message.setText("새 비밀번호 : "+ newPassword);
-		message.setFrom("ounwan50@gmail.com");
+		message.setSubject("오운완 테스트"); // 제목
+		message.setText("새 비밀번호 : "+ newPassword); // 내용
+		message.setFrom("ounwan50@gmail.com"); //발신자
 		
 		sender.send(message);
-		
-		return "aa";
+	}
+	
+	private static String hashPassword(String plainTextPassword) {
+		// 문자열 암호화해서 반환
+		return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
 	}
 	
 	private String resetPassword() {
@@ -84,7 +93,7 @@ public class ClientsService {
 		char[] symbol = {'?', '@', '!', '#', '$', '%', '&'};
 
 		for (int i = 0; i < pwLength; i++) {
-			int idx = random.nextInt(10);
+			int idx = random.nextInt(5);
 			switch (idx) {
 			// 대문자
 			case 0:

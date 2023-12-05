@@ -4,7 +4,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ounwan.dto.ClientsDTO;
 import com.ounwan.entity.Clients;
 
 @Repository
@@ -24,6 +23,10 @@ public class ClientsDAO {
 	
 	public int findPassword(Clients client) {
 		return sqlSession.selectOne(NAMESPACE + "selectForFindPassword", client);
+	}
+
+	public int updateRandomPassword(Clients client) {
+		return sqlSession.update(NAMESPACE + "updateRandomPassword", client);
 	}
 
 }

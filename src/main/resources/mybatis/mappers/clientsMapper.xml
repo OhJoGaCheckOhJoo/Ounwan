@@ -20,4 +20,8 @@
     <select id="selectForFindPassword" parameterType="clients" resultType="int">
     	SELECT COUNT(*) FROM CLIENTS WHERE CLIENT_ID = #{clientId} AND EMAIL = #{email}
     </select>
+    
+    <update id="updateRandomPassword" parameterType="clients">
+    	UPDATE CLIENTS SET PASSWORD = #{password} WHERE CLIENT_ID = #{clientId}
+    </update>
 </mapper>
