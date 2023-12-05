@@ -16,4 +16,8 @@
     <select id="selectForFindId" parameterType="clients" resultType="clients">
     	SELECT * FROM CLIENTS WHERE NAME = #{name} AND email = #{email}
     </select>
+    
+    <select id="selectForFindPassword" parameterType="clients" resultType="int">
+    	SELECT COUNT(*) FROM CLIENTS WHERE CLIENT_ID = #{clientId} AND EMAIL = #{email}
+    </select>
 </mapper>

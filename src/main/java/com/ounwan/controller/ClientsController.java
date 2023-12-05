@@ -25,5 +25,13 @@ public class ClientsController {
 		return id;
 	}
 	
+	@SuppressWarnings("static-access")
+	@RequestMapping("/findPassword")
+	public String findPassword(@RequestParam("id") String id, @RequestParam("email") String email) {
+		ClientsDTO clientsDTO = new ClientsDTO().builder().clientId(id).email(email).build();
+		System.out.println(clientsDTO.toString());
+		String result = clientsService.findPassword(clientsDTO);
+		return result;
+	}
 	
 }
