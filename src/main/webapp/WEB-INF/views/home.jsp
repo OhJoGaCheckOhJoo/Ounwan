@@ -11,7 +11,7 @@
 <h1>
 	home
 </h1>
-	<form action="login.do" method="get">
+	<form action="login" method="get">
 		<input type="submit" value="로그인이동">
 	</form>
 	
