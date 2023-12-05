@@ -1,12 +1,11 @@
 package com.ounwan.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ounwan.dto.ClientsDTO;
@@ -34,7 +33,7 @@ public class ClientsController {
 	@GetMapping(value = "/checkId", produces="text/plain;charset=utf-8")
 	public String checkId(String clientId) {
 		System.out.println(clientId);
-		// true = id ¡∏¿Á, false = id æ¯¿Ω
+		// true = id Ï°¥Ïû¨, false = id ÏóÜÏùå
 		boolean result = clientsService.checkId(clientId);
 		if(result) {
 			System.out.println("YESSSSSS");
@@ -47,7 +46,7 @@ public class ClientsController {
 	@GetMapping(value = "/checkEmail", produces="text/plain;charset=utf-8")
 	public String checkEmail(String email) {
 		System.out.println(email);
-		// true = id ¡∏¿Á, false = id æ¯¿Ω
+		// true = id Ï°¥Ïû¨, false = id ÏóÜÏùå
 		boolean result = clientsService.checkEmail(email);
 		if(result) {
 			System.out.println("YESSSSSS");
