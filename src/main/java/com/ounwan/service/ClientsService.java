@@ -11,16 +11,16 @@ public class ClientsService {
 	@Autowired
 	ClientsDAO clientDAO;
 
-	public String checkLogin(String id, String password) {  
+	public boolean checkLogin(String id, String password) {  
 		String dbpassword = clientDAO.checkLogin(id);
 		if (dbpassword == null) {
-			return "해당 아이디가 존재하지 않음!!"; 
+			return false;
 		} else {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			if(encoder.matches(password,dbpassword)) {
-				return "로그인 성공!!";
+				return true;
 			}else {
-				return "비밀번호가 일치하지 않음";
+				return false;
 			}
 			 
 		}
