@@ -1,6 +1,7 @@
 package com.ounwan.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ public class ClientsController {
 	@Autowired
 	ClientsService clientsService;
 	
-	@PostMapping(value = "/signUp", consumes = "application/json", produces = "text/plain;charset=UTF-8")
+	@PostMapping(value = "/signUp", consumes= "application/json", produces="text/plain;charset=utf-8")
 	public String createAccount(@RequestBody ClientsDTO client) {
 		System.out.println(client);
 		int result = clientsService.createAccount(client);
