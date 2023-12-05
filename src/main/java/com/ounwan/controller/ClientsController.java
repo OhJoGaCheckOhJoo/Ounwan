@@ -31,8 +31,8 @@ public class ClientsController {
 		return "success";
 	} 
 	
-	@PostMapping(value = "/checkId", consumes= "application/json", produces="text/plain;charset=utf-8")
-	public String checkId(@RequestParam String clientId) {
+	@GetMapping(value = "/checkId", produces="text/plain;charset=utf-8")
+	public String checkId(String clientId) {
 		System.out.println(clientId);
 		// true = id 존재, false = id 없음
 		boolean result = clientsService.checkId(clientId);
@@ -44,5 +44,17 @@ public class ClientsController {
 		return "success";
 	} 
 	
+	@GetMapping(value = "/checkEmail", produces="text/plain;charset=utf-8")
+	public String checkEmail(String email) {
+		System.out.println(email);
+		// true = id 존재, false = id 없음
+		boolean result = clientsService.checkEmail(email);
+		if(result) {
+			System.out.println("YESSSSSS");
+		} else {
+			System.out.println("NOOOOOOOOO");
+		}
+		return "success";
+	} 
 
 }

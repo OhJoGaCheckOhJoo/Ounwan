@@ -17,10 +17,7 @@ public class ClientsService {
 		return clientsDAO.createAccount(change(client));
 	}
 	
-	public boolean checkId(String clientId) {
-		int result = clientsDAO.checkId(clientId);
-		return (result > 0) ? true : false;
-	}
+	
 	
 	public Clients change(ClientsDTO client) {
 		return Clients.builder()
@@ -42,6 +39,17 @@ public class ClientsService {
 				.socialType(client.getSocialType())
 				.socialId(client.getSocialId())
 				.build();
+	}
+
+	
+	public boolean checkId(String clientId) {
+		int result = clientsDAO.checkId(clientId);
+		return (result > 0) ? true : false;
+	}
+	
+	public boolean checkEmail(String email) {
+		int result = clientsDAO.checkEmail(email);
+		return (result > 0) ? true : false;
 	}
 
 	

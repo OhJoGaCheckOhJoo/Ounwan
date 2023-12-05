@@ -17,4 +17,8 @@
     <select id="checkClientId" parameterType="String" resultType="int">
     select count(*) from clients where client_id = #{clientId}
     </select>
+    
+     <select id="checkEmail" parameterType="String" resultType="int">
+    select count(*) from clients where email = #{email}
+    </select>
 </mapper>

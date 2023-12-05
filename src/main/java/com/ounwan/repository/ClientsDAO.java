@@ -19,5 +19,8 @@ public class ClientsDAO {
 	public int checkId(String checkId ) {
 		return sqlSession.selectOne(NAMESPACE + "checkClientId", checkId);
 	}
+	public int checkEmail(String email) {
+		return sqlSession.selectOne(NAMESPACE + "checkEmail", email);
+	}
 
 }
