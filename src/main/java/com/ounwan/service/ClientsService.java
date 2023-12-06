@@ -22,11 +22,13 @@ public class ClientsService {
 	MailSender sender;
 
 	public int createAccount(ClientsDTO client) {
+		String password = hashPassword(client.getPassword());
+		client.setPassword(password);
 		client.setEmailAuth(UUID.randomUUID().toString());
 		client.setEmailCheck(false);
 		client.setQualifiedCheck(false);
 		client.setActivationCheck(false);
-		int result = clientsDAO.createAccount(change(client));
+		int result = clientsDAO.createAccount(changeEntity(client));
 		if (result > 0) {
 			sendEmailAuths(client.getEmail(), client.getEmailAuth());
 			return 1;
@@ -43,12 +45,18 @@ public class ClientsService {
 		int result = clientsDAO.checkEmail(email);
 		return (result > 0) ? true : false;
 	}
+	
+	public ClientsDTO checkNaverToken(String token) {
+		Clients client = clientsDAO.checkNaverToken(token);
+		return (client != null) ? changeDTO(client) : null;
+	}
+	
 
-	public Clients change(ClientsDTO client) {
+	public Clients changeEntity(ClientsDTO client) {
 		return Clients.builder()
 				.clientId(client.getClientId())
 				.name(client.getName())
-				.password(hashPassword(client.getPassword()))
+				.password(client.getPassword())
 				.email(client.getEmail())
 				.birthday(client.getBirthday())
 				.phone(client.getPhone())
@@ -59,6 +67,28 @@ public class ClientsService {
 				.emailCheck(client.getEmailCheck())
 				.activationCheck(client.getActivationCheck())
 				.qualifiedCheck(client.getQualifiedCheck())
+				.profileURL(client.getProfileURL())
+				.emailAuth(client.getEmailAuth())
+				.socialType(client.getSocialType())
+				.socialId(client.getSocialId())
+				.build();
+	}
+	
+	public ClientsDTO changeDTO(Clients client) {
+		return ClientsDTO.builder()
+				.clientId(client.getClientId())
+				.name(client.getName())
+				.password(client.getPassword())
+				.email(client.getEmail())
+				.birthday(client.getBirthday())
+				.phone(client.getPhone())
+				.address(client.getAddress())
+				.addressDetail(client.getAddressDetail())
+				.zipCode(client.getZipCode())
+				.privacyTerms(client.getPrivacyTerms())
+				.emailCheck(client.isEmailCheck())
+				.activationCheck(client.isActivationCheck())
+				.qualifiedCheck(client.isQualifiedCheck())
 				.profileURL(client.getProfileURL())
 				.emailAuth(client.getEmailAuth())
 				.socialType(client.getSocialType())

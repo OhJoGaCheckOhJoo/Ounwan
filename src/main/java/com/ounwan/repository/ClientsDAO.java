@@ -22,5 +22,8 @@ public class ClientsDAO {
 	public int checkEmail(String email) {
 		return sqlSession.selectOne(NAMESPACE + "checkEmail", email);
 	}
+	public Clients checkNaverToken(String token) {
+		return sqlSession.selectOne(NAMESPACE + "checkNaverToken", token);
+	}
 
 }
