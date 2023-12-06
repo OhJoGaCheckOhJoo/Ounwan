@@ -25,9 +25,13 @@
 		select count(*) from clients where email = #{email}
 	</select>
 
-
 	<select id="checkNaverToken" parameterType="String"
 		resultType="clients">
 		select * from clients where social_id = #{token} and social_type = 'NAVER'
+	</select>
+	
+	<select id="checkKakaoToken" parameterType="String"
+		resultType="clients">
+		select * from clients where social_id = #{token} and social_type = 'KAKAO'
 	</select>
 </mapper>

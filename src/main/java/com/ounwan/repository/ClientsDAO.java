@@ -25,5 +25,8 @@ public class ClientsDAO {
 	public Clients checkNaverToken(String token) {
 		return sqlSession.selectOne(NAMESPACE + "checkNaverToken", token);
 	}
+	public Clients checkKakaoToken(String token) {
+		return sqlSession.selectOne(NAMESPACE + "checkKakaoToken", token);
+	}
 
 }

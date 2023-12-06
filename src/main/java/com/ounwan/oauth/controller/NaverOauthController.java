@@ -31,15 +31,16 @@ public class NaverOauthController {
 	private String apiResult = null;
 
 	// callback
+
 	// return type ModelAndView로 변경 필요
 	@RequestMapping(value = "/naver", produces = "text/plain;charset=utf-8")
-	public String NaverLogin(@RequestParam String code, @RequestParam String state, HttpSession session)
+	public String naverLogin(@RequestParam String code, @RequestParam String state, HttpSession session)
 			throws IOException {
 		OAuth2AccessToken oauthToken = naverLogin.getAccessToken(session, code, state);
-		//1. 로그인 사용자 정보를 읽어온다.
+		// 1. 로그인 사용자 정보를 읽어온다.
 		apiResult = naverLogin.getUserProfile(oauthToken);
 
-		//2. String 형식인 apiResult를 json형태로 바꿈
+		// 2. String 형식인 apiResult를 json형태로 바꿈
 		JSONParser parser = new JSONParser();
 		Object obj = null;
 		try {
@@ -48,7 +49,7 @@ public class NaverOauthController {
 			e.printStackTrace();
 		}
 
-		//3. 데이터 파싱
+		// 3. 데이터 파싱
 		JSONObject jsonObj = (JSONObject) obj;
 		JSONObject response = (JSONObject) jsonObj.get("response");
 
@@ -58,24 +59,17 @@ public class NaverOauthController {
 		String birthday = (String) response.get("birthyear") + "-" + (String) response.get("birthday");
 		String profileURL = (String) response.get("profile_image");
 		String token = (String) response.get("id");
-		
+
 		ClientsDTO result = clientsService.checkNaverToken(token);
-		
-		 if(result==null) {
-			session.setAttribute("userInfo",ClientsDTO.builder()
-					                              .name(name)
-					                              .email(email)
-					                              .phone(phone)
-					                              .birthday(Date.valueOf(birthday))
-					                              .profileURL(profileURL)
-					                              .socialType("NAVER")
-					                              .socialId(token)
-					                              .build());
-		      return null;
-		 }
-			session.setAttribute("userInfo", result);
-			
-			return  null;
-		 }
+
+		if (result == null) {
+			session.setAttribute("userInfo",
+					ClientsDTO.builder().name(name).email(email).phone(phone).birthday(Date.valueOf(birthday))
+							.profileURL(profileURL).socialType("NAVER").socialId(token).build());
+			return "signUp";
+		}
+		session.setAttribute("userInfo", result);
+		return "login";
+	}
 
 }

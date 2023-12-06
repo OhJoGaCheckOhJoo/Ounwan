@@ -51,6 +51,10 @@ public class ClientsService {
 		return (client != null) ? changeDTO(client) : null;
 	}
 	
+	public ClientsDTO checkKakaoToken(String token) {
+		Clients client = clientsDAO.checkKakaoToken(token);
+		return (client != null) ? changeDTO(client) : null;
+	}
 
 	public Clients changeEntity(ClientsDTO client) {
 		return Clients.builder()
@@ -113,5 +117,4 @@ public class ClientsService {
 
 		return "aa";
 	}
-
 }

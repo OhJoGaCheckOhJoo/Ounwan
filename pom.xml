@@ -15,12 +15,21 @@
 		<org.slf4j-version>1.7.25</org.slf4j-version>
 	</properties>
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+
+
 		<!-- 제이슨 파싱 -->
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+
 		<!-- 네이버로그인 -->
 		<dependency> <!-- oauth 라이브러리 -->
 			<groupId>com.github.scribejava</groupId>
