@@ -32,46 +32,41 @@ public class NaverOauthController {
 
 	// return type modelandview로 변경 필요
 	@RequestMapping(value = "/naver", produces = "text/plain;charset=utf-8")
-	public String NaverLogin(@RequestParam String code, @RequestParam String state, HttpSession session)
-			throws IOException {
+	public String naverLogin(@RequestParam String code, @RequestParam String state, HttpSession session)
+			throws IOException, ParseException {
 		OAuth2AccessToken oauthToken = naverLogin.getAccessToken(session, code, state);
 
 		apiResult = naverLogin.getUserProfile(oauthToken);
 
-		JSONParser parser = new JSONParser();
-		Object obj = null;
-		try {
-			obj = parser.parse(apiResult);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		JSONObject jsonObj = (JSONObject) obj;
-		JSONObject response = (JSONObject) jsonObj.get("response");
-		String name = (String) response.get("name");
-		String email = (String) response.get("email");
-		String phone = (String) response.get("mobile");
-		String birthday = (String) response.get("birthyear") + "-" + (String) response.get("birthday");
-		String profileURL = (String) response.get("profile_image");
-		String token = (String) response.get("id");
-
-		ClientsDTO result = clientsService.checkNaverToken(token);
+		ClientsDTO naverClient = convertResult(apiResult);
+		ClientsDTO result = clientsService.checkNaverToken(naverClient.getSocialId());
+		
 		if (result == null) {
-			session.setAttribute("userInfo", ClientsDTO.builder()
-														.name(name)
-														.email(email)
-														.phone(phone)
-														.birthday(Date.valueOf(birthday))
-														.profileURL(profileURL)
-														.socialType("NAVER")
-														.socialId(token)
-														.build());
-			return null;
+			session.setAttribute("userInfo", naverClient);
+			return "signUp";
 		}
 		session.setAttribute("userInfo", result);
-
-		return null;
+		return "login";
 	}
 
+	
+	public ClientsDTO convertResult(String apiResult) throws ParseException{
+		JSONParser parser = new JSONParser();
+		Object obj = parser.parse(apiResult);
+	
+		JSONObject jsonObj = (JSONObject) obj;
+		JSONObject response = (JSONObject) jsonObj.get("response");
+				
+		String birthday = (String) response.get("birthyear") + "-" + (String) response.get("birthday");		
+		
+		return ClientsDTO.builder()
+				.name((String)response.get("name"))
+				.email((String)response.get("email"))
+				.phone((String)response.get("phone"))
+				.birthday(Date.valueOf(birthday))			
+				.profileURL((String)response.get("profile_image"))
+				.socialId((String)response.get("id"))
+				.socialType("KAKAO")
+				.build();
+	}
 }

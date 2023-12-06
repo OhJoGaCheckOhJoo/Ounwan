@@ -77,4 +77,9 @@ public class ClientsService {
                 .build();
     }
 
+	public ClientsDTO checkKakaoToken(String token) {
+		Clients client = clientsDAO.checkKakaoToken(token);
+		return (client != null) ? changeDTO(client) : null;
+	}
+
 }

@@ -18,4 +18,7 @@
     <select id="checkNaverToken" parameterType="String" resultType="clients">
     	select * from CLIENTS where social_id = #{token} and social_type = 'NAVER'
     </select>
+    <select id="checkKakaoToken" parameterType="String" resultType="clients">
+    	select * from CLIENTS where social_id = #{token} and social_type = 'KAKAO'
+    </select>
 </mapper>

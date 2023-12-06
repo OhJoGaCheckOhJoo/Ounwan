@@ -31,7 +31,7 @@
 		<input type="button" onclick="checkLogin()" value="로그인"> 
 	</form>
 
-	
+	<button onclick="javascript:location.href='/myapp/login/kakao'">kakao</button>
 
 	<P>The time on the server is ${serverTime}.</P>
 
