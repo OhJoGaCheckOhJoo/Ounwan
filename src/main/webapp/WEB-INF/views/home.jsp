@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="./css/main.css" rel="stylesheet" />
+    <link href="${appPath}/css/main.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>오운완</title>
 </head>
@@ -15,7 +15,7 @@
         <a class="logo" href="#"></a>
         <div class="float-right">
             <a href="./html/signup.html">회원가입</a>
-            <a class="pointer" id="login">로그인</a>
+            <a class="pointer" id="loginSelect">로그인</a>
             <!--# : DB(회원)/세션(비회원)에서 가져올 것-->
             <button class="pointer">Basket (#)</button>
         </div>
@@ -24,8 +24,8 @@
     <div class="container">
         <nav>
             <div class="nav-main">
-                <div>
-                    <a class="menu-trigger pointer">
+                <div class="pointer">
+                    <a id="hamberger-btn" class="menu-trigger">
                         <span></span>
                         <span></span>
                         <span></span>
