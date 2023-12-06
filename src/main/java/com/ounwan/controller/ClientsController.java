@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ounwan.oauth.naver.NaverLoginBO;
 import com.ounwan.service.ClientsService;
 
 //@RequestMapping("/clients")
@@ -19,10 +20,16 @@ public class ClientsController {
 
 	@Autowired
 	ClientsService clientService;
-
+	
+	NaverLoginBO naverLoginBO = new NaverLoginBO();
+	
+	private static String ounwanAPIURL = null;
+	
 	@GetMapping("/login")
-	public ModelAndView loginGet() {
+	public ModelAndView loginGet(HttpSession session) {
 		ModelAndView v = new ModelAndView("login");
+		ounwanAPIURL = naverLoginBO.getAuthorizationUrl(session);
+		System.out.println(ounwanAPIURL);
 		return v;
 	}
 

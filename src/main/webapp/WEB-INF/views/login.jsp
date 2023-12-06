@@ -31,6 +31,8 @@
 		<input type="button" onclick="checkLogin()" value="로그인"> 
 	</form>
 
+	
+
 	<P>The time on the server is ${serverTime}.</P>
 
 </body>

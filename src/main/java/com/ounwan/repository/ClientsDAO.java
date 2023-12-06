@@ -20,5 +20,9 @@ public class ClientsDAO {
 	public String checkLogin(String id) {
 		return sqlSession.selectOne(NAMESPACE + "checkLogin", id);
 	}
+
+	public Clients checkNaverToken(String token) {
+		return sqlSession.selectOne(NAMESPACE + "checkNaverToken", token);
+	}
 	
 }

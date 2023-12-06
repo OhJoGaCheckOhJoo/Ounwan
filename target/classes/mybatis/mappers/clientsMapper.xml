@@ -15,4 +15,7 @@
     <select id="checkLogin" parameterType="clients" resultType="String">
     	select password from CLIENTS where client_id=#{clientId}
     </select>
+    <select id="checkNaverToken" parameterType="String" resultType="clients">
+    	select * from CLIENTS where social_id = #{token} and social_type = 'NAVER'
+    </select>
 </mapper>
