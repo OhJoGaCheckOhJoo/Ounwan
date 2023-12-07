@@ -33,4 +33,17 @@ public class ClientsDAO {
 		return sqlSession.update(NAMESPACE + "withdrawal", client);
 	}
 
+	public String checkLogin(String id) {
+		return sqlSession.selectOne(NAMESPACE + "checkLogin", id);
+	}
+
+	public Clients checkNaverToken(String token) {
+		return sqlSession.selectOne(NAMESPACE + "checkNaverToken", token);
+	}
+
+	public Clients checkKakaoToken(String token) {
+		// System.out.println("DAO here!!!!!");
+		return sqlSession.selectOne(NAMESPACE + "checkKakaoToken", token);
+	}
+	
 }

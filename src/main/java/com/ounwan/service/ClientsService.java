@@ -6,6 +6,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ounwan.dto.ClientsDTO;
@@ -14,15 +15,84 @@ import com.ounwan.repository.ClientsDAO;
 
 @Service
 public class ClientsService {
+	@Autowired
+	ClientsDAO clientsDAO;
 
 	@Autowired
-	ClientsDAO dao;
-	
-	@Autowired
 	MailSender sender;
+
+	public boolean checkLogin(String id, String password) {  
+		String dbpassword = clientsDAO.checkLogin(id);
+		if (dbpassword == null) {
+			return false;
+		} else {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			if(encoder.matches(password,dbpassword)) {
+				return true;
+			}else {
+				return false;
+			}
+			 
+		}
+	}
+	
+	public ClientsDTO checkNaverToken(String token) {
+		Clients client = clientsDAO.checkNaverToken(token);
+		return (client != null) ? changeDTO(client) : null;
+	}
+	
+	public Clients changeEntity(ClientsDTO client) {
+        return Clients.builder()
+                .clientId(client.getClientId())
+                .name(client.getName())
+                .password(client.getPassword())
+                .email(client.getEmail())
+                .birthday(client.getBirthday())
+                .phone(client.getPhone())
+                .address(client.getAddress())
+                .addressDetail(client.getAddressDetail())
+                .zipCode(client.getZipCode())
+                .privacyTerms(client.getPrivacyTerms())
+                .emailCheck(client.getEmailCheck())
+                .activationCheck(client.getActivationCheck())
+                .qualifiedCheck(client.getQualifiedCheck())
+                .profileURL(client.getProfileURL())
+                .emailAuth(client.getEmailAuth())
+                .socialType(client.getSocialType())
+                .socialId(client.getSocialId())
+                .build();
+    }
+    
+    public ClientsDTO changeDTO(Clients client) {
+        return ClientsDTO.builder()
+                .clientId(client.getClientId())
+                .name(client.getName())
+                .password(client.getPassword())
+                .email(client.getEmail())
+                .birthday(client.getBirthday())
+                .phone(client.getPhone())
+                .address(client.getAddress())
+                .addressDetail(client.getAddressDetail())
+                .zipCode(client.getZipCode())
+                .privacyTerms(client.getPrivacyTerms())
+                .emailCheck(client.isEmailCheck())
+                .activationCheck(client.isActivationCheck())
+                .qualifiedCheck(client.isQualifiedCheck())
+                .profileURL(client.getProfileURL())
+                .emailAuth(client.getEmailAuth())
+                .socialType(client.getSocialType())
+                .socialId(client.getSocialId())
+                .build();
+    }
+
+	public ClientsDTO checkKakaoToken(String token) {
+		// System.out.println("here!!!!");
+		Clients client = clientsDAO.checkKakaoToken(token);
+		return (client != null) ? changeDTO(client) : null;
+	}
 	
 	public String findClientId(ClientsDTO clientDTO) {
-		Clients client = dao.findClientId(change(clientDTO));
+		Clients client = clientsDAO.findClientId(change(clientDTO));
 		if(client == null) {
 			return null;
 		} else {
@@ -31,28 +101,28 @@ public class ClientsService {
 	}
 	
 	public String findPassword(ClientsDTO clientsDTO) {
-		int result = dao.findPassword(change(clientsDTO));
+		int result = clientsDAO.findPassword(change(clientsDTO));
 		if(result > 0) {
 			String newPassword = resetPassword();
 			sendMail(clientsDTO.getEmail(), newPassword);
 			clientsDTO.setPassword(hashPassword(newPassword));
-			result = dao.updateRandomPassword(change(clientsDTO));
+			result = clientsDAO.updateRandomPassword(change(clientsDTO));
 			if(result > 0) {
-				return "»õ ºñ¹Ğ¹øÈ£ »ı¼º ¼º°ø";
+				return "ë³€ê²½ ì„±ê³µ";
 			} else {
-				return "»õ ºñ¹Ğ¹øÈ£ »ı¼º ½ÇÆĞ";
+				return "ë³€ê²½ ì‹¤íŒ¨";
 			}
 		} else {
-			return "È¸¿øÁ¤º¸ ºÒÀÏÄ¡";
+			return "ì¼ì¹˜í•˜ëŠ” íšŒì›ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.";
 		}
 	}
 	
 	public String withdrawalClient(ClientsDTO clientsDTO) {
-		int result = dao.withdrawalClient(change(clientsDTO));
+		int result = clientsDAO.withdrawalClient(change(clientsDTO));
 		if(result > 0) {
-			return "Å»Åğ¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.";
+			return "íƒˆí‡´ ì„±ê³µ";
 		} else {
-			return "Å»Åğ¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.";
+			return "íƒˆí‡´ ì‹¤íŒ¨";
 		}
 	}
 	
@@ -80,16 +150,16 @@ public class ClientsService {
 	
 	public void sendMail(String email, String newPassword) {
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(email); // ¼ö½ÅÀÚ
-		message.setSubject("¿À¿î¿Ï Å×½ºÆ®"); // Á¦¸ñ
-		message.setText("»õ ºñ¹Ğ¹øÈ£ : "+ newPassword); // ³»¿ë
-		message.setFrom("ounwan50@gmail.com"); //¹ß½ÅÀÚ
+		message.setTo(email); // ìˆ˜ì‹ ì
+		message.setSubject("[ì˜¤ìš´ì™„] í…ŒìŠ¤íŠ¸"); // ì œëª©
+		message.setText("ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ : "+ newPassword); // ë‚´ìš©
+		message.setFrom("ounwan50@gmail.com"); // ë°œì‹ ì
 		
 		sender.send(message);
 	}
 	
 	private static String hashPassword(String plainTextPassword) {
-		// ¹®ÀÚ¿­ ¾ÏÈ£È­ÇØ¼­ ¹İÈ¯
+		// bcrypt ì•”í˜¸í™”
 		return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
 	}
 	
@@ -102,19 +172,19 @@ public class ClientsService {
 		for (int i = 0; i < pwLength; i++) {
 			int idx = random.nextInt(5);
 			switch (idx) {
-			// ´ë¹®ÀÚ
+			// ëŒ€ë¬¸ì
 			case 0:
 				newPw.append((char) ((int) random.nextInt(26) + 65));
 				break;
-			// ¼Ò¹®ÀÚ
+			// ì†Œë¬¸ì
 			case 1:
 				newPw.append((char) ((int) random.nextInt(26) + 97));
 				break;
-			// Æ¯¼ö¹®ÀÚ
+			// íŠ¹ìˆ˜ë¬¸ì
 			case 2:
 				newPw.append(symbol[(int) random.nextInt(7)]);
 				break;
-			// ¼ıÀÚ
+			// ìˆ«ì
 			default:
 				newPw.append(random.nextInt(10));
 				break;
@@ -123,7 +193,5 @@ public class ClientsService {
 		// System.out.println(newPw);
 		return newPw.toString();
 	}
-
-	
 
 }
