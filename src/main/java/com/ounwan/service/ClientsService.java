@@ -38,21 +38,21 @@ public class ClientsService {
 			clientsDTO.setPassword(hashPassword(newPassword));
 			result = dao.updateRandomPassword(change(clientsDTO));
 			if(result > 0) {
-				return "»õ ºñ¹Ğ¹øÈ£ »ı¼º ¼º°ø";
+				return "ë³€ê²½ì„±ê³µ";
 			} else {
-				return "»õ ºñ¹Ğ¹øÈ£ »ı¼º ½ÇÆĞ";
+				return "ë³€ê²½ì‹¤íŒ¨";
 			}
 		} else {
-			return "È¸¿øÁ¤º¸ ºÒÀÏÄ¡";
+			return "íšŒì›ì¡°íšŒì‹¤íŒ¨";
 		}
 	}
 	
 	public String withdrawalClient(ClientsDTO clientsDTO) {
 		int result = dao.withdrawalClient(change(clientsDTO));
 		if(result > 0) {
-			return "Å»Åğ¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.";
+			return "íƒˆí‡´ ì„±ê³µ";
 		} else {
-			return "Å»Åğ¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.";
+			return "íƒˆí‡´ ì‹¤íŒ¨";
 		}
 	}
 	
@@ -79,17 +79,19 @@ public class ClientsService {
 	}
 	
 	public void sendMail(String email, String newPassword) {
+		email = "yu4923@naver.com";
+		
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(email); // ¼ö½ÅÀÚ
-		message.setSubject("¿À¿î¿Ï Å×½ºÆ®"); // Á¦¸ñ
-		message.setText("»õ ºñ¹Ğ¹øÈ£ : "+ newPassword); // ³»¿ë
-		message.setFrom("ounwan50@gmail.com"); //¹ß½ÅÀÚ
+		message.setTo(email); // ìˆ˜ì‹ ì
+		message.setSubject("[ì˜¤ìš´ì™„] ì„ì‹œë¹„ë°€ë²ˆí˜¸"); // ì œëª©
+		message.setText("ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ : "+ newPassword); // ë‚´ìš©
+		message.setFrom("ounwan50@gmail.com"); //ë°œì‹ ì
 		
 		sender.send(message);
 	}
 	
 	private static String hashPassword(String plainTextPassword) {
-		// ¹®ÀÚ¿­ ¾ÏÈ£È­ÇØ¼­ ¹İÈ¯
+		// ë¹„ë°€ë²ˆí˜¸ í•´ì‹±(bcrypt)
 		return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
 	}
 	
@@ -102,19 +104,19 @@ public class ClientsService {
 		for (int i = 0; i < pwLength; i++) {
 			int idx = random.nextInt(5);
 			switch (idx) {
-			// ´ë¹®ÀÚ
+			// ëŒ€ë¬¸ì
 			case 0:
 				newPw.append((char) ((int) random.nextInt(26) + 65));
 				break;
-			// ¼Ò¹®ÀÚ
+			// ì†Œë¬¸ì
 			case 1:
 				newPw.append((char) ((int) random.nextInt(26) + 97));
 				break;
-			// Æ¯¼ö¹®ÀÚ
+			// íŠ¹ìˆ˜ë¬¸ì
 			case 2:
 				newPw.append(symbol[(int) random.nextInt(7)]);
 				break;
-			// ¼ıÀÚ
+			// ìˆ«ì
 			default:
 				newPw.append(random.nextInt(10));
 				break;
