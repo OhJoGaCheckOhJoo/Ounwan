@@ -68,60 +68,14 @@ public class ClientsService {
 		Clients client = clientsDAO.checkNaverToken(token);
 		return (client != null) ? changeDTO(client) : null;
 	}
-	
-
-	public Clients changeEntity(ClientsDTO client) {
-        return Clients.builder()
-                .clientId(client.getClientId())
-                .name(client.getName())
-                .password(client.getPassword())
-                .email(client.getEmail())
-                .birthday(client.getBirthday())
-                .phone(client.getPhone())
-                .address(client.getAddress())
-                .addressDetail(client.getAddressDetail())
-                .zipCode(client.getZipCode())
-                .privacyTerms(client.getPrivacyTerms())
-                .emailCheck(client.getEmailCheck())
-                .activationCheck(client.getActivationCheck())
-                .qualifiedCheck(client.getQualifiedCheck())
-                .profileURL(client.getProfileURL())
-                .emailAuth(client.getEmailAuth())
-                .socialType(client.getSocialType())
-                .socialId(client.getSocialId())
-                .build();
-    }
-    
-    public ClientsDTO changeDTO(Clients client) {
-        return ClientsDTO.builder()
-                .clientId(client.getClientId())
-                .name(client.getName())
-                .password(client.getPassword())
-                .email(client.getEmail())
-                .birthday(client.getBirthday())
-                .phone(client.getPhone())
-                .address(client.getAddress())
-                .addressDetail(client.getAddressDetail())
-                .zipCode(client.getZipCode())
-                .privacyTerms(client.getPrivacyTerms())
-                .emailCheck(client.isEmailCheck())
-                .activationCheck(client.isActivationCheck())
-                .qualifiedCheck(client.isQualifiedCheck())
-                .profileURL(client.getProfileURL())
-                .emailAuth(client.getEmailAuth())
-                .socialType(client.getSocialType())
-                .socialId(client.getSocialId())
-                .build();
-    }
 
 	public ClientsDTO checkKakaoToken(String token) {
-		// System.out.println("here!!!!");
 		Clients client = clientsDAO.checkKakaoToken(token);
 		return (client != null) ? changeDTO(client) : null;
 	}
 	
 	public String findClientId(ClientsDTO clientDTO) {
-		Clients client = clientsDAO.findClientId(change(clientDTO));
+		Clients client = clientsDAO.findClientId(changeEntity(clientDTO));
 		if(client == null) {
 			return null;
 		} else {
@@ -130,12 +84,12 @@ public class ClientsService {
 	}
 	
 	public String findPassword(ClientsDTO clientsDTO) {
-		int result = clientsDAO.findPassword(change(clientsDTO));
+		int result = clientsDAO.findPassword(changeEntity(clientsDTO));
 		if(result > 0) {
 			String newPassword = resetPassword();
-			sendMail(clientsDTO.getEmail(), newPassword);
+			sendTempPassword(clientsDTO.getEmail(), newPassword);
 			clientsDTO.setPassword(hashPassword(newPassword));
-			result = clientsDAO.updateRandomPassword(change(clientsDTO));
+			result = clientsDAO.updateRandomPassword(changeEntity(clientsDTO));
 			if(result > 0) {
 				return "변경성공";
 			} else {
@@ -147,7 +101,7 @@ public class ClientsService {
 	}
 	
 	public String withdrawalClient(ClientsDTO clientsDTO) {
-		int result = clientsDAO.withdrawalClient(change(clientsDTO));
+		int result = clientsDAO.withdrawalClient(changeEntity(clientsDTO));
 		if(result > 0) {
 			return "탈퇴 성공";
 		} else {
@@ -155,10 +109,7 @@ public class ClientsService {
 		}
 	}
 	
-	
-	public void sendMail(String email, String newPassword) {
-		email = "yu4923@naver.com";
-		
+	public void sendTempPassword(String email, String newPassword) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(email); // 수신자
 		message.setSubject("[오운완] 테스트"); // 제목
@@ -166,6 +117,18 @@ public class ClientsService {
 		message.setFrom("ounwan50@gmail.com"); // 발신자
 		
 		sender.send(message);
+	}
+
+	public String sendEmailAuths(String email, String emailAuth) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(email); // 수신자
+		message.setSubject("오운완 테스트");
+		message.setText("인증번호 발송했습니다. " + emailAuth);
+		message.setFrom("ounwan50@gmail.com");
+
+		sender.send(message);
+
+		return "aa";
 	}
 	
 	private static String hashPassword(String plainTextPassword) {
@@ -200,20 +163,50 @@ public class ClientsService {
 				break;
 			}
 		}
-		// System.out.println(newPw);
 		return newPw.toString();
 	}
-
-	public String sendEmailAuths(String email, String emailAuth) {
-
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(email); // 수신자
-		message.setSubject("오운완 테스트");
-		message.setText("인증번호 발송했습니다. " + emailAuth);
-		message.setFrom("ounwan50@gmail.com");
-
-		sender.send(message);
-
-		return "aa";
-	}
+	
+	public Clients changeEntity(ClientsDTO client) {
+        return Clients.builder()
+                .clientId(client.getClientId())
+                .name(client.getName())
+                .password(client.getPassword())
+                .email(client.getEmail())
+                .birthday(client.getBirthday())
+                .phone(client.getPhone())
+                .address(client.getAddress())
+                .addressDetail(client.getAddressDetail())
+                .zipCode(client.getZipCode())
+                .privacyTerms(client.getPrivacyTerms())
+                .emailCheck(client.getEmailCheck())
+                .activationCheck(client.getActivationCheck())
+                .qualifiedCheck(client.getQualifiedCheck())
+                .profileURL(client.getProfileURL())
+                .emailAuth(client.getEmailAuth())
+                .socialType(client.getSocialType())
+                .socialId(client.getSocialId())
+                .build();
+    }
+    
+    public ClientsDTO changeDTO(Clients client) {
+        return ClientsDTO.builder()
+                .clientId(client.getClientId())
+                .name(client.getName())
+                .password(client.getPassword())
+                .email(client.getEmail())
+                .birthday(client.getBirthday())
+                .phone(client.getPhone())
+                .address(client.getAddress())
+                .addressDetail(client.getAddressDetail())
+                .zipCode(client.getZipCode())
+                .privacyTerms(client.getPrivacyTerms())
+                .emailCheck(client.getEmailCheck())
+                .activationCheck(client.getActivationCheck())
+                .qualifiedCheck(client.getQualifiedCheck())
+                .profileURL(client.getProfileURL())
+                .emailAuth(client.getEmailAuth())
+                .socialType(client.getSocialType())
+                .socialId(client.getSocialId())
+                .build();
+    }
 }

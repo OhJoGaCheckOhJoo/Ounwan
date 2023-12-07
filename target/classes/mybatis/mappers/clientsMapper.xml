@@ -41,10 +41,7 @@
     	select * from CLIENTS where social_id = #{token} and social_type = 'KAKAO'
     </select>
 
-	  <select id="checkLogin" parameterType="clients" resultType="String">
-    	select password from CLIENTS where client_id=#{clientId}
-    </select>
-
+	
 	<select id="checkClientId" parameterType="String"
 		resultType="int">
 		select count(*) from clients where client_id = #{clientId}
@@ -54,13 +51,4 @@
 		select count(*) from clients where email = #{email}
 	</select>
 
-	<select id="checkNaverToken" parameterType="String"
-		resultType="clients">
-		select * from clients where social_id = #{token} and social_type = 'NAVER'
-	</select>
-	
-	<select id="checkKakaoToken" parameterType="String"
-		resultType="clients">
-		select * from clients where social_id = #{token} and social_type = 'KAKAO'
-	</select>
 </mapper>

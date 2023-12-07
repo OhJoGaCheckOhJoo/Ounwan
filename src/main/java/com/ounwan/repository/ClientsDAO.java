@@ -24,7 +24,7 @@ public class ClientsDAO {
 	}
 
 	public Clients findClientId(Clients client) {
-		return (Clients)sqlSession.selectOne(NAMESPACE + "selectForFindId", client);
+		return sqlSession.selectOne(NAMESPACE + "selectForFindId", client);
 	}
 	
 	public int findPassword(Clients client) {
@@ -48,7 +48,6 @@ public class ClientsDAO {
 	}
 
 	public Clients checkKakaoToken(String token) {
-		// System.out.println("DAO here!!!!!");
 		return sqlSession.selectOne(NAMESPACE + "checkKakaoToken", token);
 	}
 	

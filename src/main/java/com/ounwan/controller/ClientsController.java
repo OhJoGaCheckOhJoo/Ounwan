@@ -6,11 +6,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ounwan.dto.ClientsDTO;
 import com.ounwan.oauth.kakao.KakaoLoginBO;
 import com.ounwan.oauth.naver.NaverLoginBO;
 import com.ounwan.service.ClientsService;
@@ -51,26 +55,19 @@ public class ClientsController {
 	@SuppressWarnings("static-access")
 	@GetMapping(value = "/findId", consumes = "text/plain;charset=UTF-8", produces = "application/json")
 	public String findId(@RequestParam("name") String name, @RequestParam("email") String email) {
-		System.out.println(name + " : " + email);
-		ClientsDTO clientsDTO = new ClientsDTO().builder().name(name).email(email).build();
-		String id = clientService.findClientId(clientsDTO);
-		return id;
+		return clientService.findClientId(new ClientsDTO().builder().name(name).email(email).build());
 	}
 	
 	@SuppressWarnings("static-access")
 	@RequestMapping("/findPassword")
 	public String findPassword(@RequestParam("id") String id, @RequestParam("email") String email) {
-		ClientsDTO clientsDTO = new ClientsDTO().builder().clientId(id).email(email).build();
-		String result = clientService.findPassword(clientsDTO);
-		return result;
+		return clientService.findPassword(new ClientsDTO().builder().clientId(id).email(email).build());
 	}
 	
 	@SuppressWarnings("static-access")
 	@RequestMapping("/withdrawal")
 	public String withdrawal(@RequestParam("clientId") String clientId, @RequestParam("privacyTerms") int privacyTerms) {
-		ClientsDTO clientsDTO = new ClientsDTO().builder().clientId(clientId).privacyTerms(privacyTerms).build();
-		String result = clientService.withdrawalClient(clientsDTO);
-		return result;
+		return clientService.withdrawalClient(new ClientsDTO().builder().clientId(clientId).privacyTerms(privacyTerms).build());
 	}
 
 	@RequestMapping("/logout")
@@ -101,7 +98,7 @@ public class ClientsController {
 	@PostMapping(value = "/signUp", consumes= "application/json", produces="text/plain;charset=utf-8")
 	public String createAccount(@RequestBody ClientsDTO client) {
 		System.out.println(client);
-		int result = clientsService.createAccount(client);
+		int result = clientService.createAccount(client);
 		if(result > 0) {
 			System.out.println("YESSSSSS");
 		} else {
@@ -114,7 +111,7 @@ public class ClientsController {
 	public String checkId(String clientId) {
 		System.out.println(clientId);
 		// true = id 존재, false = id 없음
-		boolean result = clientsService.checkId(clientId);
+		boolean result = clientService.checkId(clientId);
 		if(result) {
 			System.out.println("YESSSSSS");
 		} else {
@@ -127,7 +124,7 @@ public class ClientsController {
 	public String checkEmail(String email) {
 		System.out.println(email);
 		// true = id 존재, false = id 없음
-		boolean result = clientsService.checkEmail(email);
+		boolean result = clientService.checkEmail(email);
 		if(result) {
 			System.out.println("YESSSSSS");
 		} else {
