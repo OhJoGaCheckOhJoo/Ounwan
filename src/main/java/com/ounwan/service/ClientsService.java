@@ -78,6 +78,7 @@ public class ClientsService {
     }
 
 	public ClientsDTO checkKakaoToken(String token) {
+		// System.out.println("here!!!!");
 		Clients client = clientsDAO.checkKakaoToken(token);
 		return (client != null) ? changeDTO(client) : null;
 	}

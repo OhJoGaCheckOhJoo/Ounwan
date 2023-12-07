@@ -26,6 +26,7 @@ public class ClientsDAO {
 	}
 
 	public Clients checkKakaoToken(String token) {
+		// System.out.println("DAO here!!!!!");
 		return sqlSession.selectOne(NAMESPACE + "checkKakaoToken", token);
 	}
 	

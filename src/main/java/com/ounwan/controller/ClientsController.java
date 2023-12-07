@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -22,15 +21,15 @@ public class ClientsController {
 
 	@Autowired
 	ClientsService clientService;
-	
+
 	@Autowired
 	KakaoLoginBO kakaoLogin;
-	
+
 	@Autowired
 	NaverLoginBO naverLogin;
-	
+
 	private static String ounwanAPIURL = null;
-	
+
 	@GetMapping("/login")
 	public ModelAndView loginGet(HttpSession session) {
 		ModelAndView v = new ModelAndView("login");
@@ -47,14 +46,31 @@ public class ClientsController {
 			session.setAttribute("clientId", clientId);
 		}
 		return (result) ? "로그인 성공" : "로그인 실패";
+	}
 
+	@RequestMapping("/logout")
+	public ModelAndView logoutGet(HttpSession session) {
+		ModelAndView v = new ModelAndView("home");
+		String accessToken = (String) session.getAttribute("accessToken");
+		System.out.println("KAKAO L:OGOUTTTTTTTTTTTTTT");
+		System.out.println("AccessToken : " + accessToken);
+		if (accessToken != null) {
+			kakaoLogin.logout(session);
+			session.invalidate();
+			return v;
+		}
+		session.invalidate();
+		return v;
 	}
-	
+
 	@RequestMapping("/login/kakao")
-	public String kakaoLogin() {		
+	public String kakaoLogin() {
 		return "redirect:" + kakaoLogin.getURL();
-		
 	}
 	
+	@RequestMapping("/login/naver")
+	public String naverLogin(HttpSession session) {
+		return "redirect:" + naverLogin.getAuthorizationUrl(session);
+	}
 
 }
