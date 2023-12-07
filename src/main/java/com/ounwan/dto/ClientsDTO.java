@@ -13,8 +13,8 @@ import lombok.ToString;
 @Setter
 @Builder
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ClientsDTO {
 	private String clientId;
 	private String name;

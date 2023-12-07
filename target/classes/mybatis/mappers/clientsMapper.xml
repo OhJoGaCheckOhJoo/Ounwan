@@ -15,6 +15,9 @@
 		#{profileURL},#{emailAuth},#{socialType},#{socialId})
 	</insert>
 
+	    <select id="checkLogin" parameterType="clients" resultType="String">
+    	select password from CLIENTS where client_id=#{clientId}
+    </select>
 
 	<select id="checkClientId" parameterType="String"
 		resultType="int">

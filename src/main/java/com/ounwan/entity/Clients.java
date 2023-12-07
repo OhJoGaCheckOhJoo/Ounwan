@@ -15,6 +15,8 @@ import lombok.ToString;
 @Setter
 @Builder
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Clients {
 	private String clientId;
 	private String name;
