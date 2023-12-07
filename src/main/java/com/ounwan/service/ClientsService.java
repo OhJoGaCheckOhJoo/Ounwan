@@ -108,12 +108,12 @@ public class ClientsService {
 			clientsDTO.setPassword(hashPassword(newPassword));
 			result = clientsDAO.updateRandomPassword(change(clientsDTO));
 			if(result > 0) {
-				return "변경 성공";
+				return "변경성공";
 			} else {
-				return "변경 실패";
+				return "변경실패";
 			}
 		} else {
-			return "일치하는 회원정보가 없습니다.";
+			return "회원조회실패";
 		}
 	}
 	
@@ -149,6 +149,8 @@ public class ClientsService {
 	}
 	
 	public void sendMail(String email, String newPassword) {
+		email = "yu4923@naver.com";
+		
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(email); // 수신자
 		message.setSubject("[오운완] 테스트"); // 제목

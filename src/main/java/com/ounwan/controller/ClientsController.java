@@ -50,7 +50,8 @@ public class ClientsController {
 
 	@SuppressWarnings("static-access")
 	@GetMapping(value = "/findId", consumes = "text/plain;charset=UTF-8", produces = "application/json")
-	public String findId(@RequestParam("name") String name, @RequestParam("email") String email, Model model) {
+	public String findId(@RequestParam("name") String name, @RequestParam("email") String email) {
+		System.out.println(name + " : " + email);
 		ClientsDTO clientsDTO = new ClientsDTO().builder().name(name).email(email).build();
 		String id = clientService.findClientId(clientsDTO);
 		return id;
