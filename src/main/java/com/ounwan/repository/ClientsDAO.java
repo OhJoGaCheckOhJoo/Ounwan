@@ -16,7 +16,13 @@ public class ClientsDAO {
 	public int createAccount(Clients client) {
 		return sqlSession.insert(NAMESPACE + "insertClient", client);
 	}
-	
+	public int checkId(String checkId ) {
+		return sqlSession.selectOne(NAMESPACE + "checkClientId", checkId);
+	}
+	public int checkEmail(String email) {
+		return sqlSession.selectOne(NAMESPACE + "checkEmail", email);
+	}
+
 	public Clients findClientId(Clients client) {
 		return (Clients)sqlSession.selectOne(NAMESPACE + "selectForFindId", client);
 	}
