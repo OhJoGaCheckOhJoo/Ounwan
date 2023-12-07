@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.clients">
-	<insert id="insertClient" parameterType="client">
+	<insert id="insertClient" parameterType="clients">
         insert into
         clients(client_id, name, password, email, birthday, phone, address, address_detail, 
         zip_code, privacy_terms, email_check, activation_check, qualified_check, 
@@ -12,4 +12,13 @@
         #{zipCode},#{privacyTerms},#{emailCheck},#{activationCheck},#{qualifiedCheck},
         #{profileURL},#{emailAuth},#{socialType},#{socialId})
     </insert>
+    <select id="checkLogin" parameterType="clients" resultType="String">
+    	select password from CLIENTS where client_id=#{clientId}
+    </select>
+    <select id="checkNaverToken" parameterType="String" resultType="clients">
+    	select * from CLIENTS where social_id = #{token} and social_type = 'NAVER'
+    </select>
+    <select id="checkKakaoToken" parameterType="String" resultType="clients">
+    	select * from CLIENTS where social_id = #{token} and social_type = 'KAKAO'
+    </select>
 </mapper>
