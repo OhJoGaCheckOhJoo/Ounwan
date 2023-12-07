@@ -16,6 +16,22 @@ public class ClientsDAO {
 	public int createAccount(Clients client) {
 		return sqlSession.insert(NAMESPACE + "insertClient", client);
 	}
+	
+	public Clients findClientId(Clients client) {
+		return (Clients)sqlSession.selectOne(NAMESPACE + "selectForFindId", client);
+	}
+	
+	public int findPassword(Clients client) {
+		return sqlSession.selectOne(NAMESPACE + "selectForFindPassword", client);
+	}
+
+	public int updateRandomPassword(Clients client) {
+		return sqlSession.update(NAMESPACE + "updatePassword", client);
+	}
+
+	public int withdrawalClient(Clients client) {
+		return sqlSession.update(NAMESPACE + "withdrawal", client);
+	}
 
 	public String checkLogin(String id) {
 		return sqlSession.selectOne(NAMESPACE + "checkLogin", id);

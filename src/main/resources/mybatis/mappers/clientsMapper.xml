@@ -12,12 +12,31 @@
         #{zipCode},#{privacyTerms},#{emailCheck},#{activationCheck},#{qualifiedCheck},
         #{profileURL},#{emailAuth},#{socialType},#{socialId})
     </insert>
+    
+    <select id="selectForFindId" parameterType="clients" resultType="clients">
+    	SELECT * FROM CLIENTS WHERE NAME = #{name} AND email = #{email}
+    </select>
+    
+    <select id="selectForFindPassword" parameterType="clients" resultType="int">
+    	SELECT COUNT(*) FROM CLIENTS WHERE CLIENT_ID = #{clientId} AND EMAIL = #{email}
+    </select>
+    
+    <update id="updatePassword" parameterType="clients">
+    	UPDATE CLIENTS SET PASSWORD = #{password} WHERE CLIENT_ID = #{clientId}
+    </update>
+    
+    <update id="withdrawal" parameterType="clients">
+    	UPDATE CLIENTS SET WITHDRAWAL_DATE = NOW(), ACTIVATION_CHECK = 1, PRIVACY_TERMS = #{privacyTerms} WHERE CLIENT_ID = #{clientId}
+    </update>
+
     <select id="checkLogin" parameterType="clients" resultType="String">
     	select password from CLIENTS where client_id=#{clientId}
     </select>
+
     <select id="checkNaverToken" parameterType="String" resultType="clients">
     	select * from CLIENTS where social_id = #{token} and social_type = 'NAVER'
     </select>
+    
     <select id="checkKakaoToken" parameterType="String" resultType="clients">
     	select * from CLIENTS where social_id = #{token} and social_type = 'KAKAO'
     </select>
