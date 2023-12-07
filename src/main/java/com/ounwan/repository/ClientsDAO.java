@@ -22,11 +22,21 @@ public class ClientsDAO {
 	public int checkEmail(String email) {
 		return sqlSession.selectOne(NAMESPACE + "checkEmail", email);
 	}
-	public Clients checkNaverToken(String token) {
-		return sqlSession.selectOne(NAMESPACE + "checkNaverToken", token);
+
+	public Clients findClientId(Clients client) {
+		return (Clients)sqlSession.selectOne(NAMESPACE + "selectForFindId", client);
 	}
-	public Clients checkKakaoToken(String token) {
-		return sqlSession.selectOne(NAMESPACE + "checkKakaoToken", token);
+	
+	public int findPassword(Clients client) {
+		return sqlSession.selectOne(NAMESPACE + "selectForFindPassword", client);
+	}
+
+	public int updateRandomPassword(Clients client) {
+		return sqlSession.update(NAMESPACE + "updatePassword", client);
+	}
+
+	public int withdrawalClient(Clients client) {
+		return sqlSession.update(NAMESPACE + "withdrawal", client);
 	}
 
 	public String checkLogin(String id) {

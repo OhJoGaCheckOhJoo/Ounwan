@@ -33,4 +33,5 @@ public class ClientsDTO {
 	private String emailAuth;
 	private String socialType;
 	private String socialId;
+	private Date withdrawaDate;
 }

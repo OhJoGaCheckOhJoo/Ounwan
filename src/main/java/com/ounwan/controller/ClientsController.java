@@ -1,5 +1,5 @@
 package com.ounwan.controller;
-
+	
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -46,6 +46,31 @@ public class ClientsController {
 			session.setAttribute("clientId", clientId);
 		}
 		return (result) ? "로그인 성공" : "로그인 실패";
+	}
+
+	@SuppressWarnings("static-access")
+	@GetMapping(value = "/findId", consumes = "text/plain;charset=UTF-8", produces = "application/json")
+	public String findId(@RequestParam("name") String name, @RequestParam("email") String email) {
+		System.out.println(name + " : " + email);
+		ClientsDTO clientsDTO = new ClientsDTO().builder().name(name).email(email).build();
+		String id = clientService.findClientId(clientsDTO);
+		return id;
+	}
+	
+	@SuppressWarnings("static-access")
+	@RequestMapping("/findPassword")
+	public String findPassword(@RequestParam("id") String id, @RequestParam("email") String email) {
+		ClientsDTO clientsDTO = new ClientsDTO().builder().clientId(id).email(email).build();
+		String result = clientService.findPassword(clientsDTO);
+		return result;
+	}
+	
+	@SuppressWarnings("static-access")
+	@RequestMapping("/withdrawal")
+	public String withdrawal(@RequestParam("clientId") String clientId, @RequestParam("privacyTerms") int privacyTerms) {
+		ClientsDTO clientsDTO = new ClientsDTO().builder().clientId(clientId).privacyTerms(privacyTerms).build();
+		String result = clientService.withdrawalClient(clientsDTO);
+		return result;
 	}
 
 	@RequestMapping("/logout")
