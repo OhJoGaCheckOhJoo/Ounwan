@@ -1,1 +1,110 @@
 @charset "UTF-8";
+
+:root {
+    --main-color: #2E3C8A;
+}
+
+.ounwangram {
+    margin-top: 30px;
+}
+
+.ounwangram-option {
+    text-align: center;
+    border-bottom: 2px solid #ccc;
+    height: 20px;
+}
+
+.ounwangram-threedot-div {
+	display: inline-block;
+	width: 30px;
+	height: 85px;
+	float: right;
+}
+
+.ounwangram-threedot-div > button {
+	margin-top: 27.5px;
+}
+
+.ounwangram-option > a {
+    display: inline-block;
+    width: 150px;
+    height: 20px;
+    border-bottom: 2px solid var(--main-color);
+    margin: 0px 20px 0px 20px;
+}
+
+.ounwangram-main {
+    width: 700px;
+    padding: 50px;
+    margin: auto;
+}
+
+.ounwangram-main button {
+    background-color: rgba(0,0,0,0);
+    border: 0px;
+    cursor: pointer;
+}
+
+.ounwangram-profile {
+    width: 300px;
+    height: 85px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.ounwangram-profile > div {
+	position: absolute;
+	display: inline-block;
+	margin: 31.7px 0px 0px 20px;
+}
+
+.ounwangram-profile > img {
+	display: inline-block;
+    width: 80px;
+    height: 80px;
+    border: 2.5px solid var(--main-color);
+    border-radius: 40px;
+}
+
+.ounwangram-threedot {
+    width: 30px;
+    height: 30px;
+}
+
+.ounwangram-board > img {
+	width: 600px;
+	height: 600px;
+	margin: 20px 50px 10px 50px;
+	border: 1px solid #eee;
+}
+
+.ounwangram-content {
+	width: 600px;
+	margin: 5px 50px 10px 50px;
+}
+
+.ounwan-like {
+	vertical-align: middle;
+}
+
+.ounwan-like > span {
+	margin-left: 5px;
+}
+
+.ounwan-like > button {
+	height:30px;
+}
+
+.ounwan-like button img {
+	width: 30px;
+	height: 30px;
+}
+
+.ounwangram-content > div {
+	display: inline-block;
+}
+
+.userid {
+	font-weight: bold;
+	width: 100px;
+}

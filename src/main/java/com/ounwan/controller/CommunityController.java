@@ -1,5 +1,13 @@
 package com.ounwan.controller;
 
-public class CommunityController {
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+@Controller
+public class CommunityController {
+	
+	@RequestMapping("/ounwangram")
+	public String ounwangram() {
+		return "community/ounwangram";
+	}
 }

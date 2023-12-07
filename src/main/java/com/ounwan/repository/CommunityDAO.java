@@ -1,5 +1,8 @@
 package com.ounwan.repository;
 
-public class CommunityDAO {
+import org.springframework.stereotype.Repository;
 
+@Repository
+public class CommunityDAO {
+	
 }

@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="appPath" scope="application"  value="${pageContext.request.contextPath}" />
-<%@ page session="false" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="${appPath}/css/main.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./css/main.css" rel="stylesheet" >
+    <link href="./css/community.css" rel="stylesheet" >
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>오운완</title>
 </head>
@@ -20,8 +20,9 @@
             <button class="pointer">Basket (#)</button>
         </div>
     </header>
-
+    ​
     <div class="container">
+        <!-- nav -->
         <nav>
             <div class="nav-main">
                 <div class="pointer">
@@ -51,7 +52,7 @@
                 <div>
                     <a href="#">커뮤니티</a>
                     <div id="navSubmenu" class="nav-submenu">
-                        <a href="ounwangram">오운완 커뮤니티</a>
+                        <a href="#">오운완 커뮤니티</a>
                         <a href="#">고민 게시판</a>
                     </div>
                 </div>
@@ -66,72 +67,65 @@
                 </div>
             </div>
             <div id="navMenu" class="nav-menu">
-            	<div>
-	                <div>
-	                	<a href="#">전체 보기</a>
-	                    <a href="#">운동 기구</a>
-	                    <a href="#">건강 보조 식품</a>
-	                    <a href="#">헬스 이용권</a>
-	                    <a href="#">의류</a>
-	                </div>
-	                <div>
-	                    <a href="#">전체 보기</a>
-	                    <a href="#">관심 상품</a>
-	                </div>
-	                <div>
-	                    <a href="ounwangram">오운완 커뮤니티</a>
-	                    <a href="#">고민 게시판</a>
-	                </div>
-	                <div>
-	                    <a href="#">상품문의</a>
-	                    <a href="#">배송문의</a>
-	                    <a href="#">중고거래</a>
-	                    <a href="#">커뮤니티</a>
-	                </div>
+                <div>
+                    <div>
+                        <a href="#">전체 보기</a>
+                        <a href="#">운동 기구</a>
+                        <a href="#">건강 보조 식품</a>
+                        <a href="#">헬스 이용권</a>
+                        <a href="#">의류</a>
+                    </div>
+                    <div>
+                        <a href="#">전체 보기</a>
+                        <a href="#">관심 상품</a>
+                    </div>
+                    <div>
+                        <a href="#">오운완 커뮤니티</a>
+                        <a href="#">고민 게시판</a>
+                    </div>
+                    <div>
+                        <a href="#">상품문의</a>
+                        <a href="#">배송문의</a>
+                        <a href="#">중고거래</a>
+                        <a href="#">커뮤니티</a>
+                    </div>
                 </div>
             </div>
         </nav>
-
-        <div id="main-banner" class="main-banner">
-            <img src = './images/v616_37.png'>
+        
+        <div class="ounwangram">
+            <div class="ounwangram-option">
+                <a class="pointer">전체 보기</a>
+                <a class="pointer">친구 보기</a>
+            </div>
+            <div class="ounwangram-main">
+            	<div>
+	                <div class="pointer ounwangram-profile">
+	                    <img src="./images/insta.png">
+	                    <div>Nickname</div>
+	                </div>
+	                <div class="ounwangram-threedot-div">
+	                    <button class="ounwangram-threedot"><img class="ounwangram-threedot" src="./images/three_dot.png"></button>
+	                </div>
+	                <div class="ounwangram-board">
+	                	<img src="./images/v606_26.png">
+	                </div>
+	                <div class="ounwan-like">
+	                	<button><img src="./images/ounwan_like.png"></button>
+	                	<span>555</span><span>Likes</span>
+	                </div>
+	                <div class="ounwangram-content">
+	                	<div class="userid">Nickname</div>
+	                	<div>aaaaaaaaaaaaa</div>
+	                </div>
+                </div>
+            </div>
         </div>
-
-        <div>
-            <div class="text-1">인기상품</div>
-            <div id="populars" class="main-product"></div>
-        </div>
-
-        <br>
-
-        <div>
-            <div class="text-1">중고거래</div>
-            <div id="secondhands" class="main-product"></div>
-        </div>
-
-        <br>
+        
     </div>
-
     <hr>
-    
-    
 
-    <footer>
-        <div>
-            <div>오운완 쇼핑몰 & 커뮤니티</div>
-            <div>대표자 : 김태완, 박정우, 박지원, 방은지, 신서영, 윤윤성</div>
-            <div>대표전화 : 010-9424-2784 / 주소 : 03993 서울특별시 마포구 월드컵북로4길 77, 1층</div>
-            <div>상품&제휴 문의 메일 : ounwan50@gmail.com</div>
-            <div class="text-1">고객센터 : 평일 오전 10:00 ~ 오후 5:00</div>
-            <div class="text-1">(점심시간 12:00 ~ 13:00) 토/일/공휴일 휴무</div>
-        </div>
-        <div class="float-right">
-            <br><br>
-            <div><a href="#">이벤트</a></div>
-            <div><a href="#">개인정보처리방침</a></div>
-            <div><a href="#">이용약관</a></div>
-            <div><img class="float-right img-1 pointer" src="./images/insta.png"></div>
-        </div>
-    </footer>
+	<script src="./js/community.js"></script>
     <script src="./js/main.js"></script>
 </body>
 </html>
