@@ -1,7 +1,8 @@
 package com.ounwan.service;
 
 import java.util.UUID;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -49,19 +50,21 @@ public class ClientsService {
 		return (result > 0) ? true : false;
 	}
 
-	public boolean checkLogin(String id, String password) {  
+	public Map<String, Object> checkLogin(String id, String password) {  
 		String dbpassword = clientsDAO.checkLogin(id);
+		Map<String, Object> result = new HashMap<>();
 		if (dbpassword == null) {
-			return false;
+			result.put("loginResult", false);
 		} else {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			if(encoder.matches(password,dbpassword)) {
-				return true;
+				result.put("clientInfo", changeDTO(clientsDAO.getClientInfo(id)));
+				result.put("loginResult", true);
 			}else {
-				return false;
+				result.put("loginResult", false);
 			}
-			 
 		}
+		return result;
 	}
 	
 	public ClientsDTO checkNaverToken(String token) {

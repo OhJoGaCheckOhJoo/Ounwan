@@ -23,4 +23,5 @@ public class OunwanGram {
 	private Date updatedDate;
 	private Integer likes;
 	private String imageUrl;
+	private String profileUrl;
 }

@@ -10,5 +10,6 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.ounwan.entity.Clients" alias="clients" />
+		<typeAlias type="com.ounwan.entity.OunwanGram" alias="gram" />
 	</typeAliases>
 </configuration>
