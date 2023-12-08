@@ -64,7 +64,7 @@ var array_secondhand = [secondhand1, secondhand2, secondhand3, secondhand4, seco
 // -----------
 
 var host = window.location.host + '/';
-var appPath = '/ounwan';
+var appPath = '/myapp';
 var router = new Map([
 	['/ounwan/html/login.html', '/' + appPath + '/clients/login']
 ]);

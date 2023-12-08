@@ -35,11 +35,11 @@ public class ClientsController {
 	private static String ounwanAPIURL = null;
 
 	@GetMapping("/login")
-	public ModelAndView loginGet(HttpSession session) {
-		ModelAndView v = new ModelAndView("login");
-		ounwanAPIURL = naverLogin.getAuthorizationUrl(session);
-		System.out.println(ounwanAPIURL);
-		return v;
+	public String loginGet(HttpSession session) {
+		//ModelAndView v = new ModelAndView("login");
+		//ounwanAPIURL = naverLogin.getAuthorizationUrl(session);
+		//System.out.println(ounwanAPIURL);
+		return "login";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
