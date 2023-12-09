@@ -88,7 +88,7 @@ $(function() {
         $("#loginAccountSelected").show();
     });
 
-    $("#email").on("propertychange change paste input", function() {
+    $("#findIdEmail").on("input", function() {
         var emails = [
             '@naver.com',
             '@gmail.com',
@@ -116,7 +116,6 @@ $(function() {
     });
 
     $("#loginSelect").click(function() {
-        //location.href = appPath + '/login';
         $.ajax({
         	url : appPath + "/clients/login",
         	type : 'GET',
@@ -139,7 +138,7 @@ $(function() {
             dataType : "text",
             success : function(res) {
             	if(res != "") {
-            		var openWindow = window.open(appPath + "/findId?" + obj.name + "@" + res,'','width=700px,height=500px,location=no,status=no');
+            		var openWindow = window.open(appPath + "/findId?" + res,'','width=700px,height=500px,location=no,status=no');
             	} else {
             		alert("일치하는 회원 정보가 없습니다.");
             	}	
@@ -177,6 +176,28 @@ $(function() {
             }
         })
         console.log(obj);
+    })
+
+    $("#loginButton").on("click", function() {
+        var userInfo = {
+            "clientId" : "jj1234",
+            "password" : "123456789",
+            "name" : "정진",
+            "email" : "jj@daum.net",
+            "birthday" : "2022-08-29",
+            "phone" : "010-1234-1234",
+            "address" : "서울 마포구 월드컵북로4길 77",
+            "address_detail" : "2호실",
+            "zip_code" : "03993",
+            "profile_url" : ""
+        };
+        if($("#loginId").val() == userInfo.clientId && $("#loginPassword").val() == userInfo.password) {
+            sessionStorage.setItem("userInfo", userInfo);
+            //location.href = "./";
+            alert(1);
+            console.log(sessionStorage.getItem("userInfo"));
+        }
+
     })
 })
 
@@ -229,6 +250,13 @@ burger.each(function(index){
   $this.on('click', function(e){
     e.preventDefault();
     $(this).toggleClass('active-' + (index+1));
+    if($(this).attr("class") == 'menu-trigger') {
+        $(".nav-submenu").show();
+        $(".nav-menu").css("transform", "scaleY(0)");
+    } else {
+        $(".nav-submenu").hide();
+        $(".nav-menu").css("transform", "scaleY(1)");
+    }
   })
 });
 
@@ -254,16 +282,16 @@ var loginPage = `
             <div class="login-wrap-1 float-right">
                 <form>
                     <div class="login">
-                        <input type="text" required>
+                        <input id="loginId" type="text" required>
                         <label>아이디</label>
                         <span></span>
                     </div>
                     <div class="login">
-                        <input type="password" required>
+                        <input id="loginPassword" type="password" required>
                         <label>비밀번호</label>
                         <span></span>
                     </div>
-                    <div class="login login-radius"><button>로그인</button></div>
+                    <div class="login login-radius"><button id="loginButton">로그인</button></div>
                 </form>
                 <div class="login-sub"><a class="login-sub-1" href="#">회원이 아니신가요? 지금 가입하세요!</a></div>
                 <div class="login-sub"><a class="login-sub-2" href="#">비회원 주문조회</a></div>

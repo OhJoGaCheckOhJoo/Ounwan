@@ -1,1 +1,47 @@
 @charset "UTF-8";
+
+/* 애타 css*/
+.aeta {
+    width: 1000px;
+    margin: 100px auto;
+}
+.aeta-title {
+    margin-bottom: 30px;
+}
+.aeta-title strong {
+    font-size: 2rem;
+}
+.aeta-title p {
+    margin-top: 5px;
+    font-size: 1.2rem;
+}
+.aeta-list {
+    width: 80%;
+    display: flex;
+}
+.aeta-list .contents {
+    display: flex;
+}
+.aeta-list .num{
+    width: 60px;
+}
+.aeta-list .title{
+    width: 660px;
+}
+.aeta-list .writer{
+    width: 100px;
+}
+.aeta-list .date{
+    width: 100px;
+}
+.aeta-list .count{
+    width: 80px;
+}
+.aeta-page {
+    margin-top:;
+    text-align: center;
+}
+.search{
+    display: flex;
+    justify-content: center;
+}
