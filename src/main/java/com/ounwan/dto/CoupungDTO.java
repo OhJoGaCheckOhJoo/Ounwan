@@ -19,4 +19,6 @@ public class CoupungDTO {
 	private Integer availableStock;
 	private Boolean availableCheck;
 	private String option;
+	// 이미지 추가
+	private ProductImagesDTO image;
 }

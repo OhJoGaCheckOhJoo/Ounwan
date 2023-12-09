@@ -1,6 +1,7 @@
 package com.ounwan.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,4 +29,6 @@ public class OrdersDTO {
 	private String paymentMethod;
 	private Integer totalQuantity;
 	private Date delieveredDate;
+	// 주문을 위한 데이터 추가
+	private List<OrderDetailsDTO> orderDetails;
 }
