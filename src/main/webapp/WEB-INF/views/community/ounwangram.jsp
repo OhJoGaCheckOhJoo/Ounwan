@@ -19,9 +19,10 @@
         
         <div class="ounwangram" id="ounwangram">
             <div class="ounwangram-option">
-                <a id="gramWholeBoard" class="pointer">전체 보기</a>
+                <a id="gramWholeBoard" class="pointer ounwangram_selected">전체 보기</a>
                 <a id="gramFollowBoard" class="pointer">친구 보기</a>
             </div>
+            <div id="ounwangramBoard"></div>
         </div>
         
     </div>

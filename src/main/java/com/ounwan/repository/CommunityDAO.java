@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ounwan.entity.OunwanGram;
+import com.ounwan.entity.OunwanGramLikes;
 
 @Repository
 public class CommunityDAO {
@@ -26,6 +27,18 @@ public class CommunityDAO {
 	
 	public List<Integer> gramLikeBoards(String clientId) {
 		return sqlSession.selectList(NAMESPACE + "selectLikeBoards", clientId);
+	}
+	
+	public OunwanGram aGramBoard(int communityNumber) {
+		return sqlSession.selectOne(NAMESPACE + "selectOneBoard", communityNumber);
+	}
+	
+	public int addLikeOunwanBoard(OunwanGramLikes likes) {
+		return sqlSession.insert(NAMESPACE + "insertgGramLikeBoard", likes);
+	}
+	
+	public int cancelLikeOunwanBoard(String likesId) {
+		return sqlSession.delete(NAMESPACE + "deleteGramLikeBoard", likesId);
 	}
 	
 }

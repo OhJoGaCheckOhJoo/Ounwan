@@ -4,6 +4,10 @@
     --main-color: #2E3C8A;
 }
 
+nav .ounwangram {
+    margin-top: 0px !important;
+}
+
 .ounwangram {
     margin-top: 30px;
 }
@@ -29,8 +33,11 @@
     display: inline-block;
     width: 150px;
     height: 20px;
-    border-bottom: 2px solid var(--main-color);
     margin: 0px 20px 0px 20px;
+}
+
+.ounwangram_selected {
+    border-bottom: 2px solid var(--main-color);
 }
 
 .ounwangram-main {
@@ -93,11 +100,12 @@
 
 .ounwan-like > button {
 	height:30px;
+    width: 30px;
 }
 
-.ounwan-like button img {
-	width: 30px;
-	height: 30px;
+.ounwan-like  button img {
+	height:30px;
+    width: 30px;
 }
 
 .ounwangram-content > div {

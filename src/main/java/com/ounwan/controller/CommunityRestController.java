@@ -1,6 +1,7 @@
 package com.ounwan.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,5 +28,10 @@ public class CommunityRestController {
 	@RequestMapping("/ounwangram/wholeBoard")
 	public List<OunwanGramDTO> ounwangramWholeBoard(@RequestParam int rowNum, HttpSession session) {
 		return communityService.gramWholeBoard(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), rowNum);
+	}
+	
+	@RequestMapping("/ounwangram/likeBoard")
+	public Map<String, Integer> ounwangramLikeBoard(@RequestParam int communityNumber, HttpSession session) {
+		return communityService.gramLikeBoard(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), communityNumber);
 	}
 }

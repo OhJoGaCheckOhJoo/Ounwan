@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.ounwan.dto.OunwanGramDTO;
 import com.ounwan.entity.Clients;
 import com.ounwan.entity.OunwanGram;
+import com.ounwan.entity.OunwanGramLikes;
 import com.ounwan.repository.CommunityDAO;
 
 @Service
@@ -39,6 +40,32 @@ public class CommunityService {
 			ounwangram.setLikesCheck(likeBoars.contains(ounwangram.getCommunityNumber()) ? 1 : 0);
 			result.add(changeOunwanGram(ounwangram));
 		}
+		return result;
+	}
+	
+	@SuppressWarnings("static-access")
+	public Map<String, Integer> gramLikeBoard(String clientId, int communityNumber) {
+		Map<String, Integer> result = new HashMap<>();
+		List<Integer> likeBoars = communityDAO.gramLikeBoards(clientId);
+		if(likeBoars.contains(communityNumber)) {
+			if(communityDAO.cancelLikeOunwanBoard(communityNumber + "-" + clientId) > 0) {
+				result.put("likesCheck", 0);
+			} else {
+				result.put("likesCheck", 2);
+			}
+			
+		} else {
+			if(communityDAO.addLikeOunwanBoard(new OunwanGramLikes().builder()
+					.likesId(communityNumber + "-" + clientId)
+					.communityNumber(communityNumber)
+					.clientId(clientId)
+					.build()) > 0) {
+				result.put("likesCheck", 1);
+			} else {
+				result.put("likesCheck", 2);
+			}
+		}
+		result.put("likes", communityDAO.aGramBoard(communityNumber).getLikes());
 		return result;
 	}
 	

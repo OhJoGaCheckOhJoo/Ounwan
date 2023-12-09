@@ -21,11 +21,11 @@ public class CommunityController {
 	@RequestMapping("/ounwangram")
 	public String ounwangram(HttpSession session) {
 		
-		if(session.getAttribute("clientInfo") == null) { // 비로그인 > 로그인창
+		if(session.getAttribute("clientInfo") == null) {  	// 비로그인 > 로그인창
 			return "login";
-		} else {
-			return "community/ounwangram"; // 로그인 > 오늘운동했다그램
+		} else {											// 로그인 > 오늘운동했다그램
+			return "community/ounwangram";				
 		}
 	}
-
+	
 }
