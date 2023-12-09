@@ -209,4 +209,5 @@ public class ClientsService {
                 .socialId(client.getSocialId())
                 .build();
     }
+
 }
