@@ -16,6 +16,7 @@ import lombok.ToString;
 public class OrderDetails {
 	private int orderDetailNumber;
 	private String orderNumber;
+	private String coupungNumber;
 	private int price;
 	private int quantity;
 	private String option;

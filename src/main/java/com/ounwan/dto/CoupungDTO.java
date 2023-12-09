@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CoupungDTO {
 	private Integer coupungNumber;
-	private Integer productCategoryNumber;
+	private Integer coupungCategoryNumber;
 	private String name;
 	private Integer price;
 	private Integer availableStock;

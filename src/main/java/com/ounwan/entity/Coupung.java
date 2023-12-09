@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Coupung {
 	private int coupungNumber;
-	private int productCategoryNumber;
+	private int coupungCategoryNumber;
 	private String name;
 	private int price;
 	private int availableStock;
