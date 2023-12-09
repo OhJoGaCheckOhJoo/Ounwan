@@ -3,6 +3,27 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.danggun">
-	
 
+	<!-- 거래 게시물 정보 -->
+	<select id="selectDanggun" parameterType="int" resultType="danggun">
+		SELECT * from danggun
+		where DANGGUN_NUMBER = #{danggun_number}
+	</select>
+	
+	<!-- 이미지 가져오기 -->
+	<select id="selectImages" parameterType="int" resultType="productImages" >
+		SELECT * from Product_Images where DANGGUN_NUMBER = #{danggunNumber}
+	</select> 
+	
+	<!-- 거래 현황 정보 뽑아오기 -->
+	<select id="selectTradeStep" parameterType="int" resultType="String">
+		SELECT TRADE_STEP from
+		TRADE_HISTORY where TRADE_HISTORY_NUMBER = #{tradeHistoryNumber}
+	</select>
+	
+	<!-- 찜 개수 -->
+	<select id="selectCountZzim" parameterType="int" resultType="int">
+		SELECT count(*) from WISH_LISTS where DANGGUN_NUMBER = #{danggunNumber}
+	</select>
+	
 </mapper>
