@@ -3,6 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.danggun">
-	
+	<select id="selectAll" resultType="danggun">
+		SELECT * FROM DANGGUN ORDER BY danggun_Number desc
+	</select>
 
+	<select id="searchProduct" parameterType="String" resultType="danggun">
+		SELECT * FROM DANGGUN WHERE product_Name like CONCAT('%',#{name},'%') order by danggun_Number desc
+	</select>
+	
 </mapper>

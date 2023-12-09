@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div>
-                    <a href="#">중고거래</a>
+                    <a href="${appPath}/danggun/main">중고거래</a>
                     <div  class="nav-submenu">
                         <a href="#">전체 보기</a>
                         <a href="#">관심 상품</a>
