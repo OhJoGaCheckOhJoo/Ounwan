@@ -19,7 +19,7 @@ public class DanggunDTO {
 	private Integer danggunNumber;
 	private Integer tradeHistoryNumber;
 	private String clientId;
-	private String productName;
+	private String name;
 	private Integer price;
 	private String detail;
 	private Date uploadDate;

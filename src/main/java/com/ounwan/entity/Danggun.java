@@ -19,7 +19,7 @@ public class Danggun {
 	private int danggunNumber;
 	private int tradeHistoryNumber;
 	private String clientId;
-	private String productName;
+	private String name;
 	private int price;
 	private String detail;
 	private Date uploadDate;
