@@ -24,4 +24,8 @@ public class CommunityDAO {
 		return sqlSession.selectList(NAMESPACE + "gramWholeBoard", rowNum);
 	}
 	
+	public List<Integer> gramLikeBoards(String clientId) {
+		return sqlSession.selectList(NAMESPACE + "selectLikeBoards", clientId);
+	}
+	
 }

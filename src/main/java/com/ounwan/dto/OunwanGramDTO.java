@@ -24,4 +24,5 @@ public class OunwanGramDTO {
 	private Integer likes;
 	private String imageUrl;
 	private String profileUrl;
+	private Integer likesCheck;
 }

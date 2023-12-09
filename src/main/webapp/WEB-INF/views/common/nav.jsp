@@ -29,7 +29,7 @@
         <div>
             <a href="#">커뮤니티</a>
             <div id="navSubmenu" class="nav-submenu">
-                <a href="ounwangram">오운완 커뮤니티</a>
+                <a class="ounwangram" href="ounwangram">오운완 커뮤니티</a>
                 <a href="#">고민 게시판</a>
             </div>
         </div>
@@ -57,7 +57,7 @@
                 <a href="#">관심 상품</a>
             </div>
             <div>
-                <a href="ounwangram">오운완 커뮤니티</a>
+                <a class="ounwangram" href="ounwangram">오운완 커뮤니티</a>
                 <a href="#">고민 게시판</a>
             </div>
             <div>

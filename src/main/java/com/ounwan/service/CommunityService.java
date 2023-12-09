@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ounwan.dto.OunwanGramDTO;
+import com.ounwan.entity.Clients;
 import com.ounwan.entity.OunwanGram;
 import com.ounwan.repository.CommunityDAO;
 
@@ -23,18 +24,21 @@ public class CommunityService {
 		dataMap.put("clientId", clientId);
 		dataMap.put("rowNum", rowNum);
 		List<OunwanGramDTO> result = new ArrayList<>();
+		List<Integer> likeBoars = communityDAO.gramLikeBoards(clientId);
 		for(OunwanGram ounwangram : communityDAO.gramFollowBoard(dataMap)) {
+			ounwangram.setLikesCheck(likeBoars.contains(ounwangram.getCommunityNumber()) ? 1 : 0);
 			result.add(changeOunwanGram(ounwangram));
 		}
 		return result;
 	}
 
-	public List<OunwanGramDTO> gramWholeBoard(int rowNum) {
+	public List<OunwanGramDTO> gramWholeBoard(String clientId, int rowNum) {
 		List<OunwanGramDTO> result = new ArrayList<>();
+		List<Integer> likeBoars = communityDAO.gramLikeBoards(clientId);
 		for(OunwanGram ounwangram : communityDAO.gramWholeBoard(rowNum)) {
+			ounwangram.setLikesCheck(likeBoars.contains(ounwangram.getCommunityNumber()) ? 1 : 0);
 			result.add(changeOunwanGram(ounwangram));
 		}
-		System.out.println(result.toString());
 		return result;
 	}
 	
@@ -49,6 +53,7 @@ public class CommunityService {
 				.likes(ounwangram.getLikes())
 				.imageUrl(ounwangram.getImageUrl())
 				.profileUrl(ounwangram.getProfileUrl())
+				.likesCheck(ounwangram.getLikesCheck())
 				.build();
 	}
 

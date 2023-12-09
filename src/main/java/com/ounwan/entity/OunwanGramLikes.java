@@ -1,7 +1,5 @@
 package com.ounwan.entity;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,14 +13,8 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class OunwanGram {
+public class OunwanGramLikes {
+	private String likesId;
 	private Integer communityNumber;
 	private String clientId;
-	private String contents;
-	private Date createdDate;
-	private Date updatedDate;
-	private Integer likes;
-	private String imageUrl;
-	private String profileUrl;
-	private Integer likesCheck;
 }

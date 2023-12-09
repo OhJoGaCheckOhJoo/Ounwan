@@ -1,4 +1,4 @@
-var countGramFfollow = 0;
+var countGramFollow = 0;
 var countGramWhole = 0;
 var gramEnd = false;
 var scrollHeight = $(document).height() - $(window).height();
@@ -25,11 +25,10 @@ var loadGramWholeBoard = function() {
 		                	<img src="${res[i].imageUrl}">
 		                </div>
 		                <div class="ounwan-like">
-		                	<button><img src="./images/ounwan_like.png"></button>
+		                	<button><img src="./images/ounwan_like_${res[i].likesCheck}.png"></button>
 		                	<span>${res[i].likes}</span><span>Likes</span>
 		                </div>
 		                <div class="ounwangram-content">
-		                	<div>${res[i].contents}</div>
 		                </div>
 	                </div>
                 </div>
@@ -44,8 +43,51 @@ var loadGramWholeBoard = function() {
     })
 }
 
-$(window).on("load", loadGramWholeBoard);
-$("#gramWholeBoard").on("click", function() {countGramFfollow = 0;});
+var loadGramFollowBoard = function() {
+	$.ajax({
+        url: "/ounwan/ounwangram/followBoard",
+        data: { "rowNum": countGramFollow * 5 },
+        success : function(res) {
+            console.log(res.length);
+            for(let i = 0; i < res.length; i++) {
+                $("#ounwangram").append(`
+                <div class="ounwangram-main">
+	                <div>
+		                <div class="pointer ounwangram-profile">
+		                    <img src="${res[i].profileUrl}">
+		                    <div>${res[i].clientId}</div>
+		                </div>
+		                <div class="ounwangram-threedot-div">
+		                    <button class="ounwangram-threedot"><img class="ounwangram-threedot" src="./images/three_dot.png"></button>
+		                </div>
+		                <div class="ounwangram-board">
+		                	<img src="${res[i].imageUrl}">
+		                </div>
+		                <div class="ounwan-like">
+		                	<button><img src="./images/ounwan_like_${res[i].likesCheck}.png"></button>
+		                	<span>${res[i].likes}</span><span>Likes</span>
+		                </div>
+		                <div class="ounwangram-content">
+		                </div>
+	                </div>
+                </div>
+                `);
+            }
+            if(res.length < 5) {
+                gramEnd = true;
+            }
+            countGramFollow += 1;
+            scrollHeight = $(document).height() - $(window).height();
+        }
+    })
+}
+
+$(window).on("load", loadGramWholeBoard());
+$("#gramWholeBoard").on("click", function() {
+    countGramFfollow = 0;
+    $("#ounwangram").html("");
+    loadGramWholeBoard();
+});
 $(window).scroll(function() {
     if(!gramEnd) {
         if(!timer) {

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ounwan.dto.ClientsDTO;
 import com.ounwan.dto.OunwanGramDTO;
 import com.ounwan.service.CommunityService;
 
@@ -20,11 +21,11 @@ public class CommunityRestController {
 
 	@RequestMapping("/ounwangram/followBoard")
 	public List<OunwanGramDTO> ounwangramFollowBoard(@RequestParam int rowNum, HttpSession session) {
-		return communityService.gramFollowBoard((String) session.getAttribute("clientId"), rowNum);
+		return communityService.gramFollowBoard(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), rowNum);
 	}
 	
 	@RequestMapping("/ounwangram/wholeBoard")
-	public List<OunwanGramDTO> ounwangramWholeBoard(@RequestParam int rowNum) {
-		return communityService.gramWholeBoard(rowNum);
+	public List<OunwanGramDTO> ounwangramWholeBoard(@RequestParam int rowNum, HttpSession session) {
+		return communityService.gramWholeBoard(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), rowNum);
 	}
 }
