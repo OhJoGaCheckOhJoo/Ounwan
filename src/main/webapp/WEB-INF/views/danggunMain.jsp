@@ -66,7 +66,7 @@
 				</div>
 			</div>
 		</nav>
-		
+
 		<div class="danggun-container">
 			<div id="danggun-main-banner" class="danggun-main-banner">
 				<img>
@@ -79,19 +79,21 @@
 				</div>
 
 				<div class="register-container">
-					<button id="registerBtn" class="register-btn">제품등록</button>
+					<button id="registerBtn" class="register-btn"
+						onclick="registerPage">제품등록</button>
 				</div>
 
 
 				<div id="danggunProductList" class="danggun-product-list">
-					<c:forEach var="item" items="${list}">
+
+					<c:forEach var="list" items="${list}">
 						<div class="danggun-pointer">
-							<img class="danggun-img-loc">
+							<img class="danggun-img-loc" src="${list.url}">
 							<div>
-								<c:out value="${item.productName}" />
+								<c:out value="${list.productName}" />
 							</div>
 							<div>
-								<c:out value="${item.price}" />
+								<c:out value="${list.price}" />
 							</div>
 						</div>
 					</c:forEach>
@@ -129,28 +131,40 @@
 		</footer>
 		<script src="../js/main.js"></script>
 		<script>
-			$("#searchBtn").click(function() {
-				var obj = {
-					"searchInput" : $("#searchInput").val()
-				};
-				$.ajax({
-					type : 'POST',
-					url : "${path}/myapp/danggun/main",
-					data : obj,
-					success : function(responseData) {
-						console.log(responseData);
-						var output = "";
-						for (var i in responseData) {
-							output += "<div class='danggun-pointer'>";
-							output += "<img class='danggun-img-loc'>";
-							output += "<div>" + responseData[i].productName + "</div>";
-							output += "<div>" + responseData[i].price + "</div>";
-							output += "</div>";
-						}
-						$("#danggunProductList").html(output);
-					}
-				});
-			});
+			$("#searchBtn")
+					.click(
+							function() {
+								var obj = {
+									"searchInput" : $("#searchInput").val()
+								};
+								$
+										.ajax({
+											type : 'POST',
+											url : "${path}/myapp/danggun/main",
+											data : obj,
+											success : function(responseData) {
+												console.log(responseData);
+												var output = "";
+												for ( var i in responseData) {
+													output += "<div class='danggun-pointer'>";
+													output += "<img class='danggun-img-loc' src="+ responseData[i].url+">";
+													output += "<div>"
+															+ responseData[i].productName
+															+ "</div>";
+													output += "<div>"
+															+ responseData[i].price
+															+ "</div>";
+													output += "</div>";
+												}
+												$("#danggunProductList").html(
+														output);
+											}
+										});
+							});
+
+			/* 			function registerPage() {
+			 href = 
+			 } */
 		</script>
 </body>
 </html>

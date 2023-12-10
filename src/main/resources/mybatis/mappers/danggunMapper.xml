@@ -11,4 +11,8 @@
 		SELECT * FROM DANGGUN WHERE product_Name like CONCAT('%',#{name},'%') order by danggun_Number desc
 	</select>
 	
+	<!-- PRODUCT_IMAGES1 테이블 이름 변경 필요 -->
+	<select id="selectAllImage" parameterType="int" resultType="productImages">
+		select * from PRODUCT_IMAGES1 where DANGGUN_NUMBER = #{danggunNumber} and TYPE=0;
+	</select>
 </mapper>
