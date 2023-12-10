@@ -45,4 +45,5 @@ public class DanggunService {
 				.productName(danggun.getProductName()).price(danggun.getPrice()).detail(danggun.getDetail())
 				.uploadDate(danggun.getUploadDate()).build();
 	}
+
 }
