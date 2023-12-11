@@ -21,7 +21,7 @@ public class CartDAO {
 		return sqlSession.selectList(NAMESPACE + "getCartById", clientId);
 	}
 
-	public CartsDTO getCartByClientAndProduct(Carts cart) {
+	public Carts getCartByClientAndProduct(Carts cart) {
 		return sqlSession.selectOne(NAMESPACE + "getCartByClientAndProduct", cart);
 	}
 

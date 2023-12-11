@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="css/main1.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>오운완</title>
+</head>
+<body>
+    <header><a href="index.html">오운완</a></header>
+
+    <div class="container">
+        <div class="login-menu">
+            <div><a href="#" class="login-menu-selected" id="loginAccount">&nbsp;로그인&nbsp;</a></div>
+            <div class="float-right"><a href="#" id="findAccount">&nbsp;아이디/비밀번호 찾기&nbsp;</a></div>
+        </div>
+
+        <!-- 로그인 -->
+        <div class="login-container" id="loginAccountSelected">
+            <!-- 소셜 로그인 -->
+            <div class="social-wrap">
+                <a href="#"><img class="login login-radius" src="img/google.png"></a><br>
+                <a href="#"><img class="login login-radius" src="img/naver.PNG"></a><br>
+                <a href="#"><img class="login login-radius" src="img/kakao.png"></a><br>
+            </div>
+
+            <!-- 일반 로그인 -->
+            <div class="login-wrap-1 float-right">
+                <form>
+                    <div class="login">
+                        <input type="text" required>
+                        <label>아이디</label>
+                        <span></span>
+                    </div>
+                    <div class="login">
+                        <input type="password" required>
+                        <label>비밀번호</label>
+                        <span></span>
+                    </div>
+                    <div class="login login-radius"><button>로그인</button></div>
+                </form>
+                <div class="login-sub"><a class="login-sub-1" href="#">회원이 아니신가요? 지금 가입하세요!</a></div>
+                <div class="login-sub"><a class="login-sub-2" href="#">비회원 주문조회</a></div>
+            </div>
+        </div>
+
+        <!-- 아이디/비밀번호 찾기 -->
+        <div class="login-container" id="findAccountSelected" hidden>
+            <div class="login-wrap-2">
+                <h3>아이디 찾기</h3>
+                <form>
+                    <div class="login">
+                        <input type="text" required>
+                        <label>이름</label>
+                        <span></span>
+                    </div>
+                    <div class="login">
+                        <input id="email" type="text" required>
+                        <label>이메일</label>
+                        <span></span>
+                    </div>
+                    <div class="email-autocomplete" id="emailAutocomplete"></div>
+                    <div class="login login-radius"><button>아이디 찾기</button></div>
+                </form>
+            </div>
+            <div class="login-wrap-1 float-right">
+                <h3 class="login-padding-left">비밀번호 찾기</h3>
+                <form>
+                    <div class="login">
+                        <input type="text" required>
+                        <label>아이디</label>
+                        <span></span>
+                    </div>
+                    <div class="login">
+                        <input type="text" required>
+                        <label>이메일</label>
+                        <span></span>
+                    </div>
+                    <div class="login login-radius"><button>임시비밀번호 발급</button></div>
+                </form>
+            </div>
+            <div class="find-guide">* 회원가입 시 사용하신 이메일 주소를 통해 아이디/비밀번호를 찾으실 수 있습니다.</div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

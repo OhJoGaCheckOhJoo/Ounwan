@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,44 +27,65 @@ public class CartController {
 	@Autowired
 	CartService cartService;
 
+//	@GetMapping("/cart")
+//	public String showClientCart(Model model, HttpSession session) {
+//		String clientId = (String) session.getAttribute("clientId");
+//		List<CartsDTO> cartList = new ArrayList<CartsDTO>();
+//
+//		// 세션에서 가져온 클라이언트 아이디로 장바구니 정보 조회
+//		if (clientId != null) {
+//			cartList = cartService.getCartById(clientId);
+//		} else {
+//
+//			cartList = (List<CartsDTO>) session.getAttribute("cartList");
+//		}
+//
+//		model.addAttribute("cartList", cartList);
+//
+//		return "cart";
+//	}
+	
 	@GetMapping("/cart")
 	public String showClientCart(Model model, HttpSession session) {
-		String clientId = (String) session.getAttribute("clientId");
+		String clientId = "jj1234";
 		List<CartsDTO> cartList = new ArrayList<CartsDTO>();
 
 		// 세션에서 가져온 클라이언트 아이디로 장바구니 정보 조회
 		if (clientId != null) {
 			cartList = cartService.getCartById(clientId);
-		} else {
-
-			cartList = (List<CartsDTO>) session.getAttribute("cartList");
-		}
-
+		} 
 		model.addAttribute("cartList", cartList);
 
-		return "cart";
+		return "coupung/cart";
 	}
 
 	@PostMapping(value = "/cart", produces = "text/plain;charset=UTF-8")
-	public @ResponseBody String addCart(@RequestParam("productId") String productId, Model model, HttpSession session) {
-		String clientId = (String) session.getAttribute("clientId");
-
-		if (clientId != null) {
-			boolean result = cartService.addToCart(clientId, productId);
-			return (result) ? "success" : "fail";
-		} else {
-
-			List<CartsDTO> cartList = (List<CartsDTO>) session.getAttribute("cartList");
-			cartList.add(
-					CartsDTO.builder().clientId(null).coupungNumber(Integer.parseInt(productId)).quantity(1).build());
-			session.setAttribute("cartList", cartList);
-		}
-
-		return "success";
+	public @ResponseBody String addCart(@RequestBody String productId, HttpSession session) {
+	    String clientId = (String) session.getAttribute("clientId");
+	    List<CartsDTO> cartList = (List<CartsDTO>) session.getAttribute("cartList");
+	    
+	    if (clientId != null) {
+	        boolean result = cartService.addToCart(clientId, productId);
+	        return result ? "success" : "fail";
+	    } else {
+	        if (cartList == null) {
+	            cartList = new ArrayList<>();
+	        }
+	        cartList.add(
+	                CartsDTO.builder()
+	                        .clientId(null)
+	                        .coupungNumber(Integer.parseInt(productId))
+	                        .quantity(1)
+	                        .build());
+	        
+	        session.setAttribute("cartList", cartList);
+	        return "success";
+	    }
 	}
+	
 
-	@PostMapping(value = "/cart", produces = "text/plain;charset=UTF-8")
-	public String updateCart(@RequestParam("coupungNumber") String coupungNumber,
+	@PutMapping(value = "/cart", produces = "text/plain;charset=UTF-8")
+	public @ResponseBody String updateCart(@RequestParam("coupungNumber") String coupungNumber,
 	                         @RequestParam("quantity") int quantity,
 	                         HttpSession session) {
 	    String clientId = (String) session.getAttribute("clientId");
@@ -83,15 +106,16 @@ public class CartController {
 	                    break;
 	                }
 	            }
-
 	            session.setAttribute("cartList", cartList);
 	        }
 	    }
 	    return "cart";
 	}
+	
+
 
 	@DeleteMapping(value = "/cart", produces = "text/plain;charset=UTF-8")
-	public String deleteCart(@RequestParam("coupungNumber") String coupungNumber, HttpSession session) {
+	public @ResponseBody String deleteCart(@RequestParam("coupungNumber") String coupungNumber, HttpSession session) {
 		String clientId = (String) session.getAttribute("clientId");
 
 		if (clientId != null) {
@@ -111,5 +135,6 @@ public class CartController {
 
 		return "cart";
 	}
-
+	
+	
 }
