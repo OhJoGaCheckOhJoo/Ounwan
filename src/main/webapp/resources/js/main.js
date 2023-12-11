@@ -116,7 +116,7 @@ $(function() {
     });
 
     $("#loginSelect").click(function() {
-        //location.href = appPath + '/login';
+        location.href = appPath + '/clients/login';
         $.ajax({
         	url : appPath + "/clients/login",
         	type : 'GET',
@@ -254,12 +254,12 @@ var loginPage = `
             <div class="login-wrap-1 float-right">
                 <form>
                     <div class="login">
-                        <input type="text" required>
+                        <input type="text" id="loginId" required>
                         <label>아이디</label>
                         <span></span>
                     </div>
                     <div class="login">
-                        <input type="password" required>
+                        <input type="password" id="loginPassword" required>
                         <label>비밀번호</label>
                         <span></span>
                     </div>

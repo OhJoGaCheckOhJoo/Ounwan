@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -43,13 +44,16 @@ public class ClientsController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public String loginPost(String clientId, String password, HttpServletRequest request, RedirectAttributes attr,
-			HttpSession session) {
-		boolean result = clientService.checkLogin(clientId, password);
-		if (result) {
-			session.setAttribute("clientId", clientId);
+	public @ResponseBody String loginPost(@RequestBody ClientsDTO client, HttpSession session) {
+		System.out.println("내가 입력 비번 : " + client.getPassword());
+		ClientsDTO loginUser = clientService.checkLogin(client.getClientId(), client.getPassword());
+		System.out.println(loginUser);
+		if (loginUser != null) {
+			session.setAttribute("userInfo", loginUser);
+			System.out.println("clients : " + client);
+			return "success";
 		}
-		return (result) ? "로그인 성공" : "로그인 실패";
+		return "fail";
 	}
 
 	@SuppressWarnings("static-access")
