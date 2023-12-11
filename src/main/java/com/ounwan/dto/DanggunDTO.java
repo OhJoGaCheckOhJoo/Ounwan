@@ -23,4 +23,5 @@ public class DanggunDTO {
 	private Integer price;
 	private String detail;
 	private Date uploadDate;
+	private String url;
 }
