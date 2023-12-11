@@ -4,11 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ounwan.dto.DanggunDTO;
@@ -23,41 +24,47 @@ import com.ounwan.service.WishListsService;
 public class DanggunController {
 	@Autowired
 	DanggunService danggunService;
-	
+
 	@Autowired
 	ProductImagesService productImagesService;
-	
+
 	@Autowired
 	TradeHistoryService tradeHistoryService;
-	
+
 	@Autowired
 	WishListsService wishListsService;
-	
+
 	@GetMapping("/main")
 	public String danggunMain() {
 		return "/danggun/danggunMain";
 	}
-	
+
 //	상품 상세 목록 조회하기 
 	@GetMapping(value = "/detail")
-	public ModelAndView danggunDetail(@RequestParam ("danggunNumber") int danggunNumber ) {
+	public ModelAndView danggunDetail(@RequestParam("danggunNumber") int danggunNumber) {
 		ModelAndView mv = new ModelAndView("danggun/danggunDetail");
-		
+
 		DanggunDTO resultDanggun = danggunService.selectDanggun(danggunNumber);
-		if(resultDanggun != null) {
+		if (resultDanggun != null) {
 			mv.addObject("post", resultDanggun);
 			int tradeHistoryNumber = resultDanggun.getTradeHistoryNumber();
 			String step = tradeHistoryService.selectTradeStep(tradeHistoryNumber);
 			mv.addObject("tradeStep", step);
 		}
-		
+
 		List<ProductImagesDTO> resultImages = productImagesService.selectImages(danggunNumber);
 		System.out.println(resultImages);
-		if(resultImages != null) mv.addObject("danggunImage", resultImages);
-		
-		mv.addObject("zzimCount",wishListsService.selectCountZzim(danggunNumber));
-		
+		if (resultImages != null)
+			mv.addObject("danggunImage", resultImages);
+
+		mv.addObject("zzimCount", wishListsService.selectCountZzim(danggunNumber));
+
 		return mv;
 	}
-	
+
+	@RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces="text/plain;charset=utf-8")
+	public @ResponseBody String danggunDelete(@RequestBody DanggunDTO danggun) {
+		int result = danggunService.deleteDanggun(danggun);
+		return (result == 1) ? "삭제 성공" : "삭제 실패";
+	}
 }
