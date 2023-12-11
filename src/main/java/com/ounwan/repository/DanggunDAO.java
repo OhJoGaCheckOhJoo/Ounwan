@@ -16,5 +16,9 @@ public class DanggunDAO {
 	public Danggun selectDanggun(int danggunNumber) {
 		return sqlSession.selectOne(NAMESPACE + "selectDanggun", danggunNumber);
 	}
+
+	public int deleteDanggun(Danggun danggun) {
+		return sqlSession.delete(NAMESPACE + "deleteDanggun", danggun);
+	}
 	
 }

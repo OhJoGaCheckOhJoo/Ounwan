@@ -19,6 +19,11 @@ public class DanggunService {
 		return (result != null) ? changeDTO(result) : null;
 	}
 	
+	public int deleteDanggun(DanggunDTO danggun) {
+		int result = danggunDAO.deleteDanggun(changeEntity(danggun));
+		return (result > 0) ? 1 : 0;
+	}
+	
 	public Danggun changeEntity(DanggunDTO danggun) {
 		return Danggun.builder()
 						.danggunNumber(danggun.getDanggunNumber())
@@ -42,4 +47,5 @@ public class DanggunService {
 					.uploadDate(danggun.getUploadDate())
 					.build();
 	}
+
 }
