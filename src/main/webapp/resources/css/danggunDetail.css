@@ -1,0 +1,122 @@
+@charset "EUC-KR";
+:root {
+  --main-color: #2e3c8a;
+}
+
+#main {
+  flex: 1;
+}
+#footer {
+  bottom: 0;
+  margin: auto;
+  padding: 30px;
+  width: 1200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.small-img {
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.big-img {
+  width: 300px;
+  height: 300px;
+  bottom: 0;
+}
+.photos {
+  display: flex;
+  flex-direction: row;
+  border: solid 2px black;
+  padding: 20px;
+  margin-bottom: 20px;
+  justify-content: center;
+  justify-items: center;
+}
+.product-all {
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 30px;
+}
+.product-name{
+	font-size: 25px;
+	font-weight: bolder;
+}
+.details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.product-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 300px;
+}
+.product {
+  width: 300px;
+  height: 300px;
+  border: solid 2px black;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.product-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.product-bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  bottom: 0px;
+}
+.here {
+  width: 770px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  padding: 10px;
+  height: 500px;
+  border: 2px solid black;
+}
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+.dot3 {
+  display: inline-block;
+  background-image: url("/images/dot3.png");
+  background-size: cover;
+}
+.toList {
+  text-align: right;
+  margin-bottom: 10px;
+}
+.main-btn {
+  height: 50px;
+  width: 120px;
+  font-size: 1.25em;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 10px;
+  background-color: var(--main-color);
+}
+.white-btn {
+  height: 50px;
+  width: 120px;
+  font-size: 1.25em;
+  font-weight: bold;
+  color: var(--main-color);
+  border:1px solid var(--main-color);
+  border-radius: 10px;
+  background-color: white;
+}
+.zzim {
+  border: 0;
+  background-color: transparent;
+}
