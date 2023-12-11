@@ -8,87 +8,8 @@ var fileTag = $("#uploadImageInput")[0];
 var gramContentsInput = $(".writeGramContents").children("input");
 var gramContent = "";
 
-var loadGramWholeBoard = function() {
-	$.ajax({
-        url: "/ounwan/ounwangram/wholeBoard",
-        data: { "rowNum": countGramWhole * 5 },
-        success : function(res) {
-            for(let i = 0; i < res.length; i++) {
-                $("#ounwangramBoard").append(`
-                <div class="ounwangram-main">
-	                <div>
-		                <div class="pointer ounwangram-profile">
-		                    <img src="${res[i].profileUrl}">
-		                    <div>${res[i].clientId}</div>
-		                </div>
-		                <div class="ounwangram-threedot-div">
-		                    <button class="ounwangram-threedot"><img class="ounwangram-threedot" src="./images/three_dot.png"></button>
-		                </div>
-		                <div class="ounwangram-board">
-		                	<img src="${res[i].imageUrl}">
-		                </div>
-		                <div class="ounwan-like">
-		                	<button id="ounwanLikeBtn" value="${res[i].communityNumber}">
-		                		<img src="./images/ounwan_like_${res[i].likesCheck}.png">
-		                	</button>
-		                	<span>${res[i].likes}</span><span>Likes</span>
-		                </div>
-		                <div class="ounwangram-content">${res[i].contents}</div>
-	                </div>
-                </div>
-                <hr>
-                `);
-            }
-            if(res.length < 5) {
-                gramEnd = true;
-            }
-            countGramWhole += 1;
-            scrollHeight = $(document).height() - $(window).height();
-        }
-    })
-}
-
-var loadGramFollowBoard = function() {
-	$.ajax({
-        url: "/ounwan/ounwangram/followBoard",
-        data: { "rowNum": countGramFollow * 5 },
-        success : function(res) {
-            for(let i = 0; i < res.length; i++) {
-                $("#ounwangramBoard").append(`
-                <div class="ounwangram-main">
-	                <div>
-		                <div class="pointer ounwangram-profile">
-		                    <img src="${res[i].profileUrl}">
-		                    <div>${res[i].clientId}</div>
-		                </div>
-		                <div class="ounwangram-threedot-div">
-		                    <button class="ounwangram-threedot"><img class="ounwangram-threedot" src="./images/three_dot.png"></button>
-		                </div>
-		                <div class="ounwangram-board">
-		                	<img src="${res[i].imageUrl}">
-		                </div>
-		                <div class="ounwan-like">
-		                	<button id="ounwanLikeBtn" value="${res[i].communityNumber}">
-		                		<img src="./images/ounwan_like_${res[i].likesCheck}.png">
-		                	</button>
-		                	<span>${res[i].likes}</span><span>Likes</span>
-		                </div>
-		                <div class="ounwangram-content">${res[i].contents}</div>
-	                </div>
-                </div>
-                <hr>
-                `);
-            }
-            if(res.length < 5) {
-                gramEnd = true;
-            }
-            countGramFollow += 1;
-            scrollHeight = $(document).height() - $(window).height();
-        }
-    })
-}
-
 $(window).on("load", function() {
+
     if(window.location.pathname == "/ounwan/ounwangram") {
         loadGramWholeBoard();
 
@@ -154,6 +75,18 @@ $(window).on("load", function() {
             })
             $(this).disabled = false;
 		});
+
+        $("#ounwangramBoard").on("click", "#updateGramBoard", function() {
+            location.href="updateGramBoard?communityNumber=" + $(this).val();
+        })
+
+        $("#ounwangramBoard").on("click", "#deleteGramBoard", function() {
+            console.log("delete : " + $(this).val());
+        })
+
+        $("#ounwangramBoard").on("click", "#reportGramBoard", function() {
+            console.log("report : " + $(this).val());
+        })
 		
     } else if(window.location.pathname == "/ounwan/writeGramBoard") {
     	$("#uploadImageInput").on("change", function() {
@@ -204,3 +137,130 @@ $(window).on("load", function() {
         })
     }
 })
+
+var loadGramWholeBoard = function() {
+	$.ajax({
+        url: "/ounwan/ounwangram/wholeBoard",
+        data: { "rowNum": countGramWhole * 5 },
+        success : function(res) {
+        	var clientId = $("#clientId").html();
+            for(let i = 0; i < res.length; i++) {
+            	if(res[i].contents == null) {
+            		res[i].contents = "";
+            	}
+            	if(res[i].updatedDate == null) {
+            		res[i].updatedDate = "";
+            	} else {
+            		res[i].updatedDate = " (수정됨)";
+            	}
+            	if(res[i].clientId == clientId) {
+            		boardOption = "<button id='updateGramBoard' value=" + res[i].communityNumber + ">수정하기</button>";
+                    boardOption += "<button id='deleteGramBoard' value=" + res[i].communityNumber + ">삭제하기</button>";
+            	} else {
+            		boardOption = "<button id='reportGramBoard' value=" + res[i].communityNumber + ">신고하기</button>";
+            	}
+                $("#ounwangramBoard").append(`
+                <div class="ounwangram-main">
+	                <div>
+		                <div class="pointer ounwangram-profile">
+		                    <img src="${res[i].profileUrl}">
+		                    <div>${res[i].clientId}</div>
+		                </div>
+		                <div class="ounwangram-threedot-div">
+		                    <button class="ounwangram-threedot"><img class="ounwangram-threedot" src="./images/three_dot.png"></button>
+		                </div>
+		                <div class="gramBoardOption">
+		                	${boardOption}
+		                </div>
+		                <div class="ounwangram-board">
+		                	<img src="${res[i].imageUrl}">
+		                </div>
+		                <div class="ounwan-like">
+		                	<button id="ounwanLikeBtn" value="${res[i].communityNumber}">
+		                		<img src="./images/ounwan_like_${res[i].likesCheck}.png">
+		                	</button>
+		                	<span>${res[i].likes}</span><span>Likes</span>
+		                </div>
+		                <div class="ounwangram-content">${res[i].contents}</div>
+		                <div class="ounwan-date">
+                            <span>${new Date(res[i].createdDate).toISOString().split('T')[0]}</span>
+                        	<span>${new Date(res[i].createdDate).toTimeString().split(' ')[0].slice(0,5)}</span>
+                        	<span>${res[i].updatedDate}</span>
+                        </div>
+	                </div>
+                </div>
+                <hr>
+                `);
+            }
+            if(res.length < 5) {
+                gramEnd = true;
+            }
+            countGramWhole += 1;
+            scrollHeight = $(document).height() - $(window).height();
+        }
+    })
+}
+
+var loadGramFollowBoard = function() {
+	$.ajax({
+        url: "/ounwan/ounwangram/followBoard",
+        data: { "rowNum": countGramFollow * 5 },
+        success : function(res) {
+        	var clientId = $("#clientId").html();
+            for(let i = 0; i < res.length; i++) {
+            	if(res[i].contents == null) {
+            		res[i].contents = "";
+            	}
+            	if(res[i].updatedDate == null) {
+            		res[i].updatedDate = "";
+            	} else {
+            		res[i].updatedDate = "(수정됨)";
+            	}
+            	var boardOption = "";
+            	if(res[i].clientId == clientId) {
+            		boardOption = "<button id='updateGramBoard' value=" + res[i].communityNumber + ">수정하기</button>";
+                    boardOption += "<button id='deleteGramBoard' value=" + res[i].communityNumber + ">삭제하기</button>";
+            	} else {
+            		boardOption = "<button id='reportGramBoard' value=" + res[i].communityNumber + ">신고하기</button>";
+            	}
+                $("#ounwangramBoard").append(`
+                <div class="ounwangram-main">
+	                <div>
+		                <div class="pointer ounwangram-profile">
+		                    <img src="${res[i].profileUrl}">
+		                    <div>${res[i].clientId}</div>
+		                </div>
+		                <div class="ounwangram-threedot-div">
+		                    <button class="ounwangram-threedot"><img class="ounwangram-threedot" src="./images/three_dot.png"></button>
+		                </div>
+		                <div class="gramBoardOption">
+		                	${boardOption}
+		                </div>
+		                <div class="ounwangram-board">
+		                	<img src="${res[i].imageUrl}">
+		                </div>
+		                <div class="ounwan-like">
+		                	<button id="ounwanLikeBtn" value="${res[i].communityNumber}">
+		                		<img src="./images/ounwan_like_${res[i].likesCheck}.png">
+		                	</button>
+		                	<span>${res[i].likes}</span><span>Likes</span>
+		                </div>
+		                <div class="ounwangram-content">${res[i].contents}</div>
+		                <div class="ounwan-date">
+                            <span>${new Date(res[i].createdDate).toISOString().split('T')[0]}</span>
+                        	<span>${new Date(res[i].createdDate).toTimeString().split(' ')[0].slice(0,5)}</span>
+                        	<span>${res[i].updatedDate}</span>
+                        </div>
+	                </div>
+                </div>
+                <hr>
+                `);
+            }
+            if(res.length < 5) {
+                gramEnd = true;
+            }
+            countGramFollow += 1;
+            scrollHeight = $(document).height() - $(window).height();
+        }
+    })
+}

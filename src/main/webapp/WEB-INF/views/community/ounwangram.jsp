@@ -18,7 +18,16 @@
         <%@ include file = "../common/nav.jsp" %>
         
         <div class="ounwangram" id="ounwangram">
-        	<a href="writeGramBoard">+</a>
+        	<div id="ounwangramProfile">
+        		<img src="${clientInfo.profileURL}">
+        		<div>
+        			<div id="clientId">${clientInfo.clientId}</div>
+        			<div>
+	        			<button id="goMyProfile">My Profile</button>
+	        			<a id="writeGramBoard" href="writeGramBoard">+</a>
+        			</div>
+        		</div>
+        	</div>
             <div class="ounwangram-option">
                 <a id="gramWholeBoard" class="pointer ounwangram_selected">전체 보기</a>
                 <a id="gramFollowBoard" class="pointer">친구 보기</a>

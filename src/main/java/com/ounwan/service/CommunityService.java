@@ -77,7 +77,7 @@ public class CommunityService {
 
 	@SuppressWarnings("static-access")
 	public String gramWriteBoard(String clientId, MultipartFile image, String content, String hashTag) throws IllegalStateException, IOException {
-		String newFileName = clientId + "_" + System.currentTimeMillis() + "." + image.getContentType().split("/")[1];
+		String newFileName = clientId + "_" + System.currentTimeMillis() + "." + image.getContentType().split("/")[1]; // image/png
 		File file = new File(UPLOADPATH + IMAGEPATH + newFileName);
 		if(communityDAO.writeGramBoard(new OunwanGram().builder()
 				.clientId(clientId)
@@ -93,9 +93,28 @@ public class CommunityService {
 		return "";
 	}
 	
+	public OunwanGramDTO aGramBoard(int communityNumber) {
+		return changeOunwanGram(communityDAO.aGramBoard(communityNumber));
+	}
+	
 	@SuppressWarnings("static-access")
 	public OunwanGramDTO changeOunwanGram(OunwanGram ounwangram) {
 		return new OunwanGramDTO().builder()
+				.communityNumber(ounwangram.getCommunityNumber())
+				.clientId(ounwangram.getClientId())
+				.contents(ounwangram.getContents())
+				.createdDate(ounwangram.getCreatedDate())
+				.updatedDate(ounwangram.getUpdatedDate())
+				.likes(ounwangram.getLikes())
+				.imageUrl(ounwangram.getImageUrl())
+				.profileUrl(ounwangram.getProfileUrl())
+				.likesCheck(ounwangram.getLikesCheck())
+				.build();
+	}
+	
+	@SuppressWarnings("static-access")
+	public OunwanGram changeOunwanGramEntity(OunwanGramDTO ounwangram) {
+		return new OunwanGram().builder()
 				.communityNumber(ounwangram.getCommunityNumber())
 				.clientId(ounwangram.getClientId())
 				.contents(ounwangram.getContents())

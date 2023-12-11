@@ -43,7 +43,6 @@ public class CommunityDAO {
 
 	public int writeGramBoard(OunwanGram board) {
 		return sqlSession.insert(NAMESPACE + "insertGramBoard", board);
-		
 	}
 	
 }

@@ -10,11 +10,27 @@ footer {
 }
 
 nav .ounwangram {
-	margin-top: 0px !important;
+	padding-top: 0px !important;
 }
 
 .ounwangram {
-	margin-top: 30px;
+	padding-top: 30px;
+}
+
+.ounwangram > a {
+	position: relative;
+	display: inline-block;
+	float: right;
+	margin-right: 100px;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	background-color: var(--main-color);
+	color: #fff;
+	font-weight: bold;
+	font-size: 24px;
+	bottom: 25px;
+	border-radius: 20px;
 }
 
 .ounwangram-option {
@@ -115,6 +131,10 @@ nav .ounwangram {
 
 .ounwangram-content>div {
 	display: inline-block;
+}
+
+.ounwan-date {
+	text-align: right;
 }
 
 .userid {
@@ -226,6 +246,24 @@ nav .ounwangram {
 	font-size: 20px;
 }
 
+.gramBoardOption {
+	position: relative;
+	float: right;
+	top: 27.5px;
+	margin-right: 10px;
+	background-color: #eee;
+}
+
+.gramBoardOption > button {
+	padding: 10px 10px 10px 10px;
+	cursor: pointer;
+	background-color: #eee;
+}
+
+.gramBoardOption > button:hover {
+	background-color: #ddd;
+}
+
 #writeOunwangram {
 	width: 1000px;
 	margin: 50px auto 0px auto;
@@ -248,14 +286,14 @@ nav .ounwangram {
 	bottom: 500px;
 }
 
-#contentSubmit {
+#contentSubmit, #contentUpdate {
 	position: relative;
 	padding: 50px 0px 75px 0px;
 	height: 75px;
 	z-index: 20;
 }
 
-#contentSubmit button {
+#contentSubmit button, #contentUpdate button {
 	position: relative;
 	width: 150px;
 	height: 75px;
@@ -278,4 +316,40 @@ nav .ounwangram {
 	font-size : 24px;
 	color: #aaa;
 	cursor: pointer;
+}
+
+#ounwangramProfile > img {
+	width: 150px;
+	height: 150px;
+	border-radius: 75px;
+	border: 2px solid #ddd;
+	margin-left: 550px;
+}
+
+#ounwangramProfile > div > div {
+	text-align: center;
+	font-size: 24px;
+	margin: 20px 0px 20px 0px;
+}
+
+#goMyProfile {
+	font-size: 20px;
+	border: 0;
+	padding: 10px;
+	cursor: pointer;
+	margin-right: 10px;
+	height: 45px;
+	width: 150px;
+	border-radius: 10px;
+}
+
+#writeGramBoard {
+	display: inline-block;
+	position: relative;
+	font-size: 28px;
+	color: #fff;
+	background-color: var(--main-color);
+	height: 45px;
+	width: 45px;
+	border-radius: 10px;
 }
