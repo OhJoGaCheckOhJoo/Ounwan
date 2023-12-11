@@ -18,6 +18,7 @@
         <%@ include file = "../common/nav.jsp" %>
         
         <div class="ounwangram" id="ounwangram">
+        	<a href="writeGramBoard">+</a>
             <div class="ounwangram-option">
                 <a id="gramWholeBoard" class="pointer ounwangram_selected">전체 보기</a>
                 <a id="gramFollowBoard" class="pointer">친구 보기</a>
@@ -25,6 +26,7 @@
             <div id="ounwangramBoard"></div>
         </div>
         
+        <button id="toTopScroll">⌅</button>
     </div>
     <hr>
 

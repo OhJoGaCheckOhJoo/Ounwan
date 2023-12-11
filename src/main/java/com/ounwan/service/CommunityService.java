@@ -1,5 +1,7 @@
 package com.ounwan.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,9 +9,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.OunwanGramDTO;
-import com.ounwan.entity.Clients;
 import com.ounwan.entity.OunwanGram;
 import com.ounwan.entity.OunwanGramLikes;
 import com.ounwan.repository.CommunityDAO;
@@ -19,6 +21,9 @@ public class CommunityService {
 	
 	@Autowired
 	CommunityDAO communityDAO;
+	
+	private final static String UPLOADPATH = "C:/shinhan/sts-workspace/ounwan/src/main/webapp/resources";
+	private final static String IMAGEPATH = "/images/uploads/";
 
 	public List<OunwanGramDTO> gramFollowBoard(String clientId, int rowNum) {
 		Map<String, Object> dataMap = new HashMap<>();
@@ -68,6 +73,25 @@ public class CommunityService {
 		result.put("likes", communityDAO.aGramBoard(communityNumber).getLikes());
 		return result;
 	}
+
+
+	@SuppressWarnings("static-access")
+	public String gramWriteBoard(String clientId, MultipartFile image, String content, String hashTag) throws IllegalStateException, IOException {
+		String newFileName = clientId + "_" + System.currentTimeMillis() + "." + image.getContentType().split("/")[1];
+		File file = new File(UPLOADPATH + IMAGEPATH + newFileName);
+		if(communityDAO.writeGramBoard(new OunwanGram().builder()
+				.clientId(clientId)
+				.contents(content.length() > 0 ? content : null)
+				.imageUrl("." + IMAGEPATH + newFileName)
+				.build()) > 0) {
+			image.transferTo(file);
+			System.out.println("업로드 성공");
+		} else {
+			System.out.println("업로드 실패");
+		}
+		
+		return "";
+	}
 	
 	@SuppressWarnings("static-access")
 	public OunwanGramDTO changeOunwanGram(OunwanGram ounwangram) {
@@ -83,5 +107,6 @@ public class CommunityService {
 				.likesCheck(ounwangram.getLikesCheck())
 				.build();
 	}
+
 
 }

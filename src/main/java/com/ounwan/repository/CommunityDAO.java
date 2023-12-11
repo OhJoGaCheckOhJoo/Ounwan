@@ -40,5 +40,10 @@ public class CommunityDAO {
 	public int cancelLikeOunwanBoard(String likesId) {
 		return sqlSession.delete(NAMESPACE + "deleteGramLikeBoard", likesId);
 	}
+
+	public int writeGramBoard(OunwanGram board) {
+		return sqlSession.insert(NAMESPACE + "insertGramBoard", board);
+		
+	}
 	
 }

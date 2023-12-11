@@ -3,6 +3,10 @@ var countGramWhole = 0;
 var gramEnd = false;
 var scrollHeight = $(document).height() - $(window).height();
 var timer;
+var originalImg = $("#ounwanUploadImage").attr("src");
+var fileTag = $("#uploadImageInput")[0];
+var gramContentsInput = $(".writeGramContents").children("input");
+var gramContent = "";
 
 var loadGramWholeBoard = function() {
 	$.ajax({
@@ -109,6 +113,10 @@ $(window).on("load", function() {
                 loadGramWholeBoard();
             }
         });
+
+        $("#toTopScroll").on("click", function() {
+            window.scrollTo(0, 0);
+        })
         
         $(window).scroll(function() {
             if(!gramEnd) {
@@ -146,5 +154,53 @@ $(window).on("load", function() {
             })
             $(this).disabled = false;
 		});
+		
+    } else if(window.location.pathname == "/ounwan/writeGramBoard") {
+    	$("#uploadImageInput").on("change", function() {
+            var imgTag = $("#ounwanUploadImage");
+            if(fileTag.files.length > 0) {
+                var reader = new FileReader();
+
+                reader.onload = function(data) {
+                    imgTag.attr("src", data.target.result);
+                }
+
+                reader.readAsDataURL(fileTag.files[0]);
+            } else {
+                imgTag.attr("src", "../images/white.jpg");
+            }
+        })
+
+        $("#ounwanGramContent").on("input", function() {
+            $("#gramContentLength").html($(this).val().length);
+            if($(this).val().length == 30) {
+                gramContent = $(this).val();
+            } else if ($(this).val().length > 30) {
+                $(this).val(gramContent);
+                $("#gramContentLength").html("30");
+            }
+        })
+
+        $("#submitButton").on("click", function() {
+            if(originalImg == $("#ounwanUploadImage").attr("src")) {
+                alert("이미지를 등록해주세요!");
+            } else {
+                var formData = new FormData();
+                formData.append('image', $("input[name='uploadImageInput']")[0].files[0]);
+                formData.append('content', $("#ounwanGramContent").val());
+                formData.append('hashTag', $("#ounwanGramHashTag").val());
+                $.ajax({
+                	url: "/ounwan/ounwangram/writeBoard",
+                	data: formData,
+                	type: "post",
+                	processData: false,
+                	contentType: false,
+                	enctype: 'multipart/form-data',
+                	success: function(res) {
+                		alert(res);
+                	}
+                })
+            }
+        })
     }
 })

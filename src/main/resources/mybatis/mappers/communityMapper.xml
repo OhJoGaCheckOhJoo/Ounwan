@@ -35,6 +35,10 @@
 		INSERT INTO OUNWAN_LIKES VALUES (#{likesId}, #{communityNumber}, #{clientId})
 	</insert>
 	
+	<insert id="insertGramBoard" parameterType="gram">
+		INSERT INTO OUNWAN_COMMUNITY(CLIENT_ID, CONTENTS, CREATED_DATE, IMAGE_URL) VALUES (#{clientId}, #{contents}, NOW(), #{imageUrl})
+	</insert>
+	
 	<delete id="deleteGramLikeBoard" parameterType="String">
 		DELETE FROM OUNWAN_LIKES WHERE LIKES_ID = #{likesId}
 	</delete>
