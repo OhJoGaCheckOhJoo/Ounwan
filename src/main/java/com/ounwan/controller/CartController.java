@@ -1,5 +1,6 @@
 package com.ounwan.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -27,8 +28,15 @@ public class CartController {
 	@GetMapping("/cart")
 	public String showClientCart(Model model, HttpSession session) {
 		String clientId = (String) session.getAttribute("clientId");
+		List<CartsDTO> cartList = new ArrayList<CartsDTO>();
+
 		// 세션에서 가져온 클라이언트 아이디로 장바구니 정보 조회
-		List<CartsDTO> cartList = cartService.getCartById(clientId);
+		if (clientId != null) {
+			cartList = cartService.getCartById(clientId);
+		} else {
+
+			cartList = (List<CartsDTO>) session.getAttribute("cartList");
+		}
 
 		model.addAttribute("cartList", cartList);
 
@@ -38,37 +46,70 @@ public class CartController {
 	@PostMapping(value = "/cart", produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String addCart(@RequestParam("productId") String productId, Model model, HttpSession session) {
 		String clientId = (String) session.getAttribute("clientId");
-		
-		if(clientId != null) {
-			cartService.addCart(clientId,productId);
-			return "cart";
-		}else {
-			// 로그인하지 않은 사용자인 경우 - 세션에 장바구니 정보 저장
-            List<CartsDTO> cartList = (List<CartsDTO>) session.getAttribute("cartList");
+
+		if (clientId != null) {
+			boolean result = cartService.addToCart(clientId, productId);
+			return (result) ? "success" : "fail";
+		} else {
+
+			List<CartsDTO> cartList = (List<CartsDTO>) session.getAttribute("cartList");
+			cartList.add(
+					CartsDTO.builder().clientId(null).coupungNumber(Integer.parseInt(productId)).quantity(1).build());
+			session.setAttribute("cartList", cartList);
 		}
-		
-		return cartService.addCart(session);
+
+		return "success";
 	}
 
-	/*@GetMapping(value = "/cart", produces = "text/plain;charset=UTF-8")
-	public String updateCart() {
-		return null;
-	}*/
+	@PostMapping(value = "/cart", produces = "text/plain;charset=UTF-8")
+	public String updateCart(@RequestParam("coupungNumber") String coupungNumber,
+	                         @RequestParam("quantity") int quantity,
+	                         HttpSession session) {
+	    String clientId = (String) session.getAttribute("clientId");
+	    
+	    if (clientId != null) {
+	        // 로그인한 유저의 경우, DB에서 update
+	        cartService.updateCart(clientId, coupungNumber, quantity);
+	        return "cart";
+	    } else {
+	        // 로그인하지 않은 유저의 경우, 세션에서 update
+	        List<CartsDTO> cartList = (List<CartsDTO>) session.getAttribute("cartList");
+
+	        if (cartList != null) {
+	            // productId에 해당하는 아이템을 찾아 수량을 변경하고 다시 세션에 설정
+	            for (CartsDTO cart : cartList) {
+	                if (cart.getCoupungNumber() == Integer.parseInt(coupungNumber)) {
+	                    cart.setQuantity(quantity); // 새로운 수량으로 설정
+	                    break;
+	                }
+	            }
+
+	            session.setAttribute("cartList", cartList);
+	        }
+	    }
+	    return "cart";
+	}
 
 	@DeleteMapping(value = "/cart", produces = "text/plain;charset=UTF-8")
-	public String deleteCart(HttpSession session) {
+	public String deleteCart(@RequestParam("coupungNumber") String coupungNumber, HttpSession session) {
 		String clientId = (String) session.getAttribute("clientId");
-		List<CartsDTO> cartList = cartService.getCartById(clientId);
-		return cartService.deleteCart(cartList);
-	}
-	
-	@PostMapping(value = "/cart", produces = "text/plain;charset=UTF-8")
-    public String pay(Model model,HttpSession session){
-		String clientId = (String) session.getAttribute("clientId");
-        cartService.pay(clientId); // 결제처리
-        cartService.emptyCart(clientId); // 장바구니 비우기
 
-        return "redirect:/main";
-    }
+		if (clientId != null) {
+			// 로그인한 유저의 경우, DB에서 삭제
+			cartService.deleteCart(clientId, coupungNumber);
+			return "cart";
+		} else {
+			// 로그인하지 않은 유저의 경우, 세션에서 삭제
+			List<CartsDTO> cartList = (List<CartsDTO>) session.getAttribute("cartList");
+
+			if (cartList != null) {
+				// productId에 해당하는 아이템을 세션에서 제거
+				cartList.removeIf(cart -> cart.getCoupungNumber() == Integer.parseInt(coupungNumber));
+				session.setAttribute("cartList", cartList);
+			}
+		}
+
+		return "cart";
+	}
 
 }

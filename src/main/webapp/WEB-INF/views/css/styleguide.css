@@ -1,0 +1,49 @@
+:root { 
+  --black: #000000;
+  --gray10: #ffffff;
+  --main: #2d3c8a;
+  --star-dust: #9a9a9a;
+ 
+  --font-size-l: 20px;
+  --font-size-m: 16px;
+  --font-size-s: 15px;
+  --font-size-xs: 14px;
+  --font-size-xxs: 12px;
+  --font-size-xxxs: 10px;
+  --font-size-xxxxs: 8px;
+ 
+  --font-family-inter: "Inter", Helvetica;
+  --font-family-julius_sans_one: "Julius Sans One", Helvetica;
+  --font-family-newsreader: "Newsreader", Helvetica;
+}
+.inter-normal-black-12px {
+  color: var(--black);
+  font-family: var(--font-family-inter);
+  font-size: var(--font-size-xxs);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.inter-normal-black-16px {
+  color: var(--black);
+  font-family: var(--font-family-inter);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.inter-medium-black-15px {
+  color: var(--black);
+  font-family: var(--font-family-inter);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.juliussansone-normal-black-12px {
+  color: var(--black);
+  font-family: var(--font-family-julius_sans_one);
+  font-size: var(--font-size-xxs);
+  font-style: normal;
+  font-weight: 400;
+}

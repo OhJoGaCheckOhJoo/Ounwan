@@ -1,0 +1,147 @@
+@import
+	url("https://fonts.googleapis.com/css?family=Inter:400,700,600|Newsreader:500")
+	;
+
+.product {
+	align-items: center;
+	border: 1px solid;
+	border-color: var(- -pumice);
+	border-radius: 10px;
+	display: flex;
+	height: 140px;
+	overflow: hidden;
+	padding: 0 16px;
+	width: 900px;
+}
+
+.rectangle-34 {
+	background-color: var(—white);
+	border: 1px solid;
+	border-color: var(—main);
+	height: 20px: width: 20px;
+}
+
+.overlap-group1 {
+	height: 62px;
+	margin-left: 113px;
+	margin-top: 2px;
+	position: relative;
+	width: 44px;
+}
+
+.arrow-1 {
+	left: 23px;
+	top: 30px;
+}
+
+.u9734-basket-page-u4043644449454043594449435244624354u4469u41.arrow-3 {
+	height: 24px;
+	position: absolute;
+	width: 17px;
+}
+
+.view-1 {
+	gap: 2px;
+	left: 0;
+	min-height: 62px;
+	position: absolute;
+	top: 0;
+	width: 44px;
+}
+
+.u9734-basket-page-u4043644449454043594449435244624354446941
+.view-4 {
+	align-items: flex-start;
+	display: flex;
+	flex-direction: column;
+}
+
+.overlap-group {
+	background-color: var(- -alto);
+	border: 1px solid;
+	border-color: var(- -black);
+	height: 40px;
+	position: relative;
+	width: 40px;
+}
+
+.valign-text-middle {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.number {
+	height: 40px;
+	left: -1px;
+	letter-spacing: 0;
+	line-height: 15.6px;
+	position: absolute;
+	text-align: center;
+	top: -1px;
+	width: 24px;
+}
+
+.rectangle-33 {
+	background-color: var(- -white);
+	border: 1px solid;
+	border-color: var(- -black);
+	height: 40px;
+	left: -1px;
+	position: absolute;
+	top: -1px;
+	width: 24px;
+}
+
+.text {
+	height: 20px;
+	Letter-spacing: 0;
+	line-height: 15.6px;
+	text-align: center;
+	width: 40px;
+}
+
+.text-1 {
+	height: 46px;
+	letter-spacing: 0;
+	line-height: 20.8px;
+	margin-bottom: 2px;
+	margin-left: 12px;
+	text-align: center;
+	width: 118px;
+}
+
+.flex-col {
+	align-self: flex-start;
+	flex-direction: column;
+	margin-left: 11px;
+	margin-top: 13px;
+	min-height: 48px;
+	width: 391px;
+}
+
+.u9734-basket-page-u4043644449454043594449435244624354446941.flex {
+	align-items: flex-start;
+	display: flex;
+}
+
+.bbbbbbbbbbbbb {
+	height: 18px;
+	letter-spacing: 0;
+	line-height: 15.6px;
+	white-space: nowrap;
+}
+
+.aaaaaaaaaaaaaaaaaaaaaaa {
+	height: 30px;
+	letter-spacing: 0;
+	line-height: 20.8px;
+	width: 301px;
+}
+
+.product-image {
+	background-color: var(- -alto);
+	height: 120px;
+	margin-left: 16px;
+	width: 120px;
+}

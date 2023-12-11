@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.ounwan.carts">
+
+	<select id="getCartById" parameterType="String"
+		resultType="carts">
+		SELECT C1.*, C2.*
+		FROM
+		COUPUNG C1 RIGHT JOIN CARTS C2 ON
+		C.COUPUNG_NUMBER = C2.COUPUNG_NUMBER
+		WHERE C2.CLIENT_ID = #{CLIENT_ID}
+	</select>
+
+	<select id="getCartByClientAndProduct" parameterType="carts"
+		resultType="carts">
+		SELECT C1.*, C2.*
+		FROM
+		COUPUNG C1 RIGHT JOIN CARTS C2 ON
+		C.COUPUNG_NUMBER = C2.COUPUNG_NUMBER
+		WHERE C2.CLIENT_ID = #{CLIENT_ID}
+	</select>
+
+
+	<insert id="insertCart" parameterType="carts">
+		INSERT INTO
+		CARTS(CART_NUMBER, COUPUNG_NUMBER,
+		CLIENT_ID, QUANTITY )
+		VALUES(#{CART_NUMBER},
+		#{COUPUNG_NUMBER},
+		#{CLIENT_ID}, #{QUANTITY})
+	</insert>
+
+	<update id="modifyQuantity" parameterType="carts">
+		UPDATE CARTS
+		SET QUANTITY = QUANTITY + 1 WHERE
+		CART_NUMBER = #{CART_NUMBER}
+	</update>
+
+	<update id="updateCart" parameterType="carts">
+		UPDATE CARTS
+		SET QUANTITY = #{QUANTITY}
+		WHERE CLIENT_ID = #{CLIENT_ID}
+		AND COUPUNG_NUMBER = #{COUPUNG_NUMBER}
+	</update>
+
+	<delete id="deleteCart" parameterType="carts">
+		DELETE CARTS FROM CARTS
+		WHERE CLIENT_ID = #{CLIENT_ID}
+		AND COUPUNG_NUMBER =
+		#{COUPUNG_NUMBER}
+	</delete>
+
+</mapper>

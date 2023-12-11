@@ -1,54 +1,47 @@
 package com.ounwan.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ounwan.entity.Clients;
+import com.ounwan.dto.CartsDTO;
+import com.ounwan.entity.Carts;
 
 @Repository
 public class CartDAO {
-	
+
 	@Autowired
 	SqlSession sqlSession;
-	private static final String NAMESPACE = "net.ounwan.clients.";
-	
-	public int createAccount(Clients client) {
-		return sqlSession.insert(NAMESPACE + "insertClient", client);
-	}
-	public int checkId(String checkId ) {
-		return sqlSession.selectOne(NAMESPACE + "checkClientId", checkId);
-	}
-	public int checkEmail(String email) {
-		return sqlSession.selectOne(NAMESPACE + "checkEmail", email);
+
+	private static final String NAMESPACE = "net.ounwan.carts.";
+
+	public List<Carts> getCartById(String clientId) {
+		return sqlSession.selectList(NAMESPACE + "getCartById", clientId);
 	}
 
-	public Clients findClientId(Clients client) {
-		return sqlSession.selectOne(NAMESPACE + "selectForFindId", client);
-	}
-	
-	public int findPassword(Clients client) {
-		return sqlSession.selectOne(NAMESPACE + "selectForFindPassword", client);
+	public CartsDTO getCartByClientAndProduct(Carts cart) {
+		return sqlSession.selectOne(NAMESPACE + "getCartByClientAndProduct", cart);
 	}
 
-	public int updateRandomPassword(Clients client) {
-		return sqlSession.update(NAMESPACE + "updatePassword", client);
+	public int insertCart(Carts cart) {
+		return sqlSession.insert(NAMESPACE + "insertCart", cart);
 	}
 
-	public int withdrawalClient(Clients client) {
-		return sqlSession.update(NAMESPACE + "withdrawal", client);
-	}
+	public int modifyQuantity(Integer cartNumber) {
+		return sqlSession.update(NAMESPACE + "modifyQuantity", cartNumber);
 
-	public String checkLogin(String id) {
-		return sqlSession.selectOne(NAMESPACE + "checkLogin", id);
-	}
-
-	public Clients checkNaverToken(String token) {
-		return sqlSession.selectOne(NAMESPACE + "checkNaverToken", token);
-	}
-
-	public Clients checkKakaoToken(String token) {
-		return sqlSession.selectOne(NAMESPACE + "checkKakaoToken", token);
 	}
 	
+	public int updateCart(Carts cart) {
+		return sqlSession.update(NAMESPACE + "updateCart", cart);
+	}
+
+	public int deleteCart(Carts cart) {
+		return sqlSession.delete(NAMESPACE + "deleteCart", cart);
+	}
+
+	
+
 }
