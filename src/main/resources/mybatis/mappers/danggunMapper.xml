@@ -33,5 +33,10 @@
 		SELECT count(*) from WISH_LISTS where DANGGUN_NUMBER =
 		#{danggunNumber}
 	</select>
+	
+	<!-- 당군 게시물 삭제 -->
+	<delete id="deleteDanggun" parameterType="danggun">
+		DELETE FROM DANGGUN WHERE DANGGUN_NUMBER = #{danggunNumber} AND CLIENT_ID = #{clientId};
+	</delete>
 
 </mapper>
