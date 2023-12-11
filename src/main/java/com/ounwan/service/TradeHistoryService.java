@@ -12,7 +12,7 @@ public class TradeHistoryService {
 	@Autowired
 	TradeHistoryDAO tradeHistoryDAO;
 	
-	public int selectTradeStep(int num) {
+	public String selectTradeStep(int num) {
 		return tradeHistoryDAO.selectTradeStep(num);
 	}
 	

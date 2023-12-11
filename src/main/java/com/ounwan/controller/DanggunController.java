@@ -4,16 +4,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ounwan.dto.DanggunDTO;
 import com.ounwan.dto.ProductImagesDTO;
 import com.ounwan.service.DanggunService;
 import com.ounwan.service.ProductImagesService;
+import com.ounwan.service.TradeHistoryService;
 import com.ounwan.service.WishListsService;
 
 @RequestMapping("/danggun")
@@ -26,24 +28,36 @@ public class DanggunController {
 	ProductImagesService productImagesService;
 	
 	@Autowired
+	TradeHistoryService tradeHistoryService;
+	
+	@Autowired
 	WishListsService wishListsService;
 	
-	@GetMapping(value = "/detail", produces = "application/json")
-	public String danggunDetail(Model model,@RequestParam ("danggunNumber") int danggunNumber ) {
-		System.out.println("왔나 : " + danggunNumber);
+	@GetMapping("/main")
+	public String danggunMain() {
+		return "/danggun/danggunMain";
+	}
+	
+//	상품 상세 목록 조회하기 
+	@GetMapping(value = "/detail")
+	public ModelAndView danggunDetail(@RequestParam ("danggunNumber") int danggunNumber ) {
+		ModelAndView mv = new ModelAndView("danggun/danggunDetail");
 		
 		DanggunDTO resultDanggun = danggunService.selectDanggun(danggunNumber);
-		System.out.println(resultDanggun);
-		if(resultDanggun == null) System.out.println("실패다 이새끼야");
-		else model.addAttribute("post", resultDanggun);
+		if(resultDanggun != null) {
+			mv.addObject("post", resultDanggun);
+			int tradeHistoryNumber = resultDanggun.getTradeHistoryNumber();
+			String step = tradeHistoryService.selectTradeStep(tradeHistoryNumber);
+			mv.addObject("tradeStep", step);
+		}
 		
 		List<ProductImagesDTO> resultImages = productImagesService.selectImages(danggunNumber);
-		if(resultImages == null) System.out.println("이미지도 없다.");
-		else model.addAttribute("danggunImage", resultImages);
+		System.out.println(resultImages);
+		if(resultImages != null) mv.addObject("danggunImage", resultImages);
 		
-		model.addAttribute("zzimCount",wishListsService.selectCountZzim(danggunNumber));
+		mv.addObject("zzimCount",wishListsService.selectCountZzim(danggunNumber));
 		
-		return "danggun/danggunDetail";
+		return mv;
 	}
-
+	
 }

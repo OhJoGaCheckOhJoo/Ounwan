@@ -11,7 +11,7 @@ public class TradeHistoryDAO {
 	SqlSession sqlSession;
 	private static final String NAMESPACE = "net.ounwan.danggun.";
 	
-	public int selectTradeStep(int num) {
+	public String selectTradeStep(int num) {
 		return sqlSession.selectOne(NAMESPACE + "selectTradeStep", num);
 	}
 	
