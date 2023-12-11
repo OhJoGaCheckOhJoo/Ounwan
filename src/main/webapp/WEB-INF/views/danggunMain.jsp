@@ -22,7 +22,8 @@
 	<header>
 		<a class="logo" href="${appPath}"></a>
 		<div class="float-right">
-			<a href="./html/signup.html">회원가입</a> <a class="pointer"
+			<a href="./html/signup.html">회원가입</a>
+			<a class="pointer"
 				id="loginSelect">로그인</a>
 			<!--# : DB(회원)/세션(비회원)에서 가져올 것-->
 			<button class="pointer">Basket (#)</button>
@@ -68,21 +69,20 @@
 		</nav>
 
 		<div class="danggun-container">
-			<div id="danggun-main-banner" class="danggun-main-banner">
-				<img>
-			</div>
+			<button id="upButton" class="up-button">위로</button>
 			<div>
 				<div class="search-container">
-					<input id="searchInput" class="search-input">
-					<button id="searchBtn" class="search-btn" name="searchName">검색</button>
+					<input id="searchInput" class="search-input" placeholder="원하시는 상품을 입력해 주세요.">
+					<button id="searchButton" class="search-btn" name="searchName">검색</button>
 					<br>
 				</div>
 
 				<div class="register-container">
-					<button id="registerBtn" class="register-btn"
-						onclick="registerPage">제품등록</button>
+					<%-- <a href="${appPath}/danggun/insert"></a> --%>
+					<button id="registerButton" class="register-btn"
+						onclick="registerPage()">제품등록</button>
+					
 				</div>
-
 
 				<div id="danggunProductList" class="danggun-product-list">
 
@@ -131,40 +131,58 @@
 		</footer>
 		<script src="../js/main.js"></script>
 		<script>
-			$("#searchBtn")
-					.click(
-							function() {
-								var obj = {
-									"searchInput" : $("#searchInput").val()
-								};
-								$
-										.ajax({
-											type : 'POST',
-											url : "${path}/myapp/danggun/main",
-											data : obj,
-											success : function(responseData) {
-												console.log(responseData);
-												var output = "";
-												for ( var i in responseData) {
-													output += "<div class='danggun-pointer'>";
-													output += "<img class='danggun-img-loc' src="+ responseData[i].url+">";
-													output += "<div>"
-															+ responseData[i].productName
-															+ "</div>";
-													output += "<div>"
-															+ responseData[i].price
-															+ "</div>";
-													output += "</div>";
-												}
-												$("#danggunProductList").html(
-														output);
-											}
-										});
-							});
+		$(function(){
+				function search() {
+				var obj = {
+						"searchInput" : $("#searchInput").val()
+					};
+					$.ajax({
+								type : 'POST',
+								url : "${path}/myapp/danggun/main",
+								data : obj,
+								success : function(responseData) {
+									console.log(responseData);
+									var output = "";
+									if (responseData.length === 0) {
+										output += "<div class='none-search-list'>검색 결과가 없습니다.</div>"
+									} else{
+										for ( var i in responseData) {
+										output += "<div class='danggun-pointer'>";
+										output += "<img class='danggun-img-loc' src="+ responseData[i].url+">";
+										output += "<div>"
+												+ responseData[i].productName
+												+ "</div>";
+										output += "<div>"
+												+ responseData[i].price
+												+ "</div>";
+										output += "</div>";
+										}									
+									}
+									$("#danggunProductList").html(output);									
+								}
+					});
+			}
+			
+			$("#searchInput").keypress(function (event){
+				if(event.which === 13) {
+					event.preventDefault();
+					search();
+				}
+			});
+			
+			$("#searchButton").click(function() {
+				search();
+			});
+			
+			$("#registerButton").click(function() {
+				window.location.href = "${appPath}/danggun/insert";
+			})
+			
+			$("#upButton").click(function() {
+				window.scrollTo(0,0);
+			})
+		});
 
-			/* 			function registerPage() {
-			 href = 
-			 } */
 		</script>
 </body>
 </html>

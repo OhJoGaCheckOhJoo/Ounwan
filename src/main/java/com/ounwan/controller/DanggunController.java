@@ -40,12 +40,18 @@ public class DanggunController {
 	}
 
 	@RequestMapping(value = "/main", method = RequestMethod.POST)
-	public @ResponseBody List<DanggunDTO> searchProduct(@RequestParam ("searchInput") String searchInput, HttpSession session) {	
+	public @ResponseBody List<DanggunDTO> searchProduct(@RequestParam ("searchInput") String searchInput, HttpSession session) {			
 		List<DanggunDTO> searchList = danggunService.searchProduct(searchInput);		
 		for(DanggunDTO danggun : searchList ) {
 			ProductImagesDTO searchImage = productImageService.selectAllImages(danggun.getDanggunNumber());
 			danggun.setUrl(searchImage.getUrl());
 		}		
 		return searchList;
+	}
+	
+	@RequestMapping(value= "/insert", method = RequestMethod.GET)
+	public String insertGet() {	
+		
+		return "danggunInsert";
 	}
 }
