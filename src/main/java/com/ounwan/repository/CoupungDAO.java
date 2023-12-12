@@ -20,14 +20,18 @@ public class CoupungDAO {
 	}
 
 	public List<Coupung> getProductListById(int categoryId) {
-		return sqlSession.selectList(NAMESPACE + "selectById");
+		return sqlSession.selectList(NAMESPACE + "selectById", categoryId);
 	}
 
-	public Coupung getProductDetail(String coupungId) {
-		return sqlSession.selectOne(NAMESPACE + "selectDetail");
+	public Coupung getProductDetail(int coupungId) {
+		return sqlSession.selectOne(NAMESPACE + "selectDetail", coupungId);
 	}
 
 	public List<Coupung> getHotDealProductList() {
 		return sqlSession.selectList(NAMESPACE + "selectHotDeals");
+	}
+
+	public List<Coupung> findByName(String text) {
+		return sqlSession.selectList(NAMESPACE + "findByName", text);
 	}
 }

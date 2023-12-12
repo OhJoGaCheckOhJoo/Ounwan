@@ -12,6 +12,7 @@
 		<typeAlias type="com.ounwan.entity.Clients" alias="clients" />
 		<typeAlias type="com.ounwan.entity.Coupung" alias="coupung" />
 		<typeAlias type="com.ounwan.entity.Orders" alias="orders" />
+		<typeAlias type="com.ounwan.entity.OrderDetails" alias="orderDetails" />
 		<typeAlias type="com.ounwan.entity.Guests" alias="guests" />
 		<typeAlias type="com.ounwan.entity.ProductImages" alias="productImages" />
 	</typeAliases>

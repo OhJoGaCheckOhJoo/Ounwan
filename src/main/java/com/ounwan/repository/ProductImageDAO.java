@@ -1,5 +1,7 @@
 package com.ounwan.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,7 +15,7 @@ public class ProductImageDAO {
 	SqlSession sqlSession;
 	private static final String NAMESPACE = "net.ounwan.productImage.";
 	
-	public ProductImages getImageByCoupungId(Integer coupungProductId) {
-		return sqlSession.selectOne(NAMESPACE + "selectByCoupungId" + coupungProductId);
+	public List<ProductImages> getImageByCoupungId(Integer coupungProductId) {
+		return sqlSession.selectList(NAMESPACE + "selectByCoupungId", coupungProductId);
 	}
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.ounwan.orderDetail">
+    <insert id="setOrder" parameterType="orderDetails">
+    	INSERT INTO
+    	ORDER_DETAILS (ORDER_NUMBER, COUPUNG_NUMBER, PRICE, QUANTITY, OPTION)
+    	VALUES (#{orderNumber}, #{coupungNumber}, #{price}, #{quantity}, #{option})
+    </insert>
+</mapper>

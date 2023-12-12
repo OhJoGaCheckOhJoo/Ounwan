@@ -1,5 +1,8 @@
 package com.ounwan.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +16,19 @@ public class ProductImageService {
 	@Autowired
 	ProductImageDAO productImageDAO;
 
-	public ProductImagesDTO getImageByCoupungId(Integer coupungNumber) {
-		return changeDto(productImageDAO.getImageByCoupungId(coupungNumber));
+	public List<ProductImagesDTO> getImageByCoupungId(Integer coupungNumber) {
+		return changeDTOList(productImageDAO.getImageByCoupungId(coupungNumber));
 	}
 	
-	public ProductImagesDTO changeDto(ProductImages image) {
+	public List<ProductImagesDTO> changeDTOList(List<ProductImages> productImage) {
+		List<ProductImagesDTO> changedList = new ArrayList<ProductImagesDTO>();
+		for (ProductImages image : productImage) {
+			changedList.add(changeDTO(image));
+		}
+		return changedList;
+	}
+	
+	public ProductImagesDTO changeDTO(ProductImages image) {
 		return ProductImagesDTO.builder()
 								.productImageNumber(image.getProductImageNumber())
 								.coupungNumber(image.getCoupungNumber())
@@ -26,5 +37,4 @@ public class ProductImageService {
 								.url(image.getUrl())
 								.build();
 	}
-
 }

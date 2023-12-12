@@ -6,12 +6,12 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.dto.CoupungDTO;
 import com.ounwan.dto.GuestsDTO;
-import com.ounwan.dto.OrderDetailsDTO;
 import com.ounwan.dto.OrdersDTO;
 import com.ounwan.service.CoupungService;
+import com.ounwan.service.OrderService;
 
 @Controller
 @RequestMapping("/coupung")
@@ -29,20 +29,34 @@ public class CoupungController {
 	
 	@Autowired
 	CoupungService coupungService;
+	@Autowired
+	OrderService orderService;
 	
-	@ResponseBody
-	@GetMapping("/product")
-	public ResponseEntity<?> getProducts(@RequestParam String id) {
-		int categoryId = Integer.parseInt(id);
-		List<CoupungDTO> productList = coupungService.getProductList(categoryId);
-		if (productList.isEmpty())
-			return new ResponseEntity<>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
-		return new ResponseEntity<>(productList, HttpStatus.OK);
+	
+	@GetMapping("/products")
+	public String getProductMain (Model model) {
+		List<CoupungDTO> productList = coupungService.getProductList(0);
+		model.addAttribute("productList", productList);
+		return "coupung/products";
 	}
+	
+	@GetMapping("/product/category")
+	public @ResponseBody ResponseEntity<?> getProductsByCategory(String categoryNum) {
+		List<CoupungDTO> productList = coupungService.getProductList(Integer.parseInt(categoryNum));
+		return ResponseEntity.ok(productList);
+	}
+	
+	@GetMapping("/product/name")
+	public @ResponseBody ResponseEntity<?> findByProductName(String text) {
+		if(text.length() == 0) return ResponseEntity.ok(null);
+		List<CoupungDTO> productList = coupungService.findByProductName(text);
+		return ResponseEntity.ok(productList);
+	}
+	
 	
 	@GetMapping("/product/detail")
 	public String getDetailString (@RequestParam String coupungId, Model model) {
-		CoupungDTO coupung = coupungService.getProductDetail(coupungId);
+		CoupungDTO coupung = coupungService.getProductDetail(Integer.parseInt(coupungId));
 		model.addAttribute("detail", coupung);
 		
 		return "/coupung/detail";
@@ -62,7 +76,7 @@ public class CoupungController {
 	
 	@GetMapping("/hot-deal/detail")
 	public String getHotDealDetail(@RequestParam String coupungId, Model model) {
-		CoupungDTO coupung = coupungService.getProductDetail(coupungId);
+		CoupungDTO coupung = coupungService.getProductDetail(Integer.parseInt(coupungId));
 		
 		model.addAttribute("detail", coupung);
 		
@@ -70,29 +84,30 @@ public class CoupungController {
 	}
 	
 	@GetMapping("/order")
-	public String getOrderPage(@RequestParam List<OrderDetailsDTO> productList, Model model) {
-		List<OrderDetailsDTO> result = new ArrayList<>();
-		for (OrderDetailsDTO order : productList) {
-			order.setCoupungDTO(coupungService.getProductDetail(order.getCoupungNumber()));
+	public String getOrderPage(@RequestParam List<String> productList, Model model) {
+		List<CoupungDTO> result = new ArrayList<>();
+		for (String coupungNubmer : productList) {
+			CoupungDTO order = coupungService.getProductDetail(Integer.parseInt(coupungNubmer));
 			result.add(order);
 		}
 		model.addAttribute("products", result);
 		
-		return "/coupung/order";
+		return "coupung/order";
 	}
 	
 	@PostMapping("/order")
-	public @ResponseBody String setOrder(@RequestParam OrdersDTO order, HttpSession session) {
+	public @ResponseBody String setOrder(@RequestBody OrdersDTO order, HttpSession session) {
 		ClientsDTO client = (ClientsDTO) session.getAttribute("client");
 		GuestsDTO guest = (GuestsDTO) session.getAttribute("guest");
-		
 		if (client == null && guest == null) {
 			session.setAttribute("guestOrderList", order.getOrderDetails());
 			return "empty";
 		}
+
+//		ClientsDTO client = null;
+//		GuestsDTO guest = GuestsDTO.builder().guestNumber(2).email("yyy@gmail.com").phone("010-1234-1234").build();
+		boolean result = orderService.setOrder(order, client, guest);
 		
-		
-		
-		return null;
+		return (result) ? "success" : "fail";
 	}
 }

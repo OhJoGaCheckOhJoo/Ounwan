@@ -18,4 +18,8 @@ public class OrderDAO {
 	public List<Orders> getOrderList(String clientId) {
 		return session.selectList(NAMESPACE + "selectList", clientId);
 	}
+
+	public int setOrder(Orders order) {
+		return session.insert(NAMESPACE + "setOrder", order);
+	}
 }
