@@ -12,5 +12,6 @@
 		<typeAlias type="com.ounwan.entity.Clients" alias="clients" />
 		<typeAlias type="com.ounwan.entity.Carts" alias="carts" />
 		<typeAlias type="com.ounwan.entity.Coupung" alias="coupung" />
+		<typeAlias type="com.ounwan.entity.ProductImages" alias="productImages" />
 	</typeAliases>
 </configuration>

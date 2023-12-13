@@ -2,6 +2,7 @@ package com.ounwan.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,39 +24,22 @@ public class CartService {
 	@Autowired
 	HttpSession session;
 
-	public List<CartsDTO> getCartById(String clientId) {
-		List<Carts> carts = cartDAO.getCartById(clientId);
-		List<CartsDTO> cartList = changeDTOList(carts);
+	public List<Map<Object,Object>> getCartById(String clientId) {
+		List<Map<Object,Object>> cartList = cartDAO.getCartById(clientId);
+		
+		//List<CartsDTO> cartList = changeDTOList(carts);
 
-		System.out.println("cartList : " + cartList);
-		for (CartsDTO cart : cartList) {
-			cart.setCoupung(coupungService.getById(cart.getCoupungNumber()));
-		}
+		/*
+		 * System.out.println("cartList : " + cartList); for (CartsDTO cart : cartList)
+		 * { cart.setCoupung(coupungService.getById(cart.getCoupungNumber())); }
+		 */
 
 		return cartList;
 	}
 
-	public boolean addToCart(String clientId, String productId) {
-		CartsDTO cart = changeDTO( cartDAO
-				.getCartByClientAndProduct(Carts.builder()
-												.clientId(clientId)
-												.coupungNumber(Integer.parseInt(productId))
-												.build()));
-		if (cart != null) {
-			// 이미 해당 상품이 장바구니에 있는 경우, 수량을 증가시킴
-			int result = cartDAO.modifyQuantity(cart.getCartNumber());
-			return (result > 0) ? true : false;
-		} else {
-			// 해당 상품이 장바구니에 없는 경우, 새로 추가
-			// 해당 정보를 사용하여 Carts 객체를 생성하고 삽입
-			int result = cartDAO.insertCart(
-							Carts.builder()
-							.clientId(clientId)
-							.coupungNumber(Integer.parseInt(productId))
-							.quantity(1) 
-							.build());
-			return (result > 0) ? true : false;
-		}
+	public int addToCart(CartsDTO cartsDTO) {
+		
+		return cartDAO.insertCart(changeEntity(cartsDTO));
 	}
 
 	public boolean updateCart(String clientId, String coupungNumber, int quantity) {
@@ -91,5 +75,15 @@ public class CartService {
 						.quantity(cart.getQuantity())
 						.build();
 	}
+	
+	private Carts changeEntity(CartsDTO cartsDTO) {
+		return Carts.builder()
+						.cartNumber(cartsDTO.getCartNumber())
+						.coupungNumber(cartsDTO.getCoupungNumber())
+						.clientId(cartsDTO.getClientId())
+						.quantity(cartsDTO.getQuantity())
+						.build();
+	}
+	
 
 }

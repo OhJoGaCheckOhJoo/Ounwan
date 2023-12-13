@@ -12,11 +12,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Coupung {
-	private int coupungNumber;
-	private int coupungCategoryNumber;
+	private Integer coupungNumber;
+	private Integer coupungCategoryNumber;
 	private String name;
-	private int price;
-	private int availableStock;
-	private boolean availableCheck;
+	private Integer price;
+	private Integer availableStock;
+	private Boolean availableCheck;
 	private String option;
 }

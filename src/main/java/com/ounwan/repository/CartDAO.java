@@ -1,12 +1,12 @@
 package com.ounwan.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ounwan.dto.CartsDTO;
 import com.ounwan.entity.Carts;
 
 @Repository
@@ -17,8 +17,10 @@ public class CartDAO {
 
 	private static final String NAMESPACE = "net.ounwan.carts.";
 
-	public List<Carts> getCartById(String clientId) {
-		return sqlSession.selectList(NAMESPACE + "getCartById", clientId);
+	public List<Map<Object,Object>> getCartById(String clientId) {
+		List<Map<Object,Object>> cartlist = sqlSession.selectList(NAMESPACE + "getCartById", clientId);
+		System.out.println(cartlist);
+		return cartlist;
 	}
 
 	public Carts getCartByClientAndProduct(Carts cart) {

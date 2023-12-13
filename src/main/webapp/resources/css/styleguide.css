@@ -24,6 +24,7 @@
 }
 
 .inter-normal-black-12px {
+	
   color: var(--black);
   font-family: var(--font-family-inter);
   font-size: var(--font-size-m);

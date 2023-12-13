@@ -3,21 +3,23 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.coupung">
-<select id="getById" parameterType="int"
-		resultType="coupung">
-		SELECT *
-		FROM COUPUNG
-		WHERE COUPUNG_NUMBER = #{COUPUNG_NUMBER}
-	</select>
-
-	<!-- <select id="getCartById" parameterType="String"
-		resultType="carts">
-		SELECT NAME, `OPTION`, cart.*
-		FROM
-		COUPUNG coupung RIGHT JOIN CARTS cart ON
-		coupung.COUPUNG_NUMBER = cart.COUPUNG_NUMBER
-		WHERE cart.CLIENT_ID = #{CLIENT_ID}
-	</select> -->
-
-
+    <select id="selectAll" resultType="coupung">
+    	SELECT * FROM COUPUNG
+    </select>
+    
+    <select id="selectById" parameterType="int" resultType="coupung">
+    	SELECT * FROM COUPUNG WHERE COUPUNG_CATEGORY_NUMBER = #{categoryId}
+    </select>
+    
+    <select id="selectDetail" parameterType="int" resultType="coupung">
+    	SELECT * FROM COUPUNG WHERE COUPUNG_NUMBER = #{coupungId}
+    </select>
+    
+    <select id="selectHotDeals" resultType="coupung">
+    	SELECT * FROM COUPUNG WHERE COUPUNG_CATEGORY_NUMBER = 9
+    </select>
+    
+    <select id="findByName" parameterType="String" resultType="coupung">
+    	SELECT * FROM COUPUNG WHERE NAME LIKE CONCAT('%', #{text}, '%')
+    </select>
 </mapper>
