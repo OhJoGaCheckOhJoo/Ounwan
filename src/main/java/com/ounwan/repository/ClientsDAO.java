@@ -22,7 +22,7 @@ public class ClientsDAO {
 	public int checkEmail(String email) {
 		return sqlSession.selectOne(NAMESPACE + "checkEmail", email);
 	}
-
+  
 	public Clients findClientId(Clients client) {
 		return sqlSession.selectOne(NAMESPACE + "selectForFindId", client);
 	}

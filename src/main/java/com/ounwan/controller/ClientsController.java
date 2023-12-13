@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -94,43 +95,32 @@ public class ClientsController {
 	public String naverLogin(HttpSession session) {
 		return "redirect:" + naverLogin.getAuthorizationUrl(session);
 	}
+	
+	@GetMapping("/signUp")
+	public String createAccount () {
+		return "signUp";
+	}
 
 	@PostMapping(value = "/signUp", consumes= "application/json", produces="text/plain;charset=utf-8")
-	public String createAccount(@RequestBody ClientsDTO client) {
+	public @ResponseBody String createAccount(@RequestBody ClientsDTO client) {
 		System.out.println(client);
 		int result = clientService.createAccount(client);
-		if(result > 0) {
-			System.out.println("YESSSSSS");
-		} else {
-			System.out.println("NOOOOOOOOO");
-		}
-		return "success";
+		return (result > 0) ? "success" : "fail";
 	} 
 	
-	@GetMapping(value = "/checkId", produces="text/plain;charset=utf-8")
-	public String checkId(String clientId) {
+	@GetMapping("/checkId")
+	public @ResponseBody String checkId(String clientId) {
 		System.out.println(clientId);
 		// true = id 존재, false = id 없음
 		boolean result = clientService.checkId(clientId);
-		if(result) {
-			System.out.println("YESSSSSS");
-		} else {
-			System.out.println("NOOOOOOOOO");
-		}
-		return "success";
+		return (result) ? "exist" : "available";
 	} 
 	
-	@GetMapping(value = "/checkEmail", produces="text/plain;charset=utf-8")
-	public String checkEmail(String email) {
+	@GetMapping("/checkEmail")
+	public @ResponseBody String checkEmail(String email) {
 		System.out.println(email);
 		// true = id 존재, false = id 없음
 		boolean result = clientService.checkEmail(email);
-		if(result) {
-			System.out.println("YESSSSSS");
-		} else {
-			System.out.println("NOOOOOOOOO");
-		}
-		return "success";
+		return (result) ? "exist" : "available";
 	} 
-
 }

@@ -41,13 +41,13 @@ public class CoupungController {
 	}
 	
 	@GetMapping("/product/category")
-	public @ResponseBody ResponseEntity<?> getProductsByCategory(String categoryNum) {
+	public @ResponseBody ResponseEntity<?> getProductsByCategory(@RequestParam String categoryNum) {
 		List<CoupungDTO> productList = coupungService.getProductList(Integer.parseInt(categoryNum));
 		return ResponseEntity.ok(productList);
 	}
 	
 	@GetMapping("/product/name")
-	public @ResponseBody ResponseEntity<?> findByProductName(String text) {
+	public @ResponseBody ResponseEntity<?> findByProductName(@RequestParam String text) {
 		if(text.length() == 0) return ResponseEntity.ok(null);
 		List<CoupungDTO> productList = coupungService.findByProductName(text);
 		return ResponseEntity.ok(productList);
