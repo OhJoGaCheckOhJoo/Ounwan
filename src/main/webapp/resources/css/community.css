@@ -186,6 +186,7 @@ nav .ounwangram {
 .writeGramContents {
 	position: relative;
 	z-index: 20;
+	height: 205px;
 }
 
 .writeGramContents label, .writeGramScope label {
@@ -252,6 +253,7 @@ nav .ounwangram {
 	top: 27.5px;
 	margin-right: 10px;
 	background-color: #eee;
+	visibility: hidden;
 }
 
 .gramBoardOption > button {
@@ -262,6 +264,15 @@ nav .ounwangram {
 
 .gramBoardOption > button:hover {
 	background-color: #ddd;
+}
+
+.hashDiv span {
+	margin-right: 20px;
+	cursor: pointer;
+}
+
+.hashDiv span:hover {
+	color: var(--main-color);
 }
 
 #writeOunwangram {
@@ -289,7 +300,7 @@ nav .ounwangram {
 #contentSubmit, #contentUpdate {
 	position: relative;
 	padding: 50px 0px 75px 0px;
-	height: 75px;
+	height: 80px;
 	z-index: 20;
 }
 
@@ -302,6 +313,7 @@ nav .ounwangram {
 	background-color: var(--main-color);
 	border-radius: 30px;
 	float: right;
+	cursor: pointer;
 }
 
 #toTopScroll {
@@ -352,4 +364,38 @@ nav .ounwangram {
 	height: 45px;
 	width: 45px;
 	border-radius: 10px;
+}
+
+#addedHashTag {
+	text-align: left;
+}
+
+#addedHashTag span {
+	width: auto;
+	padding: 5px 10px 5px 10px;
+	transform: scaleX(1);
+	border: 1px solid #fff;
+	border-radius: 0;
+}
+
+#addedHashTag span:hover {
+	color: var(--main-color);
+	border: 1px solid #eee;
+}
+
+#addedHashTag span button {
+	margin-left: 5px;
+	background-color: #fff;
+	border: 1px solid #eee;
+	padding: 0px 1px 1px 1px;
+	color: red;
+	cursor: pointer;
+}
+
+#hashTagAlert {
+	position: relative;
+	visibility: hidden;
+	text-align: left;
+	bottom: 40px;
+	color: red;
 }

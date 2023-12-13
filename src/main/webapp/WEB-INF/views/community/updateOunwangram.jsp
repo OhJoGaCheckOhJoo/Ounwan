@@ -32,19 +32,19 @@
 
             <div class="writeGramContents">
                 <label>Hash Tag</label>
-                <input id="ounwanGramHashTag" type="text" placeholder="HashTag 최대 5개 작성 가능합니다.">
+                <input id="ounwanGramHashTag" type="text" placeholder="최대 15자까지, 5개 작성 가능합니다.">
                 <span></span>
-                <div><div id="gramHashTagLength">0</div>/30</div>
-            </div>
-
-            <div class="writeGramScope">
-                <label>Scope</label>
-                <input class="ounwangramScope" name="ounwangramScope" type="radio" checked><span>전체 공개</span>
-                <input class="ounwangramScope" name="ounwangramScope" type="radio"><span>친구 공개</span>
+                <div><div id="gramHashTagLength">0</div>/15</div>
+                <div id="addedHashTag">&nbsp;
+                	<c:forEach var="tag" items="${board.hashTags}">
+                		<span>${tag}<button id='removeHashTag'>x</button></span>
+                	</c:forEach>
+                </div>
+                <div id="hashTagAlert">* 최대 5개까지 작성가능합니다.</div>
             </div>
 
             <div id="contentUpdate">
-                <button id="submitButton">수정</button>
+                <button id="updateButton" value="${board.communityNumber}">수정</button>
             </div>
         </div>
     </div>

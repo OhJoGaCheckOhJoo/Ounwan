@@ -1,6 +1,7 @@
 package com.ounwan.dto;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,4 +26,5 @@ public class OunwanGramDTO {
 	private String imageUrl;
 	private String profileUrl;
 	private Integer likesCheck;
+	private List<String> hashTags;
 }

@@ -7,6 +7,8 @@ var originalImg = $("#ounwanUploadImage").attr("src");
 var fileTag = $("#uploadImageInput")[0];
 var gramContentsInput = $(".writeGramContents").children("input");
 var gramContent = "";
+var gramHashTag = "";
+var changImage = false;
 
 $(window).on("load", function() {
 
@@ -76,19 +78,53 @@ $(window).on("load", function() {
             $(this).disabled = false;
 		});
 
+        $("#ounwangramBoard").on("click", "#threeDotBtn", function() {
+        	if($(this).parent().parent().find('div:eq(3)').css("visibility") == "hidden") {
+            	$(this).parent().parent().find('div:eq(3)').css("visibility","visible");
+            } else {
+            	$(this).parent().parent().find('div:eq(3)').css("visibility","hidden");
+            }
+        })
+
         $("#ounwangramBoard").on("click", "#updateGramBoard", function() {
             location.href="updateGramBoard?communityNumber=" + $(this).val();
         })
 
         $("#ounwangramBoard").on("click", "#deleteGramBoard", function() {
-            console.log("delete : " + $(this).val());
+            if(confirm("삭제하시겠습니까?")){
+            	var communityNumber = $(this).val();
+            	console.log("delete : " + communityNumber);
+            	$.ajax({
+                	url: "/ounwan/ounwangram/deleteBoard",
+                	data: { "communityNumber" : communityNumber },
+                	success: function(res) {
+                		if(res == 'success') {
+                			alert("삭제하였습니다.");
+                            location.href = "ounwangram";
+                        } else {
+                            alert("게시글 삭제에 실패하였습니다. 이후에 다시 시도해주세요.");
+                        }
+                	}
+                })
+            } else {
+            	console.log("삭제취소");
+            }
+            
         })
 
         $("#ounwangramBoard").on("click", "#reportGramBoard", function() {
             console.log("report : " + $(this).val());
         })
 		
-    } else if(window.location.pathname == "/ounwan/writeGramBoard") {
+    } else if(window.location.pathname == "/ounwan/writeGramBoard" || window.location.pathname == "/ounwan/updateGramBoard") {
+    	var hashTagArray = [];
+        if(hashTagArray.length == 0) {
+            for(var i = 0; i < document.querySelectorAll("#addedHashTag span").length; i++) {
+                var text = document.querySelectorAll("#addedHashTag span")[i].textContent;
+                hashTagArray.push(text.substr(0, text.length - 1));
+            }
+        }
+    	
     	$("#uploadImageInput").on("change", function() {
             var imgTag = $("#ounwanUploadImage");
             if(fileTag.files.length > 0) {
@@ -99,6 +135,7 @@ $(window).on("load", function() {
                 }
 
                 reader.readAsDataURL(fileTag.files[0]);
+                changImage = true;
             } else {
                 imgTag.attr("src", "../images/white.jpg");
             }
@@ -114,14 +151,60 @@ $(window).on("load", function() {
             }
         })
 
+        $("#ounwanGramHashTag").on("input", function() {
+            var hashTags = $(this).val();
+            $("#gramHashTagLength").html(hashTags.length - hashTags.includes("#"));
+            if($(this).val().length == 15) {
+                gramHashTag = $(this).val();
+            } else if ($(this).val().length - hashTags.includes("#") > 15) {
+                $(this).val(gramHashTag);
+                $("#gramHashTagLength").html("15");
+            }
+        })
+
+        $("#ounwanGramHashTag").on("keypress", function(event) {
+            var hashTags = "";
+            if($("#ounwanGramHashTag").val().includes("#")) {
+            	hashTags = $("#ounwanGramHashTag").val();
+            } else {
+            	hashTags = "#" + $("#ounwanGramHashTag").val();
+            }
+            if(hashTags.length >= 2 && (event.keyCode == 13 || event.keyCode == 32)) {
+                event.preventDefault();
+                if(hashTagArray.length < 5) {
+                    if(!hashTagArray.includes(hashTags)) {
+                        $("#addedHashTag").append("<span>" + hashTags + "<button id='removeHashTag'>x</button></span>");
+                        hashTagArray.push(hashTags.slice(1));
+                    }
+                    $("#ounwanGramHashTag").val("");
+                    $("#gramHashTagLength").html("0");
+                } else {
+                    $("#hashTagAlert").css("visibility", "visible");
+                }
+            }
+        })
+
+        $("#addedHashTag").on("click", "#removeHashTag", function() {
+            hashTagArray.splice(hashTagArray.indexOf($(this).parent().text().substr(1, $(this).parent().text().length - 1)), 1);
+            $(this).parent().remove();
+            $("#hashTagAlert").css("visibility", "hidden");
+        })
+
         $("#submitButton").on("click", function() {
             if(originalImg == $("#ounwanUploadImage").attr("src")) {
                 alert("이미지를 등록해주세요!");
             } else {
                 var formData = new FormData();
+                if(hashTagArray.length < 5 && $("#ounwanGramHashTag").val() != "") {
+                    if($("#ounwanGramHashTag").val().includes("#")) {
+                        hashTagArray.push($("#ounwanGramHashTag").val().slice(1,$("#ounwanGramHashTag").val().length));
+                    } else {
+                        hashTagArray.push($("#ounwanGramHashTag").val());
+                    }
+                }
                 formData.append('image', $("input[name='uploadImageInput']")[0].files[0]);
                 formData.append('content', $("#ounwanGramContent").val());
-                formData.append('hashTag', $("#ounwanGramHashTag").val());
+                formData.append('hashTag', hashTagArray);
                 $.ajax({
                 	url: "/ounwan/ounwangram/writeBoard",
                 	data: formData,
@@ -130,10 +213,47 @@ $(window).on("load", function() {
                 	contentType: false,
                 	enctype: 'multipart/form-data',
                 	success: function(res) {
-                		alert(res);
+                		if(res == 'success') {
+                            location.href = "ounwangram";
+                        } else {
+                            alert("게시글 등록에 실패하였습니다. 이후에 다시 시도해주세요.");
+                        }
                 	}
                 })
             }
+        })
+
+        $('#updateButton').on("click", function() {
+            var formData = new FormData();
+            if(hashTagArray.length < 5 && $("#ounwanGramHashTag").val() != "") {
+                if($("#ounwanGramHashTag").val().includes("#")) {
+                    hashTagArray.push($("#ounwanGramHashTag").val().slice(1,$("#ounwanGramHashTag").val().length));
+                } else {
+                    hashTagArray.push($("#ounwanGramHashTag").val());
+                }
+            }
+            console.log(hashTagArray);
+            formData.append('communityNumber', $('#updateButton').val());
+            if(changImage) {
+                formData.append('image', $("input[name='uploadImageInput']")[0].files[0]);
+            }
+            formData.append('content', $("#ounwanGramContent").val());
+            formData.append('hashTag', hashTagArray);
+            $.ajax({
+                url: "/ounwan/ounwangram/updateBoard",
+                data: formData,
+                type: "post",
+                processData: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
+                success: function(res) {
+                    if(res == 'success') {
+                        location.href = "ounwangram";
+                    } else {
+                        alert("게시글 수정에 실패하였습니다. 이후에 다시 시도해주세요.");
+                    }
+                }
+            })
         })
     }
 })
@@ -159,6 +279,10 @@ var loadGramWholeBoard = function() {
             	} else {
             		boardOption = "<button id='reportGramBoard' value=" + res[i].communityNumber + ">신고하기</button>";
             	}
+                var hashTagDiv = "";
+                for(var j = 0; j < res[i].hashTags.length; j++) {
+                    hashTagDiv += "<span id='searchTag'>#" + res[i].hashTags[j] + "</span>";
+                }
                 $("#ounwangramBoard").append(`
                 <div class="ounwangram-main">
 	                <div>
@@ -167,7 +291,7 @@ var loadGramWholeBoard = function() {
 		                    <div>${res[i].clientId}</div>
 		                </div>
 		                <div class="ounwangram-threedot-div">
-		                    <button class="ounwangram-threedot"><img class="ounwangram-threedot" src="./images/three_dot.png"></button>
+		                    <button id='threeDotBtn' class="ounwangram-threedot"><img class="ounwangram-threedot" src="./images/three_dot.png"></button>
 		                </div>
 		                <div class="gramBoardOption">
 		                	${boardOption}
@@ -182,6 +306,7 @@ var loadGramWholeBoard = function() {
 		                	<span>${res[i].likes}</span><span>Likes</span>
 		                </div>
 		                <div class="ounwangram-content">${res[i].contents}</div>
+                        <div class="hashDiv">${hashTagDiv}</div>
 		                <div class="ounwan-date">
                             <span>${new Date(res[i].createdDate).toISOString().split('T')[0]}</span>
                         	<span>${new Date(res[i].createdDate).toTimeString().split(' ')[0].slice(0,5)}</span>
@@ -223,6 +348,10 @@ var loadGramFollowBoard = function() {
             	} else {
             		boardOption = "<button id='reportGramBoard' value=" + res[i].communityNumber + ">신고하기</button>";
             	}
+                var hashTagDiv = "";
+                for(var j = 0; j < res[i].hashTags.length; j++) {
+                    hashTagDiv += "<span id='searchTag'>#" + res[i].hashTags[j] + "</span>";
+                }
                 $("#ounwangramBoard").append(`
                 <div class="ounwangram-main">
 	                <div>
@@ -231,7 +360,7 @@ var loadGramFollowBoard = function() {
 		                    <div>${res[i].clientId}</div>
 		                </div>
 		                <div class="ounwangram-threedot-div">
-		                    <button class="ounwangram-threedot"><img class="ounwangram-threedot" src="./images/three_dot.png"></button>
+		                    <button id='threeDotBtn' class="ounwangram-threedot"><img class="ounwangram-threedot" src="./images/three_dot.png"></button>
 		                </div>
 		                <div class="gramBoardOption">
 		                	${boardOption}
@@ -246,6 +375,7 @@ var loadGramFollowBoard = function() {
 		                	<span>${res[i].likes}</span><span>Likes</span>
 		                </div>
 		                <div class="ounwangram-content">${res[i].contents}</div>
+                        <div class="hashDiv">${hashTagDiv}</div>
 		                <div class="ounwan-date">
                             <span>${new Date(res[i].createdDate).toISOString().split('T')[0]}</span>
                         	<span>${new Date(res[i].createdDate).toTimeString().split(' ')[0].slice(0,5)}</span>

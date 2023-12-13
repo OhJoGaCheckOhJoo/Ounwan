@@ -31,20 +31,50 @@
 		FROM OUNWAN_LIKES GROUP BY COMMUNITY_NUMBER) AS LIKES_TABLE ON BOARD.COMMUNITY_NUMBER = LIKES_TABLE.COMMUNITY_NUMBER
 	</select>
 	
+	<select id="selectHashTagsByNumber" parameterType="int" resultType="String">
+		SELECT HASH_TAGS.NAME FROM OUNWAN_DETAILS 
+		LEFT OUTER JOIN HASH_TAGS ON OUNWAN_DETAILS.HASH_TAG_NUMBER = HASH_TAGS.HASH_TAG_NUMBER WHERE COMMUNITY_NUMBER = #{communityNumber}
+	</select>
+	
+	<select id="selectBoardByCommunityNum" parameterType="int" resultType="gram">
+		SELECT * FROM OUNWAN_COMMUNITY WHERE COMMUNITY_NUMBER = #{communityNumber}
+	</select>
+	
 	<insert id="insertgGramLikeBoard" parameterType="gramLikes">
 		INSERT INTO OUNWAN_LIKES VALUES (#{likesId}, #{communityNumber}, #{clientId})
 	</insert>
 	
 	<insert id="insertGramBoard" parameterType="gram">
+		<selectKey keyColumn="COMMUNITY_NUMBER" keyProperty="communityNumber" order="AFTER" resultType="int">
+			SELECT COMMUNITY_NUMBER FROM OUNWAN_COMMUNITY WHERE CLIENT_ID = #{clientId} AND IMAGE_URL = #{imageUrl}
+		</selectKey>
+	
 		INSERT INTO OUNWAN_COMMUNITY(CLIENT_ID, CONTENTS, CREATED_DATE, IMAGE_URL) VALUES (#{clientId}, #{contents}, NOW(), #{imageUrl})
+	</insert>
+	
+	<insert id="insertHashTagName" parameterType="String">
+		INSERT INTO HASH_TAGS(NAME) SELECT #{name} FROM DUAL WHERE NOT EXISTS(SELECT * FROM HASH_TAGS WHERE NAME = #{name})
+	</insert>
+	
+	<insert id="addHashTag" parameterType="map">
+		INSERT INTO OUNWAN_DETAILS(COMMUNITY_NUMBER, HASH_TAG_NUMBER) 
+		VALUES(#{communityNumber}, (SELECT HASH_TAG_NUMBER FROM HASH_TAGS WHERE NAME = #{name}))
 	</insert>
 	
 	<delete id="deleteGramLikeBoard" parameterType="String">
 		DELETE FROM OUNWAN_LIKES WHERE LIKES_ID = #{likesId}
 	</delete>
 	
+	<delete id="deleteHashTag" parameterType="map">
+		DELETE FROM OUNWAN_DETAILS WHERE HASH_TAG_NUMBER = (SELECT HASH_TAG_NUMBER FROM HASH_TAGS WHERE NAME = #{name}) AND COMMUNITY_NUMBER = #{communityNumber}
+	</delete>
+	
+	<delete id="deleteGramBoard" parameterType="int">
+		DELETE FROM OUNWAN_COMMUNITY WHERE COMMUNITY_NUMBER = #{communityNumber}
+	</delete>
+	
 	<update id="updateGramBoard" parameterType="gram">
-		UPDATE OUNWAN_COMMUNITY SET CONTENTS=#{contents}, UPDATED_DATE = NOW(), IMAGE_URL = #{imageUrl} WHERE COMMUNITY_NUMBER = #{communityNumber}
+		UPDATE OUNWAN_COMMUNITY SET CONTENTS = #{contents}, UPDATED_DATE = NOW(), IMAGE_URL = #{imageUrl} WHERE COMMUNITY_NUMBER = #{communityNumber}
 	</update>
 
 </mapper>

@@ -3,6 +3,7 @@ package com.ounwan.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ public class CommunityService {
 		List<Integer> likeBoars = communityDAO.gramLikeBoards(clientId);
 		for(OunwanGram ounwangram : communityDAO.gramFollowBoard(dataMap)) {
 			ounwangram.setLikesCheck(likeBoars.contains(ounwangram.getCommunityNumber()) ? 1 : 0);
+			ounwangram.setHashTags(communityDAO.hashTagsByNumber(ounwangram.getCommunityNumber()));
 			result.add(changeOunwanGram(ounwangram));
 		}
 		return result;
@@ -43,6 +45,7 @@ public class CommunityService {
 		List<Integer> likeBoars = communityDAO.gramLikeBoards(clientId);
 		for(OunwanGram ounwangram : communityDAO.gramWholeBoard(rowNum)) {
 			ounwangram.setLikesCheck(likeBoars.contains(ounwangram.getCommunityNumber()) ? 1 : 0);
+			ounwangram.setHashTags(communityDAO.hashTagsByNumber(ounwangram.getCommunityNumber()));
 			result.add(changeOunwanGram(ounwangram));
 		}
 		return result;
@@ -73,28 +76,86 @@ public class CommunityService {
 		result.put("likes", communityDAO.aGramBoard(communityNumber).getLikes());
 		return result;
 	}
-
-
-	@SuppressWarnings("static-access")
-	public String gramWriteBoard(String clientId, MultipartFile image, String content, String hashTag) throws IllegalStateException, IOException {
-		String newFileName = clientId + "_" + System.currentTimeMillis() + "." + image.getContentType().split("/")[1]; // image/png
-		File file = new File(UPLOADPATH + IMAGEPATH + newFileName);
-		if(communityDAO.writeGramBoard(new OunwanGram().builder()
-				.clientId(clientId)
-				.contents(content.length() > 0 ? content : null)
-				.imageUrl("." + IMAGEPATH + newFileName)
-				.build()) > 0) {
-			image.transferTo(file);
-			System.out.println("업로드 성공");
-		} else {
-			System.out.println("업로드 실패");
-		}
-		
-		return "";
-	}
 	
 	public OunwanGramDTO aGramBoard(int communityNumber) {
-		return changeOunwanGram(communityDAO.aGramBoard(communityNumber));
+		OunwanGram ounwangram = communityDAO.aGramBoard(communityNumber);
+		ounwangram.setHashTags(communityDAO.hashTagsByNumber(communityNumber));
+		return changeOunwanGram(ounwangram);
+	}
+	
+	public String deleteGramBoard(int communityNumber) {
+		new File(UPLOADPATH + communityDAO.selectBoardByCommunityNum(communityNumber).getImageUrl().substring(1)).delete();
+		return communityDAO.deleteGramBoard(communityNumber) > 0 ? "success" : "fail";
+	}
+
+	public String gramWriteBoard(String clientId, MultipartFile image, String content, String[] hashTag) throws IllegalStateException, IOException {
+		String newFileName = clientId + "_" + System.currentTimeMillis() + "." + image.getContentType().split("/")[1]; // image/jpg
+		File file = new File(UPLOADPATH + IMAGEPATH + newFileName);
+		OunwanGram board = OunwanGram.builder()
+									.clientId(clientId)
+									.contents(content.length() > 0 ? content : null)
+									.imageUrl("." + IMAGEPATH + newFileName)
+									.build();
+		if(communityDAO.writeGramBoard(board) > 0) {
+			image.transferTo(file);
+			Map<String, Object> data = new HashMap<>();
+			data.put("communityNumber", board.getCommunityNumber());
+			for(String name : hashTag) {
+				data.put("name", name);
+				communityDAO.insertHashTagName(name);
+				communityDAO.addHashTag(data);
+			}
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	public String gramUpdateBoard(String clientId, int communityNumber, MultipartFile image, String content, String[] hashTag) throws IllegalStateException, IOException {
+		OunwanGram ounwanBoard = communityDAO.selectBoardByCommunityNum(communityNumber);
+		ounwanBoard.setContents(content); // 내용 수정
+		
+		// 이미지 수정
+		if(image != null) {
+			File removeFile = new File(UPLOADPATH + ounwanBoard.getImageUrl().substring(1));
+			if(removeFile.delete()) {
+				String newFileName = clientId + "_" + System.currentTimeMillis() + "." + image.getContentType().split("/")[1]; // image/jpg
+				File file = new File(UPLOADPATH + IMAGEPATH + newFileName);
+				ounwanBoard.setImageUrl("." + IMAGEPATH + newFileName);
+				image.transferTo(file);
+			} else {
+				return "fail";
+			}
+		}
+		System.out.println(ounwanBoard);
+		// 태그 업데이트
+		tagUpdate(communityNumber, hashTag);
+		
+		// DB 반영
+		if(communityDAO.updateGramBoard(ounwanBoard) > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}	
+	}
+	
+	public int tagUpdate(int communityNumber, String[] hashTag) {
+		Map<String, Object> dataMap = new HashMap<>();
+		dataMap.put("communityNumber", communityNumber);
+		int result = 1;
+		
+		for(String name : communityDAO.hashTagsByNumber(communityNumber)) {
+			dataMap.put("name", name);
+			result *= communityDAO.removeTag(dataMap);
+		}
+		
+		for(String name : hashTag) {
+			dataMap.put("name", name);
+			System.out.println("add : " + name);
+			result *= communityDAO.insertHashTagName(name);
+			result *= communityDAO.addHashTag(dataMap);
+		}
+		return result;
 	}
 	
 	@SuppressWarnings("static-access")
@@ -109,6 +170,7 @@ public class CommunityService {
 				.imageUrl(ounwangram.getImageUrl())
 				.profileUrl(ounwangram.getProfileUrl())
 				.likesCheck(ounwangram.getLikesCheck())
+				.hashTags(ounwangram.getHashTags())
 				.build();
 	}
 	
@@ -124,8 +186,8 @@ public class CommunityService {
 				.imageUrl(ounwangram.getImageUrl())
 				.profileUrl(ounwangram.getProfileUrl())
 				.likesCheck(ounwangram.getLikesCheck())
+				.hashTags(ounwangram.getHashTags())
 				.build();
 	}
-
 
 }
