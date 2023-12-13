@@ -293,7 +293,6 @@
         var emailCheck = $('#emailCheckBtn').val();
         var firstPwdCheck = $('#wrongForm-inform').css('visibility');
         var secondPwdCheck = $('#notMatch-inform').css('visibility');
-		alert ();
         if (idCheck === 'N') {
             alert('아이디 중복확인 해라');
             $('#clientId').focus();

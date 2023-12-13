@@ -50,5 +50,17 @@
 	<select id="checkEmail" parameterType="String" resultType="int">
 		select count(*) from clients where email = #{email}
 	</select>
+	
+	<select id="getEmailAuth" parameterType="String" resultType="String">
+		SELECT EMAIL_AUTH FROM CLIENTS WHERE CLIENT_ID = #{clientId}
+	</select>
+	
+	<update id="updateActivation" parameterType="String">
+		UPDATE CLIENTS SET ACTIVATION_CHECK = TRUE, EMAIL_AUTH =' ' WHERE CLIENT_ID = #{clientId}
+	</update>
+	
+	<select id="checkAuthorization" parameterType="String" resultType="boolean">
+		SELECT ACTIVATION_CHECK FROM CLIENTS WHERE CLIENT_ID = #{clientId}
+	</select>
 
 </mapper>

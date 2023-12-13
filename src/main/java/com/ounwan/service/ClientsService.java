@@ -109,6 +109,16 @@ public class ClientsService {
 		}
 	}
 	
+	public boolean checkEmailAuth(ClientsDTO client) {
+		String auth = clientsDAO.getEmailAuth(client.getClientId());
+		if(auth == null) return false;
+		int result = 0;
+		if (auth.equals(client.getEmailAuth())) {
+			result = clientsDAO.updateActivation(client.getClientId());
+		}
+		return (result > 0) ? true : false;
+	}
+	
 	public void sendTempPassword(String email, String newPassword) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(email); // 수신자
@@ -121,9 +131,28 @@ public class ClientsService {
 
 	public String sendEmailAuths(String email, String emailAuth) {
 		SimpleMailMessage message = new SimpleMailMessage();
+		String msg = "<!DOCTYPE html>\n"
+				+ "<html lang=\"en\">\n"
+				+ "<head>\n"
+				+ "    <meta charset=\"UTF-8\">\n"
+				+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+				+ "    <title>Document</title>\n"
+				+ "</head>\n"
+				+ "<body>\n"
+				+ "    <h2>이매일 인증 코드 입니다</h2>\n"
+				+ "    <br>\n"
+				+ "    <h3>인증번호 입니다: </h3> <h2>"
+				+ emailAuth
+				+ "</h2>\n"
+				+ "    <br>\n"
+				+ "    <h4>아래 링크로 이동해서 인증을 완료해 주세요~</h4>\n"
+				+ "    <br>\n"
+				+ "   <h3><a href=\"http://localhost:9090/myapp/clients/emailAuth\">이메일 인증하기</a></h3>\n"
+				+ "</body>\n"
+				+ "</html>";
 		message.setTo(email); // 수신자
 		message.setSubject("오운완 테스트");
-		message.setText("인증번호 발송했습니다. " + emailAuth);
+		message.setText(msg);
 		message.setFrom("ounwan50@gmail.com");
 
 		sender.send(message);

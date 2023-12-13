@@ -50,5 +50,10 @@ public class ClientsDAO {
 	public Clients checkKakaoToken(String token) {
 		return sqlSession.selectOne(NAMESPACE + "checkKakaoToken", token);
 	}
-	
+	public String getEmailAuth(String clientId) {
+		return sqlSession.selectOne(NAMESPACE + "getEmailAuth", clientId);
+	}
+	public int updateActivation(String clientId) {
+		return sqlSession.update(NAMESPACE + "updateActivation", clientId);
+	}
 }

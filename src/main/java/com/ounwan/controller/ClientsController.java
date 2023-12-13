@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -123,4 +124,15 @@ public class ClientsController {
 		boolean result = clientService.checkEmail(email);
 		return (result) ? "exist" : "available";
 	} 
+	
+	@GetMapping("/emailAuth")
+	public String getAuthPage() {
+		return "emailCheck";
+	}
+	
+	@PostMapping(value = "/emailAuth", consumes = "application/json")
+	public @ResponseBody String checkEmailAuthString (@RequestBody ClientsDTO client) {
+		boolean result = clientService.checkEmailAuth(client);
+		return (result) ? "success" : "fail";
+	}
 }
