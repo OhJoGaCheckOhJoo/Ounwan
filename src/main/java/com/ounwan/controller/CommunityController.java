@@ -42,4 +42,10 @@ public class CommunityController {
 		model.addAttribute("board", communityService.aGramBoard(communityNumber)); // 게시글 정보는 Model에 저장
 		return "community/updateOunwangram";
 	}
+	
+	@RequestMapping("/ounwanProfile")
+	public String ounwanProfile(@RequestParam String clientId, Model model) {
+		
+		return "community/ounwangramProfile";
+	}
 }

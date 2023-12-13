@@ -33,6 +33,14 @@ public class CommunityDAO {
 		return sqlSession.selectList(NAMESPACE + "selectHashTagsByNumber", communityNumber);
 	}
 	
+	public List<Map<String, Object>> searchGramClientId(String keyword) {
+		return sqlSession.selectList(NAMESPACE + "searchGramClientId", keyword);
+	}
+	
+	public Map<String, Object> searchHashTag(String keyword) {
+		return sqlSession.selectOne(NAMESPACE + "searchHashTag", keyword); 
+	}
+	
 	public OunwanGram aGramBoard(int communityNumber) {
 		return sqlSession.selectOne(NAMESPACE + "selectOneBoard", communityNumber);
 	}

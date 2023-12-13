@@ -57,4 +57,10 @@ public class CommunityRestController {
 	public String ounwangramDeleteBoard(int communityNumber) {
 		return communityService.deleteGramBoard(communityNumber);
 	}
+	
+	// 오늘운동했다그램 메인 검색
+	@RequestMapping("/ounwangram/ajaxSearch")
+	public List<Map<String, Object>> ounwangramAjaxSearch(String keyword) {
+		return communityService.searchAjaxGram(keyword);
+	}
 }

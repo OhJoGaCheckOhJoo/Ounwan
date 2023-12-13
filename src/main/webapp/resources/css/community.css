@@ -275,6 +275,189 @@ nav .ounwangram {
 	color: var(--main-color);
 }
 
+.gramSearch {
+	position: relative;
+	z-index: 8;
+	margin: 30px auto 30px auto;
+	border: 2px solid #ddd;
+	border-radius: 10px;
+	width: 360px;
+	height: 40px;
+}
+
+.myProfileBoardImage {
+	width: 390px;
+	height: 390px;
+	border: 1px solid #eee;
+	margin: 5px auto 5px auto;
+	transform: scale(1);
+	transition: all linear 0.1s;
+	cursor: pointer;
+}
+
+.myProfileBoardImage:hover {
+	transform: scale(1.05);
+}
+
+.info-bold {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+#myProfileImage {
+	margin: 50px 0px 30px 0px;
+	text-align: center;
+}
+
+#myProfileImage > img {
+	display: inline;
+	width: 150px;
+	height: 150px;
+	padding: 3px;
+	border: 1.5px solid #EE7F00;
+	border-radius: 75px;
+}
+
+#myProfileUserId {
+	text-align: center;
+	font-size: 36px;
+}
+
+#myProfileOption {
+	width: 185px;
+	margin: 20px auto 20px auto;
+}
+
+#myProfileOption > * {
+	margin: 0px 5px 0px 5px;
+}
+
+#myProfileWrite {
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	width: 35px;
+	height: 35px;
+	background-color: var(--main-color);
+	border-radius: 10px;
+	font-size: 24px;
+	color: #fff;
+	top: 2px;
+	cursor: pointer;
+}
+
+#myProfileButton {
+	width: 120px;
+	height: 35px;
+	background-color: #eee;
+	border: 0;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+#myProfileButton:hover {
+	background-color: #ddd;
+}
+
+#myProfileInfo {
+	width: 400px;
+	margin:  5px auto 20px auto;
+	text-align: center;
+}
+
+#myProfileInfo > div {
+	display: inline-block;
+}
+
+#myProfileInfo > div:nth-child(1) {
+	float: left;
+}
+
+#myProfileInfo > div:nth-child(3) {
+	float: right;
+}
+
+#myProfileBoards {
+	width: 1240px;
+	margin: 30px auto 0px auto;
+	display: inline-block;
+}
+
+#gramSearchResult {
+	position: relative;
+	z-index: 5;
+	background-color: #fff;
+	max-height: 200px;
+	bottom: 10px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border: 1px solid #ddd;
+	overflow-y: auto;
+	visibility: hidden;
+}
+
+#gramSearchResult a {
+	padding: 3px 5px 3px 10px;
+	display: block;
+}
+
+#gramSearchResult a:hover {
+	background-color: #eee;
+}
+
+#gramSearchResult a img {
+	position: relative;
+	width: 20px;
+	height: 20px;
+	border: 1px solid var(--main-color);
+	border-radius: 10px;
+	margin-right: 5px;
+	top: 3px;
+}
+
+#gramSearchResult div {
+	margin-left: 5px;
+}
+
+#searchRight {
+	position: relative;
+	float: right;
+	margin-right: 10px;
+	font-size: 12px;
+	color: #ddd;
+}
+
+#gramSearch {
+	display: inline-block;
+	position: relative;
+	z-index: 10;
+	width: 300px;
+	height: 20px;
+	padding: 5px 0px 5px 0px;
+	margin-left: 5px;
+	text-align: center;
+	border: 0;
+	border-radius: 10px;
+	bottom: 10px;
+}
+
+#gramSearch:focus {
+	outline: none;
+}
+
+#searchButton {
+	width: 30px;
+	height: 30px;
+	border: 0;
+	margin: 5px 0px 0px 10px;
+	cursor: pointer;
+}
+
+#searchButton img {
+	width: 30px;
+	height: 30px;
+}
+
 #writeOunwangram {
 	width: 1000px;
 	margin: 50px auto 0px auto;

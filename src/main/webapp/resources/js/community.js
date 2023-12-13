@@ -13,7 +13,12 @@ var changImage = false;
 $(window).on("load", function() {
 
     if(window.location.pathname == "/ounwan/ounwangram") {
-        loadGramWholeBoard();
+        const orgId = $("#clientId").html();
+        loadGramWholeBoard(orgId);
+        
+        $("#goMyProfile").on("click", function() {
+        	location.href = "/ounwan/ounwanProfile?clientId=" + $("#clientId").html();
+        })
 
         $("#gramFollowBoard").on("click", function() {
             if($("#gramWholeBoard").attr("class").toString().includes("ounwangram_selected")) {
@@ -22,7 +27,7 @@ $(window).on("load", function() {
                 $("#ounwangramBoard").html("");
                 gramEnd = false;
                 countGramWhole = 0;
-                loadGramFollowBoard();
+                loadGramFollowBoard(orgId);
             }
         });
 
@@ -33,7 +38,7 @@ $(window).on("load", function() {
                 $("#ounwangramBoard").html("");
                 gramEnd = false;
                 countGramFollow = 0;
-                loadGramWholeBoard();
+                loadGramWholeBoard(orgId);
             }
         });
 
@@ -47,9 +52,9 @@ $(window).on("load", function() {
                     if($(window).scrollTop() > scrollHeight - 300) {
                         timer = setTimeout(function() {
                             if($("#gramWholeBoard").attr("class").toString().includes("ounwangram_selected")) {
-                                loadGramWholeBoard();
+                                loadGramWholeBoard(orgId);
                             } else {
-                                loadGramFollowBoard();
+                                loadGramFollowBoard(orgId);
                             }    
                             timer = null;
                         }, 300);
@@ -79,10 +84,10 @@ $(window).on("load", function() {
 		});
 
         $("#ounwangramBoard").on("click", "#threeDotBtn", function() {
-        	if($(this).parent().parent().find('div:eq(3)').css("visibility") == "hidden") {
-            	$(this).parent().parent().find('div:eq(3)').css("visibility","visible");
+        	if($(this).parent().parent().find('div:eq(2)').css("visibility") == "hidden") {
+            	$(this).parent().parent().find('div:eq(2)').css("visibility","visible");
             } else {
-            	$(this).parent().parent().find('div:eq(3)').css("visibility","hidden");
+            	$(this).parent().parent().find('div:eq(2)').css("visibility","hidden");
             }
         })
 
@@ -115,6 +120,47 @@ $(window).on("load", function() {
         $("#ounwangramBoard").on("click", "#reportGramBoard", function() {
             console.log("report : " + $(this).val());
         })
+        
+        $("#gramSearch").on("input", function() {
+            var keyword = $(this).val();
+            if(keyword.length > 0) {
+                $("#gramSearchResult").css('visibility', 'visible');
+            } else {
+                $("#gramSearchResult").css('visibility', 'hidden');
+            }
+            $.ajax({
+                url: "/ounwan/ounwangram/ajaxSearch",
+                data: { "keyword" : keyword },
+                success: function(res) {
+                    if(res[0] != null) {
+                        $("#gramSearchResult").html(`
+                        <div>해시태그로 검색</div>
+                        <a href="#">
+                            <span>#${res[0].NAME}</span>
+                            <span id="searchRight">게시글 ${res[0].COUNT}</span>
+                        </a>`
+                        );
+                    } else{
+                        $("#gramSearchResult").html("");
+                    }
+                    
+                    if(keyword.length > 3) {
+                        if(res.length > 1) {
+                            $("#gramSearchResult").append("<div>아이디로 검색</div>");
+                        }
+                        for(var i = 1; i < res.length; i++) {
+                            $("#gramSearchResult").append(`
+                            <a href="/ounwan/ounwanProfile?clientId=${res[i].CLIENT_ID}">
+                                <img src='${res[i].PROFILE_URL}'>
+                                <span>${res[i].CLIENT_ID}</span>
+                                <span id="searchRight">팔로워 ${res[i].FOLLOWER}</span>
+                                </a>`
+                                );
+                        }
+                    }
+                }
+            })
+        });
 		
     } else if(window.location.pathname == "/ounwan/writeGramBoard" || window.location.pathname == "/ounwan/updateGramBoard") {
     	var hashTagArray = [];
@@ -139,7 +185,7 @@ $(window).on("load", function() {
             } else {
                 imgTag.attr("src", "../images/white.jpg");
             }
-        })
+        });
 
         $("#ounwanGramContent").on("input", function() {
             $("#gramContentLength").html($(this).val().length);
@@ -149,7 +195,7 @@ $(window).on("load", function() {
                 $(this).val(gramContent);
                 $("#gramContentLength").html("30");
             }
-        })
+        });
 
         $("#ounwanGramHashTag").on("input", function() {
             var hashTags = $(this).val();
@@ -160,7 +206,7 @@ $(window).on("load", function() {
                 $(this).val(gramHashTag);
                 $("#gramHashTagLength").html("15");
             }
-        })
+        });
 
         $("#ounwanGramHashTag").on("keypress", function(event) {
             var hashTags = "";
@@ -182,13 +228,13 @@ $(window).on("load", function() {
                     $("#hashTagAlert").css("visibility", "visible");
                 }
             }
-        })
+        });
 
         $("#addedHashTag").on("click", "#removeHashTag", function() {
             hashTagArray.splice(hashTagArray.indexOf($(this).parent().text().substr(1, $(this).parent().text().length - 1)), 1);
             $(this).parent().remove();
             $("#hashTagAlert").css("visibility", "hidden");
-        })
+        });
 
         $("#submitButton").on("click", function() {
             if(originalImg == $("#ounwanUploadImage").attr("src")) {
@@ -221,7 +267,7 @@ $(window).on("load", function() {
                 	}
                 })
             }
-        })
+        });
 
         $('#updateButton').on("click", function() {
             var formData = new FormData();
@@ -254,11 +300,15 @@ $(window).on("load", function() {
                     }
                 }
             })
-        })
+        });
     }
 })
 
-var loadGramWholeBoard = function() {
+const loadGramWholeBoard = function(orgId) {
+	if(orgId != $("#clientId").html()) {
+		alert("잘못된 요청입니다.");
+		location.href = "./";
+	}
 	$.ajax({
         url: "/ounwan/ounwangram/wholeBoard",
         data: { "rowNum": countGramWhole * 5 },
@@ -286,10 +336,10 @@ var loadGramWholeBoard = function() {
                 $("#ounwangramBoard").append(`
                 <div class="ounwangram-main">
 	                <div>
-		                <div class="pointer ounwangram-profile">
+		                <a class="pointer ounwangram-profile" href="/ounwan/ounwanProfile?clientId=${res[i].clientId}">
 		                    <img src="${res[i].profileUrl}">
 		                    <div>${res[i].clientId}</div>
-		                </div>
+		                </a>
 		                <div class="ounwangram-threedot-div">
 		                    <button id='threeDotBtn' class="ounwangram-threedot"><img class="ounwangram-threedot" src="./images/three_dot.png"></button>
 		                </div>
@@ -326,7 +376,11 @@ var loadGramWholeBoard = function() {
     })
 }
 
-var loadGramFollowBoard = function() {
+const loadGramFollowBoard = function(orgId) {
+	if(orgId != $("#clientId").html()) {
+		alert("잘못된 요청입니다.");
+		location.href = "./";
+	}
 	$.ajax({
         url: "/ounwan/ounwangram/followBoard",
         data: { "rowNum": countGramFollow * 5 },
@@ -355,10 +409,10 @@ var loadGramFollowBoard = function() {
                 $("#ounwangramBoard").append(`
                 <div class="ounwangram-main">
 	                <div>
-		                <div class="pointer ounwangram-profile">
+		                <a class="pointer ounwangram-profile"  href="/ounwan/ounwanProfile?clientId=${res[i].clientId}">
 		                    <img src="${res[i].profileUrl}">
 		                    <div>${res[i].clientId}</div>
-		                </div>
+		                </a>
 		                <div class="ounwangram-threedot-div">
 		                    <button id='threeDotBtn' class="ounwangram-threedot"><img class="ounwangram-threedot" src="./images/three_dot.png"></button>
 		                </div>

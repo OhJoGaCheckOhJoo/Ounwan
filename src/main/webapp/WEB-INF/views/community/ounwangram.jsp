@@ -18,6 +18,13 @@
         <%@ include file = "../common/nav.jsp" %>
         
         <div class="ounwangram" id="ounwangram">
+        	<div class="gramSearch">
+                <input id="gramSearch" type="text">
+                <button id="searchButton">
+                	<img src="./images/search_btn.png">
+                </button>
+                <div id="gramSearchResult"></div>
+            </div>
         	<div id="ounwangramProfile">
         		<img src="${clientInfo.profileURL}">
         		<div>

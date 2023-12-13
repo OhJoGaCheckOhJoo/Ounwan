@@ -111,6 +111,12 @@ public class CommunityService {
 		}
 	}
 	
+	public List<Map<String, Object>> searchAjaxGram(String keyword) {
+		List<Map<String, Object>> result = communityDAO.searchGramClientId(keyword);
+		result.add(0, communityDAO.searchHashTag(keyword));
+		return result;
+	}
+	
 	public String gramUpdateBoard(String clientId, int communityNumber, MultipartFile image, String content, String[] hashTag) throws IllegalStateException, IOException {
 		OunwanGram ounwanBoard = communityDAO.selectBoardByCommunityNum(communityNumber);
 		ounwanBoard.setContents(content); // 내용 수정
@@ -127,7 +133,7 @@ public class CommunityService {
 				return "fail";
 			}
 		}
-		System.out.println(ounwanBoard);
+		
 		// 태그 업데이트
 		tagUpdate(communityNumber, hashTag);
 		
