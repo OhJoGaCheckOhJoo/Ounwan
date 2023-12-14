@@ -15,4 +15,18 @@
 	<select id="selectAllImage" parameterType="int" resultType="productImages">
 		select * from PRODUCT_IMAGES1 where DANGGUN_NUMBER = #{danggunNumber} and TYPE=0;
 	</select>
+	
+	<insert id="danggunInsert" parameterType="danggun">
+		<selectKey keyColumn="DANGGUN_NUMBER" keyProperty="danggunNumber" order="AFTER" resultType="int">
+			select DANGGUN_NUMBER from DANGGUN where 
+			CLIENT_ID=#{clientId} and PRODUCT_NAME=#{productName}
+		</selectKey>
+		insert into DANGGUN (`TRADE_HISTORY_NUMBER`, `CLIENT_ID`, `PRODUCT_NAME`,`PRICE`, `DETAIL`, `UPLOAD_DATE`) 
+		VALUES (6, #{clientId}, #{productName}, #{price}, #{detail}, now())		
+	</insert>
+	
+	<insert id="imageInsert" parameterType="map">
+		insert into PRODUCT_IMAGES1 (`DANGGUN_NUMBER`, `URL`, `TYPE`)
+		VALUES (#{danggunNumber}, #{url}, #{type})
+	</insert>
 </mapper>

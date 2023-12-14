@@ -16,11 +16,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Danggun {
-	private int danggunNumber;
-	private int tradeHistoryNumber;
+	private Integer danggunNumber;
+	private Integer tradeHistoryNumber;
 	private String clientId;
 	private String productName;
-	private int price;
+	private Integer price;
 	private String detail;
 	private Date uploadDate;
+	private ProductImages productImages; 
 }

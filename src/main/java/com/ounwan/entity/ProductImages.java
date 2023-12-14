@@ -14,9 +14,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductImages {
-	private int productImageNumber;
-	private int coupungNumber;
-	private int danggunNumber;
+	private Integer productImageNumber;
+	private Integer coupungNumber;
+	private Integer danggunNumber;
 	private String url;
-	private int type;
+	private Integer type;
 }

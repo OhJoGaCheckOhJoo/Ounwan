@@ -29,8 +29,8 @@
     	UPDATE CLIENTS SET WITHDRAWAL_DATE = NOW(), ACTIVATION_CHECK = 1, PRIVACY_TERMS = #{privacyTerms} WHERE CLIENT_ID = #{clientId}
     </update>
 
-    <select id="checkLogin" parameterType="clients" resultType="String">
-    	select password from CLIENTS where client_id=#{clientId}
+    <select id="checkLogin" parameterType="String" resultType="clients">
+    	select * from CLIENTS where client_id=#{clientId}
     </select>
 
     <select id="checkNaverToken" parameterType="String" resultType="clients">

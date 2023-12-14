@@ -25,4 +25,5 @@ public class DanggunDTO {
 	private Date uploadDate;
 	//danggun picture url 추가
 	private String url;
+	private ProductImagesDTO productImagesDTO;
 }

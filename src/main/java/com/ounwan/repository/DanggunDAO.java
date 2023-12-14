@@ -1,6 +1,7 @@
 package com.ounwan.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ public class DanggunDAO {
 
 	@Autowired
 	SqlSession sqlSession;
+	
 	private static final String NAMESPACE = "net.ounwan.danggun.";
 
 	public List<Danggun> listAll() {
@@ -22,5 +24,9 @@ public class DanggunDAO {
 	public List<Danggun> searchProduct(String name) {
 		return sqlSession.selectList(NAMESPACE + "searchProduct", name);
 	}
-
+	
+	public int danggunInsert(Danggun danggun) {
+		return sqlSession.insert(NAMESPACE + "danggunInsert", danggun);
+	}
+	
 }
