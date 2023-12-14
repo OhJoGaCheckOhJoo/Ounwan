@@ -63,4 +63,10 @@ public class CommunityRestController {
 	public List<Map<String, Object>> ounwangramAjaxSearch(String keyword) {
 		return communityService.searchAjaxGram(keyword);
 	}
+	
+	// 오늘운동했다그램 태그 검색
+	@RequestMapping("/ounwangram/tagBoard")
+	public List<OunwanGramDTO> ounwangramTagBoard(@RequestParam int rowNum, @RequestParam String name, HttpSession session) {	
+		return communityService.searchByTag(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), rowNum, name);
+	}
 }

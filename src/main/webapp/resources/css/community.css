@@ -304,6 +304,10 @@ nav .ounwangram {
 	font-size: 18px;
 }
 
+#searchTag {
+	cursor: pointer;
+}
+
 #myProfileImage {
 	margin: 50px 0px 30px 0px;
 	text-align: center;
@@ -340,10 +344,10 @@ nav .ounwangram {
 	height: 35px;
 	background-color: var(--main-color);
 	border-radius: 10px;
-	font-size: 24px;
+	font-size: 20px;
 	color: #fff;
-	top: 2px;
 	cursor: pointer;
+	bottom: 3px;
 }
 
 #myProfileButton {

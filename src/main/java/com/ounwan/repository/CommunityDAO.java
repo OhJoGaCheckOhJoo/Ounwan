@@ -37,6 +37,18 @@ public class CommunityDAO {
 		return sqlSession.selectList(NAMESPACE + "searchGramClientId", keyword);
 	}
 	
+	public List<Map<String, Object>> getProfileBoard(String profileId) {
+		return sqlSession.selectList(NAMESPACE + "getProfileBoard", profileId);
+	}
+	
+	public List<OunwanGram> selectBoardsByTag(Map<String, Object> data) {
+		return sqlSession.selectList(NAMESPACE + "selectBoardsByTag", data);
+	}
+	
+	public int checkFollow(Map<String, Object> data) {
+		return sqlSession.selectOne(NAMESPACE + "checkFollow", data);
+	}
+	
 	public Map<String, Object> searchHashTag(String keyword) {
 		return sqlSession.selectOne(NAMESPACE + "searchHashTag", keyword); 
 	}
@@ -47,6 +59,10 @@ public class CommunityDAO {
 	
 	public OunwanGram selectBoardByCommunityNum(int communityNumber) {
 		return sqlSession.selectOne(NAMESPACE + "selectBoardByCommunityNum", communityNumber);
+	}
+	
+	public Map<String, Object> getUserProfileInfo(String profileId) {
+		return sqlSession.selectOne(NAMESPACE + "getUserProfileInfo", profileId);
 	}
 	
 	public int addLikeOunwanBoard(OunwanGramLikes likes) {

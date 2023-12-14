@@ -27,4 +27,5 @@ public class OunwanGramDTO {
 	private String profileUrl;
 	private Integer likesCheck;
 	private List<String> hashTags;
+	private boolean mine;
 }

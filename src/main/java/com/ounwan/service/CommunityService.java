@@ -32,11 +32,15 @@ public class CommunityService {
 		dataMap.put("rowNum", rowNum);
 		List<OunwanGramDTO> result = new ArrayList<>();
 		List<Integer> likeBoars = communityDAO.gramLikeBoards(clientId);
+
 		for(OunwanGram ounwangram : communityDAO.gramFollowBoard(dataMap)) {
 			ounwangram.setLikesCheck(likeBoars.contains(ounwangram.getCommunityNumber()) ? 1 : 0);
 			ounwangram.setHashTags(communityDAO.hashTagsByNumber(ounwangram.getCommunityNumber()));
-			result.add(changeOunwanGram(ounwangram));
+			OunwanGramDTO ounwangramDTO = changeOunwanGram(ounwangram);
+			ounwangramDTO.setMine(false);
+			result.add(ounwangramDTO);
 		}
+
 		return result;
 	}
 
@@ -46,7 +50,13 @@ public class CommunityService {
 		for(OunwanGram ounwangram : communityDAO.gramWholeBoard(rowNum)) {
 			ounwangram.setLikesCheck(likeBoars.contains(ounwangram.getCommunityNumber()) ? 1 : 0);
 			ounwangram.setHashTags(communityDAO.hashTagsByNumber(ounwangram.getCommunityNumber()));
-			result.add(changeOunwanGram(ounwangram));
+			OunwanGramDTO ounwangramDTO = changeOunwanGram(ounwangram);
+			if(ounwangramDTO.getClientId().equals(clientId)) {
+				ounwangramDTO.setMine(true);
+			} else {
+				ounwangramDTO.setMine(false);
+			}
+			result.add(ounwangramDTO);
 		}
 		return result;
 	}
@@ -117,6 +127,21 @@ public class CommunityService {
 		return result;
 	}
 	
+	public Map<String, Object> getUserProfile(String profileId, String clientId) {
+		Map<String, Object> result = communityDAO.getUserProfileInfo(profileId);
+		if(!profileId.equals(clientId)) {
+			Map<String, Object> data = new HashMap<>();
+			data.put("profileId", profileId);
+			data.put("clientId", clientId);
+			result.put("check", communityDAO.checkFollow(data) > 0 ? true : false);
+		}
+		return result;
+	}
+	
+	public List<Map<String, Object>> getUserBoards(String profileId) {
+		return communityDAO.getProfileBoard(profileId);
+	}
+	
 	public String gramUpdateBoard(String clientId, int communityNumber, MultipartFile image, String content, String[] hashTag) throws IllegalStateException, IOException {
 		OunwanGram ounwanBoard = communityDAO.selectBoardByCommunityNum(communityNumber);
 		ounwanBoard.setContents(content); // 내용 수정
@@ -157,10 +182,32 @@ public class CommunityService {
 		
 		for(String name : hashTag) {
 			dataMap.put("name", name);
-			System.out.println("add : " + name);
 			result *= communityDAO.insertHashTagName(name);
 			result *= communityDAO.addHashTag(dataMap);
 		}
+		return result;
+	}
+	
+	public List<OunwanGramDTO> searchByTag(String clientId, int rowNum, String name) {
+		Map<String, Object> data = new HashMap<>();
+		List<OunwanGramDTO> result = new ArrayList<>();
+		List<Integer> likeBoars = communityDAO.gramLikeBoards(clientId);
+		
+		data.put("rowNum", rowNum);
+		data.put("name", name);
+		
+		for(OunwanGram ounwangram : communityDAO.selectBoardsByTag(data)) {
+			ounwangram.setLikesCheck(likeBoars.contains(ounwangram.getCommunityNumber()) ? 1 : 0);
+			ounwangram.setHashTags(communityDAO.hashTagsByNumber(ounwangram.getCommunityNumber()));
+			OunwanGramDTO ounwangramDTO = changeOunwanGram(ounwangram);
+			if(ounwangramDTO.getClientId().equals(clientId)) {
+				ounwangramDTO.setMine(true);
+			} else {
+				ounwangramDTO.setMine(false);
+			}
+			result.add(ounwangramDTO);
+		}
+		System.out.println(result.toString());
 		return result;
 	}
 	

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ounwan.dto.ClientsDTO;
 import com.ounwan.service.ClientsService;
 import com.ounwan.service.CommunityService;
 
@@ -43,9 +44,11 @@ public class CommunityController {
 		return "community/updateOunwangram";
 	}
 	
+	// 개인 프로필 요청
 	@RequestMapping("/ounwanProfile")
-	public String ounwanProfile(@RequestParam String clientId, Model model) {
-		
+	public String ounwanProfile(@RequestParam String clientId, HttpSession session, Model model) {
+		model.addAttribute("userProfileInfo", communityService.getUserProfile(clientId, ((ClientsDTO)session.getAttribute("clientInfo")).getClientId()));
+		model.addAttribute("userBoard", communityService.getUserBoards(clientId));
 		return "community/ounwangramProfile";
 	}
 }
