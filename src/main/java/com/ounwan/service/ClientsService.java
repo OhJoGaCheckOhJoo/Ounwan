@@ -1,8 +1,7 @@
 package com.ounwan.service;
 
-import java.util.UUID;
-
 import java.util.Random;
+import java.util.UUID;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +23,26 @@ public class ClientsService {
 	@Autowired
 	MailSender sender;
 
-	public int createAccount(ClientsDTO client) {
+	public boolean createAccount(ClientsDTO client) {
 		String password = hashPassword(client.getPassword());
 		client.setPassword(password);
-		client.setEmailAuth(UUID.randomUUID().toString());
-		client.setEmailCheck(false);
 		client.setQualifiedCheck(false);
-		client.setActivationCheck(false);
-		int result = clientsDAO.createAccount(changeEntity(client));
-		if (result > 0) {
-			sendEmailAuths(client.getEmail(), client.getEmailAuth());
-			return 1;
+		client.setActivationCheck(true);
+		if (client.getSocialId() != null) {
+			client.setEmailAuth(" ");
+			client.setEmailCheck(true);
+			int result = clientsDAO.createAccount(changeEntity(client));
+			return (result > 0) ? true : false;
+		} else {
+			client.setEmailAuth(UUID.randomUUID().toString());
+			client.setEmailCheck(false);
+			int result = clientsDAO.createAccount(changeEntity(client));
+			if (result > 0) {
+				sendEmailAuths(client.getEmail(), client.getEmailAuth());
+				return true;
+			} 
+			return false;
 		}
-		return 0;
 	}
 
 	public boolean checkId(String clientId) {

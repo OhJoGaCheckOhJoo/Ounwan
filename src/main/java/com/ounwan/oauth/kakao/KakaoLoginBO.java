@@ -12,17 +12,24 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.ounwan.dto.ClientsDTO;
+import com.ounwan.service.ClientsService;
 
 @Service
 public class KakaoLoginBO {
+	
+	@Autowired
+	ClientsService clientsService;
+	
 	private String accessToken = "";
 	private String refreshToken = "";
-	private String RESTAPI_KEY = "ss";
+	private String RESTAPI_KEY = "b82d99b3ea0f111a9b78d4cc413fbfdd";
 	private String redirectURI = "http://localhost:9090/myapp/oauth/kakao";
 
 	public String getURL() {
@@ -72,7 +79,7 @@ public class KakaoLoginBO {
 		return accessToken;
 	}
 
-	public Map<String, Object> getUserInfo(String accessToken) throws IOException {
+	public ClientsDTO getUserInfo(String accessToken) throws IOException {
 		String reqURL = "https://kapi.kakao.com/v2/user/me";
 		Map<String, Object> resultMap = new HashMap<>();
 
@@ -92,24 +99,27 @@ public class KakaoLoginBO {
 		while ((line = br.readLine()) != null) {
 			result += line;
 		}
-		System.out.println("전 = " + result);
+
 		JsonParser parser = new JsonParser();
 		JsonElement element = parser.parse(result);		
 
 		JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
+		JsonObject accountInfo = element.getAsJsonObject().getAsJsonObject("kakao_account").getAsJsonObject();
 
 		String token = element.getAsJsonObject().get("id").getAsString();
 
 		String profileURL = properties.getAsJsonObject().get("profile_image").getAsString();
-		String clientId = properties.getAsJsonObject().get("nickname").getAsString();
-
-
-		resultMap.put("token", token);
-		resultMap.put("profileURL", profileURL);
-		resultMap.put("clientId", clientId);
-
-
-		return resultMap;
+		// String clientId = properties.getAsJsonObject().get("nickname").getAsString(); -> 받을지 말지 논의 필요
+		String email = accountInfo.getAsJsonObject().get("email").getAsString();
+		
+		ClientsDTO client = clientsService.checkKakaoToken(token);
+		return (client != null) ? 
+				client : ClientsDTO.builder()
+									.socialId(token)
+									.socialType("KAKAO")
+									.profileURL(profileURL)
+									.email(email)
+									.build();
 	}
 
 	public void logout(HttpSession session) {

@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -105,8 +104,8 @@ public class ClientsController {
 	@PostMapping(value = "/signUp", consumes= "application/json", produces="text/plain;charset=utf-8")
 	public @ResponseBody String createAccount(@RequestBody ClientsDTO client) {
 		System.out.println(client);
-		int result = clientService.createAccount(client);
-		return (result > 0) ? "success" : "fail";
+		boolean result = clientService.createAccount(client);
+		return (result) ? "success" : "fail";
 	} 
 	
 	@GetMapping("/checkId")

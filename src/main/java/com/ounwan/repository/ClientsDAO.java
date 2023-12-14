@@ -56,4 +56,7 @@ public class ClientsDAO {
 	public int updateActivation(String clientId) {
 		return sqlSession.update(NAMESPACE + "updateActivation", clientId);
 	}
+	public Clients findKakaoUser(String token) {
+		return sqlSession.selectOne(NAMESPACE + "findKakaoUser", token);
+	}
 }
