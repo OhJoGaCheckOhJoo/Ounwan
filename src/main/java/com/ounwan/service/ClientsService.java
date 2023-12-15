@@ -1,5 +1,6 @@
 package com.ounwan.service;
 
+import java.io.File;
 import java.util.Random;
 import java.util.UUID;
 
@@ -9,6 +10,7 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.entity.Clients;
@@ -16,13 +18,15 @@ import com.ounwan.repository.ClientsDAO;
 
 @Service
 public class ClientsService {
-
 	@Autowired
 	ClientsDAO clientsDAO;
 
 	@Autowired
 	MailSender sender;
-
+	
+	private final static String UPLOADPATH = "/Users/karenyoon/Documents/GitHub/Back-end/src/main/webapp/resources";
+	private final static String IMAGEPATH = "/images/uploads/";
+ 
 	public boolean createAccount(ClientsDTO client) {
 		String password = hashPassword(client.getPassword());
 		client.setPassword(password);
@@ -124,6 +128,15 @@ public class ClientsService {
 		}
 		return (result > 0) ? true : false;
 	}
+	
+
+	public String setImage(MultipartFile multipartFile) {
+		String newFileName = System.currentTimeMillis() + "." + multipartFile.getContentType().split("/")[1]; // image/jpg
+		File file = new File(UPLOADPATH + IMAGEPATH + newFileName);
+		
+		return "." + IMAGEPATH + newFileName;
+	}
+
 	
 	public void sendTempPassword(String email, String newPassword) {
 		SimpleMailMessage message = new SimpleMailMessage();

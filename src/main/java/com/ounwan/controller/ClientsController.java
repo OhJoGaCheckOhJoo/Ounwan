@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -33,13 +34,10 @@ public class ClientsController {
 	@Autowired
 	NaverLoginBO naverLogin;
 
-	private static String ounwanAPIURL = null;
-
 	@GetMapping("/login")
 	public ModelAndView loginGet(HttpSession session) {
 		ModelAndView v = new ModelAndView("login");
-		ounwanAPIURL = naverLogin.getAuthorizationUrl(session);
-		System.out.println(ounwanAPIURL);
+		
 		return v;
 	}
 
@@ -97,7 +95,7 @@ public class ClientsController {
 	}
 	
 	@GetMapping("/signUp")
-	public String createAccount () {
+	public String createAccount () {  
 		return "signUp";
 	}
 
@@ -133,5 +131,12 @@ public class ClientsController {
 	public @ResponseBody String checkEmailAuthString (@RequestBody ClientsDTO client) {
 		boolean result = clientService.checkEmailAuth(client);
 		return (result) ? "success" : "fail";
+	}
+	
+	@PostMapping(value="/setImage")
+	public @ResponseBody String setImage(@RequestParam("image") MultipartFile image) {
+		String imgString = clientService.setImage(image);
+		System.out.println("save : " + imgString);
+		return imgString;
 	}
 }

@@ -17,6 +17,8 @@ $(document).ready(function() {
 		$('#clientEmail').val('${kakaoClient.email}');
 		$('#clientEmail').attr('readOnly', true);
 		$('#emailCheckBtn').attr('value', 'Y');
+		$('#emailCheckBtn').attr('disabled', true);
+		$('#profileImage').attr('src', '${kakaoClient.profileURL}');
 	} 
 	if ('${naverClient}' != '') {
 		$('#clientName').val('${naverClient.name}');
@@ -24,10 +26,12 @@ $(document).ready(function() {
 		$('#clientEmail').val('${naverClient.email}');
 		$('#clientEmail').attr('readOnly', true);
 		$('#emailCheckBtn').attr('value', 'Y');
+		$('#emailCheckBtn').attr('disabled', true);
 		$('#phoneNum').val('${naverClient.phone}');
 		$('#phoneNum').attr('readOnly', true);
 		$('#clientBirthday').val('${naverClient.birthday}');
 		$('#clientBirthday').attr('readOnly', true);
+		$('#profileImage').attr('src', '${naverClient.profileURL}');
 	} 
 });
 </script>
@@ -40,16 +44,13 @@ $(document).ready(function() {
 	<div class="title">회원정보입력</div>
 	<br>
 
-	<form action="" method="post">
-
-
 		<div class="profile-photo">
-			<img class="profile-photo-file" src="img/default_profile.png">
+			<input type="file" name="uploadImageInput" id="uploadImageInput" accept="image/*"/>
+			<img class="profile-photo-file" src="img/default_profile.png" id="profileImage">
 			<button>사진등록</button>
 			<br>
 			<br>
 		</div>
-
 		<div class="profile-info">
 
 			<div class="profile-name">
@@ -135,7 +136,7 @@ $(document).ready(function() {
 		</div>
 		<br>
 		<div class="agreement">
-			<label for="agree5"> <input type="checkbox" id="agree5" required>
+			<label for="agree5"> <input type="checkbox" id="agree5" checked>
 				<i class="circle"></i> [필수] 탈퇴 시 일시적 정보 보유동의
 			</label>
 		</div>
@@ -153,8 +154,6 @@ $(document).ready(function() {
 		<div class="sign-up-button">
 			<button id='submitBtn' type='button'>회원가입</button>
 		</div>
-
-	</form>
 	<br><br><br>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -192,9 +191,10 @@ $(document).ready(function() {
                         $('#clientId').val('');
                         $('#clientId').focus();
                     } else {
-                    	if(confirm(id + " 이 아이디를 사용하시겠습니까?")) {
+                    	if(confirm("해당 아이디를 사용하시겠습니까?")) {
                     		$('#checkId').attr('value', 'Y');
           					$('#clientId').attr('readOnly', true);
+          					$('#checkId').attr('disabled', true);
                     	} else {
                     		$('#clientId').val('');
                     		$('#clientId').focus();
@@ -229,8 +229,14 @@ $(document).ready(function() {
 						$('#clientEmail').val('');
 						$('#clientEmail').focus();
 					} else {
-						alert("사용 가능한 이메일 입니다.");
-						$('#emailCheckBtn').attr('value', 'Y');
+						if(confirm('해당 이메일을 사용하시겠습니까?')) {
+							$('#emailCheckBtn').attr('value', 'Y');
+							$('#emailCheckBtn').attr('disabled', true);
+							$('#clientEmail').attr('readOnly', true);
+						} else {
+							$('#clientEmail').val('');
+							$('#clientEmail').focus();
+						}
 					}
 				},
 				error: function(request, status, error) {
@@ -301,11 +307,47 @@ $(document).ready(function() {
 	    
 	});
 	
+	var formData = new FormData();
+	var changeImage = false;
+	var formData = new FormData();
+	var imgUrl = '';
+	
+	$("#uploadImageInput").on("change", function() {
+	    var imgTag = $("#profileImage");
+	    if ($('#uploadImageInput')[0].files.length > 0) {
+	    	if (confirm("해당 이미지를 사용하시겠습니까?")) {
+		        var reader = new FileReader();
+		        formData = new FormData();
+		        formData.append('image', $("#uploadImageInput")[0].files[0]);
+		        reader.onload = function(data) {
+		            imgTag.attr("src", data.target.result);
+		        }
+	        	reader.readAsDataURL($('#uploadImageInput')[0].files[0]);
+	        	
+	        	$.ajax({
+	        	    url: "${appPath}/clients/setImage",
+	        	    type: "post",
+	        	    data: formData,
+	        	    processData: false,
+	        	    contentType: false,
+	        	    success: function(res) {
+	        	        imgUrl = res;
+	        	        $('#uploadImageInput').attr('disabled', true);
+	        	    },
+	        	    error: function(request, status, error) {
+	        	        alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	        	    }
+	        	});	 
+	    	}
+	    }
+	});
+	
 	$('#submitBtn').on('click', function() {
         var idCheck = $('#checkId').val();
         var emailCheck = $('#emailCheckBtn').val();
         var firstPwdCheck = $('#wrongForm-inform').css('visibility');
         var secondPwdCheck = $('#notMatch-inform').css('visibility');
+       	
         
         if (idCheck === 'N') {
             alert('아이디 중복확인 해라');
@@ -321,56 +363,33 @@ $(document).ready(function() {
             alert('비밀번호 다르다 확인해');
             $('#secondPass').val('');
             $('#secondPass').focus();
-        } else {
+        } else if (!$('#agree1').is(':checked')) {
+			alert('필수 등록 사항들을 체크해 주세요!');
+			$('#agree1').focus();
+		} else if (!$('#agree2').is(':checked')) {
+			alert('필수 등록 사항들을 체크해 주세요!');
+			$('#agree2').focus();
+		} else if (!$('#agree3').is(':checked')) {
+			alert('필수 등록 사항들을 체크해 주세요!');
+			$('#agree3').focus();
+		} else if (!$('#agree4').is(':checked')) {
+			alert('필수 등록 사항들을 체크해 주세요!');
+			$('#agree4').focus();
+		} else if (!$('#agree5').is(':checked')) {
+			alert('필수 등록 사항들을 체크해 주세요!');
+			$('#agree5').focus();
+		} else {
         	var obj = {};
+        	var email = $('#clientEmail').val();
         	if ('${kakaoClient}' != '') {
-        		var email = "k-" + $('#clientEmail').val()
-        		obj = {
-	        		    "clientId" : $('#clientId').val(),
-	        		    "name" : $('#clientName').val(),
-	        		    "password" : $('#firstPass').val(),
-	        		    "email" : email,
-	        		    "birthday" : $('#clientBirthday').val(),
-	        		    "phone" : $('#phoneNum').val(),
-	        		    "address" : $('#addr').val(),
-	        		    "addressDetail" : $('#addrDetail').val(),
-	        		    "zipCode" : $('#zipCode').val(),
-	        		    "privacyTerms" : "3",
-	        		    "profileURL" : "${kakaoClient.profileURL}",
-	        		    "socialType" : "KAKAO",
-	        		    "socialId" : "${kakaoClient.socialId}"
-	        		};
+        		if (imgUrl === '') imgUrl = "${kakaoClient.profileURL}";
+        		obj = setKakao(email, imgUrl);
         	} else if ('${naverClient}' != '') {
-        		var email = "n-" + $('#clientEmail').val();
-        		obj = {
-	        		    "clientId" : $('#clientId').val(),
-	        		    "name" : $('#clientName').val(),
-	        		    "password" : $('#firstPass').val(),
-	        		    "email" : email,
-	        		    "birthday" : $('#clientBirthday').val(),
-	        		    "phone" : $('#phoneNum').val(),
-	        		    "address" : $('#addr').val(),
-	        		    "addressDetail" : $('#addrDetail').val(),
-	        		    "zipCode" : $('#zipCode').val(),
-	        		    "privacyTerms" : "3",
-	        		    "profileURL" : "${naverClient.profileURL}",
-	        		    "socialType" : "NAVER",
-	        		    "socialId" : "${naverClient.socialId}"
-	        		};
+        		if (imgUrl === '') imgUrl = "${naverClient.profileURL}";
+        		obj = setNaver(email, imgUrl);
         	} else {
-	        	obj = {
-	        		    "clientId" : $('#clientId').val(),
-	        		    "name" : $('#clientName').val(),
-	        		    "password" : $('#firstPass').val(),
-	        		    "email" : $('#clientEmail').val(),
-	        		    "birthday" : $('#clientBirthday').val(),
-	        		    "phone" : $('#phoneNum').val(),
-	        		    "address" : $('#addr').val(),
-	        		    "addressDetail" : $('#addrDetail').val(),
-	        		    "zipCode" : $('#zipCode').val(),
-	        		    "privacyTerms" : "3",
-	        		    "profileURL" : "12345" // 정확한 주소로 변경 필요!
-	        		};
+        		if (imgUrl === '') imgUrl = $('#profileImage').attr('src');
+	        	obj = setUser(imgUrl);
         	}
         	
         	 $.ajax({
@@ -390,6 +409,60 @@ $(document).ready(function() {
              });
         }
     });
+	
+	 var setKakao = function(email, imgUrl) {
+     	var email = "k-" + $('#clientEmail').val()
+ 		 return {
+     		    "clientId" : $('#clientId').val(),
+     		    "name" : $('#clientName').val(),
+     		    "password" : $('#firstPass').val(),
+     		    "email" : email,
+     		    "birthday" : $('#clientBirthday').val(),
+     		    "phone" : $('#phoneNum').val(),
+     		    "address" : $('#addr').val(),
+     		    "addressDetail" : $('#addrDetail').val(),
+     		    "zipCode" : $('#zipCode').val(),
+     		    "privacyTerms" : "3",
+     		    "profileURL" : imgUrl,
+     		    "socialType" : "KAKAO",
+     		    "socialId" : "${kakaoClient.socialId}"
+     		};
+     }
+	 
+	 var setNaver = function(email, imgUrl) {
+		var email = "n-" + $('#clientEmail').val();
+ 		return {
+     		    "clientId" : $('#clientId').val(),
+     		    "name" : $('#clientName').val(),
+     		    "password" : $('#firstPass').val(),
+     		    "email" : email,
+     		    "birthday" : $('#clientBirthday').val(),
+     		    "phone" : $('#phoneNum').val(),
+     		    "address" : $('#addr').val(),
+     		    "addressDetail" : $('#addrDetail').val(),
+     		    "zipCode" : $('#zipCode').val(),
+     		    "privacyTerms" : "3",
+     		    "profileURL" : imgUrl,
+     		    "socialType" : "NAVER",
+     		    "socialId" : "${naverClient.socialId}"
+     		};
+	 }
+	 
+	 var setUser = function(imgUrl) {
+		return {
+     		    "clientId" : $('#clientId').val(),
+     		    "name" : $('#clientName').val(),
+     		    "password" : $('#firstPass').val(),
+     		    "email" : $('#clientEmail').val(),
+     		    "birthday" : $('#clientBirthday').val(),
+     		    "phone" : $('#phoneNum').val(),
+     		    "address" : $('#addr').val(),
+     		    "addressDetail" : $('#addrDetail').val(),
+     		    "zipCode" : $('#zipCode').val(),
+     		    "privacyTerms" : "3",
+     		    "profileURL" : imgUrl
+     		};
+	 }
 </script>
 </body>
 </html>

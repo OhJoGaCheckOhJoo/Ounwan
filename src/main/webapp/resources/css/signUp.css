@@ -1,4 +1,4 @@
-@charset "UTF-8";
+f@charset "UTF-8";
 
 :root { 
 	--main-color: #AAA;
@@ -37,6 +37,7 @@
 .profile-photo-file {
 	width: 220px;
 	height: 220px;
+	z-index: 100;
 }
 
 .profile-info {
