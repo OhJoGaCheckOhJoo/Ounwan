@@ -1,8 +1,6 @@
 package com.ounwan.entity;
 
-import java.sql.Date;
-
-import com.ounwan.dto.AetaImagesDTO;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,8 +20,8 @@ public class AetaBoards {
 	private String title;
 	private String contents;
 	private String clientId;
-	private Date createdDate;
-	private Date updatedDate;
+	private Timestamp createdDate;
+	private Timestamp updatedDate;
 	private Integer views;
 	private Integer likes;
 }

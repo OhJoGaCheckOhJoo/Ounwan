@@ -1,6 +1,6 @@
 package com.ounwan.entity;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import com.ounwan.dto.AetaImagesDTO;
 
@@ -19,11 +19,11 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Comments {
 	private Integer commentNumber;
-	private String client_id;
+	private String clientId;
 	private Integer boardNumber;
 	private String contents;
-	private Date createdDate;
-	private Date updatedDate;
-	private String likes;
+	private Timestamp createdDate;
+	private Timestamp updatedDate;
+	private Integer likes;
 
 }
