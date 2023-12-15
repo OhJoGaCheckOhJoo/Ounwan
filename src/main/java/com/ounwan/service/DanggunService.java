@@ -25,8 +25,13 @@ public class DanggunService {
 	@Autowired
 	ProductImagesDAO productImagesDAO;
 
-	private final static String UPLOADPATH = "C:/Users/diana/OneDrive/문서/GitHub/Back-end/src/main/webapp/resources";
+	private final static String BUPLOADPATH = "C:/Users/diana/OneDrive/문서/GitHub/Back-end/src/main/webapp/resources";
 	private final static String DANGGUNIMAGEPATH = "/images/danggunUploads/";
+	
+	private final static String UPLOADPATH = "C:/shinhan/sts-workspace/ounwan/src/main/webapp/resources";
+	private final static String CURRENTPAGEURL = "http://localhost:9090/myapp/";
+	private final static int CURRENTPAGEURLLENGTH = CURRENTPAGEURL.length()-1;
+
 
 	public List<DanggunDTO> searchProduct(String name) {
 		List<DanggunDTO> searchList = new ArrayList<DanggunDTO>();
@@ -86,9 +91,8 @@ public class DanggunService {
 
 		if (danggunNumber > 0) {
 			Map<String, Object> data = new HashMap<>();
-
+			data.put("danggunNumber", danggunNumber);
 			for (int i = 0; i < count; i++) {
-				data.put("danggunNumber", danggunNumber);
 				images[i].transferTo(files[i]);
 				data.put("url", ".." + DANGGUNIMAGEPATH + uploadFileName[i]);
 				data.put("type", imageType[i]);
@@ -98,10 +102,6 @@ public class DanggunService {
 		}
 		return result== count ? 1 : 0;
 	}
-
-	private final static String SUPLOADPATH = "C:/shinhan/sts-workspace/ounwan/src/main/webapp/resources";
-	private final static String CURRENTPAGEURL = "http://localhost:9090/myapp/";
-	private final static int CURRENTPAGEURLLENGTH = CURRENTPAGEURL.length()-1;
 
 	public DanggunDTO selectDanggun(int danggunNumber) {
 		Danggun result = danggunDAO.selectDanggun(danggunNumber);
@@ -114,25 +114,25 @@ public class DanggunService {
 	}
 
 	public boolean updateDanggun(MultipartFile[] imageFiles, int[] imageFilesNumber, String[] oldImageURL, MultipartFile[] newDetailImages,
-			String loginclientId, int danggunNumber, String clientId, String name, int price, String detail,
+			String loginclientId, int danggunNumber, String clientId, String productName, int price, String detail,
 			int tradeHistoryNumber, int imagesLength, int newImagesLength) throws IllegalStateException, IOException {
 		Danggun danggun = danggunDAO.selectDanggun(danggunNumber);
 		danggun.setClientId(loginclientId);
-		danggun.setProductName(name);
+		danggun.setProductName(productName);
 		danggun.setPrice(price);
 		danggun.setDetail(detail);
 		danggun.setTradeHistoryNumber(tradeHistoryNumber);
 		int result = 0;
 		int count = imagesLength + newImagesLength;
 		String[] uploadFileName = new String[count];
-		File[] files = new File[count]; // martipartfile에서 파일 경로만 입력
+		File[] files = new File[count]; 
 		for (int i = 0; i < imagesLength; i++) {
 			uploadFileName[i] = clientId + "_" + System.currentTimeMillis() + "_" + i + "." + imageFiles[i].getContentType().split("/")[1];
-			files[i] = new File(SUPLOADPATH + DANGGUNIMAGEPATH + uploadFileName[i]);
+			files[i] = new File(UPLOADPATH + DANGGUNIMAGEPATH + uploadFileName[i]);
 		}
-		for(int j = imagesLength; j < count; j++) {
-			uploadFileName[j] = clientId + "_" + System.currentTimeMillis() + "_" + j + "." + newDetailImages[j].getContentType().split("/")[1];
-			files[j] = new File(SUPLOADPATH + DANGGUNIMAGEPATH + uploadFileName[j]);
+		for(int i = imagesLength; i < count; i++) {
+			uploadFileName[i] = clientId + "_" + System.currentTimeMillis() + "_" + i + "." + newDetailImages[i].getContentType().split("/")[1];
+			files[i] = new File(UPLOADPATH + DANGGUNIMAGEPATH + uploadFileName[i]);
 		}
 		if (danggunDAO.updateDanggun(danggun) > 0) {
 			Map<String, Object> data = new HashMap<>();
@@ -140,7 +140,7 @@ public class DanggunService {
 				imageFiles[i].transferTo(files[i]);
 				data.put("url", ".." + DANGGUNIMAGEPATH + uploadFileName[i]);
 				data.put("danggunImageNumber", imageFilesNumber[i]);
-				new File(SUPLOADPATH + oldImageURL[i].substring(CURRENTPAGEURLLENGTH)).delete();
+				new File(UPLOADPATH + oldImageURL[i].substring(CURRENTPAGEURLLENGTH)).delete();
 				productImagesDAO.updateDanggunImages(data);
 				result += 1;
 			}
@@ -171,6 +171,4 @@ public class DanggunService {
 				.productName(danggun.getProductName()).price(danggun.getPrice()).detail(danggun.getDetail())
 				.uploadDate(danggun.getUploadDate()).build();
 	}
-
-
 }

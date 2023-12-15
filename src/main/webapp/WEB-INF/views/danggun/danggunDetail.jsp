@@ -87,7 +87,7 @@
 					<div class="product">
 						<div class="product-detail">
 							<div class="product-top">
-								<div class="product-name">${post.name}</div>
+								<div class="product-name">${post.productName}</div>
 								<c:if test="${userInfo.clientId != post.clientId}">
 									<div class="hamburger">
 										<div class="post-menu">메뉴</div>

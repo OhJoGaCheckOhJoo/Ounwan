@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +42,7 @@ public class DanggunController {
 	@Autowired
 	WishListsService wishListsService;
 
+//	당군 메인 페이지로 이동
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String mainGet(HttpSession session, Model model) {
 
@@ -48,11 +50,13 @@ public class DanggunController {
 
 		for (DanggunDTO danggun : list) {
 			ProductImagesDTO image = productImageService.selectAllImages(danggun.getDanggunNumber());
+			System.out.println("d : " + danggun.getDanggunNumber());
 			danggun.setUrl(image.getUrl());
 		}
+		System.out.println("list : " + list);
 		model.addAttribute("list", list);
 		
-		return "danggunMain";
+		return "/danggun/danggunMain";
 	}
 
 	@RequestMapping(value = "/main", method = RequestMethod.POST)
@@ -70,7 +74,7 @@ public class DanggunController {
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
 	public String insertGet(HttpSession session, Model model) {
 		if (session.getAttribute("userInfo") != null) {
-			return "danggunInsert";
+			return "/danggun/danggunInsert";
 		} else {
 			model.addAttribute("message", "로그인이 필요한 페이지입니다.");
 			return "login";
@@ -82,11 +86,6 @@ public class DanggunController {
 	public @ResponseBody String insertPost(@RequestParam(value = "detailImagesLength", required=false) int detailImagesLength,@RequestPart(value="detailImages", required = false) MultipartFile[] detailImages, MultipartFile image,
 			String clientId, String productName, int price, String detail) throws IllegalStateException, IOException {
 		return danggunService.danggunInsert(detailImagesLength, detailImages, image, clientId, productName, price, detail)>0 ? "sucess" : "fail";
-	}
-
-	@GetMapping("/main")
-	public String danggunMain() {
-		return "/danggun/danggunMain";
 	}
 
 //	상품 상세 목록 조회하기 
@@ -119,7 +118,7 @@ public class DanggunController {
 			@RequestPart(value = "newDetailImages", required = false) MultipartFile[] newDetailImages,
 			@RequestParam("danggunNumber") Integer danggunNumber, 
 			@RequestParam("clientId") String clientId,
-			@RequestParam("name") String name, 
+			@RequestParam("name") String productName, 
 			@RequestParam("price") Integer price,
 			@RequestParam("detail") String detail, 
 			@RequestParam("tradeHistoryNumber") Integer tradeHistoryNumber,
@@ -130,7 +129,7 @@ public class DanggunController {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
 
 		return danggunService.updateDanggun(imageFiles, imageFilesNumber, oldImageURL, newDetailImages,
-				userInfo.getClientId(), danggunNumber, clientId, name, price, detail, tradeHistoryNumber, imagesLength, newImagesLength);
+				userInfo.getClientId(), danggunNumber, clientId, productName, price, detail, tradeHistoryNumber, imagesLength, newImagesLength);
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = "text/plain;charset=utf-8")

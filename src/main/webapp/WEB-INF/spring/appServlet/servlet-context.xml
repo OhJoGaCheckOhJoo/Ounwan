@@ -50,11 +50,6 @@
     	<beans:property name="maxUploadSize" value="10000000000"/>
 	</beans:bean>
 	
-	<beans:bean id="multipartResolver" name="multipartResolver" 
-        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <beans:property name="maxUploadSize" value="10000000"/>
-    </beans:bean>
-	
 	<context:component-scan
 		base-package="com.ounwan" />
 

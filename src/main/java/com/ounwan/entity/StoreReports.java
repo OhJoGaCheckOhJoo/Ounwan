@@ -2,8 +2,6 @@ package com.ounwan.entity;
 
 import java.sql.Date;
 
-import com.ounwan.dto.DanggunDTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -86,7 +86,7 @@
 				<div class="text-input-description">
 					<div class="input-area">
 						<input class="input-area" id="modalDanggunName"
-							value="${post.name}" required />
+							value="${post.productName}" required />
 					</div>
 					<div>
 						<div id="name-count"></div>
