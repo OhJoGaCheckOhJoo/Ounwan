@@ -16,7 +16,8 @@
 	<select id="selectImages" parameterType="int"
 		resultType="productImages">
 		SELECT * from Product_Images where
-		DANGGUN_NUMBER = #{danggunNumber} order by PRODUCT_IMAGE_NUMBER asc
+		DANGGUN_NUMBER =
+		#{danggunNumber} order by PRODUCT_IMAGE_NUMBER asc
 	</select>
 
 	<!-- 거래 현황 정보 뽑아오기 -->
@@ -33,10 +34,34 @@
 		SELECT count(*) from WISH_LISTS where DANGGUN_NUMBER =
 		#{danggunNumber}
 	</select>
-	
+
 	<!-- 당군 게시물 삭제 -->
 	<delete id="deleteDanggun" parameterType="danggun">
-		DELETE FROM DANGGUN WHERE DANGGUN_NUMBER = #{danggunNumber} AND CLIENT_ID = #{clientId};
+		DELETE FROM DANGGUN
+		WHERE DANGGUN_NUMBER = #{danggunNumber} AND CLIENT_ID = #{clientId}
 	</delete>
+
+	<!-- 게시물 수정 -->
+	<update id="updateDanggun" parameterType="danggun">
+	 	UPDATE DANGGUN 
+	 	SET TRADE_HISTORY_NUMBER = #{tradeHistoryNumber}, NAME = #{name}, PRICE = #{price}, DETAIL = #{detail}
+	 	WHERE DANGGUN_NUMBER = #{danggunNumber} AND CLIENT_ID = #{clientId}
+	 </update>
+
+	<!-- 사진 수정 -->
+	<update id="updateDanggunImages" parameterType="productImages">
+		UPDATE PRODUCT_IMAGES
+		SET URL = #{url}
+		WHERE PRODUCT_IMAGE_NUMBER = #{danggunImageNumber}
+	</update>
+	
+	<insert id="insertNewDetailImages" parameterType="productImages">
+		INSERT INTO
+		PRODUCT_IMAGES (DANGGUN_NUMBER, URL, TYPE)
+		VALUES (#{danggunNumber}, #{url}, 1)
+	</insert>
+	
+	<!-- 찜 +1 -->
+	<!-- 찜 -1 -->
 
 </mapper>
