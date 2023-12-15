@@ -20,5 +20,9 @@ public class DanggunDAO {
 	public int deleteDanggun(Danggun danggun) {
 		return sqlSession.delete(NAMESPACE + "deleteDanggun", danggun);
 	}
+
+	public int updateDanggun(Danggun danggun) {
+		return sqlSession.update(NAMESPACE + "updateDanggun", danggun);
+	}
 	
 }

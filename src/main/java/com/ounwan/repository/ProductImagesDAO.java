@@ -1,6 +1,7 @@
 package com.ounwan.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,14 @@ public class ProductImagesDAO {
 	
 	public List<ProductImages> selectImages(int danggunNumber) {
 		return sqlSession.selectList(NAMESPACE + "selectImages", danggunNumber);
+	}
+	
+	public int updateDanggunImages(Map<String, Object> data) {
+		return sqlSession.update(NAMESPACE + "updateDanggunImages", data);
+	}
+
+	public int insertNewDetailImages(Map<String, Object> newData) {
+		return sqlSession.insert(NAMESPACE + "insertNewDetailImages", newData);
 	}
 	
 	

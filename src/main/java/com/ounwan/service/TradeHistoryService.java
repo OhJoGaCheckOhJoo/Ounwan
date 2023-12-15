@@ -15,7 +15,7 @@ public class TradeHistoryService {
 	public String selectTradeStep(int num) {
 		return tradeHistoryDAO.selectTradeStep(num);
 	}
-	
+	/*
 	public TradeHistory changeEntity(TradeHistoryDTO tradeHistory) {
 		return TradeHistory.builder()
 							.tradeHistoryNUmber(tradeHistory.getTradeHistoryNUmber())
@@ -27,5 +27,5 @@ public class TradeHistoryService {
 								.tradeHistoryNUmber(tradeHistory.getTradeHistoryNUmber())
 								.tradeStep(tradeHistory.getTradeStep())
 								.build();
-	}
+	}*/
 }
