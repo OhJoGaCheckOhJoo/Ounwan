@@ -88,10 +88,13 @@
   flex-direction: column;
   text-align: right;
 }
-.dot3 {
+.small-menu {
   display: inline-block;
-  background-image: url("/images/dot3.png");
+  background-image: url("../images/dot3.png");
   background-size: cover;
+}
+.small-menu:hover {
+  transform: scaleY(1);
 }
 .toList {
   text-align: right;
@@ -119,4 +122,43 @@
 .zzim {
   border: 0;
   background-color: transparent;
+}
+
+.post-menu {
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.small-menu {
+	opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 1;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.post-menu:hover .small-menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.small-menu a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 8px 0;
+    transition: background-color 0.3s;
+}
+
+.small-menu a:hover {
+    background-color: #f2f2f2;
 }

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
@@ -8,22 +8,17 @@
 <head>
 <link href="${appPath}/css/main.css" rel="stylesheet" />
 <link href="${appPath}/css/danggunDetail.css" rel="stylesheet" />
+<link href="${appPath}/css/danggunUpdateModal.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
+<link rel="icon" href="../images/logo.png" type="image/x-icon">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-	<!-- header -->
-	<header>
-		<a class="logo" href="../"></a>
-		<div class="float-right">
-			<a href="./html/signup.html">회원가입</a> <a class="pointer"
-				id="loginSelect">로그인</a>
-			<!--# : DB(회원)/세션(비회원)에서 가져올 것-->
-			<button class="pointer">Basket (#)</button>
-		</div>
-	</header>
+	<%@ include file="../common/header.jsp"%>
 	<main id="main">
 		<div class="container">
 			<nav>
@@ -43,8 +38,7 @@
 					<div>
 						<a href="#">중고거래</a>
 						<div class="nav-submenu">
-							<a href="${appPath}/danggun/danggunDetail">전체 보기</a> <a href="#">관심
-								상품</a>
+							<a href="${appPath}/danggun/main">전체 보기</a> <a href="#">관심 상품</a>
 						</div>
 					</div>
 					<div>
@@ -94,45 +88,41 @@
 						<div class="product-detail">
 							<div class="product-top">
 								<div class="product-name">${post.name}</div>
-								<div class="hamburger">
-									<a class="dot3" id="dot3"></a> <span>공유</span> <span>신고</span>
-								</div>
-								<!-- hamburger -->
+								<c:if test="${userInfo.clientId != post.clientId}">
+									<div class="hamburger">
+										<div class="post-menu">메뉴</div>
+										<div class="small-menu" id="small-menu">
+											<a href="#">공유</a> 
+											<a href="#">신고</a>
+										</div>
+									</div>
+									<!-- hamburger -->
+								</c:if>
 							</div>
 							<!-- product_top -->
 							<div class="seller" id="seller">판매자 : ${post.clientId}</div>
 							<div class="product-price" id="product-price">가격 :
-								${post.price}</div>
+								${post.price}원</div>
 							<div class="registered-date" id="registered-date">등록일 :
 								${post.uploadDate}</div>
-							<c:if test="${clientId != post.clientId}">
-								<div class="trade_step">${tradeStep}</div>
-							</c:if>
-							<c:if test="${clientId == post.clientId}">
-								<select id="options" name="options">
-									<option value="option1" selected>판매 중</option>
-									<option value="option2">예약 중</option>
-									<option value="option3">거래 완료</option>
-								</select>
-							</c:if>
+							<div class="trade_step">${tradeStep}</div>
 
 							<div class="product-bottom">
-								<c:if test="${clientId != post.clientId}">
+								<c:if test="${userInfo.clientId != post.clientId}">
 									<!-- session의 clientid와 작성자의 clientid가 다를 때 -->
-									<%-- <button class="zzim" id="zzim" type="button">찜하기
+									<button class="zzim" id="zzim" type="button">찜하기
 										${zzimCount}</button>
 									<button class="chatting main-btn" id="chatting" type="button">
-										채팅하기</button> --%>
-									<button class="danggunUpdate white-btn" id="danggunUpdate"
-										type="submit">수정하기</button>
-									<button class="danggunDelete main-btn" id="danggunDelete"
-										type="button">삭제하기</button>
+										채팅하기</button>
 
 								</c:if>
-								<c:if test="${clientId == post.clientId}">
+								<c:if test="${userInfo.clientId == post.clientId}">
 									<!-- session의 clientid와 작성자의 clientid가 같을 때 -->
-									<!-- <button class="danggunUpdate" id="danggunUpdate" type="button">수정하기</button>
-									<button class="danggunDelete" id="danggunDelete" type="button">삭제하기</button> -->
+									<button class="modal-button white-btn"
+										onclick="openModal(${post.tradeHistoryNumber})">수정하기</button>
+
+									<button class="danggunDelete main-btn" id="danggunDelete"
+										type="submit">삭제하기</button>
 								</c:if>
 							</div>
 							<!-- product_bottom -->
@@ -149,34 +139,12 @@
 		</div>
 		<hr />
 	</main>
-
-	<!-- footer -->
-	<footer id="footer">
-		<div>
-			<div>오운완 쇼핑몰 & 커뮤니티</div>
-			<div>대표자 : 김태완, 박정우, 박지원, 방은지, 신서영, 윤윤성</div>
-			<div>대표전화 : 010-9424-2784 / 주소 : 03993 서울특별시 마포구 월드컵북로4길 77, 1층
-			</div>
-			<div>상품&제휴 문의 메일 : ounwan50@gmail.com</div>
-			<div class="text-1">고객센터 : 평일 오전 10:00 ~ 오후 5:00</div>
-			<div class="text-1">(점심시간 12:00 ~ 13:00) 토/일/공휴일 휴무</div>
-		</div>
-		<div class="float-right">
-			<div>
-				<a href="#">이벤트</a>
-			</div>
-			<div>
-				<a href="#">개인정보처리방침</a>
-			</div>
-			<div>
-				<a href="#">이용약관</a>
-			</div>
-			<div>
-				<img class="float-right img-1 pointer" src="../images/insta.png"
-					alt="인스타 사진" />
-			</div>
-		</div>
-	</footer>
-	<script src="./js/main.js"></script>
+	<div id="danggunModal" danggunNumber="${post.danggunNumber}"
+		clientId="${post.clientId}"></div>
+	<%@ include file="../common/footer.jsp"%>
+	<%@ include file="./danggunUpdateModal.jsp"%>
+	<script src="${appPath}/js/danggunUpdateModal.js"></script>
+	<script src="${appPath}/js/main.js"></script>
+	<script src="${appPath}/js/danggunDetail.js"></script>
 </body>
 </html>
