@@ -9,22 +9,105 @@
 		order by BOARD_NUMBER DESC
 	</select>
 
-	<select id="AetaSearchAll" parameterType="String" resultType="aeta">
+	<select id="AetaSearchAll" parameterType="String"
+		resultType="aeta">
 		select * from CONCERN_BOARDS
 		where
-		title like #{searchWord} or
-		CLIENT_ID like #{searchWord}
+		title like #{searchWord}
+		or
+		CLIENT_ID like #{inputValue}
 	</select>
 
-	<select id="AetaSearchTitle" parameterType="String" resultType="aeta">
-		select * from CONCERN_BOARDS 
-		where TITLE like #{searchWord}
-		order by BOARD_NUMBER DESC
-	</select>
-	<select id="AetaSearchId" parameterType="String" resultType="aeta">
+	<select id="AetaSearchTitle" parameterType="String"
+		resultType="aeta">
 		select * from CONCERN_BOARDS
-		where CLIENT_ID like #{searchWord}
+		where TITLE like #{inputValue}
 		order by BOARD_NUMBER DESC
 	</select>
+	<select id="AetaSearchId" parameterType="String"
+		resultType="aeta">
+		select * from CONCERN_BOARDS
+		where CLIENT_ID like
+		#{inputValue}
+		order by BOARD_NUMBER DESC
+	</select>
+	<select id="AetaReadPost" parameterType="int" resultType="map">
+
+		SELECT cb.BOARD_NUMBER, cb.CLIENT_ID,
+		cb.TITLE, cb.CONTENTS as AETA_CONTENTS,
+		cb.CREATED_DATE as AETA_CREATED_DATE,
+		cb.UPDATED_DATE as AETA_UPDATED_DATE,
+		cb.VIEWS, cb.LIKES as AETA_LIKES,
+		cbi.*,
+		cmt.COMMENT_NUMBER,
+		cmt.CLIENT_ID as COMMENTS_WRITER,
+		cmt.BOARD_NUMBER,
+		cmt.CREATED_DATE as COM_CREATED,
+		cmt.CONTENTS as AETA_COMMENT,
+		COUNT(cmt.CONTENTS) as COUNT_COMMENTS,
+		SUM(COUNT(cmt.COMMENT_NUMBER)) OVER (PARTITION BY cb.BOARD_NUMBER) AS AETA_TOTAL_COMMENTS,
+		cmt.UPDATED_DATE as COM_UPDATED,
+		cmt.LIKES as COM_LIKES,
+		c_commenter.CLIENT_ID as COMMENTER_ID,
+		c_writer.PROFILE_URL as WRITER_PHOTO,
+		c_commenter.PROFILE_URL as COMMENTER_PHOTO
+		from
+		CONCERN_BOARDS cb
+		LEFT join CONCERN_BOARD_IMAGES cbi
+		on cb.BOARD_NUMBER =cbi.BOARD_NUMBER
+		LEFT outer join COMMENTS cmt
+		on
+		cmt.BOARD_NUMBER =cb.BOARD_NUMBER
+		LEFT OUTER JOIN CLIENTS c_writer
+		on c_writer.CLIENT_ID =cb.CLIENT_ID
+		Left OUTER JOIN CLIENTS c_commenter
+		on c_commenter.CLIENT_ID = cmt.CLIENT_ID
+		where cb.BOARD_NUMBER =#{boardNumber}
+		GROUP BY cb.BOARD_NUMBER,
+		cb.CLIENT_ID, cb.TITLE, cb.CONTENTS,
+		cb.CREATED_DATE, cb.UPDATED_DATE, cb.VIEWS, cb.LIKES,
+		cbi.BOARD_IMAGE_NUMBER,cbi.BOARD_NUMBER,cbi.URL,
+		cmt.COMMENT_NUMBER, cmt.CLIENT_ID, cmt.BOARD_NUMBER,
+		cmt.CREATED_DATE, cmt.CONTENTS,
+		cmt.UPDATED_DATE, COM_LIKES
+		ORDER BY cmt.COMMENT_NUMBER;
+
+	</select>
+	<insert id="AetaInsertComment" parameterType="aetaComments">
+		INSERT INTO
+		COMMENTS(CLIENT_ID, BOARD_NUMBER, CONTENTS, CREATED_DATE)
+		values(#{clientId},#{boardNumber},#{contents},now())
+	</insert>
+	<delete id="AetaDeletePost" parameterType="int">		
+		DELETE FROM CONCERN_BOARDS WHERE BOARD_NUMBER =#{boardNumber};
+	</delete>
+	
+	<delete id="AetaDeleteComment" parameterType="int">
+		DELETE from COMMENTS
+		where
+		COMMENT_NUMBER =#{commentNumber}
+	</delete>
+	<update id="AetaUpdateView" parameterType="int">
+		update CONCERN_BOARDS set 
+		views=views+1
+		where BOARD_NUMBER=#{boardNumber}
+	</update>
+	<insert id="AetaInsertPost" parameterType="aeta">
+		<selectKey keyColumn="BOARD_NUMBER" keyProperty="boardNumber" order="AFTER" resultType="int">
+			select BOARD_NUMBER 
+			from CONCERN_BOARDS
+			where 	CLIENT_ID = #{clientId} 
+				and	TITLE = #{title} 
+				and CONTENTS= #{contents} 
+		</selectKey>
+		
+		INSERT INTO CONCERN_BOARDS (
+		CLIENT_ID,TITLE,CONTENTS,CREATED_DATE)
+		value(#{clientId},#{title},#{contents},now())
+	</insert>
+	<insert id="AetaInsertImageURL" parameterType="aetaImages">
+		INSERT INTO CONCERN_BOARD_IMAGES (BOARD_NUMBER,URL)
+		values(#{boardNumber},#{imageUrl});
+	</insert>
 </mapper>
 
