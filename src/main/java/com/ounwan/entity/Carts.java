@@ -14,9 +14,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Carts {
-	private int cartNumber;
-	private int coupungNumber;
+	private Integer cartNumber;
+	private Integer coupungNumber;
 	private String clientId;
-	private int quantity;
+	private Integer quantity;
 	private Coupung coupung;
 }

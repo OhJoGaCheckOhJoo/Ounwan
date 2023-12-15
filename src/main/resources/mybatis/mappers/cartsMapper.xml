@@ -4,48 +4,60 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.carts">
 
-   <select id="getCartById" parameterType="String"
-		resultType="map">
+	<select id="getCartById" parameterType="String" resultType="map">
 		SELECT coupung.name, coupung.`OPTION`, coupung.price ,cart.*, pi.URL
 		FROM
-		COUPUNG coupung  JOIN CARTS cart ON
-		coupung.COUPUNG_NUMBER = cart.COUPUNG_NUMBER
+		COUPUNG coupung JOIN CARTS cart ON
+		coupung.COUPUNG_NUMBER =
+		cart.COUPUNG_NUMBER
 		JOIN product_images pi ON
-		cart.coupung_number = pi.coupung_number
+		cart.coupung_number =
+		pi.coupung_number
 		WHERE cart.CLIENT_ID = #{clientId}
-	</select>  
+	</select>
 
-	<select id="getCartByClientAndProduct" parameterType="carts"
+
+	<select id="getQuantity" parameterType="carts"
 		resultType="carts">
 		SELECT *
 		FROM CARTS
 		WHERE CLIENT_ID = #{clientId}
-		AND COUPUNG_NUMBER = #{coupungNumber}
+		AND
+		COUPUNG_NUMBER= #{coupungNumber}
+	</select>
+
+	<select id="updateQuantity" parameterType="carts"
+		resultType="carts">
+		update carts
+		set QUANTITY = #{quantity}
+		where CART_NUMBER = #{cartNumber}
 	</select>
 
 
 	<insert id="insertCart" parameterType="carts">
 		INSERT INTO
 		CARTS(COUPUNG_NUMBER,
-		CLIENT_ID, QUANTITY )
-		VALUES(#{coupung_number},
-		#{client_id}, #{quantity})
+		CLIENT_ID, QUANTITY)
+		VALUES(#{coupungNumber},
+		#{clientId}, #{quantity})
 	</insert>
 
 
 
-	<update id="updateCart" parameterType="carts">
+	<select id="updateCart" parameterType="carts" resultType="carts">
 		UPDATE CARTS
-		SET QUANTITY = #{quantity}
+		SET QUANTITY =
+		#{quantity}
 		WHERE CLIENT_ID = #{clientId}
-		AND COUPUNG_NUMBER = #{coupungNumber}
-	</update>
+		AND COUPUNG_NUMBER =
+		#{coupungNumber}
+	</select>
 
-	<delete id="deleteCart" parameterType="carts">
+	<select id="deleteCart" parameterType="carts" resultType="carts">
 		DELETE CARTS FROM CARTS
 		WHERE CLIENT_ID = #{clientId}
 		AND COUPUNG_NUMBER =
 		#{coupungNumber}
-	</delete>
+	</select>
 
 </mapper>

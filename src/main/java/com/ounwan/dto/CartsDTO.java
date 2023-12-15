@@ -19,5 +19,9 @@ public class CartsDTO {
 	private String clientId;
 	private Integer quantity;
 	private CoupungDTO coupung;
+	private String url;
+	private String name;
+	private Integer price;
+	private String option;
 	
 }

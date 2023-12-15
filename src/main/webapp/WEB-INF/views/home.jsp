@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="./js/main.js"></script>
 <link href="${appPath}/css/main.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -20,6 +21,11 @@
 				id="loginSelect" href="${appPath}/clients/login">로그인</a>
 			<!--# : DB(회원)/세션(비회원)에서 가져올 것-->
 			<button class="pointer" onclick="goToCart()">Basket (#)</button>
+			<script>
+		function goToCart() {
+					window.location.href = '${appPath}/coupung/cart';
+				}
+			</script>
 		</div>
 	</header>
 
@@ -34,7 +40,7 @@
 				<div>
 					<a href="#">쇼핑몰</a>
 					<div class="nav-submenu">
-						<a href="#">전체 보기</a> <a href="#">운동 기구</a> <a href="#">건강 보조
+						<a href="${appPath}/cart/test">전체 보기</a> <a href="#">운동 기구</a> <a href="#">건강 보조
 							식품</a> <a href="#">헬스 이용권</a> <a href="#">의류</a>
 					</div>
 				</div>
@@ -106,13 +112,7 @@
 			</div>
 		</div>
 	</footer>
-	<script src="./js/main.js">
-		
-	</script>
-	<script>
-		function goToCart() {
-			window.location.href = '${appPath}/coupung/cart';
-		}
-	</script>
+	
+	
 </body>
 </html>

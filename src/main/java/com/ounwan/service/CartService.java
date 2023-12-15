@@ -38,35 +38,44 @@ public class CartService {
 	}
 
 	public int addToCart(CartsDTO cartsDTO) {
-		
+		 Carts cart = cartDAO.getQuantity(changeEntity(cartsDTO));
+		 System.out.println("cart : " + cart);
+		 
+		if(cart != null) {
+			System.out.println("quantity(NEW) : " + cartsDTO.getQuantity());
+			System.out.println("quantity(old) : " + cart.getQuantity());
+			cartsDTO.setQuantity(cartsDTO.getQuantity() + cart.getQuantity());
+			System.out.println("quantity(update) : " + cartsDTO.getQuantity());
+			cartsDTO.setCartNumber(cart.getCartNumber());
+			return cartDAO.updateQuantity(changeEntity(cartsDTO));
+		}
 		return cartDAO.insertCart(changeEntity(cartsDTO));
 	}
-
-	public boolean updateCart(String clientId, String coupungNumber, int quantity) {
+/*
+	public boolean updateCart(String clientId, Integer coupungNumber, int quantity) {
 		int result = cartDAO.updateCart(Carts.builder()
 											.clientId(clientId)
 											.quantity(quantity)
-											.coupungNumber(Integer.parseInt(coupungNumber))
+											.coupungNumber(coupungNumber)
 											.build());
+		System.out.println("result : " + result);
 		return (result > 0) ? true : false;
 
 	}
-
-	public boolean deleteCart(String clientId, String productId) {
-		int result = cartDAO.deleteCart(Carts.builder()
-								.clientId(clientId)
-								.coupungNumber(Integer.parseInt(productId)) 																						
-								.build());
+*/
+	
+	public boolean updateCart(CartsDTO cartsDTO) {
+		int result = cartDAO.updateCart(changeEntity(cartsDTO));
 		return (result > 0) ? true : false;
 	}
 	
-	public List<CartsDTO> changeDTOList(List<Carts> cartList) {
-		List<CartsDTO> result = new ArrayList<>();
-		for (Carts cart : cartList) {
-			result.add(changeDTO(cart));
-		}
-		return result;
+	
+	public boolean deleteCart(CartsDTO cartsDTO) {
+		int result = cartDAO.deleteCart(changeEntity(cartsDTO));
+		return (result > 0) ? true : false;
 	}
+	
+	
 	private CartsDTO changeDTO(Carts cart) {
 		return CartsDTO.builder()
 						.cartNumber(cart.getCartNumber())
@@ -84,6 +93,8 @@ public class CartService {
 						.quantity(cartsDTO.getQuantity())
 						.build();
 	}
+
+	
 	
 
 }

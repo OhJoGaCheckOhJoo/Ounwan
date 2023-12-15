@@ -1,6 +1,10 @@
 /* screen - u9734-basket-page-u40u4364u4449u4540u4359u4449u4352u4462u4354u4469u41 */
 @charset "UTF-8";
 
+.delete-button{
+	
+}
+
 #modalOpenButton, #modalCloseButton,#modalGoButton {
 	cursor: pointer;
 }

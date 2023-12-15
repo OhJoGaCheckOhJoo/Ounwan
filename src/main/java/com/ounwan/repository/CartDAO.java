@@ -23,26 +23,35 @@ public class CartDAO {
 		return cartlist;
 	}
 
-	public Carts getCartByClientAndProduct(Carts cart) {
-		return sqlSession.selectOne(NAMESPACE + "getCartByClientAndProduct", cart);
+	public Carts getQuantity(Carts cart) {
+		return sqlSession.selectOne(NAMESPACE + "getQuantity",cart);
+		
 	}
 
+
+	public int updateQuantity(Carts cart) {
+		return sqlSession.update(NAMESPACE + "updateQuantity", cart);
+		
+	}
+	
 	public int insertCart(Carts cart) {
 		return sqlSession.insert(NAMESPACE + "insertCart", cart);
 	}
 
-	public int modifyQuantity(Integer cartNumber) {
-		return sqlSession.update(NAMESPACE + "modifyQuantity", cartNumber);
-
-	}
 	
 	public int updateCart(Carts cart) {
-		return sqlSession.update(NAMESPACE + "updateCart", cart);
+		int result = sqlSession.update(NAMESPACE + "updateCart", cart);
+		System.out.println("result : " + result);
+		return result;
 	}
 
 	public int deleteCart(Carts cart) {
-		return sqlSession.delete(NAMESPACE + "deleteCart", cart);
+		int result =sqlSession.delete(NAMESPACE + "deleteCart", cart); 
+		System.out.println(" delete result : " + result);
+		return result;
 	}
+
+
 
 	
 
