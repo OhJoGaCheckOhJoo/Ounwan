@@ -91,9 +91,10 @@
                        	 대표 이미지
 						<div class="register-required asterisk">*</div>
                     </div> 
-					<div class="danggun-image">				
-						<label for="imageInput"></label>		
-						<input type="file" id="imageInput" name="dnaggunImage" class="input-file" onchange="setMainImage(event)"/> 
+					<div class="danggun-image">						
+						<label for="imageInput"></label>			
+						<input type="file" id="imageInput" name="dnaggunImage" class="input-file"/>    	
+		<!-- 				<input type="file" id="imageInput" name="dnaggunImage" class="input-file" onchange="setMainImage(event)"/>    --> 	
 						<img id = "mainPreview" src="../images/danggunInsertDefault.png">
 					</div>
                 </div>
@@ -102,8 +103,10 @@
                         상세 이미지
 						<div class="danggun-product-text plus">(최대 3장 추가 가능)</div>
                     </div> 
-					<div class="danggun-image">								
+                    <div class = "danggun-images" id = "detailImageContainer">
+                    	<div class="danggun-image">								
 						<label for="detailInput" ></label>							
+<!-- 						<input type="file" id="detailInput" name="dnaggunImage" class="input-file" onchange="setDetailImages(event)" multiple/>    	 -->
 						<input type="file" id="detailInput" name="dnaggunImage" class="input-file" onchange="setDetailImages(event)" multiple/>    	
 						<img id = "DetailPreview1" class="detail-preview" src="../images/danggunInsertDefault.png">	
 					</div>
@@ -115,6 +118,21 @@
 						<label for="imageInput2"></label>
 						<img id = "DetailPreview3" class="detail-preview" src="../images/danggunInsertDefault.png">
 					</div>
+                    </div>
+<!-- 					<div class="danggun-image">								
+						<label for="detailInput" ></label>							
+						<input type="file" id="detailInput" name="dnaggunImage" class="input-file" onchange="setDetailImages(event)" multiple/>    	
+						<input type="file" id="detailInput" name="dnaggunImage" class="input-file" onchange="setDetailImages(event)" multiple/>    	
+						<img id = "DetailPreview1" class="detail-preview" src="../images/danggunInsertDefault.png">	
+					</div>
+					<div class="danggun-image">						
+						<label for="imageInput2"></label>						
+						<img id = "DetailPreview2" class="detail-preview" src="../images/danggunInsertDefault.png">
+					</div>
+					<div class="danggun-image">						
+						<label for="imageInput2"></label>
+						<img id = "DetailPreview3" class="detail-preview" src="../images/danggunInsertDefault.png">
+					</div> -->
                 </div>
                 <div class="danggun-product">					
                     <div class="danggun-product-text">
@@ -171,56 +189,43 @@
 </footer>
 <script src="../js/main.js"></script>
 <script>	
-	var formData = new FormData();	
-	var formDetail = new FormData();
-	var mainImageCheck=0;
-	var detailImageCheck=0;
-	var requiredCheck;
-	var detailCheck;
-	$(function(){
-		$("#detailInput").on("change", function(){
-			var max = 3;
-			var files = $("#detailInput")[0].files;
-			if(files.length > max){
-				alert("최대 " + max + "개 선택 가능합니다");
-				$("#detailInput").val("");
-			}
-		});
+var detailImageCount =0;	
+
+	$(function(){	
 		
 		$("#submitButton").on("click", function(){
 			var mainImage = document.getElementById("imageInput");
-			//var mainImageName = mainImage.value;
+			var mainImageName = mainImage.value;
 			var productName = document.getElementById("danggunName");
 			var productPrice = document.getElementById("danggunPrice");
 			var productDetail = document.getElementById("danggunDescription");
-			var detail= document.getElementById("detailInput");
+			var detail= document.getElementById("danggunDescription").value;
+			var formattedDetail = detail.replace(/\n/g, '<br>');
+			var detailImages = $("#detailInput")[0].files;
+			var detailLength = $("#detailInput")[0].files.length;
 			
-			if(mainImageCheck == 0 || productName.value.trim() ==='' || productPrice.value.trim() ==='' || productDetail.value.trim() ==='') {
+			if(mainImageName.trim() === '' || productName.value.trim() ==='' || productPrice.value.trim() ==='' || productDetail.value.trim() ==='') {
 				alert("필수 항목을 작성해 주세요");
-			}
+			}		
 			
-/* 			console.log($("#imageInput")[0].files[0]);
-			console.log($("#detailInput")[0].files.length);
-			console.log($("#detailInput")[0].files);
-			console.log($("#imageInput")[0]);	 */				
+			var formData = new FormData();		
 			
-			
-/* 			if(detailImageCheck === 0) {
+			if(detailImageCount===0) {
 				formData.append('detailImagesLength', 0);
 				formData.append('detailImages', null);
 			}
 			else {
-				formData.append('detailImagesLength', $("#detailInput")[0].files.length);
-				for(var i = 0; i < detail.files.length; i++){
-	                formData.append('detailImages', detail.files[i]);
+				formData.append('detailImagesLength', detailLength);
+				for(var i = 0; i < detailLength; i++){
+	                formData.append('detailImages', detailImages[i]);
 	            }
-			} */
+			}
 
-/* 			formData.append('image', $("input[id='imageInput']")[0].files[0]); */
+			formData.append('image', $("input[id='imageInput']")[0].files[0]);
 			formData.append('clientId', "${userInfo.clientId}");
 			formData.append('productName', $("#danggunName").val());
 			formData.append('price', $("#danggunPrice").val());
-			formData.append('detail', $("#danggunDetail").val());
+			formData.append('detail', formattedDetail);
 			$.ajax({
 				url: "${appPath}/danggun/insert",
 				data: formData,
@@ -229,28 +234,10 @@
 				contentType: false,
 				success: function(res){
 					alert(res);
-					requiredCheck = res;
 					location.href="${appPath}/danggun/main";
 				}
 			});
-			
-			$.ajax({
-				url: "${appPath}/danggun/insert",
-				data: formDetail,
-				type: "POST",
-				prcessData: false,
-				contentType: false,
-				success: function(res) {
-					alert(res);
-					detailCheck =res;
-				}
-			});
 		})
-		
-		if(requiredCheck*detailCheck ==1) {
-			location.href="${appPath}/danggun/main";
-		}
-		
 	});
 	
 	document.addEventListener("DOMContentLoaded", function(){
@@ -280,120 +267,109 @@
 			}
 			counterElement.textContent = text.length + "/" + maxLength;
 		}		
+	});	
+
+	var img;
+	var reader;
+	var input;
+	var mainImage;
+	
+	$("#imageInput").change(function(e){
+		setMainImage(e);
 	});
 	
+	function setMainImage(event){
+		var f = event.target.files[0];
+	
+		reader = new FileReader();
+		input = document.getElementById("imageInput");
+		img = document.getElementById("mainPreview");
+		
+		if(f==undefined) {
 
-	var input = "";
-	var mainImage = "";
-	var previewImages ="";
-	var reader ="";
-	var img ="";
+			$('#imageInput').replaceWith(mainImage);
+			$("#imageInput").on("change", setMainImage);
 
- 	function setMainImage(event){ 		
-		if($("input[id='imageInput']")[0].files.length>0){			
-			mainImageCheck++;
-			reader = new FileReader();
-			
-			formData = new FormData();
-			formData.append('image', $("input[id='imageInput']")[0].files[0]);
-			
-			img = document.getElementById("mainPreview");
-			input = document.getElementById("imageInput");
-			reader.onload = function(event){
-				img.src = event.target.result;
-			}			
-			reader.readAsDataURL(input.files[0]);
-			
-		}else {
 			img.src = img.src;
+			return;
+			
+		} else {
 
-		}
-		console.log("mainImage: "+ input.value);
-		console.log("mainPreview " + img);
-	} 
+			mainImage = $(event.target).clone(true);
+			console.log("cloneImage: " + mainImage);
 
-	
-
-	function setDetailImages(event) {
-	   // input = event.target;
-	    input = document.getElementById("detailInput");
-		previewImages = document.getElementsByClassName("detail-preview");
-		var detail= document.getElementById("detailInput");
-		
-		//초기화
-		for(var i=0; i<previewImages.length; i++) {
-			previewImages[i].src = "../images/danggunInsertDefault.png";
-		}
-		
-		console.log("for문 시작");
-		//들어도는 경우
-		if($("input[id='detailInput']")[0].files.length>0){
-			for(var i=0; i<Math.min(input.files.length, previewImages.length); i++){
-				reader = new FileReader();
-				
-				formData = new FormData();
-				formData.append('detailImagesLength', $("#detailInput")[0].files.length);
-			 	for(var j = 0; j < detail.files.length; i++){
-			  		formData.append('detailImages', detail.files[j]);
-			 	}
-			 	
-		        (function(index) {
-		        	console.log(index + "번 onload");
-		            reader.onload = function(e) {
-		                img = previewImages[index];
-		                img.src = e.target.result;
-		                console.log("O");
-		            }
-		        })(i);
-		        reader.readAsDataURL(input.files[i]);
-		        console.log("올라감");			
-			}				
-		}
-		//안들어오는경우
-		else {
-			if(detailImageCheck>0) {
-			 	return;
+			reader.onload = function(event) {
+				img.src = event.target.result;
 			}
-			else {
-				formData.append('detailImagesLength', 0);
-			 	formData.append('detailImages', null);
-			}
+			reader.readAsDataURL(document.getElementById("imageInput").files[0]);
+			console.log("mainImage: " + $('#imageInput')[0].files[0]);
 		}
-	
 	}
 	
-/* 변경전
+	var imgDetail;
+	var readerDetail;
+	var inputDetail;
+	var detailImgaes;
+	var detailContainer;
+	
+	$("#detailInput").change(function(e){				
+		setDetailImages(e);
+	})
+	
 	function setDetailImages(event) {
-	    var input = event.target;
-		var previewImages = document.getElementsByClassName("detail-preview");
-		
-		if (input.files.length ===0) {
-			return;
-		}
-		
-		//초기화
-		for(var i=0; i<previewImages.length; i++) {
-			previewImages[i].src = "../images/danggunInsertDefault.png";
-		}
-		
-		console.log("for문 시작");
-		
-		for(var i=0; i<Math.min(input.files.length, previewImages.length); i++){
-			var reader = new FileReader();
-				
-	        (function(index) {
-	        	console.log(index + "번 onload");
-	            reader.onload = function(e) {
-	                var img = previewImages[index];
-	                img.src = e.target.result;
-	                console.log("O");
-	            }
-	        })(i);
-	        reader.readAsDataURL(input.files[i]);
-	        console.log("올라감");			
-		}		
-	} */
+    var f = event.target.files[0];
 
+    inputDetail = document.getElementById("detailInput");
+    imgDetail = document.getElementsByClassName("detail-preview");
+
+    if (f == undefined) {
+        $('#detailInput').replaceWith(detailImgaes);
+        $("#detailInput").on("change", setDetailImages);
+
+        for (var i = 0; i < imgDetail.length; i++) {
+            imgDetail[i].src = imgDetail[i].src;
+        }
+        return;
+    } else {
+        var max = 3;
+        var files = $("#detailInput")[0].files;
+
+        if (files.length > max) {
+            alert("최대 " + max + "개 선택 가능합니다");
+            $("#detailInput").val(""); 
+            $("#detailInput").on("change", setDetailImages);
+
+            for (var i = 0; i < imgDetail.length; i++) {
+                imgDetail[i].src = "../images/danggunInsertDefault.png";
+            }            
+            return;
+        } else {
+            detailImageCount++;
+
+            for (var i = 0; i < imgDetail.length; i++) {
+                imgDetail[i].src = "../images/danggunInsertDefault.png";
+            }
+
+            detailImgaes = $(event.target).clone(true);
+            console.log("cloneImage: " + detailImgaes);
+
+            for (var i = 0; i < Math.min(inputDetail.files.length, imgDetail.length); i++) {
+                readerDetail = new FileReader();
+
+                (function(index) {
+                    console.log(index + "번 onload");
+                    readerDetail.onload = function(e) {
+                        var image = imgDetail[index];
+                        image.src = e.target.result;
+                        console.log("O");
+                    }
+                })(i);
+                readerDetail.readAsDataURL(inputDetail.files[i]);
+                console.log("올라감");
+            }
+        }
+    }
+}
 </script>
 </body>
 </html>
