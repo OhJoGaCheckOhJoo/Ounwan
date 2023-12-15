@@ -235,10 +235,10 @@
                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
             }
         })
-		
+	
 	});
 	
-	$('.product-area').on('click', '.item', function() {
+	$('#productInside').on('click', '.item', function() {
 		var cNum = $(this).find('.item-number').val();
 		window.location.href="${appPath}/coupung/product/detail?coupungId=" + cNum;
 	});

@@ -18,6 +18,9 @@ public class CoupungService {
 	CoupungDAO coupungDAO;
 	
 	@Autowired
+	CoupungOptionsService coupungOptionsService;
+	
+	@Autowired
 	ProductImageService productImageService;
 	
 	@Autowired
@@ -52,6 +55,7 @@ public class CoupungService {
 	public CoupungDTO getProductDetail(Integer coupungNumber) {
 		CoupungDTO coupung = changeDTO(coupungDAO.getProductDetail(coupungNumber));
 		coupung.setImage(productImageService.getImageByCoupungId(coupungNumber));
+		coupung.setOptions(coupungOptionsService.selectOptions(coupungNumber));
 		return coupung;
 	}
 	

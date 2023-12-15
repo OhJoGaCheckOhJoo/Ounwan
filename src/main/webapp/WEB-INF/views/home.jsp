@@ -32,7 +32,7 @@
                     </a>
                 </div>
                 <div>
-                    <a href="#">쇼핑몰</a>
+                    <a href="${appPath}/coupung/products">쇼핑몰</a>
                     <div class="nav-submenu">
                         <a href="#">전체 보기</a>
                         <a href="#">운동 기구</a>

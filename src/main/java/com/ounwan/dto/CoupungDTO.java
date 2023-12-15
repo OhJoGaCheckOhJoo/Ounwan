@@ -22,7 +22,7 @@ public class CoupungDTO {
 	private Integer price;
 	private Integer availableStock;
 	private Boolean availableCheck;
-	private String option;
 	// 이미지 추가
 	private List<ProductImagesDTO> image;
+	private List<String> options;
 }

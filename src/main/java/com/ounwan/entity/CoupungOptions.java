@@ -1,21 +1,18 @@
 package com.ounwan.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Builder;
 import lombok.Setter;
+import lombok.Getter;
 
+@Builder
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Coupung {
+public class CoupungOptions {
+	private Integer coupungOptionNumber;
 	private Integer coupungNumber;
-	private Integer coupungCategoryNumber;
 	private String name;
-	private Integer price;
-	private Integer availableStock;
-	private Boolean availableCheck;
-}
+}	
