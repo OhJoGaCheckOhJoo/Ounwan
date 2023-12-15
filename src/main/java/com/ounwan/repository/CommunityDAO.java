@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ounwan.entity.Inbody;
 import com.ounwan.entity.OunwanGram;
 import com.ounwan.entity.OunwanGramLikes;
 
@@ -37,12 +38,16 @@ public class CommunityDAO {
 		return sqlSession.selectList(NAMESPACE + "searchGramClientId", keyword);
 	}
 	
-	public List<Map<String, Object>> getProfileBoard(String profileId) {
-		return sqlSession.selectList(NAMESPACE + "getProfileBoard", profileId);
+	public List<Map<String, Object>> getProfileBoard(Map<String, Object> data) {
+		return sqlSession.selectList(NAMESPACE + "getProfileBoard", data);
 	}
 	
 	public List<OunwanGram> selectBoardsByTag(Map<String, Object> data) {
 		return sqlSession.selectList(NAMESPACE + "selectBoardsByTag", data);
+	}
+	
+	public List<Inbody> selectMyInbody(String clientId) {
+		return sqlSession.selectList(NAMESPACE + "selectMyInbody", clientId);
 	}
 	
 	public int checkFollow(Map<String, Object> data) {
@@ -79,6 +84,10 @@ public class CommunityDAO {
 
 	public int addHashTag(Map<String, Object> data) {
 		return sqlSession.insert(NAMESPACE + "addHashTag", data);
+	}
+
+	public int reportBoard(Map<String, Object> data) {
+		return sqlSession.insert(NAMESPACE + "reportGramBoard", data);
 	}
 	
 	public int cancelLikeOunwanBoard(String likesId) {

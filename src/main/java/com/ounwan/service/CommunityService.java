@@ -3,7 +3,6 @@ package com.ounwan.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,38 @@ public class CommunityService {
 	
 	private final static String UPLOADPATH = "C:/shinhan/sts-workspace/ounwan/src/main/webapp/resources";
 	private final static String IMAGEPATH = "/images/uploads/";
+	
+	public Map<String, Object> selectMyInbody(String clientId) {
+		System.out.println(communityDAO.selectMyInbody(clientId).toString());
+		return null;
+	}
 
+	public String reportBoard(String clientId, int communityNumber, int[] reason) {
+		Map<String, Object> data = new HashMap<>();
+		String[] stringReason = {
+				"스팸홍보/도배글입니다.",
+				"음란물입니다.",
+				"불법정보를 포함하고 있습니다.",
+				"청소년에게 유해한 내용입니다.",
+				"욕설/생명경시/혐오/차별적 게시물입니다.",
+				"개인정보 노출 게시물입니다.",
+				"불쾌한 표현이 있습니다.",
+				"불법촬영물 등이 포함되어 있습니다."
+		};
+		StringBuilder reasonBuilder = new StringBuilder();
+		for(int i : reason) {
+			reasonBuilder.append(stringReason[i]);
+		}
+		data.put("clientId", clientId);
+		data.put("communityNumber", communityNumber);
+		data.put("reason", reasonBuilder.toString());
+		if(communityDAO.reportBoard(data) > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
 	public List<OunwanGramDTO> gramFollowBoard(String clientId, int rowNum) {
 		Map<String, Object> dataMap = new HashMap<>();
 		dataMap.put("clientId", clientId);
@@ -47,6 +77,9 @@ public class CommunityService {
 	public List<OunwanGramDTO> gramWholeBoard(String clientId, int rowNum) {
 		List<OunwanGramDTO> result = new ArrayList<>();
 		List<Integer> likeBoars = communityDAO.gramLikeBoards(clientId);
+		Map<String, Object> data = new HashMap<>();
+		data.put("clientId", clientId);
+		data.put("rowNum", rowNum);
 		for(OunwanGram ounwangram : communityDAO.gramWholeBoard(rowNum)) {
 			ounwangram.setLikesCheck(likeBoars.contains(ounwangram.getCommunityNumber()) ? 1 : 0);
 			ounwangram.setHashTags(communityDAO.hashTagsByNumber(ounwangram.getCommunityNumber()));
@@ -138,8 +171,11 @@ public class CommunityService {
 		return result;
 	}
 	
-	public List<Map<String, Object>> getUserBoards(String profileId) {
-		return communityDAO.getProfileBoard(profileId);
+	public List<Map<String, Object>> getUserBoards(String profileId, String clientId) {
+		Map<String, Object> data = new HashMap<>();
+		data.put("profileId", profileId);
+		data.put("clientId", clientId);
+		return communityDAO.getProfileBoard(data);
 	}
 	
 	public String gramUpdateBoard(String clientId, int communityNumber, MultipartFile image, String content, String[] hashTag) throws IllegalStateException, IOException {
@@ -207,7 +243,6 @@ public class CommunityService {
 			}
 			result.add(ounwangramDTO);
 		}
-		System.out.println(result.toString());
 		return result;
 	}
 	

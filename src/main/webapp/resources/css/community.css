@@ -304,6 +304,11 @@ nav .ounwangram {
 	font-size: 18px;
 }
 
+.reportId {
+	display: inline-block;
+	width: 70px;
+}
+
 #searchTag {
 	cursor: pointer;
 }
@@ -585,4 +590,81 @@ nav .ounwangram {
 	text-align: left;
 	bottom: 40px;
 	color: red;
+}
+
+#modalWrap {
+  position: fixed; /* Stay in place */
+  z-index: 50; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+#modalBody {
+  width: 350px;
+  height: 480px;
+  padding: 30px 30px;
+  margin: 0 auto;
+  border: 1px solid #777;
+  background-color: #fff;
+}
+
+#modalBody hr {
+	margin: 20px 0px 20px 0px;
+	height: 1px;
+	background: #bbb;
+	background-image: -webkit-linear-gradient(left, #fff, #777, #fff);
+	background-image: -moz-linear-gradient(left, #fff, #777, #fff);
+	background-image: -ms-linear-gradient(left, #fff, #777, #fff);
+	background-image: -o-linear-gradient(left, #fff, #777, #fff);
+}
+
+#closeBtn {
+  position: relative;
+  float:right;
+  font-weight: bold;
+  color: #777;
+  font-size:25px;
+  cursor: pointer;
+  bottom: 15px;
+}
+
+#reportReason div:first-child {
+	font-weight: bold;
+}
+
+#reportTitle {
+	text-align: center;
+	font-weight: bold;
+	margin-bottom: 20px;
+	color: var(--main-color);
+}
+
+#reportReason > div {
+	margin-bottom: 10px;
+}
+
+#reportReason input {
+	transform: scale(1.5);
+	margin-right: 10px;
+}
+
+#reportReason button {
+	width: 300px;
+	height: 50px;
+	margin: 10px 0px 0px 25px;
+	border: 0;
+	border-radius: 15px;
+	background-color: var(--main-color);
+	color: #fff;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#reportReason button:hover {
+	color: #ddd;
 }

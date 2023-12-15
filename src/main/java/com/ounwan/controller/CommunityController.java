@@ -48,7 +48,7 @@ public class CommunityController {
 	@RequestMapping("/ounwanProfile")
 	public String ounwanProfile(@RequestParam String clientId, HttpSession session, Model model) {
 		model.addAttribute("userProfileInfo", communityService.getUserProfile(clientId, ((ClientsDTO)session.getAttribute("clientInfo")).getClientId()));
-		model.addAttribute("userBoard", communityService.getUserBoards(clientId));
+		model.addAttribute("userBoard", communityService.getUserBoards(clientId, ((ClientsDTO)session.getAttribute("clientInfo")).getClientId()));
 		return "community/ounwangramProfile";
 	}
 }

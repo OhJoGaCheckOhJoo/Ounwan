@@ -55,6 +55,18 @@
 		</div>
 	</div>
 	
+	<%-- 모달 --%>
+    <div id="modalWrap">
+	  <div id="inbodyModal">
+	    <div id="modalBody">
+	      <span id="closeBtn">&times;</span>
+	      <div>
+	      	<h1>인바디입니다.</h1>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
 	<script src="./js/community.js"></script>
     <script src="./js/main.js"></script>
 </body>

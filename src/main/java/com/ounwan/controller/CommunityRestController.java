@@ -69,4 +69,10 @@ public class CommunityRestController {
 	public List<OunwanGramDTO> ounwangramTagBoard(@RequestParam int rowNum, @RequestParam String name, HttpSession session) {	
 		return communityService.searchByTag(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), rowNum, name);
 	}
+	
+	// 오늘운동했다그램 신고
+	@RequestMapping("/ounwangram/reportBoard")
+	public String ounwangramReportBoard(@RequestParam int communityNumber, @RequestParam int[] reason, HttpSession session) {
+		return communityService.reportBoard(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), communityNumber, reason);
+	}
 }

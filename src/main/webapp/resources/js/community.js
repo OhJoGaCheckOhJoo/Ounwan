@@ -15,10 +15,52 @@ $(window).on("load", function() {
 
     if(window.location.pathname == "/ounwan/ounwangram") {
         loadGramWholeBoard();
+        const modal = document.getElementById('modalWrap');
+		const closeBtn = document.getElementById('closeBtn');
+		var report = {};
+		var reportReason = [];
+
+		modal.style.display = "none";
         
         $("#goMyProfile").on("click", function() {
         	location.href = "/ounwan/ounwanProfile?clientId=" + $("#clientId").html();
-        })
+        });
+        
+        $(".reason").on("change", function() {
+        	if($(this).is(":checked")) {
+        		reportReason.push($(this).val());
+        	} else {
+        		reportReason.splice(reportReason.indexOf($(this).val()), 1);
+        	}
+        });
+        
+        $("#reportSubmit").on("click", function() {
+        	if(reportReason.length > 0) {
+	        	report.reason = reportReason;
+	        	$.ajax({
+		            url: "/ounwan/ounwangram/reportBoard",
+		            data: report,
+		            traditional: true,
+		            success : function(res) {
+		            	if(res == 'success') {
+		            		report = {};
+		            		alert("신고처리가 완료되었습니다.");
+		            	} else {
+		            		report = {};
+		            		alert("신고 처리에 실패하였습니다.");
+		            	}
+		            	report = {};
+		            	modal.style.display = "none";
+		            	location.href = "/ounwan/ounwangram";
+		            },
+		            error : function(request,status,error) {
+		                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		            }    
+	            })
+        	} else {
+        		alert("신고 사유를 선택해주세요.");
+        	}
+        });
         
         $("#gramSearchResult").on("click", "#searchTag", function() {
         	countGramTag = 0;
@@ -26,7 +68,7 @@ $(window).on("load", function() {
         	$("#gramWholeBoard").removeClass("ounwangram_selected");
         	$("#gramFollowBoard").removeClass("ounwangram_selected");
         	loadGramTagBoard($(this).find('span').html().slice(1));
-        })
+        });
         
         $("#ounwangramBoard").on("click", "#searchTag", function() {
         	countGramTag = 0;
@@ -34,7 +76,7 @@ $(window).on("load", function() {
         	$("#gramWholeBoard").removeClass("ounwangram_selected");
         	$("#gramFollowBoard").removeClass("ounwangram_selected");
         	loadGramTagBoard($(this).html().slice(1));
-        })
+        });
 
         $("#gramFollowBoard").on("click", function() {
             if(!$("#gramFollowBoard").attr("class").toString().includes("ounwangram_selected")) {
@@ -136,7 +178,12 @@ $(window).on("load", function() {
         })
 
         $("#ounwangramBoard").on("click", "#reportGramBoard", function() {
-            console.log("report : " + $(this).val());
+        	reportReason = [];
+            $("#reportId").html("|&nbsp;" + $(this).val().split("@")[1]);
+            report.communityNumber = $(this).val().split("@")[0];
+            $(".reason").prop("checked", false);
+            report.board = $(this).parent().parent().parent();
+            modal.style.display = 'block';
         })
         
         $("#gramSearch").on("input", function() {
@@ -179,6 +226,11 @@ $(window).on("load", function() {
                 }
             })
         });
+        
+        closeBtn.onclick = function() {
+        	  report = {};
+			  modal.style.display = 'none';
+		}
 		
     } else if(window.location.pathname == "/ounwan/writeGramBoard" || window.location.pathname == "/ounwan/updateGramBoard") {
     	var hashTagArray = [];
@@ -188,22 +240,6 @@ $(window).on("load", function() {
                 hashTagArray.push(text.substr(0, text.length - 1));
             }
         }
-    	
-    	$("#uploadImageInput").on("change", function() {
-            var imgTag = $("#ounwanUploadImage");
-            if(fileTag.files.length > 0) {
-                var reader = new FileReader();
-
-                reader.onload = function(data) {
-                    imgTag.attr("src", data.target.result);
-                }
-
-                reader.readAsDataURL(fileTag.files[0]);
-                changImage = true;
-            } else {
-                imgTag.attr("src", "../images/white.jpg");
-            }
-        });
 
         $("#ounwanGramContent").on("input", function() {
             $("#gramContentLength").html($(this).val().length);
@@ -254,11 +290,27 @@ $(window).on("load", function() {
             $("#hashTagAlert").css("visibility", "hidden");
         });
 
+        var formData = new FormData();
+
+        $("#uploadImageInput").on("change", function() {
+            var imgTag = $("#ounwanUploadImage");
+            if(fileTag.files.length > 0) {
+                var reader = new FileReader();
+                formData = new FormData();
+                formData.append('image', $("input[name='uploadImageInput']")[0].files[0]);
+                reader.onload = function(data) {
+                    imgTag.attr("src", data.target.result);
+                }
+
+                reader.readAsDataURL(fileTag.files[0]);
+                changImage = true;
+            }
+        });
+
         $("#submitButton").on("click", function() {
-            if(originalImg == $("#ounwanUploadImage").attr("src")) {
+            if(!changImage) {
                 alert("이미지를 등록해주세요!");
             } else {
-                var formData = new FormData();
                 if(hashTagArray.length < 5 && $("#ounwanGramHashTag").val() != "") {
                     if($("#ounwanGramHashTag").val().includes("#")) {
                         hashTagArray.push($("#ounwanGramHashTag").val().slice(1,$("#ounwanGramHashTag").val().length));
@@ -266,7 +318,6 @@ $(window).on("load", function() {
                         hashTagArray.push($("#ounwanGramHashTag").val());
                     }
                 }
-                formData.append('image', $("input[name='uploadImageInput']")[0].files[0]);
                 formData.append('content', $("#ounwanGramContent").val());
                 formData.append('hashTag', hashTagArray);
                 $.ajax({
@@ -375,7 +426,7 @@ const loadBoard = function(res) {
     		boardOption = "<button id='updateGramBoard' value=" + res[i].communityNumber + ">수정하기</button>";
             boardOption += "<button id='deleteGramBoard' value=" + res[i].communityNumber + ">삭제하기</button>";
     	} else {
-    		boardOption = "<button id='reportGramBoard' value=" + res[i].communityNumber + ">신고하기</button>";
+    		boardOption = "<button id='reportGramBoard' value=" + res[i].communityNumber + "@" + res[i].clientId + ">신고하기</button>";
     	}
         var hashTagDiv = "";
         for(var j = 0; j < res[i].hashTags.length; j++) {
