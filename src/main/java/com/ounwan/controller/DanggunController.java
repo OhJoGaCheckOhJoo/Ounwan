@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ounwan.dto.ClientsDTO;
 import com.ounwan.dto.DanggunDTO;
 import com.ounwan.dto.ProductImagesDTO;
 import com.ounwan.service.DanggunService;
@@ -36,7 +35,6 @@ public class DanggunController {
 		System.out.println("DMain_clientInfo: " + session.getAttribute("userInfo"));
 
 		List<DanggunDTO> list = danggunService.listAll();
-		ProductImagesDTO imagse = new ProductImagesDTO();
 
 		for (DanggunDTO danggun : list) {
 			ProductImagesDTO image = productImageService.selectAllImages(danggun.getDanggunNumber());
@@ -61,8 +59,6 @@ public class DanggunController {
 
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
 	public String insertGet(HttpSession session, Model model) {
-		System.out.println("insertGet 왔다");
-
 		if (session.getAttribute("userInfo") != null) {
 			return "danggunInsert";
 		} else {
@@ -75,10 +71,7 @@ public class DanggunController {
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public @ResponseBody String insertPost(@RequestParam(value = "detailImagesLength", required=false) int detailImagesLength,@RequestPart(value="detailImages", required = false) MultipartFile[] detailImages, MultipartFile image,
 			String clientId, String productName, int price, String detail) throws IllegalStateException, IOException {
-		System.out.println("_____insertPost 왔다_______");
-		System.out.println("image_C: "+image);
-		return danggunService.danggunInsert(detailImagesLength, detailImages, image, clientId, productName, price, detail) ? "sucess" : "fail";
+		return danggunService.danggunInsert(detailImagesLength, detailImages, image, clientId, productName, price, detail)>0 ? "sucess" : "fail";
 	}
-
 
 }

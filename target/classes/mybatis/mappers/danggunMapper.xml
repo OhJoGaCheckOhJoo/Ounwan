@@ -19,7 +19,7 @@
 	<insert id="danggunInsert" parameterType="danggun">
 		<selectKey keyColumn="DANGGUN_NUMBER" keyProperty="danggunNumber" order="AFTER" resultType="int">
 			select DANGGUN_NUMBER from DANGGUN where 
-			CLIENT_ID=#{clientId} and PRODUCT_NAME=#{productName}
+			CLIENT_ID=#{clientId} order by DANGGUN_NUMBER desc limit 1
 		</selectKey>
 		insert into DANGGUN (`TRADE_HISTORY_NUMBER`, `CLIENT_ID`, `PRODUCT_NAME`,`PRICE`, `DETAIL`, `UPLOAD_DATE`) 
 		VALUES (6, #{clientId}, #{productName}, #{price}, #{detail}, now())		

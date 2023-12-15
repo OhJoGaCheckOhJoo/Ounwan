@@ -24,9 +24,10 @@ public class DanggunDAO {
 	public List<Danggun> searchProduct(String name) {
 		return sqlSession.selectList(NAMESPACE + "searchProduct", name);
 	}
-	
+
 	public int danggunInsert(Danggun danggun) {
-		return sqlSession.insert(NAMESPACE + "danggunInsert", danggun);
+		sqlSession.insert(NAMESPACE + "danggunInsert", danggun);		
+		return danggun.getDanggunNumber();
 	}
 	
 }
