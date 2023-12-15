@@ -1,12 +1,10 @@
 package com.ounwan.service;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.ProductImagesDTO;
 import com.ounwan.entity.ProductImages;
@@ -14,11 +12,14 @@ import com.ounwan.repository.ProductImagesDAO;
 
 @Service
 public class ProductImagesService {
+
 	@Autowired
 	ProductImagesDAO productImagesDAO;
 	
-	private final static String UPLOADPATH = "C:/shinhan/sts-workspace/ounwan/src/main/webapp/resources";
-	private final static String IMAGEPATH = "/images/danggunUploads/";
+	public ProductImagesDTO selectAllImages(Integer danggunNumber) {
+		ProductImagesDTO image = changeDTO(productImagesDAO.selectAllImages(danggunNumber));
+		return image;
+	}
 	
 	public List<ProductImagesDTO> selectImages(int danggunNumber) {
 		List<ProductImages> result = productImagesDAO.selectImages(danggunNumber);
@@ -51,6 +52,5 @@ public class ProductImagesService {
 							.url(productImages.getUrl())
 							.type(productImages.getType())
 							.build();
-	}
-	
+	}	
 }

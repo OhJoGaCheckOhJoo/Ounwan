@@ -33,13 +33,56 @@ public class DanggunController {
 	DanggunService danggunService;
 
 	@Autowired
-	ProductImagesService productImagesService;
+	ProductImagesService productImageService;
 
 	@Autowired
 	TradeHistoryService tradeHistoryService;
 
 	@Autowired
 	WishListsService wishListsService;
+
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public String mainGet(HttpSession session, Model model) {
+
+		List<DanggunDTO> list = danggunService.listAll();
+
+		for (DanggunDTO danggun : list) {
+			ProductImagesDTO image = productImageService.selectAllImages(danggun.getDanggunNumber());
+			danggun.setUrl(image.getUrl());
+		}
+		model.addAttribute("list", list);
+		
+		return "danggunMain";
+	}
+
+	@RequestMapping(value = "/main", method = RequestMethod.POST)
+	public @ResponseBody List<DanggunDTO> searchProduct(@RequestParam("searchInput") String searchInput,
+			HttpSession session) {
+		List<DanggunDTO> searchList = danggunService.searchProduct(searchInput);
+
+		for (DanggunDTO danggun : searchList) {
+			ProductImagesDTO searchImage = productImageService.selectAllImages(danggun.getDanggunNumber());
+			danggun.setUrl(searchImage.getUrl());
+		}
+		return searchList;
+	}
+
+	@RequestMapping(value = "/insert", method = RequestMethod.GET)
+	public String insertGet(HttpSession session, Model model) {
+		if (session.getAttribute("userInfo") != null) {
+			return "danggunInsert";
+		} else {
+			model.addAttribute("message", "로그인이 필요한 페이지입니다.");
+			return "login";
+		}
+
+	}
+
+	@RequestMapping(value = "/insert", method = RequestMethod.POST)
+	public @ResponseBody String insertPost(@RequestParam(value = "detailImagesLength", required=false) int detailImagesLength,@RequestPart(value="detailImages", required = false) MultipartFile[] detailImages, MultipartFile image,
+			String clientId, String productName, int price, String detail) throws IllegalStateException, IOException {
+		return danggunService.danggunInsert(detailImagesLength, detailImages, image, clientId, productName, price, detail)>0 ? "sucess" : "fail";
+	}
 
 	@GetMapping("/main")
 	public String danggunMain() {
@@ -59,8 +102,7 @@ public class DanggunController {
 			mv.addObject("tradeStep", step);
 		}
 
-		List<ProductImagesDTO> resultImages = productImagesService.selectImages(danggunNumber);
-		System.out.println(resultImages);
+		List<ProductImagesDTO> resultImages = productImageService.selectImages(danggunNumber);
 		if (resultImages != null)
 			mv.addObject("danggunImage", resultImages);
 

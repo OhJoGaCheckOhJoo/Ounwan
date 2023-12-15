@@ -2,7 +2,9 @@ package com.ounwan.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +25,83 @@ public class DanggunService {
 	@Autowired
 	ProductImagesDAO productImagesDAO;
 
-	private final static String UPLOADPATH = "C:/shinhan/sts-workspace/ounwan/src/main/webapp/resources";
+	private final static String UPLOADPATH = "C:/Users/diana/OneDrive/문서/GitHub/Back-end/src/main/webapp/resources";
+	private final static String DANGGUNIMAGEPATH = "/images/danggunUploads/";
+
+	public List<DanggunDTO> searchProduct(String name) {
+		List<DanggunDTO> searchList = new ArrayList<DanggunDTO>();
+		if (name.length() > 0) {
+			for (Danggun danggun : danggunDAO.searchProduct(name)) {
+				searchList.add(changeDTO(danggun));
+			}
+		}
+		return searchList;
+	}
+
+	public List<DanggunDTO> listAll() {
+		List<DanggunDTO> list = new ArrayList<>();
+		for (Danggun danggun : danggunDAO.listAll()) {
+			list.add(changeDTO(danggun));
+		}
+		return list;
+	}
+	
+	public int danggunInsert(int detailImagesLength, MultipartFile[] detailImages, MultipartFile image,
+			String clientId, String productName, int price, String detail) throws IllegalStateException, IOException {
+		
+		int result = 0;
+		Danggun danggun = Danggun.builder().clientId(clientId).productName(productName).price(price).detail(detail)
+				.build();
+		
+		if (detailImages != null) {
+			for (MultipartFile file : detailImages) {
+				System.out.println(file);
+			}
+		} else {
+			detailImagesLength = 0;
+		}
+		
+		int count = detailImagesLength + 1;
+		String[] uploadFileName = new String[count];
+		int[] imageType = new int[count];
+		MultipartFile[] images = new MultipartFile[count];
+		File[] files = new File[count];
+		
+		images[0] = image;
+		imageType[0] = 0;
+
+		if (count > 1) {
+			for (int i = 1; i < count; i++) {
+				imageType[i] = 1;
+				images[i] = detailImages[i - 1];
+			}
+		}
+		
+		for (int i = 0; i < count; i++) {
+			uploadFileName[i] = clientId + "_" + System.currentTimeMillis() + "_" + i + "."
+					+ images[i].getContentType().split("/")[1];
+			files[i] = new File(UPLOADPATH + DANGGUNIMAGEPATH + uploadFileName[i]);
+		}
+		int danggunNumber= danggunDAO.danggunInsert(danggun);
+
+		if (danggunNumber > 0) {
+			Map<String, Object> data = new HashMap<>();
+
+			for (int i = 0; i < count; i++) {
+				data.put("danggunNumber", danggunNumber);
+				images[i].transferTo(files[i]);
+				data.put("url", ".." + DANGGUNIMAGEPATH + uploadFileName[i]);
+				data.put("type", imageType[i]);
+				productImagesDAO.imageInsert(data);
+				result += 1;
+			}
+		}
+		return result== count ? 1 : 0;
+	}
+
+	private final static String SUPLOADPATH = "C:/shinhan/sts-workspace/ounwan/src/main/webapp/resources";
 	private final static String CURRENTPAGEURL = "http://localhost:9090/myapp/";
 	private final static int CURRENTPAGEURLLENGTH = CURRENTPAGEURL.length()-1;
-	private final static String DANGGUNIMAGEPATH = "/images/danggunUploads/";
 
 	public DanggunDTO selectDanggun(int danggunNumber) {
 		Danggun result = danggunDAO.selectDanggun(danggunNumber);
@@ -43,7 +118,7 @@ public class DanggunService {
 			int tradeHistoryNumber, int imagesLength, int newImagesLength) throws IllegalStateException, IOException {
 		Danggun danggun = danggunDAO.selectDanggun(danggunNumber);
 		danggun.setClientId(loginclientId);
-		danggun.setName(name);
+		danggun.setProductName(name);
 		danggun.setPrice(price);
 		danggun.setDetail(detail);
 		danggun.setTradeHistoryNumber(tradeHistoryNumber);
@@ -53,11 +128,11 @@ public class DanggunService {
 		File[] files = new File[count]; // martipartfile에서 파일 경로만 입력
 		for (int i = 0; i < imagesLength; i++) {
 			uploadFileName[i] = clientId + "_" + System.currentTimeMillis() + "_" + i + "." + imageFiles[i].getContentType().split("/")[1];
-			files[i] = new File(UPLOADPATH + DANGGUNIMAGEPATH + uploadFileName[i]);
+			files[i] = new File(SUPLOADPATH + DANGGUNIMAGEPATH + uploadFileName[i]);
 		}
 		for(int j = imagesLength; j < count; j++) {
 			uploadFileName[j] = clientId + "_" + System.currentTimeMillis() + "_" + j + "." + newDetailImages[j].getContentType().split("/")[1];
-			files[j] = new File(UPLOADPATH + DANGGUNIMAGEPATH + uploadFileName[j]);
+			files[j] = new File(SUPLOADPATH + DANGGUNIMAGEPATH + uploadFileName[j]);
 		}
 		if (danggunDAO.updateDanggun(danggun) > 0) {
 			Map<String, Object> data = new HashMap<>();
@@ -65,7 +140,7 @@ public class DanggunService {
 				imageFiles[i].transferTo(files[i]);
 				data.put("url", ".." + DANGGUNIMAGEPATH + uploadFileName[i]);
 				data.put("danggunImageNumber", imageFilesNumber[i]);
-				new File(UPLOADPATH + oldImageURL[i].substring(CURRENTPAGEURLLENGTH)).delete();
+				new File(SUPLOADPATH + oldImageURL[i].substring(CURRENTPAGEURLLENGTH)).delete();
 				productImagesDAO.updateDanggunImages(data);
 				result += 1;
 			}
@@ -86,15 +161,16 @@ public class DanggunService {
 	public Danggun changeEntity(DanggunDTO danggun) {
 		return Danggun.builder().danggunNumber(danggun.getDanggunNumber())
 				.tradeHistoryNumber(danggun.getTradeHistoryNumber()).clientId(danggun.getClientId())
-				.name(danggun.getName()).price(danggun.getPrice()).detail(danggun.getDetail())
+				.productName(danggun.getProductName()).price(danggun.getPrice()).detail(danggun.getDetail())
 				.uploadDate(danggun.getUploadDate()).build();
 	}
 
 	public DanggunDTO changeDTO(Danggun danggun) {
 		return DanggunDTO.builder().danggunNumber(danggun.getDanggunNumber())
 				.tradeHistoryNumber(danggun.getTradeHistoryNumber()).clientId(danggun.getClientId())
-				.name(danggun.getName()).price(danggun.getPrice()).detail(danggun.getDetail())
+				.productName(danggun.getProductName()).price(danggun.getPrice()).detail(danggun.getDetail())
 				.uploadDate(danggun.getUploadDate()).build();
 	}
+
 
 }
