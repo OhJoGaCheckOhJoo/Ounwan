@@ -39,7 +39,7 @@ public class ClientsDAO {
 		return sqlSession.update(NAMESPACE + "withdrawal", client);
 	}
 
-	public String checkLogin(String id) {
+	public Clients checkLogin(String id) {
 		return sqlSession.selectOne(NAMESPACE + "checkLogin", id);
 	}
 

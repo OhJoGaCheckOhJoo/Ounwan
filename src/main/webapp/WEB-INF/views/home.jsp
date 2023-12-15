@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="appPath" scope="application"  value="${pageContext.request.contextPath}" />
-<%@ page session="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="appPath" scope="application"
+	value="${pageContext.request.contextPath}" />
+<%@ page session="false"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="${appPath}/css/main.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <title>오운완</title>
+<script src="./js/main.js"></script>
+<link href="${appPath}/css/main.css" rel="stylesheet" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<title>오운완</title>
 </head>
 <body>
     <header>
@@ -17,7 +20,12 @@
             <a href="${appPath}/clients/signUp">회원가입</a>
             <a href="${appPath}/clients/login" class="pointer" id="loginSelect">로그인</a>
             <!--# : DB(회원)/세션(비회원)에서 가져올 것-->
-            <button class="pointer">Basket (#)</button>
+            <button class="pointer" onclick="goToCart()">Basket (#)</button>
+			<script>
+				function goToCart() {
+					window.location.href = '${appPath}/coupung/cart';
+				}
+			</script>
         </div>
     </header>
 
@@ -67,44 +75,53 @@
             </div>
         </nav>
 
-        <div id="main-banner" class="main-banner">
-            <img src = './images/v616_37.png'>
-        </div>
+		<div id="main-banner" class="main-banner">
+			<img src='./images/v616_37.png'>
+		</div>
 
-        <div>
-            <div class="text-1">인기상품</div>
-            <div id="populars" class="main-product"></div>
-        </div>
+		<div>
+			<div class="text-1">인기상품</div>
+			<div id="populars" class="main-product"></div>
+		</div>
 
-        <br>
+		<br>
 
-        <div>
-            <div class="text-1">중고거래</div>
-            <div id="secondhands" class="main-product"></div>
-        </div>
+		<div>
+			<div class="text-1">중고거래</div>
+			<div id="secondhands" class="main-product"></div>
+		</div>
 
-        <br>
-    </div>
+		<br>
+	</div>
 
-    <hr>
+	<hr>
 
-    <footer>
-        <div>
-            <div>오운완 쇼핑몰 & 커뮤니티</div>
-            <div>대표자 : 김태완, 박정우, 박지원, 방은지, 신서영, 윤윤성</div>
-            <div>대표전화 : 010-9424-2784 / 주소 : 03993 서울특별시 마포구 월드컵북로4길 77, 1층</div>
-            <div>상품&제휴 문의 메일 : ounwan50@gmail.com</div>
-            <div class="text-1">고객센터 : 평일 오전 10:00 ~ 오후 5:00</div>
-            <div class="text-1">(점심시간 12:00 ~ 13:00) 토/일/공휴일 휴무</div>
-        </div>
-        <div class="float-right">
-            <br><br>
-            <div><a href="#">이벤트</a></div>
-            <div><a href="#">개인정보처리방침</a></div>
-            <div><a href="#">이용약관</a></div>
-            <div><img class="float-right img-1 pointer" src="./images/insta.png"></div>
-        </div>
-    </footer>
-    <script src="./js/main.js"></script>
+	<footer>
+		<div>
+			<div>오운완 쇼핑몰 & 커뮤니티</div>
+			<div>대표자 : 김태완, 박정우, 박지원, 방은지, 신서영, 윤윤성</div>
+			<div>대표전화 : 010-9424-2784 / 주소 : 03993 서울특별시 마포구 월드컵북로4길 77, 1층</div>
+			<div>상품&제휴 문의 메일 : ounwan50@gmail.com</div>
+			<div class="text-1">고객센터 : 평일 오전 10:00 ~ 오후 5:00</div>
+			<div class="text-1">(점심시간 12:00 ~ 13:00) 토/일/공휴일 휴무</div>
+		</div>
+		<div class="float-right">
+			<br> <br>
+			<div>
+				<a href="#">이벤트</a>
+			</div>
+			<div>
+				<a href="#">개인정보처리방침</a>
+			</div>
+			<div>
+				<a href="#">이용약관</a>
+			</div>
+			<div>
+				<img class="float-right img-1 pointer" src="./images/insta.png">
+			</div>
+		</div>
+	</footer>
+	
+	
 </body>
 </html>

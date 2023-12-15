@@ -59,20 +59,25 @@ public class ClientsService {
 		return (result > 0) ? true : false;
 	}
 
-	public boolean checkLogin(String id, String password) {  
-		String dbpassword = clientsDAO.checkLogin(id);
-		if (dbpassword == null) {
-			return false;
-		} else {
-			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			if(encoder.matches(password,dbpassword)) {
-				return true;
-			}else {
-				return false;
-			}
-			 
-		}
-	}
+	public ClientsDTO checkLogin(String id, String password) {  
+        System.out.println("id : " + id);
+        System.out.println("password : " + password);
+        Clients dbInfo = clientsDAO.checkLogin(id);
+        
+        System.out.println("dbInfo : " + dbInfo);
+        if (dbInfo != null) {
+            String dbpassword = dbInfo.getPassword();
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            if(encoder.matches(password,dbpassword)) {
+                System.out.println("왔나");
+                return changeDTO(dbInfo);
+            }else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
 	
 	public ClientsDTO checkNaverToken(String token) {
 		Clients client = clientsDAO.checkNaverToken(token);
@@ -248,9 +253,9 @@ public class ClientsService {
                 .addressDetail(client.getAddressDetail())
                 .zipCode(client.getZipCode())
                 .privacyTerms(client.getPrivacyTerms())
-                .emailCheck(client.getEmailCheck())
-                .activationCheck(client.getActivationCheck())
-                .qualifiedCheck(client.getQualifiedCheck())
+                .emailCheck(client.isEmailCheck())
+                .activationCheck(client.isActivationCheck())
+                .qualifiedCheck(client.isQualifiedCheck())
                 .profileURL(client.getProfileURL())
                 .emailAuth(client.getEmailAuth())
                 .socialType(client.getSocialType())

@@ -26,10 +26,10 @@ public class Clients {
 	private String address;
 	private String addressDetail;
 	private String zipCode;
-	private Integer privacyTerms;
-	private Boolean emailCheck;
-	private Boolean activationCheck;
-	private Boolean qualifiedCheck;
+	private int privacyTerms;
+	private boolean emailCheck;
+	private boolean activationCheck;
+	private boolean qualifiedCheck;
 	private String profileURL;
 	private String emailAuth;
 	private String socialType;

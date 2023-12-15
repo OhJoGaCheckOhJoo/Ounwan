@@ -18,4 +18,5 @@ public class Coupung {
 	private Integer price;
 	private Integer availableStock;
 	private Boolean availableCheck;
+	private String option;
 }
