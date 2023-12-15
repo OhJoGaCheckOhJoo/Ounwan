@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="appPath" value="${pageContext.request.contextPath}"></c:set>
 
@@ -32,12 +32,12 @@
             <div class="login-wrap-1 float-right">
                 <form>
                     <div class="login">
-                        <input type="text" id="loginId" required>
+                        <input type="text" id="loginId" value="jj1234" required>
                         <label>아이디</label>
                         <span></span>
                     </div>
                     <div class="login">
-                        <input type="password" id="loginPassword" required>
+                        <input type="password" id="loginPassword" value="123456789" required>
                         <label>비밀번호</label>
                         <span></span>
                     </div>
