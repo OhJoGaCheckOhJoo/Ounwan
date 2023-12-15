@@ -1,6 +1,5 @@
 package com.ounwan.controller;
 	
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.oauth.kakao.KakaoLoginBO;
@@ -33,13 +31,9 @@ public class ClientsController {
 	@Autowired
 	NaverLoginBO naverLogin;
 
-	private static String ounwanAPIURL = null;
 
 	@GetMapping("/login")
 	public String loginGet(HttpSession session) {
-		//ModelAndView v = new ModelAndView("login");
-		//ounwanAPIURL = naverLogin.getAuthorizationUrl(session);
-		//System.out.println(ounwanAPIURL);
 		return "login";
 	}
 
