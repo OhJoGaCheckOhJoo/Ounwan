@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,13 +34,10 @@ public class ClientsController {
 	@Autowired
 	NaverLoginBO naverLogin;
 
-	private static String ounwanAPIURL = null;
-
 	@GetMapping("/login")
 	public ModelAndView loginGet(HttpSession session) {
 		ModelAndView v = new ModelAndView("login");
-		ounwanAPIURL = naverLogin.getAuthorizationUrl(session);
-		System.out.println(ounwanAPIURL);
+		
 		return v;
 	}
 
@@ -94,43 +93,50 @@ public class ClientsController {
 	public String naverLogin(HttpSession session) {
 		return "redirect:" + naverLogin.getAuthorizationUrl(session);
 	}
+	
+	@GetMapping("/signUp")
+	public String createAccount () {  
+		return "signUp";
+	}
 
 	@PostMapping(value = "/signUp", consumes= "application/json", produces="text/plain;charset=utf-8")
-	public String createAccount(@RequestBody ClientsDTO client) {
+	public @ResponseBody String createAccount(@RequestBody ClientsDTO client) {
 		System.out.println(client);
-		int result = clientService.createAccount(client);
-		if(result > 0) {
-			System.out.println("YESSSSSS");
-		} else {
-			System.out.println("NOOOOOOOOO");
-		}
-		return "success";
+		boolean result = clientService.createAccount(client);
+		return (result) ? "success" : "fail";
 	} 
 	
-	@GetMapping(value = "/checkId", produces="text/plain;charset=utf-8")
-	public String checkId(String clientId) {
+	@GetMapping("/checkId")
+	public @ResponseBody String checkId(String clientId) {
 		System.out.println(clientId);
 		// true = id 존재, false = id 없음
 		boolean result = clientService.checkId(clientId);
-		if(result) {
-			System.out.println("YESSSSSS");
-		} else {
-			System.out.println("NOOOOOOOOO");
-		}
-		return "success";
+		return (result) ? "exist" : "available";
 	} 
 	
-	@GetMapping(value = "/checkEmail", produces="text/plain;charset=utf-8")
-	public String checkEmail(String email) {
+	@GetMapping("/checkEmail")
+	public @ResponseBody String checkEmail(String email) {
 		System.out.println(email);
 		// true = id 존재, false = id 없음
 		boolean result = clientService.checkEmail(email);
-		if(result) {
-			System.out.println("YESSSSSS");
-		} else {
-			System.out.println("NOOOOOOOOO");
-		}
-		return "success";
+		return (result) ? "exist" : "available";
 	} 
-
+	
+	@GetMapping("/emailAuth")
+	public String getAuthPage() {
+		return "emailCheck";
+	}
+	
+	@PostMapping(value = "/emailAuth", consumes = "application/json")
+	public @ResponseBody String checkEmailAuthString (@RequestBody ClientsDTO client) {
+		boolean result = clientService.checkEmailAuth(client);
+		return (result) ? "success" : "fail";
+	}
+	
+	@PostMapping(value="/setImage")
+	public @ResponseBody String setImage(@RequestParam("image") MultipartFile image) {
+		String imgString = clientService.setImage(image);
+		System.out.println("save : " + imgString);
+		return imgString;
+	}
 }

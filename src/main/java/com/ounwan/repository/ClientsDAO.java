@@ -22,7 +22,7 @@ public class ClientsDAO {
 	public int checkEmail(String email) {
 		return sqlSession.selectOne(NAMESPACE + "checkEmail", email);
 	}
-
+  
 	public Clients findClientId(Clients client) {
 		return sqlSession.selectOne(NAMESPACE + "selectForFindId", client);
 	}
@@ -50,5 +50,13 @@ public class ClientsDAO {
 	public Clients checkKakaoToken(String token) {
 		return sqlSession.selectOne(NAMESPACE + "checkKakaoToken", token);
 	}
-	
+	public String getEmailAuth(String clientId) {
+		return sqlSession.selectOne(NAMESPACE + "getEmailAuth", clientId);
+	}
+	public int updateActivation(String clientId) {
+		return sqlSession.update(NAMESPACE + "updateActivation", clientId);
+	}
+	public Clients findKakaoUser(String token) {
+		return sqlSession.selectOne(NAMESPACE + "findKakaoUser", token);
+	}
 }

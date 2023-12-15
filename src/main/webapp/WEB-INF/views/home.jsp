@@ -14,8 +14,8 @@
     <header>
         <a class="logo" href="#"></a>
         <div class="float-right">
-            <a href="./html/signup.html">회원가입</a>
-            <a class="pointer" id="loginSelect">로그인</a>
+            <a href="${appPath}/clients/signUp">회원가입</a>
+            <a href="${appPath}/clients/login" class="pointer" id="loginSelect">로그인</a>
             <!--# : DB(회원)/세션(비회원)에서 가져올 것-->
             <button class="pointer">Basket (#)</button>
         </div>
@@ -32,7 +32,7 @@
                     </a>
                 </div>
                 <div>
-                    <a href="#">쇼핑몰</a>
+                    <a href="${appPath}/coupung/products">쇼핑몰</a>
                     <div class="nav-submenu">
                         <a href="#">전체 보기</a>
                         <a href="#">운동 기구</a>

@@ -665,8 +665,8 @@ footer div {
 	            <!-- 소셜 로그인 -->
 	            <div class="social-wrap">
 	                <a href="#"><img class="login login-radius" src="./images/google.png"></a><br>
-	                <a href="/myapp/login/naver"><img class="login login-radius" src="./images/naver_btn.png"></a><br>
-	                <a href="/myapp/login/kakao"><img class="login login-radius" src="./images/kakao_btn.png"></a><br>
+	                <a href="/myapp/clients/login/naver"><img class="login login-radius" src="../images/naver_btn.png"></a><br>
+	                <a href="/myapp/clients/login/kakao"><img class="login login-radius" src="../images/kakao_btn.png"></a><br>
 	            </div>
 
 	            <!-- 일반 로그인 -->
