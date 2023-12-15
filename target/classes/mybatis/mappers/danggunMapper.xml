@@ -7,13 +7,72 @@
 		SELECT * FROM DANGGUN ORDER BY danggun_Number desc
 	</select>
 
+	<!-- 거래 게시물 정보 -->
+	<select id="selectDanggun" parameterType="int"
+		resultType="danggun">
+		SELECT * from danggun
+		where DANGGUN_NUMBER =
+		#{danggun_number}
+	</select>
+
+	<!-- 이미지 가져오기 -->
+	<select id="selectImages" parameterType="int"
+		resultType="productImages">
+		SELECT * from Product_Images where
+		DANGGUN_NUMBER =
+		#{danggunNumber} order by PRODUCT_IMAGE_NUMBER asc
+	</select>
+
+	<!-- 거래 현황 정보 뽑아오기 -->
+	<select id="selectTradeStep" parameterType="int"
+		resultType="String">
+		SELECT TRADE_STEP from
+		TRADE_HISTORY where
+		TRADE_HISTORY_NUMBER = #{tradeHistoryNumber}
+	</select>
+
+	<!-- 찜 개수 -->
+	<select id="selectCountZzim" parameterType="int"
+		resultType="int">
+		SELECT count(*) from WISH_LISTS where DANGGUN_NUMBER =
+		#{danggunNumber}
+	</select>
+
+	<!-- 당군 게시물 삭제 -->
+	<delete id="deleteDanggun" parameterType="danggun">
+		DELETE FROM DANGGUN
+		WHERE DANGGUN_NUMBER = #{danggunNumber} AND CLIENT_ID = #{clientId}
+	</delete>
+
+	<!-- 게시물 수정 -->
+	<update id="updateDanggun" parameterType="danggun">
+	 	UPDATE DANGGUN 
+	 	SET TRADE_HISTORY_NUMBER = #{tradeHistoryNumber}, PRODUCT_NAME = #{productName}, PRICE = #{price}, DETAIL = #{detail}
+	 	WHERE DANGGUN_NUMBER = #{danggunNumber} AND CLIENT_ID = #{clientId}
+	 </update>
+
+	<!-- 사진 수정 -->
+	<update id="updateDanggunImages" parameterType="productImages">
+		UPDATE PRODUCT_IMAGES
+		SET URL = #{url}
+		WHERE PRODUCT_IMAGE_NUMBER = #{danggunImageNumber}
+	</update>
+	
+	<insert id="insertNewDetailImages" parameterType="productImages">
+		INSERT INTO
+		PRODUCT_IMAGES (DANGGUN_NUMBER, URL, TYPE)
+		VALUES (#{danggunNumber}, #{url}, 1)
+	</insert>
+	
+	<!-- 찜 +1 -->
+	<!-- 찜 -1 -->
+
 	<select id="searchProduct" parameterType="String" resultType="danggun">
 		SELECT * FROM DANGGUN WHERE product_Name like CONCAT('%',#{name},'%') order by danggun_Number desc
 	</select>
 	
-	<!-- PRODUCT_IMAGES1 테이블 이름 변경 필요 -->
 	<select id="selectAllImage" parameterType="int" resultType="productImages">
-		select * from PRODUCT_IMAGES1 where DANGGUN_NUMBER = #{danggunNumber} and TYPE=0;
+		select * from PRODUCT_IMAGES where DANGGUN_NUMBER = #{danggunNumber} and TYPE=0;
 	</select>
 	
 	<insert id="danggunInsert" parameterType="danggun">
@@ -26,7 +85,7 @@
 	</insert>
 	
 	<insert id="imageInsert" parameterType="map">
-		insert into PRODUCT_IMAGES1 (`DANGGUN_NUMBER`, `URL`, `TYPE`)
+		insert into PRODUCT_IMAGES (`DANGGUN_NUMBER`, `URL`, `TYPE`)
 		VALUES (#{danggunNumber}, #{url}, #{type})
 	</insert>
 </mapper>

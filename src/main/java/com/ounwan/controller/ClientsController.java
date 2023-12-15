@@ -1,6 +1,5 @@
 package com.ounwan.controller;
 	
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.oauth.kakao.KakaoLoginBO;
@@ -33,28 +31,24 @@ public class ClientsController {
 	@Autowired
 	NaverLoginBO naverLogin;
 
-	private static String ounwanAPIURL = null;
 
 	@GetMapping("/login")
 	public String loginGet(HttpSession session) {
-		//ModelAndView v = new ModelAndView("login");
-		//ounwanAPIURL = naverLogin.getAuthorizationUrl(session);
-		//System.out.println(ounwanAPIURL);
 		return "login";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-    public @ResponseBody String loginPost(@RequestBody ClientsDTO client, HttpSession session) {
-        System.out.println("내가 입력 비번 : " + client.getPassword());
-        ClientsDTO loginUser = clientService.checkLogin(client.getClientId(), client.getPassword());
-        System.out.println(loginUser);
-        if (loginUser != null) {
-            session.setAttribute("userInfo", loginUser);
-            System.out.println("clients : " + client);
-            return "success";
-        }
-        return "fail";
-    }
+	public @ResponseBody String loginPost(@RequestBody ClientsDTO client, HttpSession session) {
+		System.out.println("내가 입력 비번 : " + client.getPassword());
+		ClientsDTO loginUser = clientService.checkLogin(client.getClientId(), client.getPassword());
+		System.out.println(loginUser);
+		if (loginUser != null) {
+			session.setAttribute("userInfo", loginUser);
+			System.out.println("clients : " + client);
+			return "success";
+		}
+		return "fail";
+	}
 
 	@SuppressWarnings("static-access")
 	@GetMapping(value = "/findId", consumes = "text/plain;charset=UTF-8", produces = "application/json")
