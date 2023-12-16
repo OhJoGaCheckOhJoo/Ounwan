@@ -5,14 +5,11 @@
 <mapper namespace="net.ounwan.carts">
 
 	<select id="getCartById" parameterType="String" resultType="map">
-		SELECT coupung.name, coupung.`OPTION`, coupung.price ,cart.*, pi.URL
-		FROM
-		COUPUNG coupung JOIN CARTS cart ON
-		coupung.COUPUNG_NUMBER =
-		cart.COUPUNG_NUMBER
-		JOIN product_images pi ON
-		cart.coupung_number =
-		pi.coupung_number
+		SELECT coupung.name, option.name AS option, coupung.price, cart.*, image.URL
+		FROM COUPUNG coupung
+		JOIN CARTS cart ON coupung.COUPUNG_NUMBER = cart.COUPUNG_NUMBER
+		JOIN product_images image ON cart.coupung_number = pi.coupung_number
+		JOIN coupung_options option ON COUPUNG_NUMBER = option.COUPUNG_NUMBER
 		WHERE cart.CLIENT_ID = #{clientId}
 	</select>
 

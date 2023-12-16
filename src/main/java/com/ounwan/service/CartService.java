@@ -20,14 +20,14 @@ public class CartService {
 	CartDAO cartDAO;
 	@Autowired
 	CoupungService coupungService;
-	
+
 	@Autowired
 	HttpSession session;
 
-	public List<Map<Object,Object>> getCartById(String clientId) {
-		List<Map<Object,Object>> cartList = cartDAO.getCartById(clientId);
-		
-		//List<CartsDTO> cartList = changeDTOList(carts);
+	public List<Map<Object, Object>> getCartById(String clientId) {
+		List<Map<Object, Object>> cartList = cartDAO.getCartById(clientId);
+
+		// List<CartsDTO> cartList = changeDTOList(carts);
 
 		/*
 		 * System.out.println("cartList : " + cartList); for (CartsDTO cart : cartList)
@@ -38,10 +38,10 @@ public class CartService {
 	}
 
 	public int addToCart(CartsDTO cartsDTO) {
-		 Carts cart = cartDAO.getQuantity(changeEntity(cartsDTO));
-		 System.out.println("cart : " + cart);
-		 
-		if(cart != null) {
+		Carts cart = cartDAO.getQuantity(changeEntity(cartsDTO));
+		System.out.println("cart : " + cart);
+
+		if (cart != null) {
 			System.out.println("quantity(NEW) : " + cartsDTO.getQuantity());
 			System.out.println("quantity(old) : " + cart.getQuantity());
 			cartsDTO.setQuantity(cartsDTO.getQuantity() + cart.getQuantity());
@@ -51,50 +51,25 @@ public class CartService {
 		}
 		return cartDAO.insertCart(changeEntity(cartsDTO));
 	}
-/*
-	public boolean updateCart(String clientId, Integer coupungNumber, int quantity) {
-		int result = cartDAO.updateCart(Carts.builder()
-											.clientId(clientId)
-											.quantity(quantity)
-											.coupungNumber(coupungNumber)
-											.build());
-		System.out.println("result : " + result);
-		return (result > 0) ? true : false;
 
-	}
-*/
-	
 	public boolean updateCart(CartsDTO cartsDTO) {
 		int result = cartDAO.updateCart(changeEntity(cartsDTO));
 		return (result > 0) ? true : false;
 	}
-	
-	
+
 	public boolean deleteCart(CartsDTO cartsDTO) {
 		int result = cartDAO.deleteCart(changeEntity(cartsDTO));
 		return (result > 0) ? true : false;
 	}
-	
-	
+
 	private CartsDTO changeDTO(Carts cart) {
-		return CartsDTO.builder()
-						.cartNumber(cart.getCartNumber())
-						.coupungNumber(cart.getCoupungNumber())
-						.clientId(cart.getClientId())
-						.quantity(cart.getQuantity())
-						.build();
-	}
-	
-	private Carts changeEntity(CartsDTO cartsDTO) {
-		return Carts.builder()
-						.cartNumber(cartsDTO.getCartNumber())
-						.coupungNumber(cartsDTO.getCoupungNumber())
-						.clientId(cartsDTO.getClientId())
-						.quantity(cartsDTO.getQuantity())
-						.build();
+		return CartsDTO.builder().cartNumber(cart.getCartNumber()).coupungNumber(cart.getCoupungNumber())
+				.clientId(cart.getClientId()).quantity(cart.getQuantity()).build();
 	}
 
-	
-	
+	private Carts changeEntity(CartsDTO cartsDTO) {
+		return Carts.builder().cartNumber(cartsDTO.getCartNumber()).coupungNumber(cartsDTO.getCoupungNumber())
+				.clientId(cartsDTO.getClientId()).quantity(cartsDTO.getQuantity()).build();
+	}
 
 }

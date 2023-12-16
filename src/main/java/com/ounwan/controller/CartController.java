@@ -30,31 +30,6 @@ public class CartController {
 	@Autowired
 	CartService cartService;
 
-	// cart보기
-/*	@GetMapping("/cart")
-	public String showClientCart(Model model, HttpSession session) {
-		Object obj = session.getAttribute("userInfo");
-		List<Map<Object, Object>> cartList = new ArrayList<Map<Object, Object>>();
-
-		if (obj == null) {
-			session.getAttribute("cartList");
-			System.out.println("비회원의 cartList : " + cartList);
-
-		} else {
-			cartList = cartService.getCartById(((ClientsDTO) obj).getClientId());
-		}
-
-		model.addAttribute("cartList", cartList);
-		int total = 0;
-		for (Map<Object, Object> map : cartList) {
-			total += (Integer) map.get("price") * (Integer) map.get("QUANTITY");
-		}
-		model.addAttribute("total", total);
-
-		return "coupung/cart";
-
-	}
-*/
 	
 	@GetMapping("/cart")
 	public String showClientCart(Model model, HttpSession session) {

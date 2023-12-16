@@ -143,7 +143,7 @@
 								상품명 : ${cart.name}</div>
 							<div
 								class="coupungOption valign-text-middle inter-normal-star-dust-12px">
-								구매옵션 : ${cart.OPTION }</div>
+								구매옵션 : ${cart.option }</div>
 							<div>
 								<span>단가:${cart.price}원</span>
 							</div>
