@@ -46,7 +46,7 @@ public class CommunityController {
 		System.out.println(pagingList);
 		
 		//get paging data
-		PaginatingDTO paginating= communityService.pagingParam(page);
+		PaginatingDTO paginating= communityService.paginatingParam(page);
 		System.out.println(paginating);
 		model.addAttribute("boardList",pagingList);
 		model.addAttribute("paginating",paginating);

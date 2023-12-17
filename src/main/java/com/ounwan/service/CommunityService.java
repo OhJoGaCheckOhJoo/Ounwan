@@ -61,7 +61,7 @@ public class CommunityService {
 	}
 	
 	//페이징 구현
-	public PaginatingDTO pagingParam(int page) {
+	public PaginatingDTO paginatingParam(int page) {
 		//전체 게시글 갯수
 		int CountAllPosts=communityDAO.CountAllPosts();
 		//전체 페이지 갯수

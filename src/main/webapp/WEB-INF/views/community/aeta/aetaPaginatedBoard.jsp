@@ -63,14 +63,45 @@
 
 			<hr>
 			<br>
+			
 			<div id="aeta-pagination" class="aeta-pagination">
-				<a href="#" class="bt prev"><</a>
+				<c:choose>
+					<c:when test="${paginating.pageNumber<=1}">
+						<span>[<<]</span>
+					</c:when>
+					<c:otherwise>
+						<a href="${appPath}/community/aetaPaginating?page=1">[<<]</a>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${paginating.pageNumber<=1}">
+						<span>[<]</span>
+					</c:when>
+					<c:otherwise>
+						<a href="${appPath}/community/aetaPaginating?page=${paginating.pageNumber-1}">[<]</a>
+					</c:otherwise>
+				</c:choose>
 				<c:forEach begin="${paginating.startPageNumber}"
 					end="${paginating.endPageNumber}" var="i" step="1">
 					<a href="${appPath}/community/aetaPaginating?page=${i}">${i}</a>
 				</c:forEach>
-				<a href="#" class="bt next">></a>
-			</div>
+				<c:choose>
+					<c:when test="${paginating.pageNumber==paginating.maxPageNumber}">
+						<span>[>]</span>
+					</c:when>
+					<c:otherwise>
+						<a href="${appPath}/community/aetaPaginating?page=${paginating.pageNumber+1}">[>]</a>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test="${paginating.pageNumber==paginating.maxPageNumber}">
+						<span>[>>]</span>
+					</c:when>
+					<c:otherwise>
+						<a href="${appPath}/community/aetaPaginating?page=${paginating.maxPageNumber}">[>>]</a>
+				</c:otherwise>
+				</c:choose>
+				</div>
 		</div>
 		<hr>
 		<div class="search">
