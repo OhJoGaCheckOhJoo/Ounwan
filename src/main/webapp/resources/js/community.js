@@ -19,7 +19,7 @@ $(window).on("load", function() {
 		const closeBtn = document.getElementById('closeBtn');
 		var report = {};
 		var reportReason = [];
-
+		
 		modal.style.display = "none";
         
         $("#goMyProfile").on("click", function() {
@@ -371,7 +371,22 @@ $(window).on("load", function() {
             })
         });
     } else if(window.location.pathname == '/ounwan/ounwanProfile') {
-    	console.log(check);
+    	const modal = document.getElementById('modalWrap');
+		modal.style.display = "none";
+		
+		$("#myInbodyButton").on("click", function() {
+			$.ajax({
+				url: "/ounwan/inbody",
+				success: function(res) {
+					$("#inbodyGraph").html(res);
+					modal.style.display = "block";
+				}
+			});
+		});
+		
+		$("#closeBtn").on("click", function() {
+			modal.style.display = "none";
+		})
     }
 })
 

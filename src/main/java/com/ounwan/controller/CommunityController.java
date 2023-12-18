@@ -51,4 +51,25 @@ public class CommunityController {
 		model.addAttribute("userBoard", communityService.getUserBoards(clientId, ((ClientsDTO)session.getAttribute("clientInfo")).getClientId()));
 		return "community/ounwangramProfile";
 	}
+	
+	// 인바디 요청
+	@RequestMapping("/inbody")
+	public String showInbody(HttpSession session, Model model) {
+		model.addAllAttributes(communityService.selectMyInbodyGraph(((ClientsDTO)session.getAttribute("clientInfo")).getClientId()));
+		return "community/inbody";
+	}
+	
+	// 인바디 입력
+	@RequestMapping("/inbodyInsert")
+	public String insertInbody(HttpSession session, Model model) {
+		model.addAttribute("inbody", communityService.selectMyInbodyInfo(((ClientsDTO)session.getAttribute("clientInfo")).getClientId()));
+		return "community/inbodyInsert";
+	}
+	
+	// 팔로워 목록
+	@RequestMapping("/followerList")
+	public String showFollowerList(@RequestParam String clientId, HttpSession session, Model model) {
+		model.addAttribute("followers", communityService.selectFollowerList(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), clientId));
+		return "community/followList";
+	}
 }

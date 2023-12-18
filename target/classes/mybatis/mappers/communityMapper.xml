@@ -42,7 +42,7 @@
 	</select>
 	
 	<select id="selectBoardByCommunityNum" parameterType="int" resultType="gram">
-		SELECT * FROM OUNWAN_COMMUNITY WHERE COMMUNITY_NUMBER = #{communityNumber} WHERE VISIBILITY = 0
+		SELECT * FROM OUNWAN_COMMUNITY WHERE COMMUNITY_NUMBER = #{communityNumber} AND VISIBILITY = 0
 	</select>
 	
 	<select id="searchGramClientId" parameterType="String" resultType="map">
@@ -100,7 +100,21 @@
 	</select>
 	
 	<select id="selectMyInbody" parameterType="String" resultType="inbody">
-		SELECT * FROM INBODY WHERE CLIENT_ID = #{clientId}
+		SELECT * FROM INBODY WHERE CLIENT_ID = #{clientId} ORDER BY UPDATED_DATE DESC LIMIT 7
+	</select>
+	
+	<select id="selectFollowerList" parameterType="map" resultType="map">
+		SELECT FOLLOWER_ID, PROFILE_URL, IFNULL(CNT, 2) AS FOLLOW_CHECK 
+		FROM (SELECT * FROM FOLLOWERS WHERE CLIENT_ID = #{profileId}) AS FOLLOWERS 
+		LEFT JOIN CLIENTS ON FOLLOWERS.FOLLOWER_ID = CLIENTS.CLIENT_ID 
+		LEFT JOIN (SELECT CLIENT_ID, COUNT(*) AS CNT FROM FOLLOWERS WHERE FOLLOWER_ID = #{clientId}) AS FOLLOW_CHECK 
+		ON FOLLOWERS.FOLLOWER_ID = FOLLOW_CHECK.CLIENT_ID WHERE FOLLOWER_ID = #{clientId}
+		UNION
+		SELECT FOLLOWER_ID, PROFILE_URL, IFNULL(CNT, 0) AS FOLLOW_CHECK 
+		FROM (SELECT * FROM FOLLOWERS WHERE CLIENT_ID = #{profileId}) AS FOLLOWERS 
+		LEFT JOIN CLIENTS ON FOLLOWERS.FOLLOWER_ID = CLIENTS.CLIENT_ID 
+		LEFT JOIN (SELECT CLIENT_ID, COUNT(*) AS CNT FROM FOLLOWERS WHERE FOLLOWER_ID = #{clientId}) AS FOLLOW_CHECK 
+		ON FOLLOWERS.FOLLOWER_ID = FOLLOW_CHECK.CLIENT_ID WHERE FOLLOWER_ID != #{clientId} ORDER BY FOLLOW_CHECK DESC
 	</select>
 	
 	<insert id="insertgGramLikeBoard" parameterType="gramLikes">

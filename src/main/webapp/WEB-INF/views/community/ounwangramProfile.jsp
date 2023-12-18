@@ -10,6 +10,7 @@
     <link href="./css/main.css" rel="stylesheet" >
     <link href="./css/community.css" rel="stylesheet" >
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script>
     	const check = "${userProfileInfo.CLIENT_ID eq clientInfo.clientId}";
     </script>
@@ -25,7 +26,7 @@
 	            <div id="myProfileUserId">${userProfileInfo.CLIENT_ID}</div>
 	            <div id="myProfileOption">
 	            	<c:if test="${userProfileInfo.CLIENT_ID eq clientInfo.clientId}">
-	            		<button id="myProfileButton">인바디</button>
+	            		<button id="myInbodyButton">인바디</button>
 	                	<a id="myProfileWrite" href="writeGramBoard">+</a>
 	            	</c:if>
 	            	<c:if test="${userProfileInfo.CLIENT_ID ne clientInfo.clientId}">
@@ -58,11 +59,11 @@
 	<%-- 모달 --%>
     <div id="modalWrap">
 	  <div id="inbodyModal">
-	    <div id="modalBody">
+	    <div id="inbodyModalBody">
+	      <a href="/ounwan/inbodyInsert">+</a>
+	      <h1>${clientInfo.name}님의 인바디입니다.</h1>
 	      <span id="closeBtn">&times;</span>
-	      <div>
-	      	<h1>인바디입니다.</h1>
-	      </div>
+	      <div id="inbodyGraph"></div>
 	    </div>
 	  </div>
 	</div>

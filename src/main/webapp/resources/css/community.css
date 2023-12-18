@@ -309,6 +309,56 @@ nav .ounwangram {
 	width: 70px;
 }
 
+.inbodyGraph {
+	margin-top: 30px;
+}
+.inbodyInput {
+	width: 480px;
+	margin: 20px auto 20px auto;
+	border-bottom: 1px solid #ddd;
+}
+.inbodyInput span {
+	display: inline-block;
+	width: 150px;
+	font-size: 24px;
+}
+.inbodyInput input {
+	width: 300px;
+	border: 1px solid #fff;
+	text-align: center;
+	font-size: 24px;
+}
+.inbodyInput input:focus {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	outline: none;
+}
+.inbodyInput button {
+	display: block;
+	width: 300px;
+	height: 45px;
+	margin: auto;
+	background-color: var(--main-color);
+	color: #fff;
+	font-size: 18px;
+	font-weight: bold;
+	border-radius: 20px;
+}
+.inbodyInput button:hover {
+	background-color: #1E275B;
+}
+.inbodyInfo {
+	width: 1100px;
+	margin: auto;
+	border-bottom: 1px solid #ddd;
+}
+.inbodyInfo input {
+	width: 120px;
+	border: 0;
+}
+.border-0 {
+	border: 0;
+}
 #searchTag {
 	cursor: pointer;
 }
@@ -355,7 +405,7 @@ nav .ounwangram {
 	bottom: 3px;
 }
 
-#myProfileButton {
+#myProfileButton, #myInbodyButton {
 	width: 120px;
 	height: 35px;
 	background-color: #eee;
@@ -623,6 +673,27 @@ nav .ounwangram {
 	background-image: -o-linear-gradient(left, #fff, #777, #fff);
 }
 
+#inbodyModalBody {
+  width: 400px;
+  height: 930px;
+  padding: 30px 30px;
+  margin: 0 auto;
+  border: 1px solid #777;
+  background-color: #fff;
+}
+
+#inbodyModalBody > h1 {
+	display: inline-block;
+}
+
+#inbodyModalBody > a {
+	background-color: var(--main-color);
+	color: #fff;
+	border-radius: 3px;
+	padding: 0px 5px 3px 5px;
+	margin-right: 100px;
+}
+
 #closeBtn {
   position: relative;
   float:right;
@@ -667,4 +738,15 @@ nav .ounwangram {
 
 #reportReason button:hover {
 	color: #ddd;
+}
+#inbodyInsertBody {
+	margin-top: 50px;
+}
+#inbodyInputForm {
+	border: 1px solid #ddd;
+	border-radius: 30px;
+	margin: auto;
+	width: 550px;
+	padding: 50px;
+	box-shadow: 3px 3px 3px rgba(0,0,0,0.05);
 }

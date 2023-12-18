@@ -50,6 +50,10 @@ public class CommunityDAO {
 		return sqlSession.selectList(NAMESPACE + "selectMyInbody", clientId);
 	}
 	
+	public List<Map<String, Object>> selectFollowerList(Map<String, Object> data) {
+		return sqlSession.selectList(NAMESPACE + "selectFollowerList", data);
+	}
+	
 	public int checkFollow(Map<String, Object> data) {
 		return sqlSession.selectOne(NAMESPACE + "checkFollow", data);
 	}

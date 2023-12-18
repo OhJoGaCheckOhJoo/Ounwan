@@ -9,9 +9,12 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ounwan.dto.InbodyDTO;
 import com.ounwan.dto.OunwanGramDTO;
+import com.ounwan.entity.Inbody;
 import com.ounwan.entity.OunwanGram;
 import com.ounwan.entity.OunwanGramLikes;
 import com.ounwan.repository.CommunityDAO;
@@ -25,9 +28,48 @@ public class CommunityService {
 	private final static String UPLOADPATH = "C:/shinhan/sts-workspace/ounwan/src/main/webapp/resources";
 	private final static String IMAGEPATH = "/images/uploads/";
 	
-	public Map<String, Object> selectMyInbody(String clientId) {
-		System.out.println(communityDAO.selectMyInbody(clientId).toString());
-		return null;
+	public List<Map<String, Object>> selectFollowerList(String clientId, String profileId) {
+		Map<String, Object> data = new HashMap<>();
+		data.put("clientId", clientId);
+		data.put("profileId", profileId);
+		return communityDAO.selectFollowerList(data);
+	}
+	
+	public List<InbodyDTO> selectMyInbodyInfo(String clientId) {
+		List<InbodyDTO> result = new ArrayList<>();
+		for(Inbody inbody : communityDAO.selectMyInbody(clientId)) {
+			result.add(changeInbody(inbody));
+		}
+		return result;
+	}
+	
+	public Map<String, Object> selectMyInbodyGraph(String clientId) {
+		Map<String, Object> inbodyData = new HashMap<>();
+		List<Object> weight = new ArrayList<>();
+		List<Object> skeletalMusclesMass = new ArrayList<>();
+		List<Object> bodyWater = new ArrayList<>();
+		List<Object> bmr = new ArrayList<>();
+		List<Object> bmi = new ArrayList<>();
+		List<Object> inbodyScore = new ArrayList<>();
+		List<Object> updatedDate = new ArrayList<>();
+		
+		for(Inbody inbody : communityDAO.selectMyInbody(clientId)) {
+			weight.add(inbody.getWeight());
+			skeletalMusclesMass.add(inbody.getSkeletalMusclesMass());
+			bodyWater.add(inbody.getBodyWater());
+			bmr.add(inbody.getBmr());
+			bmi.add(inbody.getBmi());
+			inbodyScore.add(inbody.getInbodyScore());
+			updatedDate.add(inbody.getUpdatedDate().toString());
+		}
+		inbodyData.put("weight", weight);
+		inbodyData.put("skeletalMusclesMass", skeletalMusclesMass);
+		inbodyData.put("bodyWater", bodyWater);
+		inbodyData.put("bmr", bmr);
+		inbodyData.put("bmi", bmi);
+		inbodyData.put("inbodyScore", inbodyScore);
+		inbodyData.put("updatedDate", updatedDate);
+		return inbodyData;
 	}
 
 	public String reportBoard(String clientId, int communityNumber, int[] reason) {
@@ -248,7 +290,7 @@ public class CommunityService {
 	
 	@SuppressWarnings("static-access")
 	public OunwanGramDTO changeOunwanGram(OunwanGram ounwangram) {
-		return new OunwanGramDTO().builder()
+		return OunwanGramDTO.builder()
 				.communityNumber(ounwangram.getCommunityNumber())
 				.clientId(ounwangram.getClientId())
 				.contents(ounwangram.getContents())
@@ -264,7 +306,7 @@ public class CommunityService {
 	
 	@SuppressWarnings("static-access")
 	public OunwanGram changeOunwanGramEntity(OunwanGramDTO ounwangram) {
-		return new OunwanGram().builder()
+		return OunwanGram.builder()
 				.communityNumber(ounwangram.getCommunityNumber())
 				.clientId(ounwangram.getClientId())
 				.contents(ounwangram.getContents())
@@ -275,6 +317,36 @@ public class CommunityService {
 				.profileUrl(ounwangram.getProfileUrl())
 				.likesCheck(ounwangram.getLikesCheck())
 				.hashTags(ounwangram.getHashTags())
+				.build();
+	}
+	
+	public InbodyDTO changeInbody(Inbody inbody) {
+		return InbodyDTO.builder()
+				.inbodyNumber(inbody.getInbodyNumber())
+				.clientId(inbody.getClientId())
+				.height(inbody.getHeight())
+				.weight(inbody.getWeight())
+				.skeletalMusclesMass(inbody.getSkeletalMusclesMass())
+				.bodyWater(inbody.getBodyWater())
+				.bmr(inbody.getBmr())
+				.bmi(inbody.getBmi())
+				.inbodyScore(inbody.getInbodyScore())
+				.updatedDate(inbody.getUpdatedDate())
+				.build();
+	}
+	
+	public Inbody changeInbodyEntity(InbodyDTO inbody) {
+		return Inbody.builder()
+				.inbodyNumber(inbody.getInbodyNumber())
+				.clientId(inbody.getClientId())
+				.height(inbody.getHeight())
+				.weight(inbody.getWeight())
+				.skeletalMusclesMass(inbody.getSkeletalMusclesMass())
+				.bodyWater(inbody.getBodyWater())
+				.bmr(inbody.getBmr())
+				.bmi(inbody.getBmi())
+				.inbodyScore(inbody.getInbodyScore())
+				.updatedDate(inbody.getUpdatedDate())
 				.build();
 	}
 
