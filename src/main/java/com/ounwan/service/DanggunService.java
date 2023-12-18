@@ -12,18 +12,36 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.DanggunDTO;
+import com.ounwan.dto.ProductImagesDTO;
+import com.ounwan.dto.TradeHistoryDTO;
+import com.ounwan.dto.WishListsDTO;
 import com.ounwan.entity.Danggun;
+import com.ounwan.entity.WishLists;
 import com.ounwan.repository.DanggunDAO;
 import com.ounwan.repository.ProductImagesDAO;
+import com.ounwan.repository.TradeHistoryDAO;
+import com.ounwan.repository.WishListsDAO;
 
 @Service
 public class DanggunService {
 
 	@Autowired
 	DanggunDAO danggunDAO;
+	
+	@Autowired
+	ProductImagesService productImageService;
 
 	@Autowired
 	ProductImagesDAO productImagesDAO;
+	
+	@Autowired
+	TradeHistoryDAO tradeHistoryDAO;
+	
+	@Autowired
+	WishListsService wishListsService;
+	
+	@Autowired
+	WishListsDAO wishListsDAO;
 
 	private final static String BUPLOADPATH = "C:/Users/diana/OneDrive/문서/GitHub/Back-end/src/main/webapp/resources";
 	private final static String DANGGUNIMAGEPATH = "/images/danggunUploads/";
@@ -103,11 +121,67 @@ public class DanggunService {
 		return result== count ? 1 : 0;
 	}
 
-	public DanggunDTO selectDanggun(int danggunNumber) {
-		Danggun result = danggunDAO.selectDanggun(danggunNumber);
-		return (result != null) ? changeDTO(result) : null;
+	public DanggunDTO selectDanggun(String clientId, int danggunNumber) {
+		Danggun resultDanggun = danggunDAO.selectDanggun(danggunNumber);
+//		여기서 danggun 결과, tradeHistoryNumber로 거래 결과 나오고, danggunNumber로 이미지랑 찜 리스트 가져오기 
+		DanggunDTO danggun = null;
+		if(resultDanggun != null) {
+			danggun = changeDTO(resultDanggun);
+			String tradeStep = tradeHistoryDAO.selectTradeStep(danggunNumber);
+			danggun.setTradeStep(tradeStep);
+		}
+		
+		List<ProductImagesDTO> resultImages = productImageService.selectImages(danggunNumber);
+		if (resultImages != null) {
+			danggun.setProductImagesList(resultImages);
+		}
+		
+		int zzimCount = wishListsService.selectCountZzim(danggunNumber);
+		danggun.setCountZzim(zzimCount);
+		
+		List<Integer> zzimList = wishListsDAO.hasZzim(clientId);
+		if(zzimList.contains(danggunNumber)) {
+			danggun.setWishListImg(1);
+		}else {
+			danggun.setWishListImg(0);
+		}
+		
+		return danggun;
 	}
 
+	public Map<String, Integer> danggunWishList(String clientId, int danggunNumber) {
+		Map<String, Integer> result = new HashMap<>();
+		List<Integer> zzimList = wishListsDAO.hasZzim(clientId);
+		System.out.println("zzim : " + zzimList);
+		WishLists wishLists = new WishLists();
+		wishLists.setClientId(clientId);
+		wishLists.setDanggunNumber(danggunNumber);
+
+		if(zzimList.contains(danggunNumber)) {
+			if(wishListsDAO.minusZzim(wishLists) > 0) {
+				result.put("likesCheck", 0);
+			}else {
+				result.put("likesCheck", 2);
+			}
+		}else {
+			if(wishListsDAO.plusZzim(wishLists) > 0) {
+				result.put("likesCheck", 1);
+			}else {
+				result.put("likesCheck", 2);
+			}
+		}
+		
+		int zzimCount = wishListsService.selectCountZzim(danggunNumber);
+		result.put("zzimCount", zzimCount);
+		
+		result.put("danggunNumber",danggunNumber);
+		
+		
+		System.out.println("zzimCount " + zzimCount);
+		
+		return result;
+	}
+	
 	public boolean deleteDanggun(DanggunDTO danggun) {
 		int result = danggunDAO.deleteDanggun(changeEntity(danggun));
 		return (result > 0) ? true : false;
@@ -171,4 +245,5 @@ public class DanggunService {
 				.productName(danggun.getProductName()).price(danggun.getPrice()).detail(danggun.getDetail())
 				.uploadDate(danggun.getUploadDate()).build();
 	}
+
 }
