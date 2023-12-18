@@ -1,6 +1,7 @@
 package com.ounwan.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,4 +27,8 @@ public class DanggunDTO {
 	//danggun picture url 추가
 	private String url;
 	private ProductImagesDTO productImagesDTO;
+	private List<ProductImagesDTO> productImagesList;
+	private Integer wishListImg;
+	private Integer countZzim;
+	private String tradeStep;
 }
