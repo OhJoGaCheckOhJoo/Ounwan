@@ -14,6 +14,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TradeHistoryDTO {
-	private Integer tradeHistoryNUmber;
+	private Integer tradeHistoryNumber;
 	private String tradeStep;	
 }
