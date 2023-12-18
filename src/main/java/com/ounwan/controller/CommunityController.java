@@ -24,47 +24,32 @@ public class CommunityController {
 	@Autowired
 	CommunityService communityService;
 	
-	//애타 게시판 조회
-	/*
-	@GetMapping("/aetaBoards")
-	public String aeta(Model model) {
-		System.out.println("aetaBoard");
-		List<AetaDTO> aetaList = communityService.aetaBoardList();
-		model.addAttribute("aetaList", aetaList);
-		return "community/aeta/aetaBoard";
-	}
-	*/
-
 	
 	//페이징 처리한 게시판
-	@GetMapping("/aetaPaginating")
-	public String paging(Model model,
-			@RequestParam(value="page",required =false, defaultValue="1") 
-		int page) {
-		//get board data
-		List<AetaDTO> pagingList=communityService.aetaPaginating(page);
-		System.out.println(pagingList);
-		
-		//get paging data
-		PaginatingDTO paginating= communityService.paginatingParam(page);
-		System.out.println(paginating);
-		model.addAttribute("boardList",pagingList);
-		model.addAttribute("paginating",paginating);
+	@GetMapping("/aetaBoard")
+	public String paginateBoard() {		
 		return "community/aeta/aetaPaginatedBoard";
 	}
 	
-	
 	//애타 게시판 검색기능
 	@GetMapping("/aetaSearch")
-	public String aetaSearch(String inputValue,String selectedOption, Model model,
-			@RequestParam(value="page",required =false, defaultValue="1") int page) {
+	public String aetaSearch(@RequestParam(value="inputValue",defaultValue="%") String inputValue,
+			@RequestParam(value="selectedOption",defaultValue="%") String selectedOption,
+			Model model,
+			@RequestParam(value="page",required =false, defaultValue="1") 
+	int page) {
+		List<AetaDTO> aetaList = communityService.aetaList(page,inputValue,selectedOption);
+		PaginatingDTO paginating= communityService.getPages(page,inputValue,selectedOption);
 		
-		List<AetaDTO> aetaList = communityService.aetaSearch(inputValue,selectedOption);
-
-		//PaginatingDTO paginating= communityService.paginatingSearchAll(page,inputValue);
-		//System.out.println(paginating);
+		System.out.println("aeat data: "+aetaList);
+		System.out.println("aeta pageInfo"+paginating);
+		System.out.println();
+		
 		model.addAttribute("aetaList", aetaList);
-		//model.addAttribute("paginating",paginating);
+		model.addAttribute("paginating",paginating);
+		
+		model.addAttribute("inputValue",inputValue);
+		model.addAttribute("selectedOption",selectedOption);
 		
 		return "community/aeta/aetaSearch";	
 	}
@@ -75,7 +60,7 @@ public class CommunityController {
 		if(session.getAttribute("userInfo")==null) {
 			System.out.println("off to loginPage");
 			return "login";
-		}
+		} 
 		return	"community/aeta/aetaPosting";	
 	}
 	

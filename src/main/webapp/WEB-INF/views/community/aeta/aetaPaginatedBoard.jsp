@@ -18,7 +18,7 @@
 <body>
 	<%@ include file="../../common/header.jsp"%>
 	<script>
-		console.log("${boardList}");
+		console.log("${aetaList}");
 	</script>
 
 
@@ -34,86 +34,28 @@
 		</div>
 		<button type="button" id="postBtn">글쓰기</button>
 
+	
+		<!--
+		페이지 번호 히든으로 저장  
+		<input type="hidden" value="${paginating.pageNumber}" id="pageNumber">
+		-->
+		
+		
 		<hr>
 		<div class="aeta-list" id="aeta-list">
-			<table id="aetaList">
-				<thead>
-					<tr class="top">
-						<th class="num">번호</th>
-						<th class="title">제목</th>
-						<th class="writer">작성자</th>
-						<th class="date">작성일</th>
-						<th class="count">조회수</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="aeta" items="${boardList}">
-						<tr class="content">
-							<td class="num">${aeta.boardNumber}</td>
-							<td class="title"><a
-								href="${appPath}/community/aetaPost?boardNumber=${aeta.boardNumber}">${aeta.title}</a></td>
-							<td class="writer">${aeta.clientId}</td>
-							<td class="date">${aeta.createdDate}</td>
-							<td class="count">${aeta.views}</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-
-
-			<hr>
-			<br>
-			
-			<div id="aeta-pagination" class="aeta-pagination">
-				<c:choose>
-					<c:when test="${paginating.pageNumber<=1}">
-						<span>[<<]</span>
-					</c:when>
-					<c:otherwise>
-						<a href="${appPath}/community/aetaPaginating?page=1">[<<]</a>
-					</c:otherwise>
-				</c:choose>
-				<c:choose>
-					<c:when test="${paginating.pageNumber<=1}">
-						<span>[<]</span>
-					</c:when>
-					<c:otherwise>
-						<a href="${appPath}/community/aetaPaginating?page=${paginating.pageNumber-1}">[<]</a>
-					</c:otherwise>
-				</c:choose>
-				<c:forEach begin="${paginating.startPageNumber}"
-					end="${paginating.endPageNumber}" var="i" step="1">
-					<a href="${appPath}/community/aetaPaginating?page=${i}">${i}</a>
-				</c:forEach>
-				<c:choose>
-					<c:when test="${paginating.pageNumber==paginating.maxPageNumber}">
-						<span>[>]</span>
-					</c:when>
-					<c:otherwise>
-						<a href="${appPath}/community/aetaPaginating?page=${paginating.pageNumber+1}">[>]</a>
-					</c:otherwise>
-				</c:choose>
-				<c:choose>
-					<c:when test="${paginating.pageNumber==paginating.maxPageNumber}">
-						<span>[>>]</span>
-					</c:when>
-					<c:otherwise>
-						<a href="${appPath}/community/aetaPaginating?page=${paginating.maxPageNumber}">[>>]</a>
-				</c:otherwise>
-				</c:choose>
-				</div>
+			Error
 		</div>
 		<hr>
 		<div class="search">
 			<select name="option">
-				<option>선택</option>
-				<option value="aetaSearchAll">전체(제목+작성자)</option>
-				<option value="aetaSearchTitle">제목</option>
-				<option value="aetaSearchId">작성자</option>
+				<option selected disabled>선택</option>
+				<option value="aetaSearchAll" ${selectedOption eq 'aetaSearchAll' ? 'selected' : ''} >전체(제목+작성자)</option>
+				<option value="aetaSearchTitle" ${selectedOption eq 'aetaSearchTitle' ? 'selected' : ''}>제목</option>
+				<option value="aetaSearchId" ${selectedOption eq 'aetaSearchId' ? 'selected' : ''}>작성자</option>
 			</select>
 			<form>
-				<input id="inputValue" placeholder="검색어 입력">
-				<button type=button id="searchBtn">검색</button>
+				<input id="inputValue" placeholder="검색어 입력" >
+				<input type=button id="searchBtn" value="검색">
 			</form>
 		</div>
 		<hr>
@@ -124,6 +66,10 @@
 	<script src="../js/community.js"></script>
 	<script>
 		var appPath = "${appPath}";
+		
+		$(function(){
+			search();
+		});
 	</script>
 
 </body>

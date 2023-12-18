@@ -21,23 +21,21 @@ public class CommunityDAO {
 	private static final String NAMESPACE = "net.ounwan.community.";
 	
 	//게시판 조회
-	public List<AetaBoards> aetaBoardList() {
-		return sqlsession.selectList(NAMESPACE + "AetaList");
+	public List<AetaDTO> AetaList(Map<String, Object> paginateParams) {
+		return sqlsession.selectList(NAMESPACE+"AetaList",paginateParams );
 	}
 	
 	//게시판 검색기능
-	public List<AetaBoards> aetaSearchAll(String inputValue){
-		inputValue=addPercentage(inputValue);
-		return sqlsession.selectList(NAMESPACE+"AetaSearchAll",inputValue);
+	public List<AetaBoards> aetaSearchAll(Map<String, Object> paginateParams){		
+		return sqlsession.selectList(NAMESPACE+"AetaSearchAll",paginateParams);
 	}
-	public List<AetaBoards> aetaSearchTitle(String inputValue){
-		inputValue=addPercentage(inputValue);
-		return sqlsession.selectList(NAMESPACE+"AetaSearchTitle",inputValue);
+	public List<AetaBoards> aetaSearchTitle(Map<String, Object> paginateParams){
+		return sqlsession.selectList(NAMESPACE+"AetaSearchTitle",paginateParams);
 	}
-	public List<AetaBoards> aetaSearchId(String inputValue){
-		inputValue=addPercentage(inputValue);
-		return sqlsession.selectList(NAMESPACE+"AetaSearchId",inputValue);
+	public List<AetaBoards> aetaSearchId(Map<String, Object> paginateParams){
+		return sqlsession.selectList(NAMESPACE+"AetaSearchId",paginateParams);
 	}
+	
 	
 	
 	//게시글 조회
@@ -77,16 +75,20 @@ public class CommunityDAO {
 		return sqlsession.delete(NAMESPACE+"AetaDeletePost",boardNumber);
 	}
 
-	public List<AetaDTO> aetaPaging(Map<String, Integer> pagingParams) {
-		return sqlsession.selectList(NAMESPACE+"AetaPaging",pagingParams );
-	}
+
 
 	
 	public int CountAllPosts() {
 		return sqlsession.selectOne(NAMESPACE+"AetaCountAllPosts");
 	}
-	public int CountSearchAllPosts(String inputValue) {
-		return sqlsession.selectOne(NAMESPACE+"AetaCountSearchAllPosts",addPercentage(inputValue));
+	public int CountSearchAll(String inputValue) {
+		return sqlsession.selectOne(NAMESPACE+"AetaCountSearchAll",inputValue);
+	}
+	public int CountSearchTitle(String inputValue) {
+		return sqlsession.selectOne(NAMESPACE+"AetaCountSearchTitle",inputValue);
+	}
+	public int CountSearchId(String inputValue) {
+		return sqlsession.selectOne(NAMESPACE+"AetaCountSearchId",inputValue);
 	}
 	
 	

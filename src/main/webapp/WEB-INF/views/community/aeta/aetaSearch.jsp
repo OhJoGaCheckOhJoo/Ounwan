@@ -5,8 +5,7 @@
 	value="${pageContext.request.contextPath}" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-<table id="aetaList">
+<table id="">
 	<thead>
 		<tr class="top">
 			<th class="num">번호</th>
@@ -20,7 +19,8 @@
 		<c:forEach var="aeta" items="${aetaList}">
 			<tr class="content">
 				<td class="num">${aeta.boardNumber}</td>
-				<td class="title"><a href="${appPath}/community/aetaPost?boardNumber=${aeta.boardNumber}">${aeta.title}</a></td>
+				<td class="title"><a
+					href="${appPath}/community/aetaPost?boardNumber=${aeta.boardNumber}">${aeta.title}</a></td>
 				<td class="writer">${aeta.clientId}</td>
 				<td class="date">${aeta.createdDate}</td>
 				<td class="count">${aeta.views}</td>
@@ -28,4 +28,49 @@
 		</c:forEach>
 	</tbody>
 </table>
+<hr>
+<br>
 
+<div id="aeta-pagination" class="aeta-pagination">
+	<c:choose>
+		<c:when test="${paginating.pageNumber<=1}">
+			<span>[<<]</span>
+		</c:when>
+		<c:otherwise>
+			<a href="javascript:search(1)">[<<]</a>
+		</c:otherwise>
+	</c:choose>
+
+	<c:choose>
+		<c:when test="${paginating.pageNumber<=1}">
+			<span>[<]</span>
+		</c:when>
+		<c:otherwise>
+			<a href="javascript:search(${paginating.pageNumber-1})">[<]</a>
+		</c:otherwise>
+	</c:choose>
+
+	<c:forEach begin="${paginating.startPageNumber}"
+		end="${paginating.endPageNumber}" var="i" step="1">
+		<a href="javascript:search(${i})">${i}</a>
+	</c:forEach>
+
+	<c:choose>
+		<c:when test="${paginating.pageNumber==paginating.maxPageNumber}">
+			<span>[>]</span>
+		</c:when>
+		<c:otherwise>
+			<a href="javascript:search(${paginating.pageNumber+1})">[>]</a>
+		</c:otherwise>
+	</c:choose>
+
+	<c:choose>
+		<c:when test="${paginating.pageNumber==paginating.maxPageNumber}">
+			<span>[>>]</span>
+		</c:when>
+		<c:otherwise>
+			<a href="javascript:search(${paginating.maxPageNumber})">[>>]</a>
+		</c:otherwise>
+	</c:choose>
+</div>
+<script src="../js/community.js"></script>

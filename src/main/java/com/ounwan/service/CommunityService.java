@@ -23,45 +23,34 @@ public class CommunityService {
 	@Autowired
 	CommunityDAO communityDAO;
 	
-	int pageLimit=5; //the number of posts to show on a page
+	int pageLimit=10; //the number of posts to show on a page
 	int blockLimit=10; // the number of paginated number on the bottom
 
 	
-	//게시판 조회
-	public List<AetaDTO> aetaBoardList() {
-		return changeDTOList(communityDAO.aetaBoardList());
-	}
-	
-	//페이징 된 게시판 조회
-	public List<AetaDTO> aetaPaginating(int page) {
+	//페이징 된 게시판 조회	
+	//게시판 검색 기능
+	public List<AetaDTO> aetaList(int page,String inputValue, String selectedOption) {
 
 		int pageStartNum = (page - 1) * pageLimit;
 
-		Map<String, Integer> pagingParams = new HashMap<>();
+		Map<String, Object> paginateParams = new HashMap<>();
 
-		pagingParams.put("start", pageStartNum);
-		pagingParams.put("limit", pageLimit);
-
-		List<AetaDTO> aetaPaging = communityDAO.aetaPaging(pagingParams);
-		return aetaPaging;
-	}
-	
-
-	//게시판 검색 기능
-	public List<AetaDTO> aetaSearch(String inputValue, String selectedOption) {
-
+		paginateParams.put("start", pageStartNum);
+		paginateParams.put("limit", pageLimit);
+		paginateParams.put("inputValue", inputValue);
+		
 		if (selectedOption.equals("aetaSearchAll"))
-			return changeDTOList(communityDAO.aetaSearchAll(inputValue));
+			return changeDTOList(communityDAO.aetaSearchAll(paginateParams));
 		if (selectedOption.equals("aetaSearchTitle"))
-			return changeDTOList(communityDAO.aetaSearchTitle(inputValue));
+			return changeDTOList(communityDAO.aetaSearchTitle(paginateParams));
 		if (selectedOption.equals("aetaSearchId"))
-			return changeDTOList(communityDAO.aetaSearchId(inputValue));
-		System.out.println("error,return null");
-		return null;
+			return changeDTOList(communityDAO.aetaSearchId(paginateParams));
+		return communityDAO.AetaList(paginateParams); //애게시판메인
 	}
 	
 	//페이징 구현
 	public PaginatingDTO paginatingParam(int page) {
+		
 		//전체 게시글 갯수
 		int CountAllPosts=communityDAO.CountAllPosts();
 		//전체 페이지 갯수
@@ -73,7 +62,6 @@ public class CommunityService {
 		if(endPageNumber>maxPageNumber) {
 			endPageNumber=maxPageNumber;
 		}
-		
   		return PaginatingDTO
   				.builder()
   				.pageNumber(page)
@@ -83,12 +71,23 @@ public class CommunityService {
   				.build();
 	}
 	
-	//오류코드
-	public PaginatingDTO paginatingSearchAll(int page,String inputValue) {
-		//전체 게시글 갯수
-		int CountAllPosts=communityDAO.CountSearchAllPosts(inputValue);
+	//하단 페이징한 데이터
+	public PaginatingDTO getPages(int page,String inputValue, String selectedOption) {
+		int countPosts=0;
+		//출력할 게시글 갯수
+		switch(selectedOption) {
+		case "aetaSearchAll":
+			countPosts = communityDAO.CountSearchAll(inputValue);break;	
+		case "aetaSearchTitle":
+			countPosts = communityDAO.CountSearchTitle(inputValue);break;
+		case "aetaSearchId":
+			countPosts = communityDAO.CountSearchId(inputValue);break;
+		default:
+			countPosts=communityDAO.CountSearchAll(inputValue);break;
+		}
+			
 		//전체 페이지 갯수
-		int maxPageNumber= (int)(Math.ceil((double)CountAllPosts/pageLimit));	
+		int maxPageNumber= (int)(Math.ceil((double)countPosts/pageLimit));	
 		//시작할 페이지 값 계산
 		int startPageNumber= (((int)(Math.ceil((double)page/blockLimit)))-1)*blockLimit+1;
 		//끝 페이지 값 계산
@@ -196,7 +195,6 @@ public class CommunityService {
 				.likes(comment.getLikes())
 				.build();
 	}
-
 	public List<AetaDTO> changeDTOList(List<AetaBoards> boardList) {
 		List<AetaDTO> list = new ArrayList<AetaDTO>();
 		for (AetaBoards aeta : boardList) {
@@ -205,7 +203,6 @@ public class CommunityService {
 		return list;
 
 	}
-
 	public AetaDTO changeDTO(AetaBoards aeta) {
 		return AetaDTO
 				.builder()
