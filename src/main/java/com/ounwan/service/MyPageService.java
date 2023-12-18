@@ -17,8 +17,12 @@ public class MyPageService {
 	MyPageDAO myPageDAO;
 
 	public List<Map<String, Object>> getDanggunSaleList(String userId) {
-		System.out.println("Service 도착");
 		return myPageDAO.getDanggunSaleList(userId);
+	}
+	
+	public List<Map<String, Object>> getDanggunWishList(String userId) {
+		return myPageDAO.getDanggunWishList(userId);
+		
 	}
 	
 	public DanggunDTO changeDTO(Danggun danggun) {

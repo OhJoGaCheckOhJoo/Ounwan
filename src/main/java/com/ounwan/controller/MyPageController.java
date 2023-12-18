@@ -31,16 +31,25 @@ public class MyPageController {
 	}
 
 	@RequestMapping(value = "/danggunSaleList", method = RequestMethod.GET)
-	public String myPage(HttpSession session, Model model) {
-		System.out.println("Controller 도착");
+	public String DanggunSaleList(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");	
 		String clientId = userInfo.getClientId();
 		
-		List<Map<String, Object>> list =
-		myPageService.getDanggunSaleList(clientId);	
-		model.addAttribute("danggunList", list);			
+		List<Map<String, Object>> list = myPageService.getDanggunSaleList(clientId);	
+		model.addAttribute("danggunSaleList", list);			
 
 		return "/myPage/danggunSaleList";
+	}
+	
+	@RequestMapping(value = "/danggunWishList", method = RequestMethod.GET)
+	public String DanggunWishList(HttpSession session, Model model) {
+		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");	
+		String clientId = userInfo.getClientId();
+		
+		List<Map<String, Object>> list = myPageService.getDanggunWishList(clientId);
+		model.addAttribute("danggunWishList", list);
+		
+		return "/myPage/danggunWishList";
 	}
 
 }

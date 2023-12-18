@@ -3,12 +3,17 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.myPage">
-	<!-- danggun sale list -->
-	
+	<!-- danggun sale list -->	
 	<select id="danggunSaleList" parameterType="String" resultType="map">
 		SELECT i.URL, d.PRODUCT_NAME , d.PRICE , d.UPLOAD_DATE , d.TRADE_HISTORY_NUMBER 
 		FROM DANGGUN d JOIN PRODUCT_IMAGES i ON d.DANGGUN_NUMBER = i.DANGGUN_NUMBER 
 		WHERE d.CLIENT_ID = #{clientId} AND i.TYPE = 0 	ORDER BY i.DANGGUN_NUMBER DESC
 	</select>
 	
+	<!-- danggun wish list -->
+	<select id="danggunWishList" parameterType="String" resultType="map">
+		SELECT i.URL, d.PRODUCT_NAME, d.PRICE, d.UPLOAD_DATE, d.TRADE_HISTORY_NUMBER 
+		FROM WISH_LISTS w JOIN DANGGUN d ON w.DANGGUN_NUMBER = d.DANGGUN_NUMBER JOIN PRODUCT_IMAGES i ON d.DANGGUN_NUMBER = i.DANGGUN_NUMBER 
+		WHERE w.CLIENT_ID = #{clientId} AND i.TYPE = 0
+	</select>
 </mapper>

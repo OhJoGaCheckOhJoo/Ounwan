@@ -19,4 +19,9 @@ public class MyPageDAO {
 	public List<Map<String, Object>> getDanggunSaleList(String userid){
 		return sqlSession.selectList(NAMESPACE + "danggunSaleList", userid);
 	}
+
+	//danggun 찜한 상품 목록 조회
+	public List<Map<String, Object>> getDanggunWishList(String userId) {
+		return sqlSession.selectList(NAMESPACE + "danggunWishList", userId);
+	}
 }

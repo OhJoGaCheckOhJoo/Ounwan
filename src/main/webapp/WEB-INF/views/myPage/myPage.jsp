@@ -142,7 +142,7 @@
                                     내 판매 내역
                                 </div>
                             </a>
-                            <a href="#">
+                            <a href="javascript:danggunWishList()">
                                 <div class="danggun-menu wish-list">
                                     관심 상품
                                 </div>
@@ -239,6 +239,17 @@
         				$("#content").html(res);
         			}
         		});
+        	}
+        	
+        	function danggunWishList() {
+        		alert("danggunWishList()");
+        		$.ajax({
+        			type: "GET",
+        			url: "${appPath}/myPage/danggunWishList",
+        			success: function(res){
+        				$("#content").html(res);
+        			}
+        		})
         	}
         </script>
 </body>
