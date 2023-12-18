@@ -2,6 +2,7 @@ package com.ounwan.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -90,26 +91,24 @@ public class DanggunController {
 
 //	상품 상세 목록 조회하기 
 	@GetMapping(value = "/detail")
-	public ModelAndView danggunDetail(@RequestParam("danggunNumber") int danggunNumber) {
+	public ModelAndView danggunDetail(@RequestParam("danggunNumber") int danggunNumber, HttpSession session) {
 		ModelAndView mv = new ModelAndView("danggun/danggunDetail");
-
-		DanggunDTO resultDanggun = danggunService.selectDanggun(danggunNumber);
-		if (resultDanggun != null) {
-			mv.addObject("post", resultDanggun);
-			int tradeHistoryNumber = resultDanggun.getTradeHistoryNumber();
-			String step = tradeHistoryService.selectTradeStep(tradeHistoryNumber);
-			mv.addObject("tradeStep", step);
-		}
-
-		List<ProductImagesDTO> resultImages = productImageService.selectImages(danggunNumber);
-		if (resultImages != null)
-			mv.addObject("danggunImage", resultImages);
-
-		mv.addObject("zzimCount", wishListsService.selectCountZzim(danggunNumber));
+		
+		DanggunDTO resultDanggun = danggunService.selectDanggun(((ClientsDTO)session.getAttribute("userInfo")).getClientId(), danggunNumber);
+		System.out.println(resultDanggun.getWishListImg());
+		mv.addObject("post",resultDanggun);
 
 		return mv;
 	}
 
+	@RequestMapping("/wishLists")
+	public @ResponseBody Map<String, Integer> danggunWishList(@RequestParam int danggunNumber, HttpSession session){
+		System.out.println(danggunNumber);
+		Map<String, Integer> result = danggunService.danggunWishList(((ClientsDTO)session.getAttribute("userInfo")).getClientId(), danggunNumber);
+		System.out.println("result " + result);
+		return result;
+	}
+	
 	@PostMapping(value = "/update")
 	public @ResponseBody boolean danggunUpdate(
 			@RequestPart(value = "imageFiles", required = false) MultipartFile[] imageFiles,
@@ -144,4 +143,11 @@ public class DanggunController {
 		}
 		return (result == true) ? "삭제 성공" : "삭제 실패";
 	}
+	
+	
+	
+	
+	
+	
+	
 }
