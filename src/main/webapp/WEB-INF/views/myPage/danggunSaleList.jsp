@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="appPath" scope="application" value="${pageContext.request.contextPath}" />
 <link href="${appPath}/css/danggunSaleList.css" rel="stylesheet">
+
 <table>
     <thead>
         <tr>
@@ -15,9 +16,9 @@
         </tr>
     </thead>
     <tbody>
-        <c:forEach var="saleInfo" items="${danggunList}" varStatus="loop">
+        <c:forEach var="saleInfo" items="${danggunSaleList}" varStatus="loop">
             <tr>
-                <td class="danggun-sale num">${danggunList.size() - loop.index}</td>
+                <td class="danggun-sale num">${danggunSaleList.size() - loop.index}</td>
                 <td class="danggun-sale info">
                     <div class="danggun-sale-info img">
                         <img src="${saleInfo.URL}">
