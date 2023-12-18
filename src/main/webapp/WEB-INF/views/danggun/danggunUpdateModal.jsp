@@ -24,12 +24,12 @@
 				</div>
 				<div class="danggun-main-image">
 					<label for="uploadImageInput"></label>
-					<c:forEach var="images" items="${danggunImage}">
+					<c:forEach var="images" items="${post.productImagesList}">
 						<c:if test="${images.type eq 0}">
 							<img class="small-img" id="mainImage" src="${images.url}" />
 							<input type="file" name="uploadImageInput" id="uploadImageInput"
 								accept="image/*"
-								onchange="updateMainImage('${danggunImage[0].url}',${images.productImageNumber})">
+								onchange="updateMainImage('${post.productImagesList[0].url}',${images.productImageNumber})">
 						</c:if>
 					</c:forEach>
 				</div>
@@ -42,7 +42,7 @@
 				</div>
 
 				<div class="image-container">
-					<c:forEach var="images" items="${danggunImage}"
+					<c:forEach var="images" items="${post.productImagesList}"
 						varStatus="loopStatus">
 						<c:if test="${imageCounter lt 3 && images.type eq 1}">
 							<div class="danggun-detail-image">

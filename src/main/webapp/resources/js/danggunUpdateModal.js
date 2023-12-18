@@ -13,7 +13,9 @@ function openModal(tradeHistoryNumber) {
 			break;
 		}
 	}
+	
 }
+
 
 // 모달 닫기
 function closeModal() {
