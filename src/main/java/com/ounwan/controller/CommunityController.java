@@ -1,14 +1,18 @@
 package com.ounwan.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ounwan.dto.ClientsDTO;
+import com.ounwan.dto.InbodyDTO;
 import com.ounwan.service.ClientsService;
 import com.ounwan.service.CommunityService;
 
@@ -59,9 +63,9 @@ public class CommunityController {
 		return "community/inbody";
 	}
 	
-	// 인바디 입력
+	// 인바디 입력 페이지 요청
 	@RequestMapping("/inbodyInsert")
-	public String insertInbody(HttpSession session, Model model) {
+	public String insertInbodyPage(HttpSession session, Model model) {
 		model.addAttribute("inbody", communityService.selectMyInbodyInfo(((ClientsDTO)session.getAttribute("clientInfo")).getClientId()));
 		return "community/inbodyInsert";
 	}

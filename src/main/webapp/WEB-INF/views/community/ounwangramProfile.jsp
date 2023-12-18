@@ -43,8 +43,8 @@
 	            </div>
 	            <div id="myProfileInfo">
 	                <div><span class="info-bold">${userProfileInfo.POSTS}</span>&nbsp;posts</div>
-	                <div><a class="info-bold" href="#">${userProfileInfo.FOLLOWER}</a>&nbsp;followers</div>
-	                <div><a class="info-bold" href="#">${userProfileInfo.FOLLOWING}</a>&nbsp;following</div>
+	                <div><a class="info-bold" id="follower">${userProfileInfo.FOLLOWER}</a>&nbsp;followers</div>
+	                <div><a class="info-bold" id="following" href="#">${userProfileInfo.FOLLOWING}</a>&nbsp;following</div>
 	            </div>
 	        </div>
 	        <hr>
@@ -56,7 +56,7 @@
 		</div>
 	</div>
 	
-	<%-- 모달 --%>
+	<%-- 인바디 모달 --%>
     <div id="modalWrap">
 	  <div id="inbodyModal">
 	    <div id="inbodyModalBody">
@@ -66,6 +66,14 @@
 	      <div id="inbodyGraph"></div>
 	    </div>
 	  </div>
+	</div>
+	
+	<div id="followModalWrap">
+		<div id="followModal">
+			<div id=followModalBody>
+				<span id="closeBtn">&times;</span>
+			</div>
+		</div>
 	</div>
 	
 	<script src="./js/community.js"></script>

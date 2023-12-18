@@ -20,10 +20,10 @@
         
         <div id="inbodyInsertBody">
 	        <div id="inbodyInputForm">
-	        	<form>
+	        	<form id="insertData">
 		        	<div class="inbodyInput">
 		        		<span>키 : </span>
-		        		<input type="number"
+		        		<input name="height" type="number"
 		        		<c:if test="${inbody ne null}">
 		        			value="${inbody[0].height}"
 		        		</c:if>
@@ -31,7 +31,7 @@
 		        	</div>
 		        	<div class="inbodyInput">
 		        		<span>몸무게 : </span>
-		        		<input type="number"
+		        		<input name="weight" type="number"
 		        		 <c:if test="${inbody ne null}">
 		        			value="${inbody[0].weight}"
 		        		</c:if>
@@ -39,7 +39,7 @@
 		        	</div>
 		        	<div class="inbodyInput">
 		        		<span>골격근량 : </span>
-		        		<input type="number" 
+		        		<input name="skeletalMusclesMass" type="number" 
 		        		<c:if test="${inbody ne null}">
 		        			value="${inbody[0].skeletalMusclesMass}"
 		        		</c:if>
@@ -47,7 +47,7 @@
 		        	</div>
 		        	<div class="inbodyInput">
 		        		<span>체수분량 : </span>
-		        		<input type="number" 
+		        		<input name="bodyWater" type="number" 
 		        		<c:if test="${inbody ne null}">
 		        			value="${inbody[0].bodyWater}"
 		        		</c:if>
@@ -55,7 +55,7 @@
 		        	</div>
 		        	<div class="inbodyInput">
 		        		<span>기초대사량 : </span>
-		        		<input type="number" 
+		        		<input name="bmr" type="number" 
 		        		<c:if test="${inbody ne null}">
 		        			value="${inbody[0].bmr}"
 		        		</c:if>
@@ -63,7 +63,7 @@
 		        	</div>
 		        	<div class="inbodyInput">
 		        		<span>BMI : </span>
-		        		<input type="number" 
+		        		<input name="bmi" type="number" 
 		        		<c:if test="${inbody ne null}">
 		        			value="${inbody[0].bmi}"
 		        		</c:if>
@@ -71,7 +71,7 @@
 		        	</div>
 		        	<div class="inbodyInput">
 		        		<span>인바디점수 : </span>
-		        		<input type="number" 
+		        		<input name="inbodyScore" type="number" 
 		        		<c:if test="${inbody ne null}">
 		        			value="${inbody[0].inbodyScore}"
 		        		</c:if>
@@ -79,17 +79,17 @@
 		        	</div>
 		        	<div class="inbodyInput">
 		        		<span>날짜 : </span>
-		        		<input type="date" required>
+		        		<input name="updatedDate" type="date" required>
 		        	</div>
 		        	<div class="inbodyInput border-0">
-		        		<button>추가</button>
+		        		<button type="button" id="inbodyInsertBtn">추가</button>
 		        	</div>
-	        	</form>
+	        	</form>	
 	        </div>
-	        <div>
+	        <div id="inbodyDetail">
 	        	<c:if test="${inbody ne null}">
 	        		<h3>내 인바디 정보</h3>
-	        		<div>
+	        		<div class="inbodyTableHead">
 	        			<span>날짜</span>
 	        			<span>키</span>
 	        			<span>몸무게</span>
@@ -103,15 +103,16 @@
 	        	<c:forEach var="inbody" items="${inbody}">
 	        		<div class="inbodyInfo">
 	        			<form>
-		        			<input type="date" value="${inbody.updatedDate}" readonly>
-		        			<input type="number" value="${inbody.height}">
-		        			<input type="number" value="${inbody.weight}">
-		        			<input type="number" value="${inbody.inbodyScore}">
-		        			<input type="number" value="${inbody.skeletalMusclesMass}">
-		        			<input type="number" value="${inbody.bodyWater}">
-		        			<input type="number" value="${inbody.bmr}">
-		        			<input type="number" value="${inbody.bmi}">
-		        			<button>수정</button>
+	        				<input name="inbodyNumber" value="${inbody.inbodyNumber}" hidden>
+		        			<input name="updatedDate" type="date" value="${inbody.updatedDate}" readonly>
+		        			<input name="height" type="number" value="${inbody.height}">
+		        			<input name="weight" type="number" value="${inbody.weight}">
+		        			<input name="inbodyScore" type="number" value="${inbody.inbodyScore}">
+		        			<input name="skeletalMusclesMass" type="number" value="${inbody.skeletalMusclesMass}">
+		        			<input name="bodyWater" type="number" value="${inbody.bodyWater}">
+		        			<input name="bmr" type="number" value="${inbody.bmr}">
+		        			<input name="bmi" type="number" value="${inbody.bmi}">
+	        				<button id="updateInbody" type="button">수정</button>
 	        			</form>
 	        		</div>
 	        	</c:forEach>

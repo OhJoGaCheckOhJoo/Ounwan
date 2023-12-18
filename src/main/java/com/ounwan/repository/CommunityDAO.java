@@ -94,6 +94,10 @@ public class CommunityDAO {
 		return sqlSession.insert(NAMESPACE + "reportGramBoard", data);
 	}
 	
+	public int insertInbody(Inbody inbody) {
+		return sqlSession.insert(NAMESPACE + "insertInbody", inbody);
+	}
+	
 	public int cancelLikeOunwanBoard(String likesId) {
 		return sqlSession.delete(NAMESPACE + "deleteGramLikeBoard", likesId);
 	}
@@ -110,4 +114,7 @@ public class CommunityDAO {
 		return sqlSession.update(NAMESPACE + "updateGramBoard", board);
 	}
 	
+	public int updateInbody(Inbody inbody) {
+		return sqlSession.update(NAMESPACE + "updateInbody", inbody);
+	}
 }

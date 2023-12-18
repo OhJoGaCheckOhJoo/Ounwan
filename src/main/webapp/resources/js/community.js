@@ -372,7 +372,17 @@ $(window).on("load", function() {
         });
     } else if(window.location.pathname == '/ounwan/ounwanProfile') {
     	const modal = document.getElementById('modalWrap');
+    	const followModal = document.getElementById('followModalWrap');
 		modal.style.display = "none";
+		followModal.style.display = "none";
+		
+		$("#follower").on("click", function() {
+			console.log(window.location.search);
+		});
+		
+		$("#following").on("click", function() {
+			console.log(window.location.search);
+		});
 		
 		$("#myInbodyButton").on("click", function() {
 			$.ajax({
@@ -387,6 +397,44 @@ $(window).on("load", function() {
 		$("#closeBtn").on("click", function() {
 			modal.style.display = "none";
 		})
+    } else if(window.location.pathname == '/ounwan/inbodyInsert') {
+    	$("#inbodyInsertBtn").on("click", function() {
+    		var formData = new FormData($("#insertData")[0]);
+    		$.ajax({
+	    		url: "/ounwan/insertInbody",
+	    		type: 'post',
+	    		data: formData,
+	    		processData: false,
+                contentType: false,
+	    		success: function(res) {
+	    			if(res.result == 'success') {
+	    				alert('등록하였습니다.');
+	    			} else {
+	    				alert('등록에 실패하였습니다.');
+	    			}
+	    			location.href="/ounwan/ounwanProfile?clientId=" + res.clientId;
+	    		}
+    		})
+    	})
+    	
+    	$("#inbodyDetail").on("click", "#updateInbody", function() {
+    		var formData = new FormData($(this).parent()[0]);
+    		$.ajax({
+	    		url: "/ounwan/updateInbody",
+	    		type: 'post',
+	    		data: formData,
+	    		processData: false,
+                contentType: false,
+	    		success: function(res) {
+	    			if(res.result == 'success') {
+	    				alert('수정하였습니다.');
+	    			} else {
+	    				alert('수정에 실패하였습니다.');
+	    			}
+	    			location.href="/ounwan/ounwanProfile?clientId=" + res.clientId;
+	    		}
+    		})
+    	})
     }
 })
 

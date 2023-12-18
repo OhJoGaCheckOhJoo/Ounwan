@@ -9,7 +9,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.InbodyDTO;
@@ -27,6 +26,30 @@ public class CommunityService {
 	
 	private final static String UPLOADPATH = "C:/shinhan/sts-workspace/ounwan/src/main/webapp/resources";
 	private final static String IMAGEPATH = "/images/uploads/";
+	
+	public Map<String, Object> updateInbody(String clientId, InbodyDTO inbody) {
+		inbody.setClientId(clientId);
+		Map<String, Object> result = new HashMap<>();
+		result.put("clientId", clientId);
+		if(communityDAO.updateInbody(changeInbodyEntity(inbody)) > 0) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");
+		}
+		return result;
+	}
+	
+	public Map<String, Object> insertInbody(String clientId, InbodyDTO inbody) {
+		inbody.setClientId(clientId);
+		Map<String, Object> result = new HashMap<>();
+		result.put("clientId", clientId);
+		if(communityDAO.insertInbody(changeInbodyEntity(inbody)) > 0) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");
+		}
+		return result;
+	}
 	
 	public List<Map<String, Object>> selectFollowerList(String clientId, String profileId) {
 		Map<String, Object> data = new HashMap<>();
@@ -54,13 +77,13 @@ public class CommunityService {
 		List<Object> updatedDate = new ArrayList<>();
 		
 		for(Inbody inbody : communityDAO.selectMyInbody(clientId)) {
-			weight.add(inbody.getWeight());
-			skeletalMusclesMass.add(inbody.getSkeletalMusclesMass());
-			bodyWater.add(inbody.getBodyWater());
-			bmr.add(inbody.getBmr());
-			bmi.add(inbody.getBmi());
-			inbodyScore.add(inbody.getInbodyScore());
-			updatedDate.add(inbody.getUpdatedDate().toString());
+			weight.add(0, inbody.getWeight());
+			skeletalMusclesMass.add(0, inbody.getSkeletalMusclesMass());
+			bodyWater.add(0, inbody.getBodyWater());
+			bmr.add(0, inbody.getBmr());
+			bmi.add(0, inbody.getBmi());
+			inbodyScore.add(0, inbody.getInbodyScore());
+			updatedDate.add(0, inbody.getUpdatedDate().toString());
 		}
 		inbodyData.put("weight", weight);
 		inbodyData.put("skeletalMusclesMass", skeletalMusclesMass);

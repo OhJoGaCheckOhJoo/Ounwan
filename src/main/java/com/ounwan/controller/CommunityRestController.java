@@ -7,12 +7,14 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.ClientsDTO;
+import com.ounwan.dto.InbodyDTO;
 import com.ounwan.dto.OunwanGramDTO;
 import com.ounwan.service.CommunityService;
 
@@ -74,5 +76,17 @@ public class CommunityRestController {
 	@RequestMapping("/ounwangram/reportBoard")
 	public String ounwangramReportBoard(@RequestParam int communityNumber, @RequestParam int[] reason, HttpSession session) {
 		return communityService.reportBoard(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), communityNumber, reason);
+	}
+	
+	// 인바디 입력 요청
+	@RequestMapping("/insertInbody")
+	public Map<String, Object> insertInbody(InbodyDTO inbody, HttpSession session, Model model) {
+		return communityService.insertInbody(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), inbody);
+	}
+	
+	// 인바디 수정 요청
+	@RequestMapping("/updateInbody")
+	public Map<String, Object> updateInbody(InbodyDTO inbody, HttpSession session, Model model) {
+		return communityService.updateInbody(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), inbody);
 	}
 }

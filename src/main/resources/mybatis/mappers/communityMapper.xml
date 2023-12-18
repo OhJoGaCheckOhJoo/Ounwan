@@ -142,6 +142,11 @@
 		INSERT INTO COMMUNITY_REPORTS(COMMUNITY_NUMBER, CLIENT_ID, REGISTERED_DATE, REASON) VALUES(#{communityNumber}, #{clientId}, NOW(), #{reason})
 	</insert>
 	
+	<insert id="insertInbody" parameterType="inbody">
+		INSERT INTO INBODY(CLIENT_ID, HEIGHT, WEIGHT, SKELETAL_MUSCLES_MASS, BODY_WATER, BMR, BMI, INBODY_SCORE, UPDATED_DATE) 
+		VALUES(#{clientId}, #{height}, #{weight}, #{skeletalMusclesMass}, #{bodyWater}, #{bmr}, #{bmi}, #{inbodyScore}, #{updatedDate})
+	</insert>
+	
 	<delete id="deleteGramLikeBoard" parameterType="String">
 		DELETE FROM OUNWAN_LIKES WHERE LIKES_ID = #{likesId}
 	</delete>
@@ -156,6 +161,12 @@
 	
 	<update id="updateGramBoard" parameterType="gram">
 		UPDATE OUNWAN_COMMUNITY SET CONTENTS = #{contents}, UPDATED_DATE = NOW(), IMAGE_URL = #{imageUrl} WHERE COMMUNITY_NUMBER = #{communityNumber}
+	</update>
+	
+	<update id="updateInbody" parameterType="inbody">
+		UPDATE INBODY SET HEIGHT = #{height}, WEIGHT = #{weight}, SKELETAL_MUSCLES_MASS = #{skeletalMusclesMass}, 
+		BODY_WATER = #{bodyWater}, BMR = #{bmr}, BMI = #{bmi}, INBODY_SCORE = #{inbodyScore} 
+		WHERE INBODY_NUMBER = #{inbodyNumber} AND CLIENT_ID = #{clientId}
 	</update>
 
 </mapper>

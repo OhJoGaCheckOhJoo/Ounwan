@@ -27,3 +27,4 @@ public class InbodyDTO {
 	private Integer inbodyScore;
 	private Date updatedDate;
 }
+
