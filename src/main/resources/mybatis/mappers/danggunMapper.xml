@@ -92,7 +92,20 @@
 		#{danggunNumber}
 	</select>
 	
-	<!-- 찜 +1 -->
-	<!-- 찜 -1 -->
+	<!-- 해당 찜이 존재하는지 여부 -->
+	<select id="hasZzim" parameterType="String" resultType="int">
+		SELECT DANGGUN_NUMBER FROM WISH_LISTS WHERE CLIENT_ID = #{clientId}
+	</select>
 	
+	<!-- 찜 +1 -->
+	<insert id="plusZzim" parameterType="wishlists">
+		INSERT INTO
+		WISH_LISTS (DANGGUN_NUMBER, CLIENT_ID)
+		VALUES (#{danggunNumber}, #{clientId})
+	</insert>
+	
+	<!-- 찜 -1 -->
+	<delete id="minusZzim" parameterType="wishlists">
+		DELETE FROM WISH_LISTS WHERE CLIENT_ID = #{clientId} AND DANGGUN_NUMBER = #{danggunNumber}
+	</delete>
 </mapper>
