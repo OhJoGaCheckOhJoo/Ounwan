@@ -9,6 +9,8 @@
 <link href="${appPath}/css/main.css" rel="stylesheet" />
 <link href="${appPath}/css/danggunDetail.css" rel="stylesheet" />
 <link href="${appPath}/css/danggunUpdateModal.css" rel="stylesheet" />
+<link href="${appPath}/css/danggunReportModal.css" rel="stylesheet" />
+<link href="${appPath}/css/danggunShareModal.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <meta charset="EUC-KR">
@@ -64,7 +66,7 @@
 				<div class="details">
 					<div class="photos">
 						<div class="small-img">
-							<c:forEach var="images" items="${danggunImage}">
+							<c:forEach var="images" items="${post.productImagesList}">
 								<c:if test="${images.type eq 1}">
 									<div>
 										<img class="small-img" src="${images.url}" />
@@ -74,7 +76,7 @@
 						</div>
 						<!-- small_img -->
 						<div class="big-img">
-							<c:forEach var="images" items="${danggunImage}">
+							<c:forEach var="images" items="${post.productImagesList}">
 								<c:if test="${images.type eq 0}">
 									<img class="big-img" src="${images.url }" />
 								</c:if>
@@ -90,10 +92,10 @@
 								<div class="product-name">${post.productName}</div>
 								<c:if test="${userInfo.clientId != post.clientId}">
 									<div class="hamburger">
-										<div class="post-menu">메뉴</div>
+										<div class="post-menu">이미지들어간다</div>
 										<div class="small-menu" id="small-menu">
-											<a href="#">공유</a> 
-											<a href="#">신고</a>
+											<button class="modal-button" onclick="openShareModal()">공유</button>
+											<button class="modal-button" onclick="openReportModal()">신고</button>
 										</div>
 									</div>
 									<!-- hamburger -->
@@ -105,13 +107,15 @@
 								${post.price}원</div>
 							<div class="registered-date" id="registered-date">등록일 :
 								${post.uploadDate}</div>
-							<div class="trade_step">${tradeStep}</div>
+							<div class="trade_step">${post.tradeStep}</div>
 
 							<div class="product-bottom">
 								<c:if test="${userInfo.clientId != post.clientId}">
 									<!-- session의 clientid와 작성자의 clientid가 다를 때 -->
-									<button class="zzim" id="zzim" type="button">찜하기
-										${zzimCount}</button>
+									<button class="zzimBtn" id="wishListBtn" type="button" value="${post.danggunNumber}">
+										<img id="wishListImg" class="wish-list-img" src="${appPath}/images/danggun_wishlist_${post.wishListImg}.png" /> 
+										<div id="small" class="small">${post.countZzim}</div>
+									</button>
 									<button class="chatting main-btn" id="chatting" type="button">
 										채팅하기</button>
 
@@ -120,7 +124,6 @@
 									<!-- session의 clientid와 작성자의 clientid가 같을 때 -->
 									<button class="modal-button white-btn"
 										onclick="openModal(${post.tradeHistoryNumber})">수정하기</button>
-
 									<button class="danggunDelete main-btn" id="danggunDelete"
 										type="submit">삭제하기</button>
 								</c:if>
@@ -137,13 +140,18 @@
 			</div>
 			<!-- product ALL-->
 		</div>
+		<!-- container -->
 		<hr />
 	</main>
 	<div id="danggunModal" danggunNumber="${post.danggunNumber}"
 		clientId="${post.clientId}"></div>
 	<%@ include file="../common/footer.jsp"%>
+	<%@ include file="./danggunReportModal.jsp"%>
 	<%@ include file="./danggunUpdateModal.jsp"%>
+	<%@ include file="./danggunShareModal.jsp"%>
 	<script src="${appPath}/js/danggunUpdateModal.js"></script>
+	<script src="${appPath}/js/danggunReportModal.js"></script>
+	<script src="${appPath}/js/danggunShareModal.js"></script>
 	<script src="${appPath}/js/main.js"></script>
 	<script src="${appPath}/js/danggunDetail.js"></script>
 </body>

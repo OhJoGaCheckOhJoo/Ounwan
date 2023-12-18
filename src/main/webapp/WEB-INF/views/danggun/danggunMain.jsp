@@ -143,7 +143,7 @@
 				$
 						.ajax({
 							type : 'POST',
-							url : "${path}/myapp/danggun/main",
+							url : "${appPath}/danggun/main",
 							data : obj,
 							success : function(responseData) {
 								console.log(responseData);
