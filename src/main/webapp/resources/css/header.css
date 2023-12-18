@@ -1,0 +1,103 @@
+@charset "UTF-8";
+
+header {
+    background-color: #282828;
+    width: 100%;
+    min-width: 1250px;
+}
+.header {
+    height: 100px;
+    width: 1150px;
+    padding: 10px 50px 30px 50px;
+    margin: auto;
+}
+header .logo {
+    display: inline-block;
+    height: 100px;
+    width: 247px;
+    background-image: url("../images/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+header .float-right {
+    position: relative;
+    float: right;
+    top: 40px;
+    height: 44px;
+}
+header .float-right a {
+    position: relative;
+    margin: 0px 10px 0px 10px;
+}
+header .float-right a:hover {
+    color: var(--main-color-2);
+}
+.header-sub-menu {
+    width: 100px;
+    position: absolute;
+    top: 100px;
+    right: calc((100% - 1250px) / 2 + 233px);
+    background-color: var(--main-back);
+    visibility: hidden;
+}
+.header-sub-menu a {
+    display: block;
+    text-align: center;
+    padding: 3px;
+}
+.header-sub-menu a:hover {
+    color: var(--main-color-2);
+    background-color: #282828;
+}
+#cart {
+    position: relative;
+    height: 35px;
+    width: 35px;
+    top: 4px;
+    margin-left: 5px;
+    cursor: pointer;
+    background-image: url("../images/cart_0.jpeg");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+#cart:hover {
+    background-image: url("../images/cart_1.jpeg");
+}
+#cartNotice {
+    position: relative;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    bottom: 22px;
+    right: 10px;
+    border-radius: 5px;
+    background-color: var(--red);
+} 
+#signUp, #loginSelect {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+#signUp {
+    background-image: url("./sign_up_0.png");
+}
+#signUp:hover {
+    background-image: url("./sign_up_1.jpeg");
+}
+#loginSelect {
+    background-image: url("./sign_in_0.png");
+}
+#loginSelect:hover {
+    background-image: url("./sign_in_1.jpeg");
+}
+#profileImage img {
+    position: relative;
+    width: 33px;
+    height: 33px;
+    border: 1px solid var(--main-color-2);
+    padding: 2px;
+    border-radius: 17.5px;
+    top: 5px;
+}
