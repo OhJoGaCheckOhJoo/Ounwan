@@ -76,11 +76,7 @@ public class DanggunService {
 		Danggun danggun = Danggun.builder().clientId(clientId).productName(productName).price(price).detail(detail)
 				.build();
 		
-		if (detailImages != null) {
-			for (MultipartFile file : detailImages) {
-				System.out.println(file);
-			}
-		} else {
+		if (detailImages == null) {
 			detailImagesLength = 0;
 		}
 		
@@ -152,7 +148,6 @@ public class DanggunService {
 	public Map<String, Integer> danggunWishList(String clientId, int danggunNumber) {
 		Map<String, Integer> result = new HashMap<>();
 		List<Integer> zzimList = wishListsDAO.hasZzim(clientId);
-		System.out.println("zzim : " + zzimList);
 		WishLists wishLists = new WishLists();
 		wishLists.setClientId(clientId);
 		wishLists.setDanggunNumber(danggunNumber);
@@ -175,9 +170,6 @@ public class DanggunService {
 		result.put("zzimCount", zzimCount);
 		
 		result.put("danggunNumber",danggunNumber);
-		
-		
-		System.out.println("zzimCount " + zzimCount);
 		
 		return result;
 	}

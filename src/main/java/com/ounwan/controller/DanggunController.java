@@ -51,10 +51,8 @@ public class DanggunController {
 
 		for (DanggunDTO danggun : list) {
 			ProductImagesDTO image = productImageService.selectAllImages(danggun.getDanggunNumber());
-			System.out.println("d : " + danggun.getDanggunNumber());
 			danggun.setUrl(image.getUrl());
 		}
-		System.out.println("list : " + list);
 		model.addAttribute("list", list);
 		
 		return "/danggun/danggunMain";
@@ -95,7 +93,6 @@ public class DanggunController {
 		ModelAndView mv = new ModelAndView("danggun/danggunDetail");
 		
 		DanggunDTO resultDanggun = danggunService.selectDanggun(((ClientsDTO)session.getAttribute("userInfo")).getClientId(), danggunNumber);
-		System.out.println(resultDanggun.getWishListImg());
 		mv.addObject("post",resultDanggun);
 
 		return mv;
@@ -103,9 +100,7 @@ public class DanggunController {
 
 	@RequestMapping("/wishLists")
 	public @ResponseBody Map<String, Integer> danggunWishList(@RequestParam int danggunNumber, HttpSession session){
-		System.out.println(danggunNumber);
 		Map<String, Integer> result = danggunService.danggunWishList(((ClientsDTO)session.getAttribute("userInfo")).getClientId(), danggunNumber);
-		System.out.println("result " + result);
 		return result;
 	}
 	
@@ -143,11 +138,5 @@ public class DanggunController {
 		}
 		return (result == true) ? "삭제 성공" : "삭제 실패";
 	}
-	
-	
-	
-	
-	
-	
 	
 }
