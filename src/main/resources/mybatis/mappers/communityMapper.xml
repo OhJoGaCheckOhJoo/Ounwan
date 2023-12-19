@@ -42,7 +42,6 @@
 		order by BOARD_NUMBER DESC
 		limit #{start},#{limit}
 	</select>
-	
 
 
 	<select id="AetaCountAllPosts" resultType="int">
@@ -109,6 +108,7 @@
 		DELETE FROM
 		CONCERN_BOARDS
 		WHERE BOARD_NUMBER =#{boardNumber};
+		
 	</delete>
 
 	<update id="AetaUpdatePost" parameterType="aeta">
@@ -176,6 +176,34 @@
 		ORDER BY cmt.COMMENT_NUMBER;
 
 	</select>
+	
+	<select id="AetaCountLikes" parameterType="int" resultType="int">
+		select count(BOARD_NUMBER) from AETA_LIKES
+		where BOARD_NUMBER= #{boardNumber};
+	</select> 
+	
+	<select id="AetaLikesCheck" parameterType="aetaLikes" resultType="int">
+		select count(BOARD_NUMBER) from AETA_LIKES
+		where BOARD_NUMBER=#{boardNumber}
+		and CLIENT_ID=#{clientId};
+	</select>
+
+
+	<insert id="AetaLike" parameterType="aetaLikes">
+		INSERT INTO AETA_LIKES
+		(BOARD_NUMBER,CLIENT_ID)
+		values(#{boardNumber} ,#{clientId})
+
+	</insert>
+	
+	<delete id="AetaDislike" parameterType="aetaLikes">	
+		DELETE from AETA_LIKES
+		where BOARD_NUMBER=#{boardNumber}  
+		and CLIENT_ID=#{clientId}
+	</delete>	
+	
+	
+	
 
 	<insert id="AetaInsertComment" parameterType="aetaComments">
 		INSERT INTO

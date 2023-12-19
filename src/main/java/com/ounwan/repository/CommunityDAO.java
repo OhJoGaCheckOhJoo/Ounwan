@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ounwan.dto.AetaDTO;
-import com.ounwan.entity.AetaBoards;
+import com.ounwan.entity.Aeta;
 import com.ounwan.entity.AetaImages;
+import com.ounwan.entity.AetaLikes;
 import com.ounwan.entity.Comments;  
 
 @Repository
@@ -26,13 +27,13 @@ public class CommunityDAO {
 	}
 	
 	//게시판 검색기능
-	public List<AetaBoards> aetaSearchAll(Map<String, Object> paginateParams){		
+	public List<Aeta> aetaSearchAll(Map<String, Object> paginateParams){		
 		return sqlsession.selectList(NAMESPACE+"AetaSearchAll",paginateParams);
 	}
-	public List<AetaBoards> aetaSearchTitle(Map<String, Object> paginateParams){
+	public List<Aeta> aetaSearchTitle(Map<String, Object> paginateParams){
 		return sqlsession.selectList(NAMESPACE+"AetaSearchTitle",paginateParams);
 	}
-	public List<AetaBoards> aetaSearchId(Map<String, Object> paginateParams){
+	public List<Aeta> aetaSearchId(Map<String, Object> paginateParams){
 		return sqlsession.selectList(NAMESPACE+"AetaSearchId",paginateParams);
 	}
 	
@@ -43,9 +44,21 @@ public class CommunityDAO {
 		
 		return sqlsession.selectList(NAMESPACE+"AetaReadPost", boardNumber);
 	}
+	public int aetaCountLikes(int boardNumber) {
+		return sqlsession.selectOne(NAMESPACE+"AetaCountLikes",boardNumber);
+	}
+	public int aetaLikesCheck(AetaLikes aetaLikesDTO) {
+		return sqlsession.selectOne(NAMESPACE+"AetaLikesCheck",aetaLikesDTO);
+	}
+	public int aetaLike(AetaLikes aetaLikesDTO) {
+		return sqlsession.insert(NAMESPACE+"AetaLike",aetaLikesDTO);
+	}
+	public int aetaDislike(AetaLikes aetaLikesDTO) {
+		return sqlsession.delete(NAMESPACE+"AetaDislike",aetaLikesDTO);
+	}
 	
 	//게시글 등록
-	public int aetaInsertPost(AetaBoards post) {
+	public int aetaInsertPost(Aeta post) {
 		return sqlsession.insert(NAMESPACE+"AetaInsertPost",post);
 	}
 	public int aetaInsertImageURL(AetaImages images) {
@@ -67,7 +80,7 @@ public class CommunityDAO {
 	
 
 	//게시글 수정
-	public int aetaUpdatePost(AetaBoards post) {
+	public int aetaUpdatePost(Aeta post) {
 		return sqlsession.update(NAMESPACE+"AetaUpdatePost", post);
 	}
 	//게시글 삭제
@@ -95,6 +108,8 @@ public class CommunityDAO {
 	private String addPercentage(String inputValue) {
 		return "%"+inputValue+"%";
 	}
+
+	
 	
 }
 	

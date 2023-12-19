@@ -18,6 +18,15 @@
 .aeta-list {
     width: 80%;
     display: flex;
+    flex-direction: column;
+}
+/* .aeta-list1 {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+} */
+
+    
 }
 .aeta-list .contents {
     display: flex;
@@ -48,3 +57,13 @@
 /* 버튼 숨기기*/
 
 
+
+/*좋아요 */
+.aeta-like{
+	width:100px;
+	height:30px;
+}
+.aeta-like-png{
+	width:30px;
+	height:30px;
+}

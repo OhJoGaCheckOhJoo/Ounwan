@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ounwan.dto.AetaDTO;
+import com.ounwan.dto.AetaLikesDTO;
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.dto.PaginatingDTO;
 import com.ounwan.service.CommunityService;
@@ -66,8 +67,9 @@ public class CommunityController {
 	
 	//애타 게시글 조회
 	@GetMapping("/aetaPost")
-	public String aetaReadPost(@RequestParam String boardNumber,Model model, HttpSession session) {
-		System.out.println("ReadPost(controller)");
+	public String aetaReadPost(@RequestParam String boardNumber,
+			Model model, 
+			HttpSession session) {
 		
 		if(session.getAttribute("userInfo")==null) {
 			System.out.println("off to loginPage");
@@ -86,10 +88,22 @@ public class CommunityController {
 				System.out.println("failed to update views");
 			}
 			
+			AetaLikesDTO aetaLikesDTO=new AetaLikesDTO();
+			aetaLikesDTO.setBoardNumber(Integer.parseInt(boardNumber));
+			aetaLikesDTO.setClientId(logedInClient.getClientId());
+			
 			model.addAttribute("aetaPost", communityService.aetaReadPost(Integer.parseInt(boardNumber)));
+			model.addAttribute("aetaCountLikes",communityService.aetaCountLikes(Integer.parseInt(boardNumber)));
+			model.addAttribute("aetaLikesCheck",communityService.aetaLikesCheck(aetaLikesDTO));
+			// 좋아요 개수 보내기
+			// 확인
+			
+			System.out.println(model);
+			System.out.println(model.getAttribute("aetaLikesCheck"));
+			
+			return "community/aeta/aetaPost";
 			
 		}
-		return "community/aeta/aetaPost";
 	}
 	
 	//게시글 수정 페이지 조회 (모달로 해주기)
