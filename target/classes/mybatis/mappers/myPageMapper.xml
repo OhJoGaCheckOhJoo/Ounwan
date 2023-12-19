@@ -16,4 +16,9 @@
 		FROM WISH_LISTS w JOIN DANGGUN d ON w.DANGGUN_NUMBER = d.DANGGUN_NUMBER JOIN PRODUCT_IMAGES i ON d.DANGGUN_NUMBER = i.DANGGUN_NUMBER 
 		WHERE w.CLIENT_ID = #{clientId} AND i.TYPE = 0
 	</select>
+	
+	<!-- aeta list -->
+	<select id="aetaList" parameterType="String" resultType="aeta">
+		SELECT * FROM AETA WHERE CLIENT_ID = #{clientId}
+	</select>
 </mapper>

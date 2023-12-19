@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ounwan.dto.AetaDTO;
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.service.MyPageService;
 import com.ounwan.service.ProductImagesService;
@@ -50,6 +51,17 @@ public class MyPageController {
 		model.addAttribute("danggunWishList", list);
 		
 		return "/myPage/danggunWishList";
+	}
+	
+	@RequestMapping(value = "/aetaList", method = RequestMethod.GET)
+	public String AetaList(HttpSession session, Model model) {
+		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");	
+		String clientId = userInfo.getClientId();
+		
+		List<AetaDTO> list = myPageService.getAetaList(clientId);
+		model.addAttribute("aetaList", list);
+		
+		return "/myPage/aetaList";
 	}
 
 }

@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ounwan.entity.Aeta;
+
 @Repository
 public class MyPageDAO {
 	
@@ -23,5 +25,10 @@ public class MyPageDAO {
 	//danggun 찜한 상품 목록 조회
 	public List<Map<String, Object>> getDanggunWishList(String userId) {
 		return sqlSession.selectList(NAMESPACE + "danggunWishList", userId);
+	}
+
+	//aeta 내가 쓴 게시글 목록 조회
+	public List<Aeta> getAetaList(String userId) {
+		return sqlSession.selectList(NAMESPACE + "aetaList", userId);
 	}
 }
