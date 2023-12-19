@@ -27,6 +27,45 @@ public class CommunityService {
 	private final static String UPLOADPATH = "C:/shinhan/sts-workspace/ounwan/src/main/webapp/resources";
 	private final static String IMAGEPATH = "/images/uploads/";
 	
+	public OunwanGramDTO selectOunwangramBoardDetail(int communityNumber, String clientId) {
+		Map<String, Object> data = new HashMap<>();
+		data.put("communityNumber", communityNumber);
+		data.put("clientId", clientId);
+		OunwanGramDTO ounwangram = changeOunwanGram(communityDAO.selectOunwangramBoardDetail(data));
+		ounwangram.setHashTags(communityDAO.hashTagsByNumber(ounwangram.getCommunityNumber()));
+		System.out.println(ounwangram.toString());
+		return ounwangram;
+	}
+	
+	public int addFollowing(String clientId, String profileId) {
+		Map<String, Object> data = new HashMap<>();
+		data.put("relationId", profileId + "-" + clientId);
+		data.put("clientId", clientId);
+		data.put("profileId", profileId);
+		return communityDAO.addFollowing(data);
+	}
+	
+	public int cancelFollowing(String clientId, String profileId) {
+		Map<String, Object> data = new HashMap<>();
+		data.put("clientId", clientId);
+		data.put("profileId", profileId);
+		return communityDAO.cancelFollowing(data);
+	}
+	
+	public int checkFollowing(String clientId, String profileId) {
+		Map<String, Object> data = new HashMap<>();
+		data.put("clientId", clientId);
+		data.put("profileId", profileId);
+		return communityDAO.checkFollow(data);
+	}
+	
+	public Map<String, Object> getProfile(String profileId) {
+		Map<String, Object> result = new HashMap<>();
+		result.put("image", communityDAO.getProfileImage(profileId));
+		result.put("clientId", profileId);
+		return result;
+	}
+	
 	public Map<String, Object> updateInbody(String clientId, InbodyDTO inbody) {
 		inbody.setClientId(clientId);
 		Map<String, Object> result = new HashMap<>();
@@ -56,6 +95,13 @@ public class CommunityService {
 		data.put("clientId", clientId);
 		data.put("profileId", profileId);
 		return communityDAO.selectFollowerList(data);
+	}
+	
+	public List<Map<String, Object>> selectFollowingList(String clientId, String profileId) {
+		Map<String, Object> data = new HashMap<>();
+		data.put("clientId", clientId);
+		data.put("profileId", profileId);
+		return communityDAO.selectFollowingList(data);
 	}
 	
 	public List<InbodyDTO> selectMyInbodyInfo(String clientId) {
@@ -105,7 +151,8 @@ public class CommunityService {
 				"욕설/생명경시/혐오/차별적 게시물입니다.",
 				"개인정보 노출 게시물입니다.",
 				"불쾌한 표현이 있습니다.",
-				"불법촬영물 등이 포함되어 있습니다."
+				"불법촬영물 등이 포함되어 있습니다.",
+				"게시물 디테일에서 신고"
 		};
 		StringBuilder reasonBuilder = new StringBuilder();
 		for(int i : reason) {

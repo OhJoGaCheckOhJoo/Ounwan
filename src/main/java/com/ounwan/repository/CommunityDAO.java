@@ -54,6 +54,10 @@ public class CommunityDAO {
 		return sqlSession.selectList(NAMESPACE + "selectFollowerList", data);
 	}
 	
+	public List<Map<String, Object>> selectFollowingList(Map<String, Object> data) {
+		return sqlSession.selectList(NAMESPACE + "selectFollowingList", data);
+	}
+	
 	public int checkFollow(Map<String, Object> data) {
 		return sqlSession.selectOne(NAMESPACE + "checkFollow", data);
 	}
@@ -72,6 +76,14 @@ public class CommunityDAO {
 	
 	public Map<String, Object> getUserProfileInfo(String profileId) {
 		return sqlSession.selectOne(NAMESPACE + "getUserProfileInfo", profileId);
+	}
+	
+	public String getProfileImage(String profileId) {
+		return sqlSession.selectOne(NAMESPACE + "getProfileImage", profileId);
+	}
+	
+	public OunwanGram selectOunwangramBoardDetail(Map<String, Object> data) {
+		return sqlSession.selectOne(NAMESPACE + "selectOunwangramBoardDetail", data);
 	}
 	
 	public int addLikeOunwanBoard(OunwanGramLikes likes) {
@@ -98,6 +110,10 @@ public class CommunityDAO {
 		return sqlSession.insert(NAMESPACE + "insertInbody", inbody);
 	}
 	
+	public int addFollowing(Map<String, Object> data) {
+		return sqlSession.insert(NAMESPACE + "addFollowing", data);
+	}
+	
 	public int cancelLikeOunwanBoard(String likesId) {
 		return sqlSession.delete(NAMESPACE + "deleteGramLikeBoard", likesId);
 	}
@@ -108,6 +124,10 @@ public class CommunityDAO {
 	
 	public int deleteGramBoard(int communityNumber) {
 		return sqlSession.delete(NAMESPACE + "deleteGramBoard", communityNumber);
+	}
+	
+	public int cancelFollowing(Map<String, Object> data) {
+		return sqlSession.delete(NAMESPACE + "cancelFollowing", data);
 	}
 	
 	public int updateGramBoard(OunwanGram board) {

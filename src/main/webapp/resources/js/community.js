@@ -56,7 +56,7 @@ $(window).on("load", function() {
 		            error : function(request,status,error) {
 		                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		            }    
-	            })
+	            });
         	} else {
         		alert("신고 사유를 선택해주세요.");
         	}
@@ -149,7 +149,7 @@ $(window).on("load", function() {
             } else {
             	$(this).parent().parent().find('div:eq(2)').css("visibility","hidden");
             }
-        })
+        });
 
         $("#ounwangramBoard").on("click", "#updateGramBoard", function() {
             location.href="updateGramBoard?communityNumber=" + $(this).val();
@@ -165,7 +165,7 @@ $(window).on("load", function() {
                 	success: function(res) {
                 		if(res == 'success') {
                 			alert("삭제하였습니다.");
-                            location.href = "ounwangram";
+                            location.reload();
                         } else {
                             alert("게시글 삭제에 실패하였습니다. 이후에 다시 시도해주세요.");
                         }
@@ -175,7 +175,7 @@ $(window).on("load", function() {
             	console.log("삭제취소");
             }
             
-        })
+        });
 
         $("#ounwangramBoard").on("click", "#reportGramBoard", function() {
         	reportReason = [];
@@ -373,14 +373,219 @@ $(window).on("load", function() {
     } else if(window.location.pathname == '/ounwan/ounwanProfile') {
     	const modal = document.getElementById('modalWrap');
     	const followModal = document.getElementById('followModalWrap');
+    	const boardModal = document.getElementById('boardModalWrap');
 		modal.style.display = "none";
 		followModal.style.display = "none";
+		boardModal.style.display = "none";
+		
+		$("#boardDetail").on("click", "#reportGramBoard", function() {
+			var communityNumber = $(this).val().split("@")[0];
+			if(confirm("해당 게시물을 정말 신고하시겠습니까?")) {
+				$.ajax({
+		            url: "/ounwan/ounwangram/reportBoard",
+		            data: {
+		            	"communityNumber": communityNumber,
+		            	"reason": [8]
+		            },
+		            traditional: true,
+		            success : function(res) {
+		            	if(res == 'success') {
+		            		report = {};
+		            		alert("신고처리가 완료되었습니다.");
+		            	} else {
+		            		report = {};
+		            		alert("신고 처리에 실패하였습니다.");
+		            	}
+		            	report = {};
+		            	modal.style.display = "none";
+		            	location.reload();
+		            },
+		            error : function(request,status,error) {
+		                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		            }    
+	            });
+			} else {
+			
+			}
+		});
+		
+		$("#boardDetail").on("click", "#ounwanLikeBtn", function() {
+            $(this).disabled = true;
+            var img = $(this).children('img');
+            var span = $(this).parent().children('span').first();
+            $.ajax({
+                url: "/ounwan/ounwangram/likeBoard",
+                data: { "communityNumber" : $(this).val() },
+                success : function(res) {
+                    if(res.likesCheck < 2) {
+                        img.attr("src", "./images/ounwan_like_" + res.likesCheck + ".png");
+                        span.html(res.likes);
+                    } else {
+                        alert("좋아요를 실패하였습니다.");
+                    }
+                }
+            })
+            $(this).disabled = false;
+		});
+		
+		$("#boardDetail").on("click", "#searchTag", function() {
+        	countGramTag = 0;
+        	$("#ounwangramBoard").html("");
+        	$("#gramWholeBoard").removeClass("ounwangram_selected");
+        	$("#gramFollowBoard").removeClass("ounwangram_selected");
+        	loadGramTagBoard($(this).find('span').html().slice(1));
+        });
+
+		$("#boardDetail").on("click", "#threeDotBtn", function() {
+        	if($(this).parent().parent().find('div:eq(2)').css("visibility") == "hidden") {
+            	$(this).parent().parent().find('div:eq(2)').css("visibility","visible");
+            } else {
+            	$(this).parent().parent().find('div:eq(2)').css("visibility","hidden");
+            }
+        });
+
+ 		$("#boardDetail").on("click", "#updateGramBoard", function() {
+            location.href="updateGramBoard?communityNumber=" + $(this).val();
+        });
+
+        $("#boardDetail").on("click", "#deleteGramBoard", function() {
+            if(confirm("삭제하시겠습니까?")){
+            	var communityNumber = $(this).val();
+            	console.log("delete : " + communityNumber);
+            	$.ajax({
+                	url: "/ounwan/ounwangram/deleteBoard",
+                	data: { "communityNumber" : communityNumber },
+                	success: function(res) {
+                		if(res == 'success') {
+                			alert("삭제하였습니다.");
+                            location.reload();
+                        } else {
+                            alert("게시글 삭제에 실패하였습니다. 이후에 다시 시도해주세요.");
+                        }
+                	}
+                })
+            } else {
+            	console.log("삭제취소");
+            }
+            
+        })
+		
+		$("#myProfileBoards").on("click", ".myProfileBoardImage", function() {
+			var communityNumber = $(this).parent().find('input').val();
+			$.ajax({
+				url: "/ounwan/gramDetail?communityNumber=" + communityNumber,
+				success: function(res) {
+					$("#boardDetail").html(res);
+					boardModal.style.display = "block";
+				}
+			});
+		})
+		
+		$("#myProfileOption").on("click", "#followButton", function() {
+			var button = $(this);
+			$.ajax({
+				url: "/ounwan/checkFollowing" + window.location.search,
+				success: function(res) {
+					if(res > 0) {
+						if(confirm("정말 팔로우를 취소하시겠습니까?")) {
+							$.ajax({
+								url: "/ounwan/cancelFollowing" + window.location.search,
+								success: function(res) {
+									if(res > 0) {
+										button.html("follow");
+									} else {
+										alert("실패하였습니다.");
+									}
+								}
+							});
+						}
+					} else {
+						$.ajax({
+							url: "/ounwan/addFollowing" + window.location.search,
+							success: function(res) {
+								if(res > 0) {
+									button.html("following ✔");
+								} else {
+									alert("실패하였습니다.");
+								}
+							}
+						});
+					}
+				}
+			})
+		});
+		
+		$("#followList").on("click", "#followBtn", function() {
+			var button = $(this);
+			$.ajax({
+				url: "/ounwan/checkFollowing?clientId=" + button.val(),
+				success: function(res) {
+					if(res > 0) {
+						if(confirm("정말 팔로우를 취소하시겠습니까?")) {
+							$.ajax({
+								url: "/ounwan/cancelFollowing?clientId=" + button.val(),
+								success: function(res) {
+									if(res > 0) {
+										button.html("follow");
+									} else {
+										alert("실패하였습니다.");
+									}
+								}
+							});
+						}
+					} else {
+						$.ajax({
+							url: "/ounwan/addFollowing?clientId=" + button.val(),
+							success: function(res) {
+								if(res > 0) {
+									button.html("following ✔");
+								} else {
+									alert("실패하였습니다.");
+								}
+							}
+						});
+					}
+				}
+			})
+		})
+		
+		$("#followList").on("click", "#following", function() {
+			$.ajax({
+				url: "/ounwan/following" + window.location.search,
+				success: function(res) {
+					$("#followList").html(res);
+				}
+			})
+		});
+		
+		$("#followList").on("click", "#follower", function() {
+			$.ajax({
+				url: "/ounwan/followers" + window.location.search,
+				success: function(res) {
+					$("#followList").html(res);
+				}
+			})
+		});
 		
 		$("#follower").on("click", function() {
+			$.ajax({
+				url: "/ounwan/followers" + window.location.search,
+				success: function(res) {
+					$("#followList").html(res);
+					followModal.style.display = "block";
+				}
+			})
 			console.log(window.location.search);
 		});
 		
 		$("#following").on("click", function() {
+			$.ajax({
+				url: "/ounwan/following" + window.location.search,
+				success: function(res) {
+					$("#followList").html(res);
+					followModal.style.display = "block";
+				}
+			})
 			console.log(window.location.search);
 		});
 		
@@ -396,6 +601,12 @@ $(window).on("load", function() {
 		
 		$("#closeBtn").on("click", function() {
 			modal.style.display = "none";
+		})
+		$("#followCloseBtn").on("click", function() {
+			followModal.style.display = "none";
+		})
+		$("#boardCloseBtn").on("click", function() {
+			boardModal.style.display = "none";
 		})
     } else if(window.location.pathname == '/ounwan/inbodyInsert') {
     	$("#inbodyInsertBtn").on("click", function() {

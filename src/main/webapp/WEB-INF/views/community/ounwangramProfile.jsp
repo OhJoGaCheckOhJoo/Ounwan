@@ -30,7 +30,7 @@
 	                	<a id="myProfileWrite" href="writeGramBoard">+</a>
 	            	</c:if>
 	            	<c:if test="${userProfileInfo.CLIENT_ID ne clientInfo.clientId}">
-	            		<button id="myProfileButton">
+	            		<button id="followButton">
 		            		<c:if test="${userProfileInfo.check}">
 		            			following ✔
 		            		</c:if>
@@ -38,7 +38,6 @@
 		            			follow
 		            		</c:if>
 	            		</button>
-	            		<a id="myProfileWrite">···</a>
 	            	</c:if>
 	            </div>
 	            <div id="myProfileInfo">
@@ -50,7 +49,10 @@
 	        <hr>
 	        <div id="myProfileBoards">
 	        	<c:forEach var="board" items="${userBoard}">
-	        		<img class="myProfileBoardImage" src="${board.IMAGE_URL}">
+	        		<div>
+	        			<img class="myProfileBoardImage" src="${board.IMAGE_URL}">
+	        			<input value="${board.COMMUNITY_NUMBER}" hidden>
+        			</div>
 	        	</c:forEach>
 	        </div>
 		</div>
@@ -68,15 +70,31 @@
 	  </div>
 	</div>
 	
+	<%-- 팔로잉 목록 모달 --%>
 	<div id="followModalWrap">
 		<div id="followModal">
 			<div id=followModalBody>
-				<span id="closeBtn">&times;</span>
+				<span id="followCloseBtn">&times;</span>
+				<div class="followProfile">
+					<img src="${userProfileInfo.PROFILE_URL}">
+					<h1>${userProfileInfo.CLIENT_ID}</h1>
+				</div>
+				<div id="followList"></div>
 			</div>
 		</div>
 	</div>
 	
-	<script src="./js/community.js"></script>
+	<%-- 게시물 모달 --%>
+	<div id="boardModalWrap">
+		<div id="boardModal">
+			<div id=boardModalBody>
+				<span id="boardCloseBtn">&times;</span>
+				<div id="boardDetail"></div>
+			</div>
+		</div>
+	</div>
+	
     <script src="./js/main.js"></script>
+    <script src="./js/community.js"></script>
 </body>
 </html>

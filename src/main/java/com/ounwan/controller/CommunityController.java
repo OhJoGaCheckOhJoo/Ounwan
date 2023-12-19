@@ -1,18 +1,14 @@
 package com.ounwan.controller;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ounwan.dto.ClientsDTO;
-import com.ounwan.dto.InbodyDTO;
 import com.ounwan.service.ClientsService;
 import com.ounwan.service.CommunityService;
 
@@ -71,9 +67,27 @@ public class CommunityController {
 	}
 	
 	// 팔로워 목록
-	@RequestMapping("/followerList")
+	@RequestMapping("/followers")
 	public String showFollowerList(@RequestParam String clientId, HttpSession session, Model model) {
+		model.addAttribute("kind", "follower");
+		model.addAttribute("profile", communityService.getProfile(clientId));
 		model.addAttribute("followers", communityService.selectFollowerList(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), clientId));
 		return "community/followList";
+	}
+	
+	// 팔로잉 목록
+	@RequestMapping("/following")
+	public String showFollowingList(@RequestParam String clientId, HttpSession session, Model model) {
+		model.addAttribute("kind", "following");
+		model.addAttribute("profile", communityService.getProfile(clientId));
+		model.addAttribute("followers", communityService.selectFollowingList(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), clientId));
+		return "community/followList";
+	}
+	
+	// 게시물디테일
+	@RequestMapping("/gramDetail")
+	public String selectOunwangramBoardDetail(@RequestParam int communityNumber, HttpSession session, Model model) {
+		model.addAttribute("board", communityService.selectOunwangramBoardDetail(communityNumber, ((ClientsDTO)session.getAttribute("clientInfo")).getClientId()));
+		return "community/ounwangramBoardDetail";
 	}
 }

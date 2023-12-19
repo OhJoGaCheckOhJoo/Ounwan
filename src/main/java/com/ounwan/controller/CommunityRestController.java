@@ -89,4 +89,22 @@ public class CommunityRestController {
 	public Map<String, Object> updateInbody(InbodyDTO inbody, HttpSession session, Model model) {
 		return communityService.updateInbody(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), inbody);
 	}
+	
+	// 팔로우 확인
+	@RequestMapping("/checkFollowing")
+	public int checkFollowing(@RequestParam String clientId, HttpSession session) {
+		return communityService.checkFollowing(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), clientId);
+	}
+	
+	// 팔로우 취소
+	@RequestMapping("/cancelFollowing")
+	public int cancelFollowing(@RequestParam String clientId, HttpSession session) {
+		return communityService.cancelFollowing(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), clientId);
+	}
+	
+	// 팔로우 요청
+	@RequestMapping("/addFollowing")
+	public int addFollowing(@RequestParam String clientId, HttpSession session) {
+		return communityService.addFollowing(((ClientsDTO)session.getAttribute("clientInfo")).getClientId(), clientId);
+	}
 }
