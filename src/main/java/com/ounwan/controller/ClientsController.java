@@ -1,5 +1,7 @@
 package com.ounwan.controller;
 	
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ounwan.dto.CartsDTO;
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.oauth.kakao.KakaoLoginBO;
 import com.ounwan.oauth.naver.NaverLoginBO;
+import com.ounwan.service.CartService;
 import com.ounwan.service.ClientsService;
 
 @RequestMapping("/clients")
@@ -25,6 +29,9 @@ public class ClientsController {
 
 	@Autowired
 	ClientsService clientService;
+	
+	@Autowired
+	CartService cartService;
 
 	@Autowired
 	KakaoLoginBO kakaoLogin;
@@ -33,20 +40,24 @@ public class ClientsController {
 	NaverLoginBO naverLogin;
 
 	@GetMapping("/login")
-	public ModelAndView loginGet(HttpSession session) {
-		ModelAndView v = new ModelAndView("login");
-		
-		return v;
+	public String loginGet(HttpSession session) {
+		return "login";
 	}
-
+	
+	
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public @ResponseBody String loginPost(@RequestBody ClientsDTO client, HttpSession session) {
-        System.out.println("내가 입력 비번 : " + client.getPassword());
         ClientsDTO loginUser = clientService.checkLogin(client.getClientId(), client.getPassword());
-        System.out.println(loginUser);
+        List<CartsDTO> cartList = (List<CartsDTO>) session.getAttribute("cartList");
+        
         if (loginUser != null) {
             session.setAttribute("userInfo", loginUser);
-           
+            if(cartList != null) {
+            	for (CartsDTO cart : cartList) {
+            		cart.setClientId(loginUser.getClientId());
+            		cartService.addToCart(cart);
+            	}
+            }
             return "success";
         }
         return "fail";
@@ -69,20 +80,17 @@ public class ClientsController {
 	public String withdrawal(@RequestParam("clientId") String clientId, @RequestParam("privacyTerms") int privacyTerms) {
 		return clientService.withdrawalClient(new ClientsDTO().builder().clientId(clientId).privacyTerms(privacyTerms).build());
 	}
-
+	// Rest Api 처리 필
 	@RequestMapping("/logout")
-	public ModelAndView logoutGet(HttpSession session) {
-		ModelAndView v = new ModelAndView("home");
+	public String logoutGet(HttpSession session) {
 		String accessToken = (String) session.getAttribute("accessToken");
-		System.out.println("KAKAO L:OGOUTTTTTTTTTTTTTT");
-		System.out.println("AccessToken : " + accessToken);
 		if (accessToken != null) {
 			kakaoLogin.logout(session);
 			session.invalidate();
-			return v;
+			return "home";
 		}
 		session.invalidate();
-		return v;
+		return "home";
 	}
 
 	@RequestMapping("/login/kakao")
@@ -102,14 +110,12 @@ public class ClientsController {
 
 	@PostMapping(value = "/signUp", consumes= "application/json", produces="text/plain;charset=utf-8")
 	public @ResponseBody String createAccount(@RequestBody ClientsDTO client) {
-		System.out.println(client);
 		boolean result = clientService.createAccount(client);
 		return (result) ? "success" : "fail";
 	} 
 	
 	@GetMapping("/checkId")
 	public @ResponseBody String checkId(String clientId) {
-		System.out.println(clientId);
 		// true = id 존재, false = id 없음
 		boolean result = clientService.checkId(clientId);
 		return (result) ? "exist" : "available";
@@ -117,7 +123,6 @@ public class ClientsController {
 	
 	@GetMapping("/checkEmail")
 	public @ResponseBody String checkEmail(String email) {
-		System.out.println(email);
 		// true = id 존재, false = id 없음
 		boolean result = clientService.checkEmail(email);
 		return (result) ? "exist" : "available";
@@ -137,7 +142,6 @@ public class ClientsController {
 	@PostMapping(value="/setImage")
 	public @ResponseBody String setImage(@RequestParam("image") MultipartFile image) {
 		String imgString = clientService.setImage(image);
-		System.out.println("save : " + imgString);
 		return imgString;
 	}
 }

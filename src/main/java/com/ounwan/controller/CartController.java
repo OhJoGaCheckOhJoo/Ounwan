@@ -9,10 +9,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,16 +18,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ounwan.dto.CartsDTO;
 import com.ounwan.dto.ClientsDTO;
-import com.ounwan.dto.CoupungDTO;
 import com.ounwan.service.CartService;
 
 @Controller
 @RequestMapping("/coupung")
 public class CartController {
-
 	@Autowired
 	CartService cartService;
-
 	
 	@GetMapping("/cart")
 	public String showClientCart(Model model, HttpSession session) {
@@ -65,7 +60,7 @@ public class CartController {
 
 		Object obj = session.getAttribute("userInfo");
 		List<CartsDTO> cartList = null;
-		
+		System.out.println("front: " + cartsDTO );
 		if (obj == null) {
 			// 로그인 안한사람
 			Object prevCartList = session.getAttribute("cartList");
@@ -80,7 +75,7 @@ public class CartController {
 				System.out.println("prevCartList : " + cartList);
 				boolean updateOK = false;
 				for (CartsDTO dto : cartList) {
-					if (dto.getCoupungNumber() == cartsDTO.getCoupungNumber()) {
+					if (dto.getCoupungNumber() == cartsDTO.getCoupungNumber() && dto.getCoupungOptionNumber() == cartsDTO.getCoupungOptionNumber()) {
 						System.out.println("getcoupungnum : " + dto.getCoupungNumber());
 						dto.setQuantity(dto.getQuantity() + cartsDTO.getQuantity()); // 수정
 						updateOK = true;
@@ -136,10 +131,10 @@ public class CartController {
 	}
 
 	@GetMapping(value = "/cartDelete", produces = "text/plain;charset=UTF-8")
-	public @ResponseBody String deleteCart(@RequestParam("coupungNumber") Integer coupungNumber, HttpSession session) {
+	public @ResponseBody String deleteCart(@RequestParam("coupungNumber") Integer coupungNumber, @RequestParam("optionNumber") Integer optionNumber, HttpSession session) {
 		Object obj = session.getAttribute("userInfo");
 		// 상품번호, 갯수, 고객id
-		CartsDTO cartsDTO = CartsDTO.builder().coupungNumber(coupungNumber).build();
+		CartsDTO cartsDTO = CartsDTO.builder().coupungNumber(coupungNumber).coupungOptionNumber(optionNumber).build();
 		if (obj == null) {
 			// 로그인하지 않은 유저의 경우, 세션에서 삭제
 			List<CartsDTO> cartList = (List<CartsDTO>) session.getAttribute("cartList");

@@ -63,13 +63,23 @@ public class CartService {
 	}
 
 	private CartsDTO changeDTO(Carts cart) {
-		return CartsDTO.builder().cartNumber(cart.getCartNumber()).coupungNumber(cart.getCoupungNumber())
-				.clientId(cart.getClientId()).quantity(cart.getQuantity()).build();
+		return CartsDTO.builder()
+						.cartNumber(cart.getCartNumber())
+						.coupungNumber(cart.getCoupungNumber())
+						.clientId(cart.getClientId())
+						.coupungOptionNumber(cart.getCoupungNumber())
+						.quantity(cart.getQuantity())
+						.build();
 	}
 
 	private Carts changeEntity(CartsDTO cartsDTO) {
-		return Carts.builder().cartNumber(cartsDTO.getCartNumber()).coupungNumber(cartsDTO.getCoupungNumber())
-				.clientId(cartsDTO.getClientId()).quantity(cartsDTO.getQuantity()).build();
+		return Carts.builder()
+					.cartNumber(cartsDTO.getCartNumber())
+					.coupungNumber(cartsDTO.getCoupungNumber())
+					.clientId(cartsDTO.getClientId())
+					.coupungOptionNumber(cartsDTO.getCoupungOptionNumber())
+					.quantity(cartsDTO.getQuantity())
+					.build();
 	}
 
 }

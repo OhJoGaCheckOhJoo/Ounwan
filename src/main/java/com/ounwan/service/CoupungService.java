@@ -52,10 +52,15 @@ public class CoupungService {
 		return result;
 	}
 	
-	public CoupungDTO getProductDetail(Integer coupungNumber) {
+	public CoupungDTO getProductDetail(int coupungNumber, int optionNumber, int quantity) {
 		CoupungDTO coupung = changeDTO(coupungDAO.getProductDetail(coupungNumber));
 		coupung.setImage(productImageService.getImageByCoupungId(coupungNumber));
-		coupung.setOptions(coupungOptionsService.selectOptions(coupungNumber));
+		if(optionNumber == 0 && quantity == 0) {
+			coupung.setOptions(coupungOptionsService.selectOptions(coupungNumber));
+		} else {
+			coupung.setOptions(coupungOptionsService.getOptionByOptionId(optionNumber));
+			coupung.setQuantity(quantity);
+		}
 		return coupung;
 	}
 	

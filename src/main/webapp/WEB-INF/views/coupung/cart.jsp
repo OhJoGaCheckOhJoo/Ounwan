@@ -14,9 +14,32 @@
 <link rel="stylesheet" type="text/css" href="../css/main.css" />
 <link rel="stylesheet" type="text/css" href="../css/cart.css" />
 <link rel="stylesheet" type="text/css" href="../css/styleguide.css" />
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+<!-- 전체 화면 모달 -->
+<div class="modal fade" id="fullScreenModal" tabindex="-1" aria-labelledby="fullScreenModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="fullScreenModalLabel">전체 화면 모달</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- 모달 내용 -->
+       	이메일 : <input type="text" id="guestEmail" />
+        핸드폰 번호 : <input type="text" id="guestPhone"/>
+        <button type="button" id="guestSubmitBtn">입력</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-primary">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 	<header>
 		<a class="logo" href="#"></a>
 		<div class="float-right">
@@ -75,8 +98,10 @@
 					<div class="product">
 
 						<div class="checkbox">
-							<input type="checkbox" id="checkbox" name="checkbox"
-								class="checkbox">
+							<input type="checkbox" name="checkbox" class="selectCheckbox">
+							<input type="hidden" value="${cart.coupungNumber}" class="productNum" />
+							<input type="hidden" value="${cart.coupungOptionNumber}" class="optionNum" />
+							<input type="hidden" value="${cart.quantity}" class="productQuantity" />
 						</div>
 
 						<img src="${cart.url}" alt="productImage"
@@ -117,7 +142,7 @@
 							<span id="resultPrice${status.count}">금액:${cart.price*cart.quantity}</span>원
 						</div>
 						<button class="delete-button"
-							data-coupung-num="${cart.coupungNumber}">X</button>
+							data-coupung-num="${cart.coupungNumber}" data-option-num="${cart.coupungOptionNumber}">X</button>
 					</div>
 				</div>
 				<br>
@@ -131,9 +156,12 @@
 					<div class="product">
 
 						<div class="checkbox">
-							<input type="checkbox" id="checkbox" name="checkbox"
-								class="checkbox">
+							<input type="checkbox" name="checkbox" class="selectCheckbox">
+							<input type="hidden" value="${cart.coupungNumber}" class="productNum" />
+							<input type="hidden" value="${cart.coupungOptionNumber}" class="optionNum" />
+							<input type="hidden" value="${cart.quantity}" class="productQuantity" />
 						</div>
+
 
 						<img src="${cart.URL}" alt="productImage"
 							style="height: 120px; margin-left: 16px; width: 120px;">
@@ -143,6 +171,7 @@
 								상품명 : ${cart.name}</div>
 							<div
 								class="coupungOption valign-text-middle inter-normal-star-dust-12px">
+								
 								구매옵션 : ${cart.option }</div>
 							<div>
 								<span>단가:${cart.price}원</span>
@@ -173,7 +202,7 @@
 							<span id="resultPrice${status.count}">금액:${cart.price*cart.QUANTITY}</span>원
 						</div>
 						<button class="delete-button"
-							data-coupung-num="${cart.COUPUNG_NUMBER}">X</button>
+							data-coupung-num="${cart.COUPUNG_NUMBER}" data-option-num="${cart.COUPUNG_OPTION_NUMBER}">X</button>
 					</div>
 				</div>
 				<br>
@@ -184,16 +213,9 @@
 			<div class="payOption">
 				<div class="overlap-group2">
 					<div class="option">
-						<button id="modalOpenButton">
+						<button id="orderBtn" type='button'>
 							<div class="text-11 valign-text-middle">주문하기</div>
 						</button>
-						<div id="modalContainer" class="hidden">
-							<div id="modalContent">
-								<p>주문하시겠습니까?</p>
-								<button id=modalGoButton onclick="">주문페이지로 고고</button>
-								<button id="modalCloseButton" onclick="">닫기</button>
-							</div>
-						</div>
 					</div>
 					<div class="view-3 view-4">
 						<div class="text-12 valign-text-middle inter-normal-black-16px">결제
@@ -209,10 +231,13 @@
 	<script>
 	$(".delete-button").on("click",function(){
 		 var coupungNum = $(this).data("coupung-num");
+		 var optionNum = $(this).data('option-num');
+		 alert(optionNum);
 			$.ajax({
 				url:"${appPath}/coupung/cartDelete",
 				data : {
 					"coupungNumber" : coupungNum,
+					"optionNumber" : optionNum
 				},
 				success : function(res){
 					if(res === "cart"){
@@ -273,42 +298,73 @@
 			});
 
 		
-		
-		$("#cartList").on("click", "#checkbox", function() {
-			totalPrice = (Number)($("#totalAmount").html().replaceAll(',', ''));
-			if($(this).is(":checked")) {
-				$(this).parent().parent().addClass("highlight");
-				totalPrice += (Number)($(this).parent().parent().find("div:eq(6)").find('span').html().replaceAll(',','').split(":")[1]);
-				$("#totalAmount").html(totalPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
-			} else{
-				$(this).parent().parent().removeClass("highlight");
-				totalPrice -= (Number)($(this).parent().parent().find("div:eq(6)").find('span').html().replaceAll(',','').split(":")[1]);
-				$("#totalAmount").html(totalPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
+		var productList = [];
+		var optionList = [];
+		var quantityList = [];
+		$("#orderBtn").on("click", function() {
+		    $('.selectCheckbox:checked').each(function() {
+		        var coupungNum = $(this).parent().find('.productNum').val();
+		        var optionNum = $(this).parent().find('.optionNum').val();
+		        var quantity = $(this).parent().find('.productQuantity').val();
+				productList.push(coupungNum);
+				optionList.push(optionNum);
+				quantityList.push(quantity);
+		    });
+		    
+			if('${userInfo}' === '') {
+				if(!confirm('로그인 하시겠습니까?')) {
+					$('#fullScreenModal').modal('show'); // 모달을 띄우는 부분
+				} else {
+					location.href="${appPath}/clients/login";
+				}
+			} else {
+				location.href = '${appPath}/coupung/order?productList=' + productList + '&optionList=' + optionList +'&quantityList=' + quantityList;
 			}
-		})
-      
+		});
+		
+		var phone = "";
+	    $('#guestPhone').on('input', function() {
+	        if ($(this).val().length < 14) {
+	            $(this).val($(this).val()
+	                .replace(/[^0-9]/g, '')
+	                .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3"));
+	            phone = $(this).val();
+	        } else {
+	            $(this).val(phone);
+	        }
+
+	    });
+	    
+		$('#guestSubmitBtn').on('click', function() {
+			var email = $('#guestEmail').val();
+			var emailFormat = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+			
+			if (!emailFormat.test(email)) {
+				alert('잘못된 이메일 형식입니다!');
+				$('#guestEmail').val('');
+				$('#guestEmail').focus();
+			} else {
+				var obj = {
+						'email' : email,
+						'phone' : phone
+				}
+				$.ajax({
+					url : '${appPath}/guest',
+					type : 'post',
+					data : JSON.stringify(obj),
+					contentType : 'application/json',
+					success : function(res) {
+						if (res === 'success') {
+							alert("성공하셨습니다.");
+							location.href = '${appPath}/coupung/order?productList=' + productList + '&optionList=' + optionList +'&quantityList=' + quantityList;
+						}
+					},
+		            error: function(request, status, error) {
+		                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		            }
+				});
+			}
+		});
 		</script>
-
-	<script>
-		const modalOpenButton = document.getElementById('modalOpenButton');
-		const modalCloseButton = document.getElementById('modalCloseButton');
-		const modal = document.getElementById('modalContainer');
-
-		modalOpenButton.addEventListener('click', () => {
-		  modal.classList.remove('hidden');
-		});
-
-		
-		modalCloseButton.addEventListener('click', () => {
-		  modal.classList.add('hidden');
-		});
-		
-		modalGoButton.addEventListener('click', () => {
-		    // 다른 페이지의 URL을 여기에 입력합니다.
-		    window.location.href = '${appPath}/coupung/products';
-		})
-		
-		
-	</script>
 </body>
 </html>

@@ -16,6 +16,49 @@
 
 </head>
 <body>
+	<script>
+		$(document).ready(function() {
+		    // Calculate total price on page load
+		    calculateTotalPrice();
+	
+		    // Function to calculate total price
+		    function calculateTotalPrice() {
+		        var totalPrice = 0;
+	
+		        // Loop through all elements with class '.priceValue'
+		        $('.price-value').each(function() {
+		        	console.log($(this).text());
+		            // Get the value from each element and add it to totalPrice
+		            totalPrice += parseInt($(this).text(), 10);
+		        });
+	
+		        // Update the content of element with id '#totalPrice'
+		        $('#totalPrice').text(totalPrice);
+		    }
+		    var emailId = '';
+		    var domain = '';
+		    var phone = '';
+		    if ('${userInfo}' != '') {
+				emailId = "${userInfo.email}".split('@')[0];
+				domain = "${userInfo.email}".split('@')[1];
+				phone = '${userInfo.phone}';
+				$('#name-txt').val('${userInfo.name}');	
+				$('#name-txt').attr('readOnly', true);
+			} else if('${guest}' != '') {
+				emailId = '${guest.email}'.split('@')[0];
+				domain = '${guest.email}'.split('@')[1];
+				phone = '${guest.phone}';
+			}
+		    
+		    $('#id-txt').val(emailId);
+		    $('#id-txt').attr('readOnly', true);
+		    $('#domain-txt').val(domain);
+		    $('#domain-txt').attr('readOnly', true);
+		    $('#domain-list').attr('disable', true);
+		    $('#phone-txt').val(phone);	
+		    $('#phone-txt').attr('readOnly', true);
+		});
+	</script>
 
 	<header>
 		<a class="logo" href="#"></a>
@@ -78,7 +121,7 @@
 											<div class="rectangle-35"></div>
 											<div
 												class="navbar-link-text-2 valign-text-middle navbar-link-text inter-normal-black-12px">
-												가격</div>
+												가격(원)</div>
 											<div
 												class="navbar-link-text-3 valign-text-middle navbar-link-text inter-normal-black-12px">
 												마일리지</div>
@@ -94,21 +137,21 @@
 											src="../images/order/line-19.svg" alt="Line 19" />
 									</div>
 									<div>
-										<c:forEach var="cart" items="${cartList}" varStatus="status">
+										<c:forEach var="product" items="${products}" varStatus="status">
 											<div class="x01">
 												<div class="x01-1">
-													<img class="x50-2" src="../images/order/----50-1.png"
+													<img class="x50-2" src="${product.image[0].url }"
 														alt="50" />
 													<div class="text-container">
 														<p class="jtext-10 valign-text-middle">-[옵션] :
-															${cart.OPTION}</p>
+															${product.options[0].name}</p>
 														<div
-															class="text-11 valign-text-middle inter-normal-black-12px">${cart.name}</div>
+															class="text-11 valign-text-middle inter-normal-black-12px">${product.name}</div>
 													</div>
 												</div>
-												<div class="text-12 valign-text-middle">${cart.quantity}</div>
+												<div class="text-12 valign-text-middle">${product.quantity}</div>
 												<div
-													class="text-13 valign-text-middle juliussansone-normal-black-12px">${cart.OPTION }</div>
+													class="text-13 valign-text-middle juliussansone-normal-black-12px price-value">${product.price}</div>
 												<div
 													class="text-14 valign-text-middle juliussansone-normal-black-12px">없음</div>
 											</div>
@@ -132,21 +175,21 @@
 							<div class="name-info">
 								<div class="purchaser-name">
 									<div class="jtext-2 valign-text-middle inter-normal-black-12px">이름</div>
-									<input class="box" id="name-txt" type="text" />
+									<input class="box" id="name-txt" type="text" required />
 								</div>
 							</div>
 							<div class="phone-info">
 								<div class="purchaser-phone">
 									<div class="jtext-1 valign-text-middle inter-normal-black-12px">연락처</div>
-									<input class="box" id="phone-txt" type="text" />
+									<input class="box" id="phone-txt" type="text" required />
 								</div>
 							</div>
 							<div class="email-info">
 								<div class="purchaser-email">
 									<div class="jtext-1 valign-text-middle inter-normal-black-12px">이메일</div>
-									<input class="box" id="id-txt" type="text" />
+									<input class="box" id="id-txt" type="text" required />
 									<div class="text-3 valign-text-middle">@</div>
-									<input class="box" id="domain-txt" type="text" /> <select
+									<input class="box" id="domain-txt" type="text" required /> <select
 										class="email-dropdown" id="domain-list">
 										<option value="type">직접 입력</option>
 										<option value="naver.com">naver.com</option>
@@ -175,23 +218,23 @@
 						<div class="view-11">
 
 							<div class="checkbox">
-								<input type="checkbox" id="checkbox" name="checkbox"
+								<input type="checkbox" id="orderCheckBox" name="checkbox"
 									class="checkbox"><span>주문자 정보와 동일</span>
 							</div>
 						</div>
 					</div>
 					<div class="view-12">
 						<div class="jtext-2 valign-text-middle inter-normal-black-12px">이름</div>
-						<input class="box" id="name-txt" type="text" />
+						<input class="box" id="name-txt-2" type="text" required />
 					</div>
 					<img class="line-21-2 line-21-3" src="../images/order/line-21.svg"
 						alt="Line 21" />
 					<div class="contents-1 contents-3">
 						<div class="view-13">
 							<div class="text-2 valign-text-middle inter-normal-black-12px">이메일</div>
-							<input class="box" id="id-txt" type="text" />
+							<input class="box" id="id-txt-2" type="text" required />
 							<div class="text-3 valign-text-middle">@</div>
-							<input class="box" id="domain-txt" type="text" /> <select
+							<input class="box" id="domain-txt-2" type="text" required /> <select
 								class="email-dropdown" id="domain-list">
 								<option value="type">직접 입력</option>
 								<option value="naver.com">naver.com</option>
@@ -208,7 +251,7 @@
 						alt="Line 22" />
 					<div class="view-14">
 						<div class="jtext-1 valign-text-middle inter-normal-black-12px">연락처</div>
-						<input class="box" id="phone-txt" type="text" />
+						<input class="box" id="phone-txt-2" type="text" required />
 
 					</div>
 					<img class="line-23" src="../images/order/line-21.svg"
@@ -217,12 +260,13 @@
 						<div class="jtext-29 valign-text-middle inter-normal-black-12px">주소</div>
 						<div class="flex-col-2 flex-col-3">
 							<div class="contents-2 contents-3">
-								<input class="box" id="adress-txt" type="text" />
+								<input class="box" id="zipcode-txt" type="text" readOnly required />
 								<div class="overlap-group-3">
-									<div class="text-4 valign-text-middle">우편번호 검색</div>
+									<button id="findAddr" type="button">우편번호 검색</button>
 								</div>
 							</div>
-							<input class="box" id="adress-txt" type="text" />
+							<input class="box" id="address-txt" type="text" readOnly required />
+							<input class="box" id="address-detail-txt" type="text" readOnly />
 						</div>
 
 					</div>
@@ -238,7 +282,7 @@
 							</div>
 							<div class="view-18">
 								<div class="jtext-11 valign-text-middle inter-normal-black-12px">마일리지</div>
-								<input class="box" id="adress-txt" type="text" value="0" />
+								<input class="box" id="address-txt" type="text" value="0" />
 								<div class="overlap-group2-1">모두 사용</div>
 								<div class="text-33 valign-text-middle">보유 127점</div>
 							</div>
@@ -277,14 +321,23 @@
 						<img class="line-28" src="../images/order/line-28.svg"
 							alt="Line 28" />
 						<div class="payment-box">
-							<p class="total-product-amount valign-text-middle inter-normal-black-16px">
-								<span><span class="inter-normal-black-16px">총 상품
-										금액<br />마일리지 사용<br />
-								</span><span class="total-payment-amount">총 결제 금액</span> </span>
-							</p>
-							<div class="text-41 valign-text-middle">
-								<span><span class="inter-normal-black-16px">97,800원<br />-2000점<br /></span><span
-									class="total-payment-amount-1">98,800원</span> </span>
+							<div >
+								총 상품 금액 
+								<div class="inter-normal-black-16px" id="totalPrice">
+									978000
+								</div>
+							</div>
+							<div >
+								마일리지 사용
+								<div class="inter-normal-black-16px" id="useMileage">
+									0
+								</div>
+							</div>
+							<div class="total-payment-amount">
+								총 결제 금액
+								<div class="total-payment-amount-1">
+									978000
+								</div>
 							</div>
 						</div>
 						<img class="line-29" src="../images/order/line-28.svg"
@@ -294,7 +347,8 @@
 			</div>
 		</div>
 	</div>
-	<script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
 		$(document).ready(function() {
 			let isVisible = false;
 			const $detailsContent = $('#order-details .view-3');
@@ -312,9 +366,76 @@
 			// 초기에 숨겨진 상태로 시작
 			$detailsContent.hide();
 		});
+		
+		$('#orderCheckBox').on('click', function() {
+			if($('#orderCheckBox').is(':checked')) {
+				if(!$('#name-txt').val()) {
+					alert('이름을 입력해 주세요!');
+					$('#name-txt').focus();
+					$('#orderCheckBox').prop('checked', false);
+			    } else {
+					$('#id-txt-2').val($('#id-txt').val());
+				    $('#id-txt-2').attr('readOnly', true);
+				    $('#domain-txt-2').val($('#domain-txt').val());
+				    $('#domain-txt-2').attr('readOnly', true);
+				    $('#domain-list').attr('disable', true);
+				    $('#phone-txt-2').val($('#phone-txt').val());	
+				    $('#phone-txt-2').attr('readOnly', true);
+				    $('#name-txt-2').val($('#name-txt').val());
+			    	$('#name-txt').attr('readOnly', true);
+			    	$('#name-txt-2').attr('readOnly', true);
+					if ('${userInfo}' != '') {
+						$('#name-txt-2').val($('#name-txt').val());
+						$('#name-txt-2').attr('readOnly', true);
+						$('#zipcode-txt').val('${userInfo.zipCode}');
+						$('#zipcode-txt').attr('readOnly', true);
+						$('#address-txt').val('${userInfo.address}');
+						$('#address-txt').attr('readOnly', true);
+						$('#address-detail-txt').val('${userInfo.addressDetail}');
+						$('#address-detail-txt').attr('readOnly', true);
+						$('#findAddr').attr('disabled', true);
+					}	
+			    }
+			}
+		});
+		$('#findAddr').on('click', function() {
+			new daum.Postcode({
+		        oncomplete: function(data) {
+		            var addr = ''; 
+		            var extraAddr = ''; 
+
+		            if (data.userSelectedType === 'R') { 
+		                addr = data.roadAddress;
+		            } else {
+		                addr = data.jibunAddress;
+		            }
+
+		            if(data.userSelectedType === 'R'){
+		               
+		                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+		                    extraAddr += data.bname;
+		                }
+		              
+		                if(data.buildingName !== '' && data.apartment === 'Y'){
+		                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		                }
+		              
+		                if(extraAddr !== ''){
+		                    extraAddr = ' (' + extraAddr + ')';
+		                }
+		            } 
+		            
+		            $('#zipcode-txt').val(data.zonecode);
+		            $('#address-txt').val(addr);
+		            $('#address-detail-txt').attr('readOnly', false);
+		     
+		            $('#address-detail-txt').focus();
+		        }
+		    }).open();
+		});
 	</script>
 
-	<script>
+	<!-- <script>
 		$(document).ready(function() {
 			let isVisible = false;
 			const $detailsContent = $('#order-details .view-3');
@@ -329,7 +450,7 @@
 				}
 			});
 		});
-	</script>
+	</script> -->
 
 </body>
 </html>

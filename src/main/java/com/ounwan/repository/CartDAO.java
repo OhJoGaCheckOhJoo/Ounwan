@@ -37,7 +37,6 @@ public class CartDAO {
 	public int insertCart(Carts cart) {
 		return sqlSession.insert(NAMESPACE + "insertCart", cart);
 	}
-
 	
 	public int updateCart(Carts cart) {
 		int result = sqlSession.update(NAMESPACE + "updateCart", cart);

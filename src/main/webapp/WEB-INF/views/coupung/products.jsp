@@ -107,6 +107,7 @@
 			</div>
 		</div>
 		<div class="product-area">
+			<div class="product-area-zone" id='productClick'>
 			<div class="product-area-zone" id="productInside">
 				<c:forEach var="product" items="${productList}">
 					<div class="item">
@@ -120,6 +121,7 @@
 						</div>
 					</div>
 				</c:forEach>
+			</div>
 			</div>
 		</div>
 		<!-- 여기 아래에 추가 -->
@@ -238,7 +240,7 @@
 	
 	});
 	
-	$('#productInside').on('click', '.item', function() {
+	$('#productClick').on('click', '.item', function() {
 		var cNum = $(this).find('.item-number').val();
 		window.location.href="${appPath}/coupung/product/detail?coupungId=" + cNum;
 	});

@@ -57,7 +57,7 @@ public class CoupungController {
 	
 	@GetMapping("/product/detail")
 	public String getDetailString (@RequestParam String coupungId, Model model) {
-		CoupungDTO coupung = coupungService.getProductDetail(Integer.parseInt(coupungId));
+		CoupungDTO coupung = coupungService.getProductDetail(Integer.parseInt(coupungId), 0, 0);
 		model.addAttribute("detail", coupung);
 		
 		return "/coupung/detail";
@@ -77,25 +77,29 @@ public class CoupungController {
 	
 	@GetMapping("/hot-deal/detail")
 	public String getHotDealDetail(@RequestParam String coupungId, Model model) {
-		CoupungDTO coupung = coupungService.getProductDetail(Integer.parseInt(coupungId));
+		CoupungDTO coupung = coupungService.getProductDetail(Integer.parseInt(coupungId), 0, 0);
 		
 		model.addAttribute("detail", coupung);
 		
  		return "/coupung/hot-deal/detail";
 	}
 	
-	@GetMapping("/order")
-	public String getOrderPage(@RequestParam List<String> productList, Model model) {
+	@GetMapping("/order") 
+	public String getOrderPage(@RequestParam List<Integer> productList
+								, @RequestParam List<Integer> optionList
+								, @RequestParam List<Integer> quantityList
+								, Model model) {
 		List<CoupungDTO> result = new ArrayList<>();
-		for (String coupungNubmer : productList) {
-			CoupungDTO order = coupungService.getProductDetail(Integer.parseInt(coupungNubmer));
+		for (int i = 0; i < productList.size(); i++) {
+			CoupungDTO order = coupungService.getProductDetail(productList.get(i), optionList.get(i), quantityList.get(i));
 			result.add(order);
-		}
+		} 
+		System.out.println("result : " + result);
 		model.addAttribute("products", result);
 		
 		return "coupung/order";
 	}
-	
+
 	@PostMapping("/order")
 	public @ResponseBody String setOrder(@RequestBody OrdersDTO order, HttpSession session) {
 		ClientsDTO client = (ClientsDTO) session.getAttribute("client");

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Builder;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.Getter;
 
 @Builder
@@ -11,6 +12,7 @@ import lombok.Getter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class CoupungOptionsDTO {
 	private Integer coupungOptionNumber;
 	private Integer coupungNumber;

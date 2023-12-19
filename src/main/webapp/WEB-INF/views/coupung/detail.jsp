@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="appPath" scope="application"
-	value="${pageContext.request.contextPath}" />
+<c:set var="appPath" scope="application" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,12 +9,36 @@
 <title>Insert title here</title>
 <link href="${appPath}/css/main.css" rel="stylesheet" />
 <link href="${appPath}/css/coupung/productDetail.css" rel="stylesheet" />
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
+<!-- 전체 화면 모달 -->
+<div class="modal fade" id="fullScreenModal" tabindex="-1" aria-labelledby="fullScreenModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="fullScreenModalLabel">전체 화면 모달</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- 모달 내용 -->
+       	이메일 : <input type="text" id="guestEmail" />
+        핸드폰 번호 : <input type="text" id="guestPhone"/>
+        <button type="button" id="guestSubmitBtn">입력</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-primary">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
 	<!-- header -->
 	<header>
+	
 		<a class="logo" href="#"></a>
 		<div class="float-right">
 			<a href="./html/signup.html">회원가입</a> <a class="pointer"
@@ -105,12 +128,12 @@
 						<select class="option-select-box" id="optionBox">
 							<option value="empty">선택</option>
 							<c:forEach var="opt" items="${detail.options}">
-								<option value="option">${opt}</option>
+								<option value="${opt.coupungOptionNumber}">${opt.name}</option>
 							</c:forEach>
 						</select>
 						<div class="counting">
 							<input type='button' class="plus-button" value='+'/>
-							<div class="quantity-number">0</div>
+							<div class="quantity-number" id='quantityVal'>0</div>
 							<input type='button' class="minus-button" value='-'/>
 						</div>
 					</div>
@@ -121,8 +144,8 @@
 						<span class="total-price" id="totalPrice">0</span> 원
 					</div>
 					<div class="order-buttons">
-						<button>장바구니</button>
-						<button>결제하기</button>
+						<button id='cartBtn' type='button'>장바구니</button>
+						<button type='button' id='payBtn'>결제하기</button>
 					</div>
 				</div>
 			</div>
@@ -147,7 +170,6 @@
     </div>
 </div>
 <hr>
-​
 <!-- footer -->
 <footer>
 	<div>
@@ -167,6 +189,7 @@
 	</div>
 </footer>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script>
 	$('.plus-button').on('click', function() {
 		var optionVal = $('#optionBox option:selected').val();
@@ -227,7 +250,7 @@
 	
 	function clip(){
 		var url = '';
-		var textarea = document.createElement("textarea");
+		var textarea = document.createElement("textarea8");
 		document.body.appendChild(textarea);
 		url = window.document.location.href;
 		textarea.value = url;
@@ -236,6 +259,113 @@
 		document.body.removeChild(textarea);
 		alert("URL이 복사되었습니다.")
 	}
+	
+	$('#cartBtn').on('click', function() {
+		var quantity = $('#quantityVal').text();
+		alert($('#optionBox option:selected').val());
+		if (quantity === '0') {
+			alert('수량을 선택해 주세요');
+		} else {
+			var option = $('#optionBox option:selected').val();
+			var obj = {
+					'coupungNumber' : ${detail.coupungNumber},
+					'quantity' : quantity,
+					'coupungOptionNumber' : option,
+					'name' : '${detail.name}',
+					'option' : "$('#optionBox option:selected').text()",
+					'url' : '${detail.image[0].url}',
+					'price' : '${detail.price }'
+				};
+			
+			$.ajax({
+				url : '${appPath}/coupung/cart',
+				type : 'post',
+				data : JSON.stringify(obj),
+				contentType : 'application/json',
+				success : function(res) {
+					if (res === 'success') {
+						if(confirm('장바구니 담기에 성공하였습니다. 장바구니 페이지로 이동하시겠습니까?')) {
+							location.href='${appPath}/coupung/cart';
+						} else {
+							window.location.href = window.location.href;
+						}
+					}
+				},
+                error: function(request, status, error) {
+                    alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                }
+			});
+		}
+	});
+	
+	$('#payBtn').on('click', function() {
+		var quantity = $('#quantityVal').text();
+		if (quantity === '0') {
+			alert('수량을 선택해 주세요');
+		} else if('${userInfo}' === '') {
+			if(!confirm('로그인 하시겠습니까?')) {
+				$('#fullScreenModal').modal('show'); // 모달을 띄우는 부분
+			} else {
+				location.href="${appPath}/clients/login";
+			}
+		} else {
+			var productList = [${detail.coupungNumber}];
+			var optionList = [$('#optionBox option:selected').val()];
+			var quantityList = [$('#quantityVal').text()];
+			console.log(productList);
+			console.log(optionList);
+			location.href = '${appPath}/coupung/order?productList=' + productList + '&optionList=' + optionList +'&quantityList=' + quantityList;
+		}
+	});
+	
+	var phone = "";
+    $('#guestPhone').on('input', function() {
+        if ($(this).val().length < 14) {
+            $(this).val($(this).val()
+                .replace(/[^0-9]/g, '')
+                .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3"));
+            phone = $(this).val();
+        } else {
+            $(this).val(phone);
+        }
+
+    });
+    
+	$('#guestSubmitBtn').on('click', function() {
+		var email = $('#guestEmail').val();
+		var emailFormat = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+		
+		if (!emailFormat.test(email)) {
+			alert('잘못된 이메일 형식입니다!');
+			$('#guestEmail').val('');
+			$('#guestEmail').focus();
+		} else {
+			var obj = {
+					'email' : email,
+					'phone' : phone
+			}
+			$.ajax({
+				url : '${appPath}/guest',
+				type : 'post',
+				data : JSON.stringify(obj),
+				contentType : 'application/json',
+				success : function(res) {
+					if (res === 'success') {
+						alert("성공하셨습니다.");
+						var productList = [${detail.coupungNumber}];
+						var optionList = [$('#optionBox option:selected').val()];
+						var quantityList = [$('#quantityVal').text()];
+						console.log(productList);
+						console.log(optionList);
+						location.href = '${appPath}/coupung/order?productList=' + productList + '&optionList=' + optionList +'&quantityList=' + quantityList;
+					}
+				},
+	            error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
+			});
+		}
+	});
 </script>
 </body>
 </html>

@@ -16,6 +16,7 @@ import lombok.ToString;
 public class CartsDTO {
 	private Integer cartNumber;
 	private Integer coupungNumber;
+	private Integer coupungOptionNumber;
 	private String clientId;
 	private Integer quantity;
 	private CoupungDTO coupung;

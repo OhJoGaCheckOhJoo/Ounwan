@@ -8,9 +8,10 @@
 		SELECT coupung.name, option.name AS option, coupung.price, cart.*, image.URL
 		FROM COUPUNG coupung
 		JOIN CARTS cart ON coupung.COUPUNG_NUMBER = cart.COUPUNG_NUMBER
-		JOIN product_images image ON cart.coupung_number = pi.coupung_number
-		JOIN coupung_options option ON COUPUNG_NUMBER = option.COUPUNG_NUMBER
+		JOIN product_images image ON cart.coupung_number = image.coupung_number
+		JOIN coupung_options option ON cart.coupung_option_number = option.coupung_option_number
 		WHERE cart.CLIENT_ID = #{clientId}
+        and image.type=0
 	</select>
 
 
@@ -21,6 +22,8 @@
 		WHERE CLIENT_ID = #{clientId}
 		AND
 		COUPUNG_NUMBER= #{coupungNumber}
+		AND
+		COUPUNG_OPTION_NUMBER = #{coupungOptionNumber}
 	</select>
 
 	<select id="updateQuantity" parameterType="carts"
@@ -34,9 +37,9 @@
 	<insert id="insertCart" parameterType="carts">
 		INSERT INTO
 		CARTS(COUPUNG_NUMBER,
-		CLIENT_ID, QUANTITY)
+		CLIENT_ID, COUPUNG_OPTION_NUMBER, QUANTITY)
 		VALUES(#{coupungNumber},
-		#{clientId}, #{quantity})
+		#{clientId}, #{coupungOptionNumber}, #{quantity})
 	</insert>
 
 
@@ -53,8 +56,8 @@
 	<select id="deleteCart" parameterType="carts" resultType="carts">
 		DELETE CARTS FROM CARTS
 		WHERE CLIENT_ID = #{clientId}
-		AND COUPUNG_NUMBER =
-		#{coupungNumber}
+		AND COUPUNG_NUMBER = #{coupungNumber}
+		AND COUPUNG_OPTION_NUMBER = #{coupungOptionNumber}
 	</select>
 
 </mapper>

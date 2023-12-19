@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ounwan.entity.CoupungOptions;
+
 @Repository
 public class CoupungOptionsDAO {
 	
@@ -14,7 +16,11 @@ public class CoupungOptionsDAO {
 	
 	private static final String NAMESPACE = "net.ounwan.coupungOption.";
 	
-	public List<String> selectOptions (int coupungNumber) {
+	public List<CoupungOptions> selectOptions (int coupungNumber) {
 		return sqlSession.selectList(NAMESPACE + "selectOptions", coupungNumber);
+	}
+
+	public List<CoupungOptions> getOptionByOptionId(int optionNumber) {
+		return sqlSession.selectList(NAMESPACE + "getOptionByOptionId", optionNumber);
 	}
 }
