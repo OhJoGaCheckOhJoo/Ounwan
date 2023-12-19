@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
@@ -9,6 +9,7 @@
 <head>
 <link href="${appPath}/css/main.css" rel="stylesheet" />
 <link href="${appPath}/css/danggunInsert.css" rel="stylesheet" />
+<link href="${appPath}/css/danggunProhibitedListModal.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>오운완</title>
@@ -81,8 +82,8 @@
                <div class="register-required">
                     *필수입력사항
                </div>                
-               <div class="prohibit-list">
-                    거래금지 품목 보기
+               <div class="prohibit-list" id="prohibitedList">
+                    <button onclick="openProhibitedListModal()">거래금지 품목 보기</button>
                </div>              
             </div>           
             <div class="register-content">
@@ -187,6 +188,8 @@
 		<div><img class="float-right img-1 pointer" src="../images/insta.png"></div>
 	</div>
 </footer>
+<%@ include file="./danggunProhibitedListModal.jsp"%>
+<script src="../js/danggunProhibitedListModal.js"></script>
 <script src="../js/main.js"></script>
 <script>	
 var detailImageCount =0;	

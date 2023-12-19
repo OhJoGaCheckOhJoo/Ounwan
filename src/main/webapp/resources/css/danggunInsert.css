@@ -30,6 +30,12 @@
     transform: translateY(80%);
 }
 
+.prohibit-list > button {
+	text-decoration: underline;
+	border: 0;
+	background-color: transparent;
+}
+
 .register-content {
     padding: 80px 30px 30px 30px;
 }
