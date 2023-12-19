@@ -150,7 +150,7 @@
                         </div>
                         
                         <div class="menu-container aeta">
-                            <a href="#">
+                            <a href="javascript:aetaList()">
                                 <div class="aeta-menu writing-list">
                                     내 게시글 목록
                                 </div>
@@ -246,6 +246,17 @@
         		$.ajax({
         			type: "GET",
         			url: "${appPath}/myPage/danggunWishList",
+        			success: function(res){
+        				$("#content").html(res);
+        			}
+        		})
+        	}
+        	
+        	function aetaList() {
+        		alert("aetaList()");
+        		$.ajax({
+        			type: "GET",
+        			url: "${appPath}/myPage/aetaList",
         			success: function(res){
         				$("#content").html(res);
         			}
