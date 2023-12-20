@@ -130,7 +130,7 @@
                                     마일리지
                                 </div>
                             </a>
-                            <a href="#">
+                            <a href="javascript:reviewList()">
                                 <div class="coupung-menu review">
                                     리뷰 관리
                                 </div>
@@ -261,6 +261,17 @@
         				$("#content").html(res);
         			}
         		})
+        	}
+        	
+        	function reviewList() {
+        		alert("reviewList()");
+        		$.ajax({
+        			type: "GET",
+        			url: "${appPath}/myPage/coupungReviewList",
+        			success: function(res) {
+        				$("#content").html(res);
+        			}
+        		});
         	}
         </script>
 </body>
