@@ -14,6 +14,7 @@
 			<th>작성일</th>
 			<th>작성자</th>
 			<th>조회수</th>
+			<th>게시글 번호_삭제 필요</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,6 +25,7 @@
 				<td class="aeta-list upload-date">${list.createdDate}</td>
 				<td class="aeta-list clied-id">${list.clientId}</td>
 				<td class="aeta-list views">${list.views}</td>
+				<td class="aeta-list numbee">${list.aetaNumber}</td>
 			</tr>
 		</c:forEach>
 	</tbody>
