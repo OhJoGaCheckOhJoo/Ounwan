@@ -41,6 +41,9 @@
     	select * from CLIENTS where social_id = #{token} and social_type = 'KAKAO'
     </select>
 
+	<select id="checkGoogleToken" parameterType="String" resultType="clients">
+    	select * from CLIENTS where social_id = #{token} and social_type = 'GOOGLE'
+    </select>
 	
 	<select id="checkClientId" parameterType="String"
 		resultType="int">

@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ounwan.dto.CartsDTO;
 import com.ounwan.dto.ClientsDTO;
+import com.ounwan.oauth.google.GoogleLoginBO;
 import com.ounwan.oauth.kakao.KakaoLoginBO;
 import com.ounwan.oauth.naver.NaverLoginBO;
 import com.ounwan.service.CartService;
@@ -38,6 +39,9 @@ public class ClientsController {
 
 	@Autowired
 	NaverLoginBO naverLogin;
+	
+	@Autowired
+	GoogleLoginBO googleLogin;
 
 	@GetMapping("/login")
 	public String loginGet(HttpSession session) {
@@ -51,6 +55,8 @@ public class ClientsController {
         List<CartsDTO> cartList = (List<CartsDTO>) session.getAttribute("cartList");
         
         if (loginUser != null) {
+        	if (!loginUser.getEmailCheck())
+        		return "unAuthorized";
             session.setAttribute("userInfo", loginUser);
             if(cartList != null) {
             	for (CartsDTO cart : cartList) {
@@ -101,6 +107,11 @@ public class ClientsController {
 	@RequestMapping("/login/naver")
 	public String naverLogin(HttpSession session) {
 		return "redirect:" + naverLogin.getAuthorizationUrl(session);
+	}
+	
+	@RequestMapping("/login/google")
+	public String googleLogin() {
+		return "redirect:" + googleLogin.getURL();
 	}
 	
 	@GetMapping("/signUp")

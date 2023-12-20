@@ -88,6 +88,11 @@ public class ClientsService {
 		Clients client = clientsDAO.checkKakaoToken(token);
 		return (client != null) ? changeDTO(client) : null;
 	}
+
+	public ClientsDTO checkGoogleToken(String token) {
+		Clients client = clientsDAO.checkGoogleToken(token);
+		return (client != null) ? changeDTO(client) : null;
+	}
 	
 	public String findClientId(ClientsDTO clientDTO) {
 		Clients client = clientsDAO.findClientId(changeEntity(clientDTO));

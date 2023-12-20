@@ -33,6 +33,15 @@ $(document).ready(function() {
 		$('#clientBirthday').attr('readOnly', true);
 		$('#profileImage').attr('src', '${naverClient.profileURL}');
 	} 
+	if ('${googleClient}' != '') {
+		$('#clientName').val('${googleClient.name}');
+		$('#clientName').attr('readOnly', true);
+		$('#clientEmail').val('${googleClient.email}');
+		$('#clientEmail').attr('readOnly', true);
+		$('#emailCheckBtn').attr('value', 'Y');
+		$('#emailCheckBtn').attr('disabled', true);
+		$('#profileImage').attr('src', '${googleClient.profileURL}');
+	}
 });
 </script>
 <title>회원정보입력</title>
@@ -55,35 +64,35 @@ $(document).ready(function() {
 
 			<div class="profile-name">
 
-				<label class="attribute-name" for=""> 이름<span
+				<label class="attribute-name"> 이름<span
 					class="red-star">*</span></label> <input type="text" class="input-form"
 					 placeholder="이름을 입력하세요"id="clientName" required />
 			</div>
 			<div class="profile-id">
-				<label class="attribute-name" for="">아이디<span
+				<label class="attribute-name" >아이디<span
 					class="red-star">*</span></label> <input type="text" class="input-form"
 					placeholder="아이디를 입력하세요" id='clientId' required />
 				<button id="checkId" type="button" value="N">중복확인</button>
 			</div>
 
 			<div class="profile-email">
-				<label class="attribute-name" for="">이메일<span
+				<label class="attribute-name" >이메일<span
 					class="red-star">*</span></label> <input type="email" class="input-form"
 					placeholder="이메일을 입력하세요" id="clientEmail" required/>
 				<button id="emailCheckBtn" type="button" value="N">중복확인</button>
 			</div>
 			<div class="profile-phone">
-				<label class="attribute-name" for="">연락처<span
+				<label class="attribute-name" >연락처<span
 					class="red-star">*</span></label> <input type="text" class="input-form"
 					placeholder="전화번호를 입력하세요" id="phoneNum" required/>
 			</div>
 			<div class="profile-password">
-				<label class="attribute-name" for="">비밀번호<span
+				<label class="attribute-name" >비밀번호<span
 					class="red-star">*</span></label> <input type="password" class="input-form"
 					id="firstPass" placeholder="비밀번호를 입력하세요"> <span id="wrongForm-inform">잘못된 형식입니다.</span>
 			</div>
 			<div class="profile-password">
-				<label class="attribute-name" for="">비밀번호 확인<span
+				<label class="attribute-name" >비밀번호 확인<span
 					class="red-star">*</span></label> <input type="password" class="input-form"
 					placeholder="비밀번호를 입력하세요"  id="secondPass" required/> <span id="notMatch-inform">비밀번호가 일치하지 않습니다.</span>
 			</div>
@@ -92,14 +101,14 @@ $(document).ready(function() {
                 <input class="input-form" type="date" id="clientBirthday" max="2077-12-31" min="1900-01-01" required/>
 			</div>
 			<div class="profile-address">
-				<label class="attribute-name" for="">주소</label> 
+				<label class="attribute-name">주소</label> 
 				<input class="form-address" size="10" id="zipCode" readOnly />
 				<button id="findAddr" type="button">우편번호 검색</button>
 				<br> 
-				<label class="attribute-name" for=""></label> 
+				<label class="attribute-name" ></label> 
 				<input class="form-address" size="35" id="addr" readOnly/> 
 				<br>
-				<label class="attribute-name" for=""></label> 
+				<label class="attribute-name" ></label> 
 				<input class="form-address" size="35" id="addrDetail" readOnly />
 			</div>
 		</div>
@@ -387,6 +396,9 @@ $(document).ready(function() {
         	} else if ('${naverClient}' != '') {
         		if (imgUrl === '') imgUrl = "${naverClient.profileURL}";
         		obj = setNaver(email, imgUrl);
+        	} else if ('${googleClient}' != '') {
+        		if (imgUrl === '') imgUrl = "${googleClient.profileURL}";
+        		obj = setGoogle(email, imgUrl);
         	} else {
         		if (imgUrl === '') imgUrl = $('#profileImage').attr('src');
 	        	obj = setUser(imgUrl);
@@ -447,6 +459,25 @@ $(document).ready(function() {
      		    "socialId" : "${naverClient.socialId}"
      		};
 	 }
+	 
+	 var setGoogle = function(email, imgUrl) {
+			var email = "g-" + $('#clientEmail').val();
+	 		return {
+	     		    "clientId" : $('#clientId').val(),
+	     		    "name" : $('#clientName').val(),
+	     		    "password" : $('#firstPass').val(),
+	     		    "email" : email,
+	     		    "birthday" : $('#clientBirthday').val(),
+	     		    "phone" : $('#phoneNum').val(),
+	     		    "address" : $('#addr').val(),
+	     		    "addressDetail" : $('#addrDetail').val(),
+	     		    "zipCode" : $('#zipCode').val(),
+	     		    "privacyTerms" : "3",
+	     		    "profileURL" : imgUrl,
+	     		    "socialType" : "GOOGLE",
+	     		    "socialId" : "${googleClient.socialId}"
+	     		};
+		 }
 	 
 	 var setUser = function(imgUrl) {
 		return {

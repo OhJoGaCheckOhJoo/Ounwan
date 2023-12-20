@@ -19,9 +19,9 @@
         <div class="login-container" id="loginAccountSelected">
             <!-- 소셜 로그인 -->
             <div class="social-wrap">
-                <a href="#"><img class="login login-radius" src="../images/google.png"></a><br>
-                <a href="/myapp/login/naver"><img class="login login-radius" src="../images/naver_btn.png"></a><br>
-                <a href="/myapp/login/kakao"><img class="login login-radius" src="../images/kakao.png"></a><br>
+                <a href="/myapp/clients/login/google"><img class="login login-radius" src="../images/google.png"></a><br>
+                <a href="/myapp/clients/login/naver"><img class="login login-radius" src="../images/naver_btn.png"></a><br>
+                <a href="/myapp/clients/login/kakao"><img class="login login-radius" src="../images/kakao.png"></a><br>
             </div>
             <!-- 일반 로그인 -->
             <div class="login-wrap-1 float-right">
@@ -106,7 +106,10 @@
                     if(responseData === "success"){
                         alert("어서오소 ");
                         window.location.href = "${appPath}/"
-                    }else {
+                    } else if (responseData === "unAuthorized") {
+                    	alert('이메일 인증을 완료해 주세요!');
+                    	location.href = "${appPath}";
+                    } else {
                         alert("로그인 실패");
                         console.log(responseData);
                     }
