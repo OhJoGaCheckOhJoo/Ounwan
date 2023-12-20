@@ -16,7 +16,23 @@ public class MyPageDAO {
 	SqlSession sqlSession;
 	
 	private static final String NAMESPACE = "net.ounwan.myPage.";
-
+	
+	
+	//main_최근 주문 내역 최대 3개
+	public List<Map<String, Object>> getOrderPreviewList(String userId) {
+		return sqlSession.selectList(NAMESPACE + "orderPreviewList", userId);
+	}
+	
+	//main_최근 내가 쓴 게시글 최대 3개
+	public List<Aeta> getAetaPreviewList(String userId) {
+		return sqlSession.selectList(NAMESPACE + "aetaPreviewList", userId);
+	}
+	
+	//main_최근 장바구니 내역 최대 3개
+	public List<Map<String, Object>> getCartPreviewList(String userId) {
+		return sqlSession.selectList(NAMESPACE + "cartPreviewList" , userId);
+	}
+	
 	//danggun 판매 목록 조회
 	public List<Map<String, Object>> getDanggunSaleList(String userid){
 		return sqlSession.selectList(NAMESPACE + "danggunSaleList", userid);
@@ -36,4 +52,5 @@ public class MyPageDAO {
 	public List<Map<String, Object>> getReviewList(String userId) {
 		return sqlSession.selectList(NAMESPACE + "reviewList", userId);
 	}
+
 }

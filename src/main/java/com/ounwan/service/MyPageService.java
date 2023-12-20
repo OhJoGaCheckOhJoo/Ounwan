@@ -18,6 +18,19 @@ public class MyPageService {
 
 	@Autowired
 	MyPageDAO myPageDAO;
+	
+	public List<Map<String, Object>> orderListPreview(String userId) {
+		return myPageDAO.getOrderPreviewList(userId);
+	}
+
+	public List<AetaDTO> aetaListPreview(String userId) {
+		return changeDTOList(myPageDAO.getAetaPreviewList(userId));
+	}
+
+	public List<Map<String, Object>> cartListPreview(String userId) {
+		return myPageDAO.getCartPreviewList(userId);
+		
+	}
 
 	public List<Map<String, Object>> getDanggunSaleList(String userId) {
 		return myPageDAO.getDanggunSaleList(userId);
@@ -54,7 +67,7 @@ public class MyPageService {
 	public AetaDTO changeDTO(Aeta aeta) {
 		return AetaDTO
 				.builder()
-				.boardNumber(aeta.getBoardNumber())
+				.aetaNumber(aeta.getAetaNumber())
 				.title(aeta.getTitle())
 				.contents(aeta.getContents())
 				.clientId(aeta.getClientId())
@@ -63,6 +76,5 @@ public class MyPageService {
 				.views(aeta.getViews())
 				.build();
 	}
-
 
 }

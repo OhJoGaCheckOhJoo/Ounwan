@@ -3,11 +3,75 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.myPage">
+	<!-- main -->
+	<!-- orderListPreview -->
+	<select id="orderPreviewList" parameterType="String"
+		resultType="map">
+		SELECT
+		O.ORDER_NUMBER,
+		O.ORDER_DATE,
+		OD.PRICE,
+		OD.QUANTITY,
+		C.COUPUNG_NUMBER,
+		C.NAME AS COUPUNG_NAME,
+		PI.URL AS PRODUCT_IMAGE_URL
+		FROM
+		ORDERS O
+		JOIN
+		ORDER_DETAILS OD ON
+		O.ORDER_NUMBER = OD.ORDER_NUMBER
+		JOIN
+		COUPUNG C ON OD.COUPUNG_NUMBER =
+		C.COUPUNG_NUMBER
+		LEFT JOIN
+		PRODUCT_IMAGES PI ON C.COUPUNG_NUMBER =
+		PI.COUPUNG_NUMBER
+		WHERE
+		O.CLIENT_ID = #{clientId}
+		AND PI.TYPE = 0
+		ORDER BY
+		O.ORDER_DATE DESC
+		LIMIT 3;
+	</select>
+
+	<!-- aetaListPreview -->
+	<select id="aetaPreviewList" parameterType="String" resultType="aeta">
+		SELECT *
+		FROM AETA WHERE CLIENT_ID = #{clientId}
+		ORDER
+		BY AETA_NUMBER DESC LIMIT 3;
+	</select>
+
+	<!-- cartListPreview -->
+	<select id="cartPreviewList" parameterType="String" resultType="map">
+		SELECT
+		C.NAME AS COUPUNG_NAME,
+		C.AVAILABLE_STOCK,
+		C.PRICE,
+		C.COUPUNG_NUMBER,
+		C.AVAILABLE_CHECK,
+		CART.CART_NUMBER,
+		CART.QUANTITY,
+		PI.URL
+		FROM
+		COUPUNG C
+		JOIN
+		PRODUCT_IMAGES PI ON C.COUPUNG_NUMBER = PI.COUPUNG_NUMBER
+		JOIN
+		CARTS CART ON C.COUPUNG_NUMBER = CART.COUPUNG_NUMBER
+		WHERE
+		CART.CLIENT_ID = #{clientId}
+		AND PI.TYPE = 0
+		ORDER BY
+		CART.CART_NUMBER DESC
+		LIMIT 3;
+	</select>
+
 	<!-- danggun sale list -->
 	<select id="danggunSaleList" parameterType="String"
 		resultType="map">
 		SELECT i.URL, d.PRODUCT_NAME, d.PRICE , d.UPLOAD_DATE ,
-		d.TRADE_HISTORY_NUMBER
+		d.TRADE_HISTORY_NUMBER, d.DANGGUN_NUMBER
 		FROM DANGGUN d JOIN PRODUCT_IMAGES i ON
 		d.DANGGUN_NUMBER =
 		i.DANGGUN_NUMBER
@@ -20,7 +84,7 @@
 	<select id="danggunWishList" parameterType="String"
 		resultType="map">
 		SELECT i.URL, d.PRODUCT_NAME, d.PRICE, d.UPLOAD_DATE,
-		d.TRADE_HISTORY_NUMBER
+		d.TRADE_HISTORY_NUMBER, d.DANGGUN_NUMBER
 		FROM WISH_LISTS w JOIN DANGGUN d ON
 		w.DANGGUN_NUMBER = d.DANGGUN_NUMBER
 		JOIN PRODUCT_IMAGES i ON
@@ -37,13 +101,16 @@
 
 	<!-- review list -->
 	<select id="reviewList" parameterType="String" resultType="map">
-		SELECT 
+		SELECT
 		R.CONTENTS,
 		R.SCORE,
 		R.CREATED_DATE,
 		R.IMAGE_URL,
-		CO.NAME AS COUPUNG_NAME,
-		COO.NAME AS COUPUNG_OPTION_NAME FROM
+		CO.NAME AS
+		COUPUNG_NAME,
+		CO.COUPUNG_NUMBER,
+		COO.NAME AS
+		COUPUNG_OPTION_NAME FROM
 		REVIEWS R
 		JOIN
 		ORDER_DETAILS OD ON
@@ -52,12 +119,15 @@
 		ORDERS O ON
 		OD.ORDER_NUMBER = O.ORDER_NUMBER
 		JOIN
-		COUPUNG CO ON OD.COUPUNG_NUMBER =
+		COUPUNG CO ON
+		OD.COUPUNG_NUMBER =
 		CO.COUPUNG_NUMBER
 		JOIN
-		COUPUNG_OPTIONS COO ON OD.COUPUNG_OPTION_NUMBER =
+		COUPUNG_OPTIONS COO ON
+		OD.COUPUNG_OPTION_NUMBER =
 		COO.COUPUNG_OPTION_NUMBER
 		WHERE
-		O.CLIENT_ID = #{clientId}
+		O.CLIENT_ID =
+		#{clientId}
 	</select>
 </mapper>

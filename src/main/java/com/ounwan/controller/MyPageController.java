@@ -27,50 +27,53 @@ public class MyPageController {
 	ProductImagesService productImagesService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String myPage(HttpSession session, String clientId) {
+	public String myPage(HttpSession session, Model model) {
+		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
+		String clientId = userInfo.getClientId();
+		
+		model.addAttribute("orderList", myPageService.orderListPreview(clientId));
+		model.addAttribute("aetaList", myPageService.aetaListPreview(clientId));
+		model.addAttribute("cartList", myPageService.cartListPreview(clientId));
+		
 		return "/myPage/myPage";
 	}
 
 	@RequestMapping(value = "/danggunSaleList", method = RequestMethod.GET)
 	public String DanggunSaleList(HttpSession session, Model model) {
-		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");	
-		String clientId = userInfo.getClientId();
+		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
+		String clientId = userInfo.getClientId();	
 		
-		List<Map<String, Object>> list = myPageService.getDanggunSaleList(clientId);	
-		model.addAttribute("danggunSaleList", list);			
+		model.addAttribute("danggunSaleList", myPageService.getDanggunSaleList(clientId));			
 
 		return "/myPage/danggunSaleList";
 	}
 	
 	@RequestMapping(value = "/danggunWishList", method = RequestMethod.GET)
 	public String DanggunWishList(HttpSession session, Model model) {
-		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");	
-		String clientId = userInfo.getClientId();
+		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
+		String clientId = userInfo.getClientId();		
 		
-		List<Map<String, Object>> list = myPageService.getDanggunWishList(clientId);
-		model.addAttribute("danggunWishList", list);
+		model.addAttribute("danggunWishList", myPageService.getDanggunWishList(clientId));
 		
 		return "/myPage/danggunWishList";
 	}
 	
 	@RequestMapping(value = "/aetaList", method = RequestMethod.GET)
 	public String AetaList(HttpSession session, Model model) {
-		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");	
-		String clientId = userInfo.getClientId();
+		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
+		String clientId = userInfo.getClientId();		
 		
-		List<AetaDTO> list = myPageService.getAetaList(clientId);
-		model.addAttribute("aetaList", list);
+		model.addAttribute("aetaList", myPageService.getAetaList(clientId));
 		
 		return "/myPage/aetaList";
 	}
 	
 	@RequestMapping(value ="/coupungReviewList", method = RequestMethod.GET)
 	public String reviewList(HttpSession session, Model model) {
-		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
+		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");		
 		String clientId = userInfo.getClientId();
 		
-		List<Map<String, Object>> list = myPageService.getreviewList(clientId);
-		model.addAttribute("coupungReviewList", list);
+		model.addAttribute("coupungReviewList", myPageService.getreviewList(clientId));
 		
 		return "/myPage/coupungReviewList";
 	}

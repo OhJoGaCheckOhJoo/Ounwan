@@ -114,7 +114,7 @@
             <div class="mypage-content">
                 <div class="side-bar-container">
                     <div class="side-bar title">
-                        <a href="#">
+                        <a href="${appPath}/myPage">
                             마이페이지
                         </a>
                     </div>
@@ -222,6 +222,75 @@
                     <div class="content-info-container">
                         <div class="content-info" id="content">
                             여기
+                            <h2>최근 주문 정보_coupung</h2>
+                            	<c:forEach var="oList" items="${orderList}">
+                            		<div>
+                            			주문일자: <span>${oList.ORDER_DATE}</span>
+                            		</div>
+                            		<div>
+                            			이미지 url: <span>${oList.PRODUCT_IMAGE_URL}</span>
+                            		</div>
+                            		<div>
+                            			상품명: <span>${oList.COUPUNG_NAME}</span>
+                            		</div>
+                            		<div>
+                            			주문번호: <span>${oList.ORDER_NUMBER}</span>
+                            		</div>
+                            		<div>
+                            			가격: <span>${oList.PRICE}</span>
+                            		</div>
+                            		<div>
+                            			수량: <span>${oList.QUANTITY}</span>
+                            		</div>
+                            		<div>
+                            			상품 번호: <span>${oList.COUPUNG_NUMBER}</span>
+                            		</div>
+                            		
+                            	</c:forEach>
+                            	<br><br>
+                            <h2>최근 등록 게시글_aeta</h2>
+                            	<c:forEach var="aList" items="${aetaList}">
+                            		<div>
+                            			제목: <span>${aList.title}</span>
+                            		</div>
+                            		<div>
+                            			작성일: <span>${aList.createdDate}</span>
+                            		</div>
+                            		<div>
+                            			조회수: <span>${aList.views}</span>
+                            		</div>
+                            		<div>
+                            			게시글 번호: <span>${aList.aetaNumber}</span>
+                            		</div>
+                            	</c:forEach>
+                            	<br><br>
+                            <h2>장바구니</h2>
+                            	<c:forEach var="cList" items="${cartList}">
+                            		<div>
+                            			상품명: <span>${cList.COUPUNG_NAME}</span>
+                            		</div>
+                            		<div>
+                            			이미지 URL: <span>${cList.URL}</span>
+                            		</div>
+                            		<div>
+                            			수량: <span>${cList.QUANTITY}</span>
+                            		</div>
+                            		<div>
+                            			가격: <span>${cList.PRICE}</span>
+                            		</div>
+                            		<div>
+                            			재고: <span>${cList.AVAILABLE_STOCK}</span>
+                            		</div>
+                            		<div>
+                            			비활 여부: <span>${cList.AVAILABLE_CHECK}</span>
+                            		</div>
+                            		<div>
+                            			장바구니 번호: <span>${cList.CART_NUMBER}</span>
+                            		</div>
+                            		<div>
+                            			상품 번호: <span>${cList.COUPUNG_NUMBER}</span>
+                            		</div>                           		
+                            	</c:forEach>                       
                         </div>
                     </div>
                 </div>
@@ -231,7 +300,6 @@
         <script src="./js/main.js"></script>
         <script>
         	function danggunSaleList() {
-        		alert("danggunSaleList()");
         		$.ajax({
         			type: "GET",
         			url: "${appPath}/myPage/danggunSaleList",
@@ -242,7 +310,6 @@
         	}
         	
         	function danggunWishList() {
-        		alert("danggunWishList()");
         		$.ajax({
         			type: "GET",
         			url: "${appPath}/myPage/danggunWishList",
@@ -253,7 +320,6 @@
         	}
         	
         	function aetaList() {
-        		alert("aetaList()");
         		$.ajax({
         			type: "GET",
         			url: "${appPath}/myPage/aetaList",
@@ -264,7 +330,6 @@
         	}
         	
         	function reviewList() {
-        		alert("reviewList()");
         		$.ajax({
         			type: "GET",
         			url: "${appPath}/myPage/coupungReviewList",
