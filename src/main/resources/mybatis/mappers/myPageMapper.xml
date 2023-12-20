@@ -3,22 +3,61 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.myPage">
-	<!-- danggun sale list -->	
-	<select id="danggunSaleList" parameterType="String" resultType="map">
-		SELECT i.URL, d.PRODUCT_NAME , d.PRICE , d.UPLOAD_DATE , d.TRADE_HISTORY_NUMBER 
-		FROM DANGGUN d JOIN PRODUCT_IMAGES i ON d.DANGGUN_NUMBER = i.DANGGUN_NUMBER 
-		WHERE d.CLIENT_ID = #{clientId} AND i.TYPE = 0 	ORDER BY i.DANGGUN_NUMBER DESC
+	<!-- danggun sale list -->
+	<select id="danggunSaleList" parameterType="String"
+		resultType="map">
+		SELECT i.URL, d.PRODUCT_NAME, d.PRICE , d.UPLOAD_DATE ,
+		d.TRADE_HISTORY_NUMBER
+		FROM DANGGUN d JOIN PRODUCT_IMAGES i ON
+		d.DANGGUN_NUMBER =
+		i.DANGGUN_NUMBER
+		WHERE d.CLIENT_ID = #{clientId} AND
+		i.TYPE = 0 ORDER BY i.DANGGUN_NUMBER
+		DESC
 	</select>
-	
+
 	<!-- danggun wish list -->
-	<select id="danggunWishList" parameterType="String" resultType="map">
-		SELECT i.URL, d.PRODUCT_NAME, d.PRICE, d.UPLOAD_DATE, d.TRADE_HISTORY_NUMBER 
-		FROM WISH_LISTS w JOIN DANGGUN d ON w.DANGGUN_NUMBER = d.DANGGUN_NUMBER JOIN PRODUCT_IMAGES i ON d.DANGGUN_NUMBER = i.DANGGUN_NUMBER 
-		WHERE w.CLIENT_ID = #{clientId} AND i.TYPE = 0
+	<select id="danggunWishList" parameterType="String"
+		resultType="map">
+		SELECT i.URL, d.PRODUCT_NAME, d.PRICE, d.UPLOAD_DATE,
+		d.TRADE_HISTORY_NUMBER
+		FROM WISH_LISTS w JOIN DANGGUN d ON
+		w.DANGGUN_NUMBER = d.DANGGUN_NUMBER
+		JOIN PRODUCT_IMAGES i ON
+		d.DANGGUN_NUMBER = i.DANGGUN_NUMBER
+		WHERE w.CLIENT_ID = #{clientId} AND
+		i.TYPE = 0
 	</select>
-	
+
 	<!-- aeta list -->
 	<select id="aetaList" parameterType="String" resultType="aeta">
-		SELECT * FROM AETA WHERE CLIENT_ID = #{clientId}
+		SELECT *
+		FROM AETA WHERE CLIENT_ID = #{clientId}
+	</select>
+
+	<!-- review list -->
+	<select id="reviewList" parameterType="String" resultType="map">
+		SELECT 
+		R.CONTENTS,
+		R.SCORE,
+		R.CREATED_DATE,
+		R.IMAGE_URL,
+		CO.NAME AS COUPUNG_NAME,
+		COO.NAME AS COUPUNG_OPTION_NAME FROM
+		REVIEWS R
+		JOIN
+		ORDER_DETAILS OD ON
+		R.ORDER_DETAIL_NUMBER = OD.ORDER_DETAIL_NUMBER
+		JOIN
+		ORDERS O ON
+		OD.ORDER_NUMBER = O.ORDER_NUMBER
+		JOIN
+		COUPUNG CO ON OD.COUPUNG_NUMBER =
+		CO.COUPUNG_NUMBER
+		JOIN
+		COUPUNG_OPTIONS COO ON OD.COUPUNG_OPTION_NUMBER =
+		COO.COUPUNG_OPTION_NUMBER
+		WHERE
+		O.CLIENT_ID = #{clientId}
 	</select>
 </mapper>

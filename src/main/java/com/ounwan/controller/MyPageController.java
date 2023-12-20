@@ -63,5 +63,16 @@ public class MyPageController {
 		
 		return "/myPage/aetaList";
 	}
+	
+	@RequestMapping(value ="/coupungReviewList", method = RequestMethod.GET)
+	public String reviewList(HttpSession session, Model model) {
+		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
+		String clientId = userInfo.getClientId();
+		
+		List<Map<String, Object>> list = myPageService.getreviewList(clientId);
+		model.addAttribute("coupungReviewList", list);
+		
+		return "/myPage/coupungReviewList";
+	}
 
 }

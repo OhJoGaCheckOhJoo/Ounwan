@@ -32,6 +32,10 @@ public class MyPageService {
 		return  changeDTOList(myPageDAO.getAetaList(userId));
 	}
 	
+	public List<Map<String, Object>> getreviewList(String userId) {
+		return myPageDAO.getReviewList(userId);
+	}
+	
 	public DanggunDTO changeDTO(Danggun danggun) {
 		return DanggunDTO.builder().danggunNumber(danggun.getDanggunNumber())
 				.tradeHistoryNumber(danggun.getTradeHistoryNumber()).clientId(danggun.getClientId())
@@ -59,4 +63,6 @@ public class MyPageService {
 				.views(aeta.getViews())
 				.build();
 	}
+
+
 }

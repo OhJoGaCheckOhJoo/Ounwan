@@ -31,4 +31,9 @@ public class MyPageDAO {
 	public List<Aeta> getAetaList(String userId) {
 		return sqlSession.selectList(NAMESPACE + "aetaList", userId);
 	}
+	
+	//coupung 내가 쓴 리뷰 목록 조회
+	public List<Map<String, Object>> getReviewList(String userId) {
+		return sqlSession.selectList(NAMESPACE + "reviewList", userId);
+	}
 }
