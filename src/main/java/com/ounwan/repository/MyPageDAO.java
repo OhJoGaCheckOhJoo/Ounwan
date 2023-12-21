@@ -34,6 +34,10 @@ public class MyPageDAO {
 		return sqlSession.update(NAMESPACE + "modifyUserInfo", client);
 	}
 
+	public int modifyProfileURL(Clients client) {
+		return sqlSession.update(NAMESPACE + "modifyProfileURL", client);
+	}
+
 	
 
 }

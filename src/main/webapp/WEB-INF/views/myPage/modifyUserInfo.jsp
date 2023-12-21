@@ -229,8 +229,9 @@
                         <div class="content-info">	
 							<div class="profile-photo">
 								<input type="file" name="uploadImageInput" id="uploadImageInput" accept="image/*"/>
-								<img class="profile-photo-file" src="img/default_profile.png" id="profileImage">
-								<button>사진수정</button>
+								<img class="profile-photo-file" src="../${userInfo.profileURL}" id="registerProfileImage">
+								 <!--src="${userInfo.profileURL}"-->
+								<button id="uploadImageButton">사진수정</button>
 								<br>
 								<br>
 							</div>
@@ -418,7 +419,7 @@
 	    	  }
 
 	    	// 클라이언트 정보를 담은 DTO
-	    	  var clientDTO = {
+	    	  var obj = {
 	    	    clientId: "${userInfo.clientId}", // 클라이언트 ID
 	    	    password: secondPass // 새 비밀번호
 	    	  };
@@ -426,7 +427,7 @@
 	    	  $.ajax({
 	    	    url: "${appPath}/myPage/modifyUserInfo/pwd", // 정보 변경을 위한 URL
 	    	    type: "post",
-	    	    data: JSON.stringify(clientDTO), // DTO 전달
+	    	    data: JSON.stringify(obj), // DTO 전달
 	    	    contentType: 'application/json',
 	    	    success: function(res) {
 	    	    	console.log(res);
@@ -446,6 +447,46 @@
 	    	  modal.style.display = "none";
 	    	});
 	    	
+	    	  var formData = new FormData();
+	    	    var imgUrl = '';
+	    	    var clientId = "${userInfo.clientId}";
+
+	    	    $("#uploadImageInput").on("change", function() {
+	    	        var imgTag = $("#registerProfileImage");
+	    	        if ($('#uploadImageInput')[0].files.length > 0) {
+	    	            if (confirm("해당 이미지를 사용하시겠습니까?")) {
+	    	                var reader = new FileReader();
+	    	                formData = new FormData();
+	    	                formData.append('image', $("#uploadImageInput")[0].files[0]);
+	    	                formData.append('clientId', clientId);
+	    	                reader.onload = function(data) {
+	    	                    imgTag.attr("src", data.target.result);
+	    	                }
+	    	                reader.readAsDataURL($('#uploadImageInput')[0].files[0]);
+	    	            }
+	    	        }
+	    	    });
+
+	    	    $("#uploadImageButton").on("click", function() {
+	    	      
+	    	            $.ajax({
+	    	                url: "${appPath}/myPage/updateImg",
+	    	                type: "post",
+	    	                data: formData,
+	    	                processData: false,
+	    	                contentType: false,
+	    	                success: function(res) {
+	    	                    imgUrl = res;
+	    	                    $('#uploadImageInput').attr('disabled', true);
+	    	                    alert("이미지가 성공적으로 업데이트되었습니다!");
+	    	                },
+	    	                error: function(request, status, error) {
+	    	                    alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	    	                }
+	    	            });
+	    	     
+	    	    });
+	    	
 	    	
 	    	
 	    	$('#submitBtn').on('click', function() {
@@ -453,7 +494,7 @@
 	    		var address = $('#addr').val();
 	    		var addressDetail = $('#addrDetail').val();
 	    		
-	            var clientDTO = {
+	            var obj = {
 	    	    	    clientId: "${userInfo.clientId}", // 클라이언트 ID
 	    	    	    phone: phone,
 	            	    address: address,
@@ -462,7 +503,7 @@
 	            $.ajax({
 	                 url: "${appPath}/myPage/modifyUserInfo",
 	                 type: "post",
-	                 data: JSON.stringify(clientDTO),
+	                 data: JSON.stringify(obj),
 	                 contentType: 'application/json',
 	                 success: function(res) {
 	                	 if (res === 'success') {

@@ -2,9 +2,13 @@ package com.ounwan.service;
 
 
 
+import java.io.File;
+import java.io.IOException;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.entity.Clients;
@@ -19,6 +23,10 @@ public class MyPageService {
 
 	@Autowired
 	ClientsDAO clientsDAO;
+	
+	
+	private final static String UPLOADPATH = "D:\\github_desktop\\Back-end\\src\\main\\webapp\\resources";
+	private final static String IMAGEPATH = "/images/uploads/";
 	
 
 
@@ -58,6 +66,32 @@ public class MyPageService {
 			return 1;
 		}
 		return 0;
+	}
+	
+	public String updateImage(MultipartFile multipartFile, String clientId) {
+		System.out.println("SSSSSmultipartFile : " + multipartFile);
+		System.out.println("SSSSSclientId : " + clientId);
+		
+		
+		String newFileName = System.currentTimeMillis() + ".." + multipartFile.getContentType().split("/")[1]; // image/jpg
+		File file = new File(UPLOADPATH + IMAGEPATH + newFileName);
+		try {
+			multipartFile.transferTo(file);
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		String newProfile = "." + IMAGEPATH + newFileName;
+		
+		ClientsDTO client = new ClientsDTO();
+		
+		client.setClientId(clientId);
+		client.setProfileURL(newProfile);
+		
+		int result = myPageDAO.modifyProfileURL(changeEntity(client));
+		if (result > 0) {
+			return "success";
+		}
+		return "success";
 	}
 	
 	

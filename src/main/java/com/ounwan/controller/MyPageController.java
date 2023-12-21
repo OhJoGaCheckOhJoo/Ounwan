@@ -7,10 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.service.ClientsService;
@@ -72,6 +76,7 @@ public class MyPageController {
 	 * 
 	 * }
 	 */
+	
 	@RequestMapping(value = "/modifyUserInfo", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String showUserInfo(HttpSession session, Model model) {
 	
@@ -101,6 +106,15 @@ public class MyPageController {
 		myPageService.modifyUserInfo(clientsDTO);
 		return "success";
 
+	}
+	
+	@PostMapping(value="/updateImg")
+	public @ResponseBody String updateImage(@RequestParam("image") MultipartFile image,  @RequestParam("clientId") String clientId) {
+	    System.out.println("!!!!formdata : " + image );
+	    System.out.println("@@@@formdata : " + clientId );
+	    
+		String imgString = myPageService.updateImage(image, clientId);
+	    return imgString;
 	}
 	
 	
