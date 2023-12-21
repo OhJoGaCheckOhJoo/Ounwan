@@ -10,22 +10,25 @@ import com.ounwan.entity.Clients;
 public class MyPageDAO {
 	
 
-	private static final String NAMESPACE = "net.ounwan.myPage";
+	private static final String NAMESPACE = "net.ounwan.myPage.";
 	
 	@Autowired
 	SqlSession sqlSession;
 	
-	public Clients getPasswordById(String clientId) {
-		return sqlSession.selectOne(NAMESPACE + "getPasswordById", clientId);
+	public String getPwdById(String clientId) {
+		System.out.println("DAO왔다감");
+	    return sqlSession.selectOne(NAMESPACE + "getPwdById", clientId);
 	}
 
-	public String getUserInfo(Clients client) {
-		return sqlSession.selectOne(NAMESPACE + "getUserInfo", client);
+	public Clients getUserInfo(String clientId) {
+		return sqlSession.selectOne(NAMESPACE + "getUserInfo", clientId);
 	}
 	
+
 	public int modifyPwd(Clients client) {
 		return sqlSession.update(NAMESPACE + "modifyPwd", client);
 	}
+	
 	
 	public int modifyUserInfo(Clients client) {
 		return sqlSession.update(NAMESPACE + "modifyUserInfo", client);
