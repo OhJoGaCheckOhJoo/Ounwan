@@ -42,6 +42,15 @@ public class DanggunController {
 
 	@Autowired
 	WishListsService wishListsService;
+	
+	// 채팅 방으로 seller 데리고 이동
+	@GetMapping("/bixSiri/chat")
+	public String chat(@RequestParam(name = "danggunNumber") Integer danggunNumber, @RequestParam(name = "seller") String seller, Model model) {
+		DanggunDTO danggun = danggunService.selectDanggun(seller, danggunNumber);
+		System.out.println("step = " + danggun.getTradeStep());
+		model.addAttribute("post", danggun);
+		return "/bixSiri/danggunChat";
+	}
 
 //	당군 메인 페이지로 이동
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
@@ -90,6 +99,12 @@ public class DanggunController {
 //	상품 상세 목록 조회하기 
 	@GetMapping(value = "/detail")
 	public ModelAndView danggunDetail(@RequestParam("danggunNumber") int danggunNumber, HttpSession session) {
+		ClientsDTO clients = (ClientsDTO) session.getAttribute("userInfo");
+		if(clients == null) {
+			ModelAndView mv = new ModelAndView("/login");
+			return mv;
+		}
+		
 		ModelAndView mv = new ModelAndView("danggun/danggunDetail");
 		
 		DanggunDTO resultDanggun = danggunService.selectDanggun(((ClientsDTO)session.getAttribute("userInfo")).getClientId(), danggunNumber);
