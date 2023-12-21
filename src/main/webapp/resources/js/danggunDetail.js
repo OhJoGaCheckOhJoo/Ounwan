@@ -46,17 +46,12 @@ $(function() {
 	});
 	
 })
-
-/*
-function imgHover(){
-	var zzimImg = document.getElementById("wish-list");
-	if(zzimImg.src == appPath + '/images/lime_wishlist.png'){
-		zzimImg.setAttribute('src', appPath + '/images/default_wishlist.png');
-	}else if(zzimImg.src == appPath + '/images/default_wishlist.png'){
-		zzimImg.setAttribute('src', appPath + '/images/lime_wishlist.png');
-	}
-}
-
-function imgRestore(){
+$("#chatting").on("click",function(e){
+	e.preventDefault();
 	
-}*/
+    var seller = encodeURIComponent(document.getElementById('danggunModal').getAttribute('clientId'));
+    var danggunNumber = encodeURIComponent(document.getElementById('danggunModal').getAttribute('danggunNumber'));
+	var url = appPath + "/danggun/bixSiri/chat?seller="+seller+"&danggunNumber="+danggunNumber;
+	
+	window.open(url, "/bixSiri/danggunChat", "width=500, height=800, top=200, left=200");
+});
