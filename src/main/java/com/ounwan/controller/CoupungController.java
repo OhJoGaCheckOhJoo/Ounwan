@@ -35,8 +35,8 @@ public class CoupungController {
 	
 	
 	@GetMapping("/products")
-	public String getProductMain (Model model) {
-		List<CoupungDTO> productList = coupungService.getProductList(0);
+	public String getProductMain (@RequestParam(defaultValue = "0")String categoryNum, Model model) {
+		List<CoupungDTO> productList = coupungService.getProductList(Integer.parseInt(categoryNum));
 		model.addAttribute("productList", productList);
 		return "coupung/products";
 	}

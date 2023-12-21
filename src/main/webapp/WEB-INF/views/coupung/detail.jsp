@@ -4,249 +4,291 @@
 <c:set var="appPath" scope="application" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link href="${appPath}/css/main.css" rel="stylesheet" />
-<link href="${appPath}/css/coupung/productDetail.css" rel="stylesheet" />
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+ 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Document</title>
+    <link href="${appPath }/css/coupung/main2.css" rel="stylesheet">
+    <link href="${appPath }/css/coupung/header.css" rel="stylesheet">
+    <link href="${appPath }/css/coupung/nav.css" rel="stylesheet">
+    <link href="${appPath }/css/coupung/coupung.css" rel="stylesheet">
+    <title>Document</title>
 </head>
 <body>
-<!-- 전체 화면 모달 -->
-<div class="modal fade" id="fullScreenModal" tabindex="-1" aria-labelledby="fullScreenModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="fullScreenModalLabel">전체 화면 모달</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- 모달 내용 -->
-       	이메일 : <input type="text" id="guestEmail" />
-        핸드폰 번호 : <input type="text" id="guestPhone"/>
-        <button type="button" id="guestSubmitBtn">입력</button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary">저장</button>
-      </div>
-    </div>
-  </div>
-</div>
+	<!-- 전체 화면 모달 -->
+	<div class="modal fade" id="fullScreenModal" tabindex="-1" aria-labelledby="fullScreenModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-fullscreen">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="fullScreenModalLabel">전체 화면 모달</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <!-- 모달 내용 -->
+	       	이메일 : <input type="text" id="guestEmail" />
+	        핸드폰 번호 : <input type="text" id="guestPhone"/>
+	        <button type="button" id="guestSubmitBtn">입력</button>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary">저장</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 	<!-- header -->
-	<header>
-	
-		<a class="logo" href="#"></a>
-		<div class="float-right">
-			<a href="./html/signup.html">회원가입</a> <a class="pointer"
-				id="loginSelect">로그인</a>
-			<!--# : DB(회원)/세션(비회원)에서 가져올 것-->
-			<button class="pointer">Basket (#)</button>
-		</div>
-	</header>
-	​
-	<div class="container">
-		<!-- nav -->
-		<nav>
-			<div class="nav-main">
-				<div class="pointer">
-					<a id="hamberger-btn" class="menu-trigger"> <span></span> <span></span>
-						<span></span>
-					</a>
-				</div>
-				<div>
-					<a href="${appPath}/coupung/products?categoryNum=0">쇼핑몰</a>
-					<div id="navSubmenu" class="nav-submenu">
-						<a href="${appPath}/coupung/products?categoryNum=0">전체 보기</a> <a
-							href="#">운동 기구</a> <a href="#">건강 보조 식품</a> <a href="#">헬스
-							이용권</a> <a href="#">의류</a>
-					</div>
-				</div>
-				<div>
-					<a href="#">중고거래</a>
-					<div id="navSubmenu" class="nav-submenu">
-						<a href="#">전체 보기</a> <a href="#">관심 상품</a>
-					</div>
-				</div>
-				<div>
-					<a href="#">커뮤니티</a>
-					<div id="navSubmenu" class="nav-submenu">
-						<a href="#">오운완 커뮤니티</a> <a href="#">고민 게시판</a>
-					</div>
-				</div>
-				<div>
-					<a href="#">고객센터</a>
-					<div id="navSubmenu" class="nav-submenu">
-						<a href="#">상품문의</a> <a href="#">배송문의</a> <a href="#">중고거래</a> <a
-							href="#">커뮤니티</a>
-					</div>
-				</div>
-			</div>
-		</nav>
- <!-- 여기 아래에 추가 -->
-	<div class="product-detail">
-		<div class="product-main">
-			<div class="product-main-detail">
-				<div class="product-images">
-					<div class="product-images-mini">
-						<div class="mini-image">
-							<img class="mini-image" src="../${detail.image[1].url}"/>
-						</div>
-						<div class="mini-image">
-							<img class="mini-image" src="../${detail.image[2].url}"/>
-						</div>
-						<div class="mini-image">
-							<img class="mini-image" src="../${detail.image[3].url}"/>
-						</div>
-					</div>
-					<div class="product-images-main" id="product">
-						<img class="product-images-main" src="../${detail.image[0].url}" />
-					</div>
-				</div>
-				<div class="product-info">
-					<div class="product-name-bar">
-						<div class="product-name" id="productName">${detail.name}</div>
-						<div class="share-button"  onclick="clip()">
-							공유
-						</div>
-					</div>
-					<div class="product-info-line">
-						<hr>
-					</div>
-					<div class="product-mini-info">
-						<div class="product-star-zone">
-							<span class="product-star">★★★★★</span> (100)
-						</div>
-						<div class="product-price-zone">
-							<span class="product-price" id="productPrice">${detail.price }</span> 임
-						</div>
-					</div>
-					<div class="option-bar">
-						<select class="option-select-box" id="optionBox">
-							<option value="empty">선택</option>
-							<c:forEach var="opt" items="${detail.options}">
-								<option value="${opt.coupungOptionNumber}">${opt.name}</option>
-							</c:forEach>
-						</select>
-						<div class="counting">
-							<input type='button' class="plus-button" value='+'/>
-							<div class="quantity-number" id='quantityVal'>0</div>
-							<input type='button' class="minus-button" value='-'/>
-						</div>
-					</div>
-					<div class="product-info-line">
-						<hr>
-					</div>
-					<div class="total-price-bar">
-						<span class="total-price" id="totalPrice">0</span> 원
-					</div>
-					<div class="order-buttons">
-						<button id='cartBtn' type='button'>장바구니</button>
-						<button type='button' id='payBtn'>결제하기</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="product-category-bar">
-			<div class="product-detail-menu">
-				<div class="about-product" id="productInfo">
-					상품 상세
-				</div>
-				<div class="about-product" id="productReview">
-					상품 후기
-				</div>
-			</div>
-		</div>
-		<div class="product-explain-review">
-			<div class="product-explain">
-				<div class="product-explain-body" id="detailBody">
-					상세 페이지
-				</div>
-			</div>
-		</div>
+    <header>
+        <div class="header">
+            <a class="logo" href="/ounwan"></a>
+            <div class="float-right">
+                <a id="signUp" href="./html/signup.html"></a>
+                <a id="loginSelect" href="#"></a>
+                <button id="cart"></button>
+                <div id="cartNotice"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav>
+            <div class="nav-main">
+                <div class="pointer">
+                    <a id="hamberger-btn" class="menu-trigger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </a>
+                </div>
+                <div>
+                    <a href="${appPath}/coupung/products">쇼핑몰</a>
+                    <div id="navSubmenu" class="nav-submenu">
+                        <a href="${appPath}/coupung/products">전체 보기</a>
+                        <a href="${appPath}/coupung/products?categoryNum=3">운동 기구</a>
+                        <a href="${appPath}/coupung/products?categoryNum=2">건강 보조 식품</a>
+                        <a href="${appPath}/coupung/products?categoryNum=4">헬스 이용권</a>
+                        <a href="${appPath}/coupung/products?categoryNum=1">의류</a>
+                    </div>
+                </div>
+                <div>
+                    <a href="#">중고거래</a>
+                    <div id="navSubmenu" class="nav-submenu">
+                        <a href="#">전체 보기</a>
+                        <a href="#">관심 상품</a>
+                    </div>
+                </div>
+                <div>
+                    <a href="#">커뮤니티</a>
+                    <div id="navSubmenu" class="nav-submenu">
+                        <a class="ounwangram" href="ounwangram">오운완 커뮤니티</a>
+                        <a href="#">고민 게시판</a>
+                    </div>
+                </div>
+                <div>
+                    <a href="#">고객센터</a>
+                    <div id="navSubmenu" class="nav-submenu">
+                        <a href="#">상품문의</a>
+                        <a href="#">배송문의</a>
+                        <a href="#">중고거래</a>
+                        <a href="#">커뮤니티</a>
+                    </div>
+                </div>
+            </div>
+            <div id="navMenu" class="nav-menu">
+                <div>
+                    <div>
+                        <a href="#">전체 보기</a>
+                        <a href="#">운동 기구</a>
+                        <a href="#">건강 보조 식품</a>
+                        <a href="#">헬스 이용권</a>
+                        <a href="#">의류</a>
+                    </div>
+                    <div>
+                        <a href="#">전체 보기</a>
+                        <a href="#">관심 상품</a>
+                    </div>
+                    <div>
+                        <a class="ounwangram" href="ounwangram">오운완 커뮤니티</a>
+                        <a href="#">고민 게시판</a>
+                    </div>
+                    <div>
+                        <a href="#">상품문의</a>
+                        <a href="#">배송문의</a>
+                        <a href="#">중고거래</a>
+                        <a href="#">커뮤니티</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div>
+            <div class="product-detail">
+                <div class="product-img-2">
+                	<c:forEach var="image" items="${detail.image }" begin='1'>
+                		<img class="detail-img" src="../${image.url }">
+                	</c:forEach>
+                </div>
+                <div class="product-img-1">
+                    <!-- <%-- 메인 이미지 수정--%> -->
+                    <img src="../${detail.image[0].url }">
+                </div>
+                <div class="product-box">
+                    <div class="product-title">
+                        <div>
+                            <!-- <%-- 상품명 수정--%> -->
+                            <span>${detail.name }</span>
+                        </div>
+                        <div class="product-share" onclick="clip()">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="product-score">
+                            <!-- <%-- 하단 평점 별이미지 forEach (java에서 처리 필요해보임) --%> -->
+                            <img src="./full_star.png">
+                            <img src="./full_star.png">
+                            <img src="./full_star.png">
+                            <img src="./full_star.png">
+                            <img src="./half_star.png">
+                            <!-- <%-- ==================== --%> -->
+                        </div>
+                        <span>(<span>62</span>)</span>
+                    </div>
+                    <div class="delivery">
+                        <span>당일 배송</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-point">
+                            <img src="./poing.png">
+                            <span>구매시 15 포인트로 적립</span>
+                        </div>
+                        <!-- <%-- 물품 가격 수정--%> -->
+                        <div class="product-unit-price"><span id="unitPrice">${detail.price }</span>원</div>
+                    </div>
+                    <div class="product-select">
+                        <div class="product-option">
+                            <select id="productOption">
+                                <option value="0" hidden>옵션선택</option>
+                                <c:forEach var="opt" items="${detail.options}">
+									<option value="${opt.coupungOptionNumber}">${opt.name}</option>
+								</c:forEach>
+                            </select>
+                        </div>
+                        <div class="product-quantity">
+                            <input type="number" id="quantity" placeholder="0" disabled>
+                            <div class="quantity-button">
+                                <button id="plus" disabled><span>+</span></button>
+                                <button id="minus" disabled><span>-</span></button>
+                            </div>
+                        </div>
+                        <div class="product-total">
+                            <span>총 금액 : </span>
+                            <span id="totalPrice">0</span>
+                            <span>원</span>
+                        </div>
+                    </div>
+                    <div class="product-order">
+                        <button id='cartBtn' type='button'>장바구니</button>
+                        <button id='payBtn' type='button'>바로구매</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="product-view-option">
+                    <a href="#" id="explain" class="selected">상품 설명</a>
+                    <a href="#" id="comment">후기</a>
+                </div>
+                <div class="product-additional-view">
+                    <div class="product-explain">
+                        <img src="./hamberger.png">
+                    </div>
+                    <div class="product-comment" hidden>
+                        <div>
+                            <div>
+                                <!-- <%-- 하단 평점 별이미지 forEach (java에서 처리 필요해보임) --%> -->
+                                <img src="./full_star.png">
+                                <img src="./full_star.png">
+                                <img src="./full_star.png">
+                                <img src="./full_star.png">
+                                <img src="./half_star.png">
+                                <!-- <%-- ==================== --%> -->
+                            </div>
+                            <div>
+                                <div>5점</div>
+                                <div>4점</div>
+                                <div>3점</div>
+                                <div>2점</div>
+                                <div>1점</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<hr>
-<!-- footer -->
-<footer>
-	<div>
-		<div>오운완 쇼핑몰 & 커뮤니티</div>
-		<div>대표자 : 김태완, 박정우, 박지원, 방은지, 신서영, 윤윤성</div>
-		<div>대표전화 : 010-9424-2784 / 주소 : 03993 서울특별시 마포구 월드컵북로4길 77, 1층</div>
-		<div>상품&제휴 문의 메일 : ounwan50@gmail.com</div>
-		<div class="text-1">고객센터 : 평일 오전 10:00 ~ 오후 5:00</div>
-		<div class="text-1">(점심시간 12:00 ~ 13:00) 토/일/공휴일 휴무</div>
-	</div>
-	<div class="float-right">
-		<br><br>
-		<div><a href="#">이벤트</a></div>
-		<div><a href="#">개인정보처리방침</a></div>
-		<div><a href="#">이용약관</a></div>
-		<div><img class="float-right img-1 pointer" src="./images/insta.png"></div>
-	</div>
-</footer>
+    <script src="../js/main.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script>
-	$('.plus-button').on('click', function() {
-		var optionVal = $('#optionBox option:selected').val();
-		if (optionVal != "empty") {
-			var cnt = $(this).parent().find('.quantity-number').html();
-			var price = $('#productPrice').html();
-			var total = $('#totalPrice').html();
-			cnt = parseInt(cnt) + 1;
-			total = parseInt(price) * cnt;
-			$('.quantity-number').html(cnt);
-			$('#totalPrice').html(total);
-		}
+const unitPrice = $("#unitPrice").html().replaceAll(",",""); // jsp에서는 DB에서 가져온 가격으로 설정
+	// 상세이미지 클릭하였을 때, 메인이미지와 변경
+	$(".product-detail").on("click", ".detail-img", function() {
+	    var detailsrc = $(this).attr("src");
+	    $(this).attr("src", $(".product-img-1 img").attr("src"));
+	    $(".product-img-1 img").attr("src", detailsrc);
 	});
+	
+	 // 옵션 선택하면 수량 선택 가능
+    $("#productOption").on("change", function() {
+        if($(this).val() > 0) {
+            $(".product-quantity input").attr("disabled", false);
+            $(".product-quantity input").val(1);
+            $("#totalPrice").html((unitPrice * $("#quantity").val()).toLocaleString());
+            $("#plus").attr("disabled", false);
+            $("#minus").attr("disabled", false);
+        }
+    });
 
-	$('.minus-button').on('click', function() {
-		var cnt = $(this).parent().find('.quantity-number').html();
-		var price = $('#productPrice').html();
-		var total = $('#totalPrice').html();
+ 	// 수량을 직접 입력하는 경우
+    $(".product-quantity input").on("change", function() {
+        if($(this).val() < 1) {
+            $(this).val(1);
+        }
+        $("#totalPrice").html((unitPrice * $(this).val()).toLocaleString());
+    });
+ 	
+ 	// 수량 + / - 버튼
+    $("#plus").on("click", function() {
+        $(".product-quantity input").val((Number)($(".product-quantity input").val()) + 1);
+        $("#totalPrice").html((unitPrice * $(".product-quantity input").val()).toLocaleString());
+    });
+    $("#minus").on("click", function() {
+        if($(".product-quantity input").val() > 1) {
+            $(".product-quantity input").val((Number)($(".product-quantity input").val()) - 1);
+            $("#totalPrice").html((unitPrice * $(".product-quantity input").val()).toLocaleString());
+        }
+    });
 
-		cnt = parseInt(cnt) - 1;
-		total = parseInt(price) * cnt;
-
-		if (cnt < 0) {
-			cnt = 0;
-			total = 0;
-		}
-		$('.quantity-number').html(cnt);
-		$('#totalPrice').html(total);
-	});
-
-	$('.option-select-box').on('change', function() {
-		var optionVal = $('#optionBox option:selected').val();
-		if (optionVal === "empty") {
-			$('.quantity-number').html("0");
-			$('#totalPrice').html("0");
-		} else {
-			$('.quantity-number').html("1");
-			var price = $('#productPrice').html();
-			$('#totalPrice').html(price);
-		}
-	});
-
-	$('#productInfo').on('click', function() {
-		$('#detailBody').remove();
-		var inside =`<div class="product-explain-body" id="detailBody">
-						상세 페이지
-					</div>`;
-		$('.product-explain').append(inside);
-	});
-
-	$('#productReview').on('click', function() {
-		$('#detailBody').remove();
-		var inside =`<div class="product-explain-body" id="detailBody">
-						리뷰에 대해서어ㅓ
-					</div>`;
-		$('.product-explain').append(inside);
-	});
+ 	// 상품설명 버튼 클릭
+    $("#explain").on("click", function() {
+        if($(this).attr("class") != "selected") {
+            $(".product-explain").attr("hidden", false);
+            $(".product-comment").attr("hidden", true);
+            $("#explain").addClass("selected");
+            $("#comment").removeClass("selected");
+        }
+    });
+ 	
+ 	// 후기 버튼 클릭
+    $("#comment").on("click", function() {
+        if($(this).attr("class") != "selected") {
+            $(".product-explain").attr("hidden", true);
+            $(".product-comment").attr("hidden", false);
+            $("#explain").removeClass("selected");
+            $("#comment").addClass("selected");
+        }
+    });
 	
 	function clip(){
 		var url = '';
@@ -261,18 +303,16 @@
 	}
 	
 	$('#cartBtn').on('click', function() {
-		var quantity = $('#quantityVal').text();
-		alert($('#optionBox option:selected').val());
-		if (quantity === '0') {
+		if ($('#productOption option:selected').val() === '0') {
 			alert('수량을 선택해 주세요');
 		} else {
-			var option = $('#optionBox option:selected').val();
+			var option = $('#productOption option:selected').val();
 			var obj = {
 					'coupungNumber' : ${detail.coupungNumber},
 					'quantity' : quantity,
 					'coupungOptionNumber' : option,
 					'name' : '${detail.name}',
-					'option' : "$('#optionBox option:selected').text()",
+					'option' : $('#productOption option:checked').text(),
 					'url' : '${detail.image[0].url}',
 					'price' : '${detail.price }'
 				};
@@ -299,10 +339,9 @@
 	});
 	
 	$('#payBtn').on('click', function() {
-		var quantity = $('#quantityVal').text();
-		if (quantity === '0') {
+		if ($('#productOption option:selected').val() === '0') {
 			alert('수량을 선택해 주세요');
-		} else if('${userInfo}' === '') {
+		}  else if('${userInfo}' === '') {
 			if(!confirm('로그인 하시겠습니까?')) {
 				$('#fullScreenModal').modal('show'); // 모달을 띄우는 부분
 			} else {
@@ -310,8 +349,8 @@
 			}
 		} else {
 			var productList = [${detail.coupungNumber}];
-			var optionList = [$('#optionBox option:selected').val()];
-			var quantityList = [$('#quantityVal').text()];
+			var optionList = [$('#productOption option:selected').val()];
+			var quantityList = [$('#quantity').val()];
 			console.log(productList);
 			console.log(optionList);
 			location.href = '${appPath}/coupung/order?productList=' + productList + '&optionList=' + optionList +'&quantityList=' + quantityList;

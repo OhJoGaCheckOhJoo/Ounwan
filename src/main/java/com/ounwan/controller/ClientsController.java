@@ -48,7 +48,6 @@ public class ClientsController {
 		return "login";
 	}
 	
-	
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public @ResponseBody String loginPost(@RequestBody ClientsDTO client, HttpSession session) {
         ClientsDTO loginUser = clientService.checkLogin(client.getClientId(), client.getPassword());
