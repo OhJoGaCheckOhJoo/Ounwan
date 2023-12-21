@@ -1,32 +1,37 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="appPath" scope="application"
-	value="${pageContext.request.contextPath}" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<c:set var="appPath" scope="application" value="${pageContext.request.contextPath}" />
 <link href="${appPath}/css/aetaList.css" rel="stylesheet">
-
-<h1>내가 쓴 애타 게시글 내용</h1>
+<h2>최근 애타 게시글 내용</h2>
 <table>
 	<thead>
-		<tr>
+		<tr class="head-tr">
 			<th>번호</th>
 			<th>제목</th>
 			<th>작성일</th>
 			<th>작성자</th>
 			<th>조회수</th>
-			<th>게시글 번호_삭제 필요</th>
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach var="list" items="${aetaList}" varStatus="loop">
-			<tr>
-				<td class="aeta-list num">${aetaList.size() - loop.index }</tdh>
-				<td class="aeta-list title">${list.title}</td>
-				<td class="aeta-list upload-date">${list.createdDate}</td>
-				<td class="aeta-list clied-id">${list.clientId}</td>
-				<td class="aeta-list views">${list.views}</td>
-				<td class="aeta-list numbee">${list.aetaNumber}</td>
+		<c:if test="${empty aetaList}">
+			<tr class="none-content">
+				<td colspan="5">게시글 내역이 없습니다.</td>
 			</tr>
-		</c:forEach>
+		</c:if>
+		<c:if test="${not empty aetaList}">
+			<c:forEach var="list" items="${aetaList}" varStatus="loop">
+				<tr class="content-tr">
+					<td class="aeta-list num">${aetaList.size() - loop.index }</td>
+					<td class="aeta-list title"><a href="#">${list.title}</a></td>
+					<td class="aeta-list upload-date">
+						<fmt:formatDate value="${list.createdDate}" pattern="yyyy-MM-dd" />
+					</td>
+					<td class="aeta-list client-id">${list.clientId}</td>
+					<td class="aeta-list views">${list.views}</td>
+				</tr>
+			</c:forEach>
+		</c:if>
 	</tbody>
 </table>

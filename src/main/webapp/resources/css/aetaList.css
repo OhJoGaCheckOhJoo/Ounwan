@@ -1,1 +1,39 @@
-@charset "EUC-KR";
+th {
+    border-top: 3px solid #eee7d8;
+    border-bottom: 3px solid #eee7d8;
+}
+
+td {
+    border-bottom: 1px solid gray;
+}
+
+.content-tr {
+    height: 50px;
+    text-align: center;
+}
+
+
+.aeta-list.num {
+    width: 40px;
+}
+
+.aeta-list.title {
+    width: 230px;
+}
+
+.aeta-list.upload-date {
+    width: 100px;
+}
+
+.aeta-list.client-id {
+    width: 100px;
+}
+
+.aeta-list.views {
+    width: 40px;
+}
+
+.none-content > td {
+	text-align: center;
+	padding: 80px;
+}

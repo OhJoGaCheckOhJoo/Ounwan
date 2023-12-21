@@ -3,6 +3,7 @@ table {
     border-bottom: 3px solid #eee7d8;
     border-collapse: collapse;
     margin-top: 15px;
+    text-align: center;
 }
 
 th {
@@ -15,28 +16,25 @@ th {
     height: 40px;
 }
 
-.danggun-sale {
-    text-align: center;
-}
 
-.danggun-sale.num {
+.wish-list.num {
     width: 70px;
 }
 
-.danggun-sale.info > a {
+.wish-list.info > a {
 	width: 100%;
-	display: flex;
-	align-items: center;
+	    display: flex;
+	    align-items: center;
 }
 
-.danggun-sale-info.img {
+.wish-list-info.img {
     flex: 0.4;
     box-sizing: border-box;
     display: flex;
     align-items: center;
 }
 
-.danggun-sale-info.name {
+.wish-list-info.name {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
@@ -44,23 +42,24 @@ th {
     align-items: center; 
 }
 
-.danggun-sale-info.img img {
+.wish-list-info.img img {
     width: 60px;
     height: 60px;
     padding: 5px 20px;
 }
 
-.danggun-sale.price {
+.wish-list.price {
     width: 130px;
 }
 
-.danggun-sale.upload-date {
+.wish-list.upload-date {
     width: 100px;
 }
 
-.danggun-sale.state {
+.wish-list.state {
     width: 80px;
 }
+
 
 .none-content > td {
 	text-align: center;

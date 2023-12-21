@@ -1,1 +1,13 @@
-@charset "EUC-KR";
+
+.personal-score > div {
+    margin-left: 125px;
+    width: 0px;
+    height: 30px;
+    background-color: var(--main-color-2);
+}
+.personal-score img {
+    position: relative;
+    width: 150px;
+    height: 30px;
+    bottom: 30px;
+}

@@ -8,6 +8,26 @@
     padding-top: 80px;
 }
 
+table {
+	width: 100%;
+    border-bottom: 3px solid #eee7d8;
+    border-collapse: collapse;
+    margin-top: 15px;
+    text-align: center;
+}
+
+th {
+    border-top: 3px solid #eee7d8;
+    border-bottom: 3px solid #eee7d8;
+}
+
+td {
+    border-bottom: 1px solid gray;
+}
+
+.head-tr {
+    height: 40px;;
+}
 
 
 .side-bar-container {
@@ -32,9 +52,6 @@
     padding-right: 80px;
 }
 
-
-
-
 .menu-container {
     border-bottom: 1px white solid;
     padding: 25px 0px;
@@ -43,11 +60,6 @@
 .coupung-menu, .danggun-menu, .chat-menu, .aeta-menu, .user-menu {
     padding: 3px 0px;
 }
-
-
-
-
-
 
 .content-container {
     width: 950px;
@@ -72,21 +84,24 @@
 .preview.user {
     width: 40%;
     color: black;
-    padding:50px;
+    display: flex;
+    padding: 50px 0px 30px 35px;
+}
 
+.preview.user > img {
+    width: 150px;
+    height: 150px;
+    box-sizing: border-box;
+    margin-right: 20px;
 }
 
 .preview-user.text {
-    font-size: 50px;
+    font-size: 20px;
 }
 
-
-
-
-
-
-
-
+.preview-user.name > span {
+    font-size: 40px;
+}
 
 .preview.menu {
     width: 60%;
@@ -97,43 +112,60 @@
 .preview-menu {
     flex: 1;
     box-sizing: border-box;
-    padding-top: 25px;
+    padding: 30px 0px 20px 0px;
 }
 
 .preview-menu-image {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
 }
 
 .preview-menu-text {
-    margin: 5px;
+    margin: 15px;
+    font-size: 22px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.preview-menu-text > p {
+    margin-bottom: 3px;
+}
 
 .content-info-container {
-    width: 100%;
-    height: 900px;
-    padding-top: 30px;
+    width: 100%;/* 
+    height: 900px; */
+    padding-top: 60px;
 }
 
 .content-info {
     width:100%;
     height: 100%;
-    
-    border: 1px gainsboro dotted;
+}
+
+.recent-info {
+	padding-bottom: 70px;
+}
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .section-title {
+    margin: 0;
+  }
+
+.coupung-block-container {
+	position: relative;
+	display: inline-block;
+}
+
+.coupung-block {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5); 
+    width: 60px; 
+    height: 60px;
+    z-index: 1;
+	
 }

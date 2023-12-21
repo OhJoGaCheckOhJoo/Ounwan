@@ -1,4 +1,9 @@
-@charset "UTF-8";
+@font-face {
+    font-family: 'NPSfontBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
 
 :root {
     --main-back: #333;
@@ -10,6 +15,7 @@
     margin: 0;
     padding: 0;
     color: var(--main-color-1);
+    font-family: 'NPSfontBold';
 }
 html, body {
     background-color: var(--main-back);
