@@ -123,7 +123,8 @@ public class DanggunService {
 		DanggunDTO danggun = null;
 		if(resultDanggun != null) {
 			danggun = changeDTO(resultDanggun);
-			String tradeStep = tradeHistoryDAO.selectTradeStep(danggunNumber);
+			int tradeHistoryNumber = danggun.getTradeHistoryNumber();
+			String tradeStep = tradeHistoryDAO.selectTradeStep(tradeHistoryNumber);
 			danggun.setTradeStep(tradeStep);
 		}
 		
