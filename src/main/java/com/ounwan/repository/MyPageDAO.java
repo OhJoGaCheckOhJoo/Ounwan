@@ -16,41 +16,48 @@ public class MyPageDAO {
 	SqlSession sqlSession;
 	
 	private static final String NAMESPACE = "net.ounwan.myPage.";
+
+	public int getWishListCount(String userId) {
+		return sqlSession.selectOne(NAMESPACE + "wishListCount", userId);
+	}
 	
+	public int getCartListCount(String userId) {
+		return sqlSession.selectOne(NAMESPACE + "cartListCount", userId); 
+	}
 	
-	//main_최근 주문 내역 최대 3개
 	public List<Map<String, Object>> getOrderPreviewList(String userId) {
 		return sqlSession.selectList(NAMESPACE + "orderPreviewList", userId);
 	}
 	
-	//main_최근 내가 쓴 게시글 최대 3개
 	public List<Aeta> getAetaPreviewList(String userId) {
 		return sqlSession.selectList(NAMESPACE + "aetaPreviewList", userId);
 	}
 	
-	//main_최근 장바구니 내역 최대 3개
 	public List<Map<String, Object>> getCartPreviewList(String userId) {
 		return sqlSession.selectList(NAMESPACE + "cartPreviewList" , userId);
 	}
 	
-	//danggun 판매 목록 조회
 	public List<Map<String, Object>> getDanggunSaleList(String userid){
 		return sqlSession.selectList(NAMESPACE + "danggunSaleList", userid);
 	}
 
-	//danggun 찜한 상품 목록 조회
 	public List<Map<String, Object>> getDanggunWishList(String userId) {
 		return sqlSession.selectList(NAMESPACE + "danggunWishList", userId);
 	}
+	
+	public int deleteWishList(int wishListNumber) {
+		return sqlSession.delete(NAMESPACE + "deleteWishList", wishListNumber);
+	}
 
-	//aeta 내가 쓴 게시글 목록 조회
 	public List<Aeta> getAetaList(String userId) {
 		return sqlSession.selectList(NAMESPACE + "aetaList", userId);
 	}
 	
-	//coupung 내가 쓴 리뷰 목록 조회
 	public List<Map<String, Object>> getReviewList(String userId) {
 		return sqlSession.selectList(NAMESPACE + "reviewList", userId);
 	}
 
+	public int deleteReviewList(int reviewNumber) {
+		return sqlSession.delete(NAMESPACE + "deleteReview", reviewNumber);
+	}
 }

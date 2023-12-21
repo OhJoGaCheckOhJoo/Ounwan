@@ -19,6 +19,14 @@ public class MyPageService {
 	@Autowired
 	MyPageDAO myPageDAO;
 	
+	public int getWishListCount(String userId) {
+		return myPageDAO.getWishListCount(userId);
+	}
+
+	public int getCartListCount(String userId) {
+		return myPageDAO.getCartListCount(userId);
+	}
+	
 	public List<Map<String, Object>> orderListPreview(String userId) {
 		return myPageDAO.getOrderPreviewList(userId);
 	}
@@ -41,12 +49,33 @@ public class MyPageService {
 		
 	}
 	
+	public boolean deleteWishList(List<String> selectWishLists) {
+		int result = 0;
+		
+		for(String wishList: selectWishLists) {
+			myPageDAO.deleteWishList(Integer.parseInt(wishList));
+			result++;
+		}
+		return selectWishLists.size()==result? true: false;
+	}
+	
 	public List<AetaDTO> getAetaList(String userId) {		
 		return  changeDTOList(myPageDAO.getAetaList(userId));
 	}
 	
-	public List<Map<String, Object>> getreviewList(String userId) {
+	public List<Map<String, Object>> getReviewList(String userId) {
 		return myPageDAO.getReviewList(userId);
+	}
+	
+	public boolean deleteReviewList(List<String> selectedReviews) {
+		int result =0;
+		for(String reviewNumber: selectedReviews) {
+			myPageDAO.deleteReviewList(Integer.parseInt(reviewNumber));
+			result++;
+		}
+		
+		return selectedReviews.size()==result? true: false;
+		
 	}
 	
 	public DanggunDTO changeDTO(Danggun danggun) {

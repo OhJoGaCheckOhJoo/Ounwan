@@ -4,6 +4,19 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.myPage">
 	<!-- main -->
+	<!-- wish list count -->
+	<select id="wishListCount" parameterType="String"
+		resultType="int">
+		SELECT COUNT(*) FROM WISH_LISTS WHERE CLIENT_ID =
+		#{clientId}
+	</select>
+
+	<!-- cart list count -->
+	<select id="cartListCount" parameterType="String"
+		resultType="int">
+		SELECT COUNT(*) FROM CARTS WHERE CLIENT_ID = #{clientId}
+	</select>
+
 	<!-- orderListPreview -->
 	<select id="orderPreviewList" parameterType="String"
 		resultType="map">
@@ -35,15 +48,18 @@
 	</select>
 
 	<!-- aetaListPreview -->
-	<select id="aetaPreviewList" parameterType="String" resultType="aeta">
+	<select id="aetaPreviewList" parameterType="String"
+		resultType="aeta">
 		SELECT *
 		FROM AETA WHERE CLIENT_ID = #{clientId}
 		ORDER
-		BY AETA_NUMBER DESC LIMIT 3;
+		BY
+		AETA_NUMBER DESC LIMIT 3;
 	</select>
 
 	<!-- cartListPreview -->
-	<select id="cartPreviewList" parameterType="String" resultType="map">
+	<select id="cartPreviewList" parameterType="String"
+		resultType="map">
 		SELECT
 		C.NAME AS COUPUNG_NAME,
 		C.AVAILABLE_STOCK,
@@ -56,9 +72,11 @@
 		FROM
 		COUPUNG C
 		JOIN
-		PRODUCT_IMAGES PI ON C.COUPUNG_NUMBER = PI.COUPUNG_NUMBER
+		PRODUCT_IMAGES PI ON C.COUPUNG_NUMBER =
+		PI.COUPUNG_NUMBER
 		JOIN
-		CARTS CART ON C.COUPUNG_NUMBER = CART.COUPUNG_NUMBER
+		CARTS CART ON C.COUPUNG_NUMBER =
+		CART.COUPUNG_NUMBER
 		WHERE
 		CART.CLIENT_ID = #{clientId}
 		AND PI.TYPE = 0
@@ -72,10 +90,12 @@
 		resultType="map">
 		SELECT i.URL, d.PRODUCT_NAME, d.PRICE , d.UPLOAD_DATE ,
 		d.TRADE_HISTORY_NUMBER, d.DANGGUN_NUMBER
-		FROM DANGGUN d JOIN PRODUCT_IMAGES i ON
+		FROM DANGGUN d JOIN
+		PRODUCT_IMAGES i ON
 		d.DANGGUN_NUMBER =
 		i.DANGGUN_NUMBER
-		WHERE d.CLIENT_ID = #{clientId} AND
+		WHERE d.CLIENT_ID
+		= #{clientId} AND
 		i.TYPE = 0 ORDER BY i.DANGGUN_NUMBER
 		DESC
 	</select>
@@ -83,25 +103,47 @@
 	<!-- danggun wish list -->
 	<select id="danggunWishList" parameterType="String"
 		resultType="map">
-		SELECT i.URL, d.PRODUCT_NAME, d.PRICE, d.UPLOAD_DATE,
-		d.TRADE_HISTORY_NUMBER, d.DANGGUN_NUMBER
-		FROM WISH_LISTS w JOIN DANGGUN d ON
+		SELECT 
+		w.WISH_LIST_NUMBER,
+		i.URL, 
+		d.PRODUCT_NAME, 
+		d.PRICE, 
+		d.UPLOAD_DATE,
+		d.TRADE_HISTORY_NUMBER, 
+		d.DANGGUN_NUMBER
+		FROM WISH_LISTS w 
+		JOIN 
+		DANGGUN d 
+		ON
 		w.DANGGUN_NUMBER = d.DANGGUN_NUMBER
-		JOIN PRODUCT_IMAGES i ON
+		JOIN 
+		PRODUCT_IMAGES i 
+		ON
 		d.DANGGUN_NUMBER = i.DANGGUN_NUMBER
-		WHERE w.CLIENT_ID = #{clientId} AND
-		i.TYPE = 0
+		WHERE 
+		w.CLIENT_ID = #{clientId} 
+		AND
+		i.TYPE = 0 
+		ORDER BY 
+		d.DANGGUN_NUMBER DESC
 	</select>
+
+	<!-- delete danaggun wish list -->
+	<delete id="deleteWishList" parameterType="int">
+		DELETE FROM WISH_LISTS
+		WHERE WISH_LIST_NUMBER = #{wishListNumber}
+	</delete>
 
 	<!-- aeta list -->
 	<select id="aetaList" parameterType="String" resultType="aeta">
 		SELECT *
-		FROM AETA WHERE CLIENT_ID = #{clientId}
+		FROM AETA WHERE CLIENT_ID = #{clientId} ORDER BY AETA_NUMBER DESC
 	</select>
 
 	<!-- review list -->
 	<select id="reviewList" parameterType="String" resultType="map">
 		SELECT
+		R.REVIEW_NUMBER,
 		R.CONTENTS,
 		R.SCORE,
 		R.CREATED_DATE,
@@ -129,5 +171,12 @@
 		WHERE
 		O.CLIENT_ID =
 		#{clientId}
+		ORDER BY REVIEW_NUMBER DESC
 	</select>
+
+	<!-- delete review list -->
+	<delete id="deleteReview" parameterType="int">
+		DELETE FROM REVIEWS
+		WHERE REVIEW_NUMBER = ${reviewNumber}
+	</delete>
 </mapper>
