@@ -37,6 +37,11 @@ public class MyPageDAO {
 		return sqlSession.selectList(NAMESPACE + "cartPreviewList" , userId);
 	}
 	
+	public List<Map<String, Object>> getCoupungOrderList(String userId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE + "coupungOrderList", userId);
+	}
+	
 	public List<Map<String, Object>> getDanggunSaleList(String userid){
 		return sqlSession.selectList(NAMESPACE + "danggunSaleList", userid);
 	}
@@ -60,4 +65,5 @@ public class MyPageDAO {
 	public int deleteReviewList(int reviewNumber) {
 		return sqlSession.delete(NAMESPACE + "deleteReview", reviewNumber);
 	}
+
 }

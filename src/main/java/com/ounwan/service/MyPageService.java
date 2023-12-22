@@ -39,6 +39,11 @@ public class MyPageService {
 		return myPageDAO.getCartPreviewList(userId);
 		
 	}
+	
+	public List<Map<String, Object>> getCoupungOrderList(String userId) {
+		// TODO Auto-generated method stub
+		return myPageDAO.getCoupungOrderList(userId);
+	}
 
 	public List<Map<String, Object>> getDanggunSaleList(String userId) {
 		return myPageDAO.getDanggunSaleList(userId);

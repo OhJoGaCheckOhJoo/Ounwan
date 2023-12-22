@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.service.MyPageService;
-import com.ounwan.service.ProductImagesService;
 
 @RequestMapping("/myPage")
 @Controller
@@ -22,31 +21,44 @@ public class MyPageController {
 
 	@Autowired
 	MyPageService myPageService;
-
-	@Autowired
-	ProductImagesService productImagesService;
+	
+	String id = "jj1234";
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String myPage(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-		String clientId = userInfo.getClientId();
+//		String clientId = userInfo.getClientId();
 		
-		model.addAttribute("wishListCount", myPageService.getWishListCount(clientId));
-		model.addAttribute("cartListCount", myPageService.getCartListCount(clientId));
+		model.addAttribute("wishListCount", myPageService.getWishListCount(id));
+		model.addAttribute("cartListCount", myPageService.getCartListCount(id));
 		
-		model.addAttribute("orderList", myPageService.orderListPreview(clientId));
-		model.addAttribute("aetaList", myPageService.aetaListPreview(clientId));
-		model.addAttribute("cartList", myPageService.cartListPreview(clientId));
+		model.addAttribute("orderList", myPageService.orderListPreview(id));
+		model.addAttribute("aetaList", myPageService.aetaListPreview(id));
+		model.addAttribute("cartList", myPageService.cartListPreview(id));
 		
 		return "/myPage/myPage";
 	}
 
+	///###################여기 하는 중###############
+	@RequestMapping(value = "/coupungOrderList", method = RequestMethod.GET)
+	public String coupungOrderList(HttpSession session, Model model) {
+		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
+//		String clientId = userInfo.getClientId();	
+		
+		List<Map<String, Object>> lists = myPageService.getCoupungOrderList(id);
+		System.out.println("lists: " + lists);
+		
+		model.addAttribute("coupungOrderList", lists);
+		
+		return "/myPage/coupungOrderList";
+	}
+	
 	@RequestMapping(value = "/danggunSaleList", method = RequestMethod.GET)
 	public String DanggunSaleList(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-		String clientId = userInfo.getClientId();	
+//		String clientId = userInfo.getClientId();	
 		
-		model.addAttribute("danggunSaleList", myPageService.getDanggunSaleList(clientId));			
+		model.addAttribute("danggunSaleList", myPageService.getDanggunSaleList(id));			
 
 		return "/myPage/danggunSaleList";
 	}
@@ -54,9 +66,9 @@ public class MyPageController {
 	@RequestMapping(value = "/danggunWishList", method = RequestMethod.GET)
 	public String DanggunWishList(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-		String clientId = userInfo.getClientId();		
+//		String clientId = userInfo.getClientId();		
 		
-		model.addAttribute("danggunWishList", myPageService.getDanggunWishList(clientId));
+		model.addAttribute("danggunWishList", myPageService.getDanggunWishList(id));
 		
 		return "/myPage/danggunWishList";
 	}
@@ -64,13 +76,13 @@ public class MyPageController {
 	@RequestMapping(value ="/deleteDanggunWishList", method = RequestMethod.POST)
 	public String deleteWishList(@RequestBody Map<String, List<String>> payload, HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");		
-		String clientId = userInfo.getClientId();
+//		String clientId = userInfo.getClientId();
 		
 		List<String> selectedWishLists = payload.get("selectedWishLists");
 
 		myPageService.deleteWishList(selectedWishLists);
 		
-		List<Map<String, Object>> updateWishLists = myPageService.getDanggunWishList(clientId);
+		List<Map<String, Object>> updateWishLists = myPageService.getDanggunWishList(id);
 		model.addAttribute("danggunWishList", updateWishLists);
 		
 		return "/myPage/danggunWishList";
@@ -79,9 +91,9 @@ public class MyPageController {
 	@RequestMapping(value = "/aetaList", method = RequestMethod.GET)
 	public String AetaList(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-		String clientId = userInfo.getClientId();		
+//		String clientId = userInfo.getClientId();		
 		
-		model.addAttribute("aetaList", myPageService.getAetaList(clientId));
+		model.addAttribute("aetaList", myPageService.getAetaList(id));
 		
 		return "/myPage/aetaList";
 	}
@@ -89,9 +101,9 @@ public class MyPageController {
 	@RequestMapping(value ="/coupungReviewList", method = RequestMethod.GET)
 	public String reviewList(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");		
-		String clientId = userInfo.getClientId();
+//		String clientId = userInfo.getClientId();
 		
-		model.addAttribute("coupungReviewList", myPageService.getReviewList(clientId));
+		model.addAttribute("coupungReviewList", myPageService.getReviewList(id));
 		
 		return "/myPage/coupungReviewList";
 	}
@@ -99,13 +111,13 @@ public class MyPageController {
 	@RequestMapping(value ="/deleteCoupungReviewList", method = RequestMethod.POST)
 	public String deleteReviewList(@RequestBody Map<String, List<String>> payload, HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");		
-		String clientId = userInfo.getClientId();
+//		String clientId = userInfo.getClientId();
 		
 		List<String> selectedReviews = payload.get("selectedReviews");
 
 		myPageService.deleteReviewList(selectedReviews);
 		
-		List<Map<String, Object>> updateReview = myPageService.getReviewList(clientId);
+		List<Map<String, Object>> updateReview = myPageService.getReviewList(id);
 		model.addAttribute("coupungReviewList", updateReview);
 		
 		return "/myPage/coupungReviewList";

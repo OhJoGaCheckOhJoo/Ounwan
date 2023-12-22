@@ -85,6 +85,39 @@
 		LIMIT 3;
 	</select>
 
+	<!-- coupung order list -->
+	<select id="coupungOrderList" parameterType="String"
+		resultType="map">
+		SELECT
+		O.ORDER_DATE,
+		O.ORDER_NUMBER,
+		C.NAME AS COUPUNG_NAME,
+		CO.NAME AS COUPUNG_OPTION_NAME,
+		OD.ORDER_DETAIL_NUMBER,
+		OD.PRICE,
+		OD.QUANTITY,
+		TH.TRADE_STEP,
+		TH.TRADE_HISTORY_NUMBER,
+		PI.URL
+		FROM
+		ORDERS O
+		JOIN
+		ORDER_DETAILS OD ON O.ORDER_NUMBER = OD.ORDER_NUMBER
+		JOIN
+		COUPUNG C ON OD.COUPUNG_NUMBER = C.COUPUNG_NUMBER
+		JOIN
+		COUPUNG_OPTIONS CO ON OD.COUPUNG_OPTION_NUMBER = CO.COUPUNG_OPTION_NUMBER
+		JOIN
+		TRADE_HISTORY TH ON O.TRADE_HISTORY_NUMBER = TH.TRADE_HISTORY_NUMBER
+		JOIN
+		PRODUCT_IMAGES PI ON C.COUPUNG_NUMBER = PI.COUPUNG_NUMBER
+		WHERE
+		O.CLIENT_ID = #{clientId}
+		AND PI.TYPE = 0
+		ORDER BY
+		O.ORDER_DATE DESC;
+	</select>
+
 	<!-- danggun sale list -->
 	<select id="danggunSaleList" parameterType="String"
 		resultType="map">
@@ -103,28 +136,28 @@
 	<!-- danggun wish list -->
 	<select id="danggunWishList" parameterType="String"
 		resultType="map">
-		SELECT 
+		SELECT
 		w.WISH_LIST_NUMBER,
-		i.URL, 
-		d.PRODUCT_NAME, 
-		d.PRICE, 
+		i.URL,
+		d.PRODUCT_NAME,
+		d.PRICE,
 		d.UPLOAD_DATE,
-		d.TRADE_HISTORY_NUMBER, 
+		d.TRADE_HISTORY_NUMBER,
 		d.DANGGUN_NUMBER
-		FROM WISH_LISTS w 
-		JOIN 
-		DANGGUN d 
+		FROM WISH_LISTS w
+		JOIN
+		DANGGUN d
 		ON
 		w.DANGGUN_NUMBER = d.DANGGUN_NUMBER
-		JOIN 
-		PRODUCT_IMAGES i 
+		JOIN
+		PRODUCT_IMAGES i
 		ON
 		d.DANGGUN_NUMBER = i.DANGGUN_NUMBER
-		WHERE 
-		w.CLIENT_ID = #{clientId} 
+		WHERE
+		w.CLIENT_ID = #{clientId}
 		AND
-		i.TYPE = 0 
-		ORDER BY 
+		i.TYPE = 0
+		ORDER BY
 		d.DANGGUN_NUMBER DESC
 	</select>
 
@@ -171,7 +204,8 @@
 		WHERE
 		O.CLIENT_ID =
 		#{clientId}
-		ORDER BY REVIEW_NUMBER DESC
+		ORDER BY
+		REVIEW_NUMBER DESC
 	</select>
 
 	<!-- delete review list -->
