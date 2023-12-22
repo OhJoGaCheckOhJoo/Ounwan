@@ -16,5 +16,11 @@
 		<typeAlias type="com.ounwan.entity.Chat" alias="chat" />
 		<typeAlias type="com.ounwan.entity.DanggunChatRoom" alias="danggunChatRoom" />
 		<typeAlias type="com.ounwan.entity.DanggunChatMessage" alias="danggunChatMessage" />
+		<typeAlias type="com.ounwan.entity.Coupung" alias="coupung" />
+		<typeAlias type="com.ounwan.entity.Orders" alias="orders" />
+		<typeAlias type="com.ounwan.entity.OrderDetails" alias="orderDetails" />
+		<typeAlias type="com.ounwan.entity.Guests" alias="guests" />
+		<typeAlias type="com.ounwan.entity.CoupungOptions" alias="coupungOptions" />
+		<typeAlias type="com.ounwan.entity.Carts" alias="carts" />
 	</typeAliases>
 </configuration>

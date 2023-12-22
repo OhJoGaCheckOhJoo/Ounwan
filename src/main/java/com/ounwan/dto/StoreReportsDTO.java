@@ -18,7 +18,7 @@ import lombok.ToString;
 public class StoreReportsDTO {
 	private Integer storeReportNumber;
 	private Integer reviewNumber;
-	private Integer danggunNubmer;
+	private Integer danggunNumber;
 	private String clientId;
 	private Date registeredDate;
 	private String reason;
