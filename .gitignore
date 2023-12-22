@@ -9,3 +9,10 @@ taget/
 .metadata/
 .settings/
 src/main/webapp/WEB-INF/spring/appServlet/mariaDB.properties
+target/classes/com/ounwan/.DS_Store
+target/classes/com/.DS_Store
+target/classes/com/.DS_Store
+target/classes/.DS_Store
+*.MF
+*.properties
+*.war
