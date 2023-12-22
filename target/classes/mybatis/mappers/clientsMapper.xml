@@ -40,10 +40,12 @@
     <select id="checkKakaoToken" parameterType="String" resultType="clients">
     	select * from CLIENTS where social_id = #{token} and social_type = 'KAKAO'
     </select>
-
+    
+    <select id="getClientInfo" parameterType="String" resultType="clients">
+    	select * from CLIENTS WHERE CLIENT_ID = #{clientId}
+    </select>
 	
-	<select id="checkClientId" parameterType="String"
-		resultType="int">
+	<select id="checkClientId" parameterType="String" resultType="int">
 		select count(*) from clients where client_id = #{clientId}
 	</select>
 

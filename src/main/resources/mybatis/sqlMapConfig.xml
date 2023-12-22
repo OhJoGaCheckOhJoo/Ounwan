@@ -11,5 +11,9 @@
 	<typeAliases>
 		<typeAlias type="com.ounwan.entity.Clients" alias="clients" />
 		<typeAlias type="com.ounwan.entity.AetaBoards" alias="aeta" />
+		<typeAlias type="com.ounwan.entity.OunwanGram" alias="gram" />
+		<typeAlias type="com.ounwan.entity.OunwanGramLikes" alias="gramLikes" />
+		<typeAlias type="com.ounwan.entity.Follower" alias="follower" />
+		<typeAlias type="com.ounwan.entity.Inbody" alias="inbody" />
 	</typeAliases>
 </configuration>

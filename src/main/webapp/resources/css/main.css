@@ -33,6 +33,7 @@ header div a {
 }
 
 header div button {
+  position: relative;
   height: 50px;
   width: 120px;
   font-size: 1.25em;
@@ -40,6 +41,27 @@ header div button {
   color: #fff;
   border-radius: 10px;
   background-color: var( --main-color);
+  bottom: 10px;
+}
+
+#myProfile {
+	display: inline-block;
+	cursor: pointer;
+}
+
+#myProfile img {
+	margin: 20px 10px 0px 0px;
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+}
+
+#myProfile span {
+	position: relative;
+	display: inline-block;
+	margin-right: 10px;
+	height: 40px;
+	bottom: 12px;
 }
 
 nav {

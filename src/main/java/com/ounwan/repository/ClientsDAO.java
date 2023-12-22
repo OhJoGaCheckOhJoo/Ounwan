@@ -51,4 +51,8 @@ public class ClientsDAO {
 		return sqlSession.selectOne(NAMESPACE + "checkKakaoToken", token);
 	}
 	
+	public Clients getClientInfo(String id) {
+		return sqlSession.selectOne(NAMESPACE + "getClientInfo", id);
+	}
+	
 }

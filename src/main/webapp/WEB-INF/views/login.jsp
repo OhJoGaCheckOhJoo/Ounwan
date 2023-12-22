@@ -651,9 +651,6 @@ footer div {
 </head>
 <body>
 
-	
-	<header><a class="logo" href= "./"></a></header>
-
 	    <div class="container">
 	        <div class="login-menu">
 	            <div><a href="#" class="login-menu-selected" id="loginAccount">&nbsp;로그인&nbsp;</a></div>
