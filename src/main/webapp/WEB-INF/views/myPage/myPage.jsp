@@ -5,19 +5,17 @@
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<title>ounwan</title>
-<link href="${appPath}/css/main2.css" rel="stylesheet">
-<link href="${appPath}/css/header.css" rel="stylesheet">
-<link href="${appPath}/css/nav.css" rel="stylesheet">
-<link href="${appPath}/css/mypagemain.css" rel="stylesheet">
-<link href="${appPath}/css/aetaList.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Document</title>
+    <link href="${appPath}/css/main2.css" rel="stylesheet">
+    <link href="${appPath}/css/header.css" rel="stylesheet">
+    <link href="${appPath}/css/nav.css" rel="stylesheet">
+    <link href="${appPath}/css/mypagemain.css" rel="stylesheet">
 </head>
 
 <body>
@@ -37,7 +35,6 @@
 			</div>
 		</div>
 	</header>
-
 	<div class="container">
 		<nav>
 			<div class="nav-main">
@@ -133,7 +130,8 @@
 							</a>
 						</div>
 						<div class="menu-container user">
-							<a href="#">
+<%-- 							<a href="${appPath}/myPage/checkPwd"> --%>
+							<a href="javascript:checkPassword()">
 								<div class="user-menu update-user-info">회원 정보 수정</div>
 							</a>
 						</div>
@@ -386,7 +384,18 @@
 					}
 				});
 			}
+			
+			function checkPassword() {
+				$.ajax({
+					type : "GET",
+					url : "${appPath}/myPage/checkPwd",
+					success : function(res) {
+						$("#content").html(res);
+					}
+				});
+			}
 		</script>
+
 </body>
 
 </html>

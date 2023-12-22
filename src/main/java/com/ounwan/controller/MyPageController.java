@@ -25,10 +25,15 @@ import com.ounwan.service.MyPageService;
 @RequestMapping("/myPage")
 @Controller
 public class MyPageController {
+	
+
+	@Autowired
+	ClientsService clientService;
 
 	@Autowired
 	MyPageService myPageService;
-	
+
+	String id="jj1234";
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String myPage(HttpSession session, Model model) {
@@ -56,7 +61,7 @@ public class MyPageController {
 		
 		model.addAttribute("coupungOrderList", lists);
 		
-		return "/myPage/coupungOrderList";
+		return "myPage/coupungOrderList";
 	}
 	
 	@RequestMapping(value = "/danggunSaleList", method = RequestMethod.GET)
@@ -66,7 +71,7 @@ public class MyPageController {
 		
 		model.addAttribute("danggunSaleList", myPageService.getDanggunSaleList(id));			
 
-		return "/myPage/danggunSaleList";
+		return "myPage/danggunSaleList";
 	}
 	
 	@RequestMapping(value = "/danggunWishList", method = RequestMethod.GET)
@@ -76,7 +81,7 @@ public class MyPageController {
 		
 		model.addAttribute("danggunWishList", myPageService.getDanggunWishList(id));
 		
-		return "/myPage/danggunWishList";
+		return "myPage/danggunWishList";
 	}
 	
 	@RequestMapping(value ="/deleteDanggunWishList", method = RequestMethod.POST)
@@ -91,7 +96,7 @@ public class MyPageController {
 		List<Map<String, Object>> updateWishLists = myPageService.getDanggunWishList(id);
 		model.addAttribute("danggunWishList", updateWishLists);
 		
-		return "/myPage/danggunWishList";
+		return "myPage/danggunWishList";
 	}
 	
 	@RequestMapping(value = "/aetaList", method = RequestMethod.GET)
@@ -101,7 +106,7 @@ public class MyPageController {
 		
 		model.addAttribute("aetaList", myPageService.getAetaList(id));
 		
-		return "/myPage/aetaList";
+		return "myPage/aetaList";
 	}
 	
 	@RequestMapping(value ="/coupungReviewList", method = RequestMethod.GET)
@@ -111,7 +116,7 @@ public class MyPageController {
 		
 		model.addAttribute("coupungReviewList", myPageService.getReviewList(id));
 		
-		return "/myPage/coupungReviewList";
+		return "myPage/coupungReviewList";
 	}
 	
 	@RequestMapping(value ="/deleteCoupungReviewList", method = RequestMethod.POST)
@@ -126,27 +131,9 @@ public class MyPageController {
 		List<Map<String, Object>> updateReview = myPageService.getReviewList(id);
 		model.addAttribute("coupungReviewList", updateReview);
 		
-		return "/myPage/coupungReviewList";
+		return "myPage/coupungReviewList";
 	}
 
-
-	@Autowired
-	ClientsService clientService;
-
-	@RequestMapping(method = RequestMethod.GET)
-	public String myPageMain() {
-		return "myPage/myPage";
-	}
-	/*
-	 * @RequestMapping(value = "/checkPwd", method = RequestMethod.POST, produces =
-	 * "text/plain;charset=UTF-8") public @ResponseBody String checkPwd(@RequestBody
-	 * ClientsDTO client, HttpSession session) { System.out.println("내가 입력 비번 : " +
-	 * client.getPassword()); ClientsDTO loginUser =
-	 * clientService.checkLogin(client.getClientId(), client.getPassword());
-	 * 
-	 * System.out.println(loginUser); if (loginUser != null) { return "success"; }
-	 * return "fail"; }
-	 */
 
 	@GetMapping(value = "/checkPwd")
 	public String checkPwd(HttpSession session) {
@@ -169,16 +156,6 @@ public class MyPageController {
 		}
 		return "fail";
 	}
-
-	/*
-	 * @RequestMapping(value = "/modifyUserInfo", method = RequestMethod.GET,
-	 * produces = "text/plain;charset=UTF-8") public String
-	 * showUserInfo(@RequestBody ClientsDTO client, Model model) { String userInfo =
-	 * myPageService.getUserInfo(client); model.addAttribute(userInfo); return
-	 * "/myPage/checkPwd";
-	 * 
-	 * }
-	 */
 	
 	@RequestMapping(value = "/modifyUserInfo", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String showUserInfo(HttpSession session, Model model) {
@@ -187,7 +164,7 @@ public class MyPageController {
 		ClientsDTO userInfo = myPageService.getUserInfo(clientId);
 		System.out.println("!!!userInfo : " + userInfo);
 		model.addAttribute("userInfo", userInfo);
-		return "/myPage/modifyUserInfo"; // 회원정보 수정 페이지의 뷰 이름
+		return "myPage/modifyUserInfo"; // 회원정보 수정 페이지의 뷰 이름
 	}
 
 
@@ -219,6 +196,5 @@ public class MyPageController {
 		String imgString = myPageService.updateImage(image, clientId);
 	    return imgString;
 	}
-	
 	
 }

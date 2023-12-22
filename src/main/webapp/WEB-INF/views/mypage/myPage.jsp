@@ -1,231 +1,401 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<c:set var="appPath" scope="application"
+	value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Document</title>
-    <link href="./main2.css" rel="stylesheet">
-    <!--
-        <link href="./header.css" rel="stylesheet">
-    -->
-
-    <link href="./nav.css" rel="stylesheet">
-    <link href="./mypagemain.css" rel="stylesheet">
+    <link href="${appPath}/css/main2.css" rel="stylesheet">
+    <link href="${appPath}/css/header.css" rel="stylesheet">
+    <link href="${appPath}/css/nav.css" rel="stylesheet">
+    <link href="${appPath}/css/mypagemain.css" rel="stylesheet">
 </head>
 
 <body>
-    <header>
-        <div class="header">
-            <a class="logo" href="/ounwan"></a>
-            <div class="float-right">
-                <a id="signUp" href="./html/signup.html"></a>
-                <a id="loginSelect" href="#"></a>
-                <button id="cart"></button>
-                <div id="cartNotice"></div>
-            </div>
-        </div>
-    </header>
+	<header>
+		<div class="header">
+			<a class="logo" href="/ounwan"></a>
+			<div class="float-right">
+				<a id="profileImage" href="#"> <img src="./images/google.png">
+				</a> <span>0000ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤</span>
+				<button id="cart"></button>
+				<div id="cartNotice"></div>
+			</div>
+		</div>
+		<div class="header-sub-menu">
+			<div>
+				<a href="#">ë§ˆì´í˜ì´ì§€</a> <a href="#">ë¡œê·¸ì•„ì›ƒ</a>
+			</div>
+		</div>
+	</header>
+	<div class="container">
+		<nav>
+			<div class="nav-main">
+				<div class="pointer">
+					<a id="hamberger-btn" class="menu-trigger"> <span></span> <span></span>
+						<span></span>
+					</a>
+				</div>
+				<div>
+					<a href="#">ì‡¼í•‘ëª°</a>
+					<div id="navSubmenu" class="nav-submenu">
+						<a href="#">ì „ì²´ ë³´ê¸°</a> <a href="#">ìš´ë™ ê¸°êµ¬</a> <a href="#">ê±´ê°• ë³´ì¡°
+							ì‹í’ˆ</a> <a href="#">í—¬ìŠ¤ ì´ìš©ê¶Œ</a> <a href="#">ì˜ë¥˜</a>
+					</div>
+				</div>
+				<div>
+					<a href="#">ì¤‘ê³ ê±°ë˜</a>
+					<div id="navSubmenu" class="nav-submenu">
+						<a href="#">ì „ì²´ ë³´ê¸°</a> <a href="#">ê´€ì‹¬ ìƒí’ˆ</a>
+					</div>
+				</div>
+				<div>
+					<a href="#">ì»¤ë®¤ë‹ˆí‹°</a>
+					<div id="navSubmenu" class="nav-submenu">
+						<a class="ounwangram" href="ounwangram">ì˜¤ìš´ì™„ ì»¤ë®¤ë‹ˆí‹°</a> <a href="#">ê³ ë¯¼
+							ê²Œì‹œíŒ</a>
+					</div>
+				</div>
+				<div>
+					<a href="#">ê³ ê°ì„¼í„°</a>
+					<div id="navSubmenu" class="nav-submenu">
+						<a href="#">ìƒí’ˆë¬¸ì˜</a> <a href="#">ë°°ì†¡ë¬¸ì˜</a> <a href="#">ì¤‘ê³ ê±°ë˜</a> <a
+							href="#">ì»¤ë®¤ë‹ˆí‹°</a>
+					</div>
+				</div>
+			</div>
+			<div id="navMenu" class="nav-menu">
+				<div>
+					<div>
+						<a href="#">ì „ì²´ ë³´ê¸°</a> <a href="#">ìš´ë™ ê¸°êµ¬</a> <a href="#">ê±´ê°• ë³´ì¡°
+							ì‹í’ˆ</a> <a href="#">í—¬ìŠ¤ ì´ìš©ê¶Œ</a> <a href="#">ì˜ë¥˜</a>
+					</div>
+					<div>
+						<a href="#">ì „ì²´ ë³´ê¸°</a> <a href="#">ê´€ì‹¬ ìƒí’ˆ</a>
+					</div>
+					<div>
+						<a class="ounwangram" href="ounwangram">ì˜¤ìš´ì™„ ì»¤ë®¤ë‹ˆí‹°</a> <a href="#">ê³ ë¯¼
+							ê²Œì‹œíŒ</a>
+					</div>
+					<div>
+						<a href="#">ìƒí’ˆë¬¸ì˜</a> <a href="#">ë°°ì†¡ë¬¸ì˜</a> <a href="#">ì¤‘ê³ ê±°ë˜</a> <a
+							href="#">ì»¤ë®¤ë‹ˆí‹°</a>
+					</div>
+				</div>
+			</div>
+		</nav>
 
-    <div class="container">
-        <nav>
-            <div class="nav-main">
-                <div class="pointer">
-                    <a id="hamberger-btn" class="menu-trigger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </a>
-                </div>
-                <div>
-                    <a href="#">¼îÇÎ¸ô</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a href="#">ÀüÃ¼ º¸±â</a>
-                        <a href="#">¿îµ¿ ±â±¸</a>
-                        <a href="#">°Ç°­ º¸Á¶ ½ÄÇ°</a>
-                        <a href="#">Çï½º ÀÌ¿ë±Ç</a>
-                        <a href="#">ÀÇ·ù</a>
-                    </div>
-                </div>
-                <div>
-                    <a href="#">Áß°í°Å·¡</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a href="#">ÀüÃ¼ º¸±â</a>
-                        <a href="#">°ü½É »óÇ°</a>
-                    </div>
-                </div>
-                <div>
-                    <a href="#">Ä¿¹Â´ÏÆ¼</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a class="ounwangram" href="ounwangram">¿À¿î¿Ï Ä¿¹Â´ÏÆ¼</a>
-                        <a href="#">°í¹Î °Ô½ÃÆÇ</a>
-                    </div>
-                </div>
-                <div>
-                    <a href="#">°í°´¼¾ÅÍ</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a href="#">»óÇ°¹®ÀÇ</a>
-                        <a href="#">¹è¼Û¹®ÀÇ</a>
-                        <a href="#">Áß°í°Å·¡</a>
-                        <a href="#">Ä¿¹Â´ÏÆ¼</a>
-                    </div>
-                </div>
-            </div>
-            <div id="navMenu" class="nav-menu">
-                <div>
-                    <div>
-                        <a href="#">ÀüÃ¼ º¸±â</a>
-                        <a href="#">¿îµ¿ ±â±¸</a>
-                        <a href="#">°Ç°­ º¸Á¶ ½ÄÇ°</a>
-                        <a href="#">Çï½º ÀÌ¿ë±Ç</a>
-                        <a href="#">ÀÇ·ù</a>
-                    </div>
-                    <div>
-                        <a href="#">ÀüÃ¼ º¸±â</a>
-                        <a href="#">°ü½É »óÇ°</a>
-                    </div>
-                    <div>
-                        <a class="ounwangram" href="ounwangram">¿À¿î¿Ï Ä¿¹Â´ÏÆ¼</a>
-                        <a href="#">°í¹Î °Ô½ÃÆÇ</a>
-                    </div>
-                    <div>
-                        <a href="#">»óÇ°¹®ÀÇ</a>
-                        <a href="#">¹è¼Û¹®ÀÇ</a>
-                        <a href="#">Áß°í°Å·¡</a>
-                        <a href="#">Ä¿¹Â´ÏÆ¼</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+		<!--mypage content-->
+		<div class="mypage-container">
+			<div class="mypage-content">
+				<div class="side-bar-container">
+					<div class="side-bar title">
+						<a href="${appPath}/myPage"> ë§ˆì´í˜ì´ì§€ </a>
+					</div>
+					<div class="side-bar menu">
+						<div class="menu-container coupung">
+							<a href="javascript:orderList()">
+								<div class="coupung-menu order-list">ì£¼ë¬¸ë‚´ì—­ ì¡°íšŒ</div>
+							</a> <a href="#">
+								<div class="coupung-menu mileage">ë§ˆì¼ë¦¬ì§€</div>
+							</a> <a href="javascript:reviewList()">
+								<div class="coupung-menu review">ë¦¬ë·° ê´€ë¦¬</div>
+							</a>
+						</div>
+						<div class="menu-container danggun">
+							<a href="javascript:danggunSaleList()">
+								<div class="danggun-menu sale-list">ë‚´ íŒë§¤ ë‚´ì—­</div>
+							</a> <a href="javascript:danggunWishList()">
+								<div class="danggun-menu wish-list">ê´€ì‹¬ ìƒí’ˆ</div>
+							</a>
+						</div>
 
-        <!--mypage content-->
-        <div class="mypage-container">
-            <div class="mypage-content">
-                <div class="side-bar-container">
-                    <div class="side-bar title">
-                        <a href="#">
-                            ¸¶ÀÌÆäÀÌÁö
-                        </a>
-                    </div>
-                    <div class="side-bar menu">
-                        <div class="menu-container coupung">
-                            <a href="#">
-                                <div class="coupung-menu order-list">
-                                    ÁÖ¹®³»¿ª Á¶È¸
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="coupung-menu mileage">
-                                    ¸¶ÀÏ¸®Áö
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="coupung-menu review">
-                                    ¸®ºä °ü¸®
-                                </div>
-                            </a>
-                        </div>
-                        <div class="menu-container danggun">
-                            <a href="#">
-                                <div class="danggun-menu sale-list">
-                                    ³» ÆÇ¸Å ³»¿ª
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="danggun-menu wish-list">
-                                    °ü½É »óÇ°
-                                </div>
-                            </a>
-                        </div>
-                        
-                        <div class="menu-container aeta">
-                            <a href="#">
-                                <div class="aeta-menu writing-list">
-                                    ³» °Ô½Ã±Û ¸ñ·Ï
-                                </div>
-                            </a>
-                        </div>
-                        <div class="menu-container chat">
-                            <a href="#">
-                                <div class="chat-menu admin">
-                                    °ü¸®ÀÚ¿Í Ã¤ÆÃ
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="chat-menu danggun">
-                                    ÂÊÁö ³»¿ª
-                                </div>
-                            </a>
-                        </div>
-                        <div class="menu-container user">
-                            <a href="#">
-                                <div class="user-menu update-user-info">
-                                    È¸¿ø Á¤º¸ ¼öÁ¤
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+						<div class="menu-container aeta">
+							<a href="javascript:aetaList()">
+								<div class="aeta-menu writing-list">ë‚´ ê²Œì‹œê¸€ ëª©ë¡</div>
+							</a>
+						</div>
+						<div class="menu-container chat">
+							<a href="#">
+								<div class="chat-menu admin">ê´€ë¦¬ìì™€ ì±„íŒ…</div>
+							</a> <a href="#">
+								<div class="chat-menu danggun">ìª½ì§€ ë‚´ì—­</div>
+							</a>
+						</div>
+						<div class="menu-container user">
+<%-- 							<a href="${appPath}/myPage/checkPwd"> --%>
+							<a href="javascript:checkPassword()">
+								<div class="user-menu update-user-info">íšŒì› ì •ë³´ ìˆ˜ì •</div>
+							</a>
+						</div>
+					</div>
+				</div>
 
-                </div>
+				<div class="content-container">
+					<div class="preview-container">
+						<div class="preview user">
+							<img>
+							<div>
+								<p class="preview-user text">ë°˜ê°‘ìŠµë‹ˆë‹¤</p>
+								<p class="preview-user name">
+									<span>${userInfo.clientId}</span> ë‹˜
+								</p>
+							</div>
+						</div>
 
-                <div class="content-container">
-                    <div class="preview-container">
-                        <div class="preview user">
-                            <p class="preview-user name">¿À¿î¿Ï´Ô</p>
-                            <p class="preview-user text">WELCOME</p>
-                        </div>
+						<div class="preview menu">
+							<a href="#" class="preview-menu mileage">
+								<div>
+									<img class="preview-menu-image">
+									<div class="preview-menu-text">
+										<p>ë§ˆì¼ë¦¬ì§€</p>
+										<span>127</span><span> ì </span>
+									</div>
 
-                        <div class="preview menu">
-                            <a href="#" class="preview-menu mileage">
-                                <div>
-                                    <img class="preview-menu-image">
-                                    <div class="preview-menu-text">
-                                        <p>¸¶ÀÏ¸®Áö</p>
-                                        <span>127</span><span> Á¡</span>
-                                    </div>
-                                    
-                                </div>
-                            </a>
-                            <a href="#" class="preview-menu wish-list">
-                                <div>
-                                    <img class="preview-menu-image">
-                                    <div class="preview-menu-text">
-                                        <p>°ü½É »óÇ°</p>
-                                        <span>0</span><span> °³</span>
-                                    </div>
-                                    
-                                </div>
-                            </a>
-                            <a href="#" class="preview-menu cart">
-                                <div>
-                                    <img class="preview-menu-image">
-                                    <div class="preview-menu-text">
-                                        <p>Àå¹Ù±¸´Ï</p>
-                                        <span>5</span><span> °³</span>
-                                    </div>                            
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+								</div>
+							</a> <a href="javascript:danggunWishList()"
+								class="preview-menu wish-list">
+								<div>
+									<img class="preview-menu-image">
+									<div class="preview-menu-text">
+										<p>ê´€ì‹¬ ìƒí’ˆ</p>
+										<span>${wishListCount}</span><span> ê°œ</span>
+									</div>
 
-                    <!--¿©±âºÎºĞÀÌ °è¼Ó ¹Ù²ğ ¿¹Á¤ÀÔ´Ï´ç-->
-                    <div class="content-info-container">
-                        <div class="content-info">
-                            ¿©±â
-                        </div>
+								</div>
+							</a> <a href="#" class="preview-menu cart">
+								<div>
+									<img class="preview-menu-image">
+									<div class="preview-menu-text">
+										<p>ì¥ë°”êµ¬ë‹ˆ</p>
+										<span>${cartListCount}</span><span> ê°œ</span>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
 
-                    </div>
+					<!--ì—¬ê¸°ë¶€ë¶„ì´ ê³„ì† ë°”ë€” ì˜ˆì •ì…ë‹ˆë‹¹-->
+					<div class="content-info-container">
+						<div class="content-info" id="content">
+							<div class="recent-info order">
+								<div class="section-header">
+									<h2 class="section-title">ìµœê·¼ ì£¼ë¬¸ ì •ë³´</h2>
+									<a href=#>ë”ë³´ê¸° > </a>
+								</div>
+								<table>
+									<thead>
+										<tr class="head-tr">
+											<th>ì£¼ë¬¸ì¼ì</th>
+											<th>ìƒí’ˆì •ë³´</th>
+											<th>ì£¼ë¬¸ë²ˆí˜¸</th>
+											<th>ê²°ì œê¸ˆì•¡</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${empty orderList}">
+											<tr class="none-content">
+												<td colspan="5">ìµœê·¼ ì£¼ë¬¸ ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.</td>
+											</tr>
+										</c:if>
+										<c:if test="${not empty orderList}">
+											<c:forEach var="oList" items="${orderList}">
+												<tr>
+													<td><fmt:formatDate value="${oList.ORDER_DATE}"
+															pattern="yyyy-MM-dd" /></td>
+													<td><a href="#">
+															<div>
+																<img src="${oList.PRODUCT_IMAGE_URL}"
+																	style="width: 60px; height: 60px;">
+															</div>
+															<div>
+																<span>${oList.COUPUNG_NAME}</span>
+															</div>
+													</a></td>
+													<td>${oList.ORDER_NUMBER}</td>
+													<td>${oList.PRICE * oList.QUANTITY}ì›</td>
+												</tr>
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>
+							</div>
 
-                </div>
+							<div class="recent-info aeta">
+								<div class="section-header">
+									<h2 class="section-title">ìµœê·¼ ë“±ë¡ ê²Œì‹œê¸€_aeta</h2>
+									<a href="javascript:aetaList()">ë”ë³´ê¸° > </a>
+								</div>
 
-            </div>
+								<table>
+									<thead>
+										<tr class="head-tr">
+											<th>ë²ˆí˜¸</th>
+											<th>ì œëª©</th>
+											<th>ì‘ì„±ì¼</th>
+											<th>ì‘ì„±ì</th>
+											<th>ì¡°íšŒìˆ˜</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${empty aetaList}">
+											<tr class="none-content">
+												<td colspan="5">ê²Œì‹œê¸€ ë‚´ì—­ì´ ì—†ìŠµë‹ˆë‹¤.</td>
+											</tr>
+										</c:if>
+										<c:if test="${not empty aetaList}">
+											<c:forEach var="list" items="${aetaList}" varStatus="loop">
+												<tr class="content-tr">
+													<td class="aeta-list num">${aetaList.size() - loop.index }</td>
+													<td class="aeta-list title"><a href="#">${list.title}</a>
+													</td>
+													<td class="aeta-list upload-date"><fmt:formatDate
+															value="${list.createdDate}" pattern="yyyy-MM-dd" /></td>
+													<td class="aeta-list client-id">${list.clientId}</td>
+													<td class="aeta-list views">${list.views}</td>
+												</tr>
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>
 
-        </div>
+							</div>
 
-        <script src="main.js"></script>
+							<div class="recent-info cart">
+								<div class="section-header">
+									<h2 class="section-title">ì¥ë°”êµ¬ë‹ˆ</h2>
+									<a href=#>ë”ë³´ê¸° > </a>
+								</div>
+								<table>
+									<thead>
+										<tr class="head-tr">
+											<th>ë²ˆí˜¸</th>
+											<th>ìƒí’ˆì •ë³´</th>
+											<th>ìˆ˜ëŸ‰</th>
+											<th>ì¬ê³ </th>
+											<th>ê°€ê²©</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${empty cartList}">
+											<tr class="none-content">
+												<td colspan="5">ì¥ë°”êµ¬ë‹ˆê°€ ë¹„ì–´ìˆìŠµë‹ˆë‹¤.</td>
+											</tr>
+										</c:if>
+										<c:if test="${not empty cartList}">
+											<c:forEach var="cList" items="${cartList}" varStatus="loop">
+												<tr>
+													<td>${cartList.size() - loop.index}</td>
+													<c:if test="${cList.AVAILABLE_STOCK <=10 }">
+														<td>
+															<div class="coupung-block-container">
+																<img src="${cList.URL}"
+																	style="width: 60px; height: 60px;">
+																<div class="coupung-block" /></div>
+															</div>
+															<div>
+																<span>${cList.COUPUNG_NAME}</span>
+															</div>
+														</td>
+														<td>${cList.QUANTITY}</td>
+														<td>í’ˆì ˆ</td>
+													</c:if>
+													<c:if test="${cList.AVAILABLE_STOCK > 10 }">
+														<td><a href="#">
+																<div>
+																	<img src="${cList.URL}"
+																		style="width: 60px; height: 60px;">
+																</div>
+																<div>
+																	<span>${cList.COUPUNG_NAME}</span>
+																</div>
+														</a></td>
+														<td>${cList.QUANTITY}</td>
+														<td>ì¬ê³ ìˆìŒ</td>
+													</c:if>
+													<td>${cList.PRICE * cList.QUANTITY}ì›</td>
+												</tr>
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="./js/main.js" ></script>
+		<script>
+			function orderList() {
+				$.ajax({
+					type : "GET",
+					url : "${appPath}/myPage/coupungOrderList",
+					success : function(res) {
+						$("#content").html(res);
+					}
+				});
+			}
+		
+			function danggunSaleList() {
+				$.ajax({
+					type : "GET",
+					url : "${appPath}/myPage/danggunSaleList",
+					success : function(res) {
+						$("#content").html(res);
+					}
+				});
+			}
+
+			function danggunWishList() {
+				$.ajax({
+					type : "GET",
+					url : "${appPath}/myPage/danggunWishList",
+					success : function(res) {
+						$("#content").html(res);
+					}
+				})
+			}
+
+			function aetaList() {
+				$.ajax({
+					type : "GET",
+					url : "${appPath}/myPage/aetaList",
+					success : function(res) {
+						$("#content").html(res);
+					}
+				})
+			}
+
+			function reviewList() {
+				$.ajax({
+					type : "GET",
+					url : "${appPath}/myPage/coupungReviewList",
+					success : function(res) {
+						$("#content").html(res);
+					}
+				});
+			}
+			
+			function checkPassword() {
+				$.ajax({
+					type : "GET",
+					url : "${appPath}/myPage/checkPwd",
+					success : function(res) {
+						$("#content").html(res);
+					}
+				});
+			}
+		</script>
+
 </body>
 
 </html>

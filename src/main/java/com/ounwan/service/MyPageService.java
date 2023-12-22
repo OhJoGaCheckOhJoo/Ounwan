@@ -32,7 +32,8 @@ public class MyPageService {
 	ClientsDAO clientsDAO;
 
 		
-	private final static String UPLOADPATH = "D:\\github_desktop\\Back-end\\src\\main\\webapp\\resources";
+//	private final static String UPLOADPATH = "D:\\github_desktop\\Back-end\\src\\main\\webapp\\resources";
+	private final static String UPLOADPATH = "C:/Users/diana/OneDrive/문서/GitHub/Back-end/src/main/webapp/resources";
 	private final static String IMAGEPATH = "/images/uploads/";
 	
 	public int getWishListCount(String userId) {
@@ -172,7 +173,7 @@ public class MyPageService {
 		System.out.println("SSSSSclientId : " + clientId);
 		
 		
-		String newFileName = System.currentTimeMillis() + ".." + multipartFile.getContentType().split("/")[1]; // image/jpg
+		String newFileName = System.currentTimeMillis() + "." + multipartFile.getContentType().split("/")[1]; // image/jpg
 		File file = new File(UPLOADPATH + IMAGEPATH + newFileName);
 		try {
 			multipartFile.transferTo(file);
