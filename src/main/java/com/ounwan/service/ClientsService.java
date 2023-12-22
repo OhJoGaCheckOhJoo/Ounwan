@@ -49,18 +49,19 @@ public class ClientsService {
 		return (result > 0) ? true : false;
 	}
 
-	public boolean checkLogin(String id, String password) {  
-		String dbpassword = clientsDAO.checkLogin(id);
-		if (dbpassword == null) {
-			return false;
-		} else {
+	public ClientsDTO checkLogin(String id, String password) {  
+		Clients dbInfo = clientsDAO.checkLogin(id);
+		
+		if (dbInfo != null) {
+			String dbpassword = dbInfo.getPassword();
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			if(encoder.matches(password,dbpassword)) {
-				return true;
+				return changeDTO(dbInfo);
 			}else {
-				return false;
+				return null;
 			}
-			 
+		} else {
+			return null;
 		}
 	}
 	
@@ -209,4 +210,5 @@ public class ClientsService {
                 .socialId(client.getSocialId())
                 .build();
     }
+
 }

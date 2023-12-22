@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.ounwan.chat">	
+	<select id="selectChatList" resultType="chat">
+		select * from chat_message
+	</select>
+	
+	<insert id="insertMessage">
+		insert into chat_message(sender, message)
+		values(#{sender}, #{message})
+	</insert>
+	
+</mapper>

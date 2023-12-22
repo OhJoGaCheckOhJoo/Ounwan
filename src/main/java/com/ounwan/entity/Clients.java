@@ -34,5 +34,5 @@ public class Clients {
 	private String emailAuth;
 	private String socialType;
 	private String socialId;
-	private Date withdrawaDate;
+	private Date withdrawalDate;
 }
