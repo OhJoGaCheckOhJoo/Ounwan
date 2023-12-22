@@ -1,20 +1,3 @@
-table {
-    width: 100%;
-    border-bottom: 3px solid #eee7d8;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-th {
-    border-top: 3px solid #eee7d8;
-    border-bottom: 3px solid #eee7d8;
-}
-
-
-.head-tr {
-    height: 40px;
-}
-
 .danggun-sale {
     text-align: center;
 }

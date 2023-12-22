@@ -3,7 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="appPath" scope="application" value="${pageContext.request.contextPath}" />
 <link href="${appPath}/css/danggunSaleList.css" rel="stylesheet">
-<h2>내 판매 내역</h2>
+<div class="section-header">
+	<h2 class="section-title">판매 내역</h2>
+</div>
 <table>
 	<thead>
 		<tr class="head-tr">

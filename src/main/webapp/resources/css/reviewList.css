@@ -1,6 +1,6 @@
 
 .personal-score > div {
-    margin-left: 125px;
+    margin-left: 130px;
     width: 0px;
     height: 30px;
     background-color: var(--main-color-2);
@@ -10,4 +10,23 @@
     width: 150px;
     height: 30px;
     bottom: 30px;
+    
+}
+
+.table-container {
+	position: relative;
+}
+
+.delete-button {
+	width:60px;
+	height:40px;
+	position: absolute;
+	bottom: -70px;
+	right: 10px;
+	cursor: pointer;
+	border-radius: 5px;
+	margin: 10px 0px;
+	padding: 5px;
+	background-color: #444;
+	border: 1px solid #ccc5b6;
 }

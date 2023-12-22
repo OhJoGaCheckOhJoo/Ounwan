@@ -5,11 +5,14 @@
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
 <link href="${appPath}/css/danggunWishList.css" rel="stylesheet">
-<h3>관심 목록</h3>
+<div class="section-header">
+	<h2 class="section-title">관심 상품</h2>
+</div>
+<div class="table-container">
 <table>
 	<thead>
 		<tr class="head-tr">
-			<th>체크박스</th>
+			<th></th>
 			<th>상품 정보</th>
 			<th>가격</th>
 			<th>업로드일</th>
@@ -96,8 +99,8 @@
 	</tbody>
 </table>
 
-<button id="deleteWishListButton">삭제</button>
-
+<button id="deleteWishListButton" class="delete-button">삭제</button>
+</div>
 <script>
 $(document).ready(function () {
     $('#deleteWishListButton').click(function () {

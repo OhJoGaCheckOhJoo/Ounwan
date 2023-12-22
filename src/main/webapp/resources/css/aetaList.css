@@ -1,17 +1,7 @@
-th {
-    border-top: 3px solid #eee7d8;
-    border-bottom: 3px solid #eee7d8;
-}
-
-td {
-    border-bottom: 1px solid gray;
-}
-
 .content-tr {
     height: 50px;
     text-align: center;
 }
-
 
 .aeta-list.num {
     width: 40px;

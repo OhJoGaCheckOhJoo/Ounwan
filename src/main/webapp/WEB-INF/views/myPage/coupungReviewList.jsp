@@ -1,55 +1,62 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<c:set var="appPath" scope="application" value="${pageContext.request.contextPath}" />
+<c:set var="appPath" scope="application"
+	value="${pageContext.request.contextPath}" />
 <link href="${appPath}/css/reviewList.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<h2>내 리뷰 관리</h2>
-<table>
-	<thead>
-		<tr class="head-tr">
-			<th>체크박스</th>
-			<th>상품정보</th>
-			<th>상품평</th>
-			<th>별점</th>
-			<th>작성일</th>
-		</tr>
-	</thead>
-	<tbody>
-		<c:if test="${empty coupungReviewList}">
-			<tr class="none-content">
-				<td colspan="5">리뷰 내역이 없습니다.</td>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<div class="section-header">
+	<h2 class="section-title">리뷰 관리</h2>
+</div>
+<div class="table-container">
+	<table>
+		<thead>
+			<tr class="head-tr">
+				<th>체크박스</th>
+				<th>상품정보</th>
+				<th>상품평</th>
+				<th>별점</th>
+				<th>작성일</th>
 			</tr>
-		</c:if>
-		<c:if test="${not empty coupungReviewList}">
-			<c:forEach var="list" items="${coupungReviewList}">
-				<tr>
-					<td><input type="checkbox" value="${list.REVIEW_NUMBER }"></td>
-					<td>
-						<div>${list.COUPUNG_NAME}</div>
-						<div>${list.COUPUNG_OPTION_NAME}</div>
-					</td>
-					<td><c:if test="${empty list.IMAGE_URL}">
-							<img src="./images/myPage/reviewDefault.png" style="width: 60px; height: 60px;">
-						</c:if> 
-						<c:if test="${not empty list.IMAGE_URL}">
-							<img src="${list.IMAGE_URL}" style="width: 60px; height: 60px;">
-						</c:if>
-						<div>${list.CONTENTS}</div></td>
-					<td>
-						<div class="personal-score">
-							<div style="width: calc(${list.SCORE} * 30px);"></div>
-							<img src="./images/myPage/star.png">
-						</div>
-					</td>
-					<td><fmt:formatDate value="${list.CREATED_DATE}" pattern="yyyy-MM-dd" /></td>
+		</thead>
+		<tbody>
+			<c:if test="${empty coupungReviewList}">
+				<tr class="none-content">
+					<td colspan="5">리뷰 내역이 없습니다.</td>
 				</tr>
-			</c:forEach>
-		</c:if>
-	</tbody>
-</table>
-<button id="deleteReviewButton">삭제</button>
-
+			</c:if>
+			<c:if test="${not empty coupungReviewList}">
+				<c:forEach var="list" items="${coupungReviewList}">
+					<tr>
+						<td><input type="checkbox" value="${list.REVIEW_NUMBER }"></td>
+						<td>
+							<div>${list.COUPUNG_NAME}</div>
+							<div>${list.COUPUNG_OPTION_NAME}</div>
+						</td>
+						<td><c:if test="${empty list.IMAGE_URL}">
+								<img src="./images/myPage/reviewDefault.png"
+									style="width: 60px; height: 60px;">
+							</c:if> <c:if test="${not empty list.IMAGE_URL}">
+								<img src="${list.IMAGE_URL}" style="width: 60px; height: 60px;">
+							</c:if>
+							<div>${list.CONTENTS}</div></td>
+						<td>
+							<div class="personal-score">
+								<div style="width: calc(${list.SCORE} * 30px);"></div>
+								<img src="./images/myPage/star.png">
+							</div>
+						</td>
+						<td><fmt:formatDate value="${list.CREATED_DATE}"
+								pattern="yyyy-MM-dd" /></td>
+					</tr>
+				</c:forEach>
+			</c:if>
+		</tbody>
+	</table>
+	<button id="deleteReviewButton" class="delete-button">삭제</button>
+</div>
 
 
 <script>
@@ -69,7 +76,7 @@
 
 			$.ajax({
 				type : 'POST',
-				url : '${appPath}/myPage/deleteCoupungReviewList', 
+				url : '${appPath}/myPage/deleteCoupungReviewList',
 				contentType : 'application/json',
 				data : JSON.stringify({
 					selectedReviews : selectedReviews
