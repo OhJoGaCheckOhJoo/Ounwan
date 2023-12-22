@@ -15,7 +15,8 @@
 		<org.slf4j-version>1.7.25</org.slf4j-version>
 	</properties>
 	<dependencies>
-		<!-- google oauth 필요한거 -->
+
+	
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-websocket</artifactId>
@@ -255,6 +256,9 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
+		
+		
+		
 	</dependencies>
 	<build>
 		<plugins>

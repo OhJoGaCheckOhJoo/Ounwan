@@ -22,5 +22,13 @@
 		<typeAlias type="com.ounwan.entity.Guests" alias="guests" />
 		<typeAlias type="com.ounwan.entity.CoupungOptions" alias="coupungOptions" />
 		<typeAlias type="com.ounwan.entity.Carts" alias="carts" />
+		<typeAlias type="com.ounwan.entity.Aeta" alias="aeta" />
+		<typeAlias type="com.ounwan.entity.Comments" alias="aetaComments" />
+		<typeAlias type="com.ounwan.entity.AetaImages" alias="aetaImages" />
+		<typeAlias type="com.ounwan.entity.AetaLikes" alias="aetaLikes" />
+		<typeAlias type="com.ounwan.entity.OunwanGram" alias="gram" />
+		<typeAlias type="com.ounwan.entity.OunwanGramLikes" alias="gramLikes" />
+		<typeAlias type="com.ounwan.entity.Follower" alias="follower" />
+		<typeAlias type="com.ounwan.entity.Inbody" alias="inbody" />
 	</typeAliases>
 </configuration>

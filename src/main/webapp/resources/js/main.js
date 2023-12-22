@@ -116,7 +116,6 @@ $(function() {
     });
 
     $("#loginSelect").click(function() {
-        location.href = appPath + '/clients/login';
         $.ajax({
         	url : appPath + "/clients/login",
         	type : 'GET',

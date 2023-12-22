@@ -62,4 +62,8 @@ public class ClientsDAO {
 	public int updateActivation(String clientId) {
 		return sqlSession.update(NAMESPACE + "updateActivation", clientId);
 	}
+	public Clients getClientInfo(String id) {
+		return sqlSession.selectOne(NAMESPACE + "getClientInfo", id);
+	}
+	
 }
