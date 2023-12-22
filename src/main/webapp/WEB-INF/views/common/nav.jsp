@@ -36,9 +36,8 @@
             </div>
         </div>
         <div>
-            <a href="#">고객센터</a>
+            <a href="${appPath}/faq">고객센터</a>
             <div id="navSubmenu" class="nav-submenu">
-                <a href="#">상품문의</a>
                 <a href="#">배송문의</a>
                 <a href="#">중고거래</a>
                 <a href="#">커뮤니티</a>
@@ -62,7 +61,6 @@
                 <a href="${appPath}/community/aetaBoards">고민 게시판</a>
             </div>
             <div>
-                <a href="#">상품문의</a>
                 <a href="#">배송문의</a>
                 <a href="#">중고거래</a>
                 <a href="#">커뮤니티</a>
