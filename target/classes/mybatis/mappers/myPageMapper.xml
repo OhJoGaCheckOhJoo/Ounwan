@@ -213,4 +213,33 @@
 		DELETE FROM REVIEWS
 		WHERE REVIEW_NUMBER = ${reviewNumber}
 	</delete>
+
+	<select id="getPwdById" parameterType="String"
+		resultType="String">
+		SELECT PASSWORD FROM CLIENTS WHERE CLIENT_ID=#{clientId}
+	</select>
+
+	<select id="getUserInfo" parameterType="String"
+		resultType="clients">
+		SELECT CLIENT_ID, NAME, EMAIL, PHONE, ADDRESS,
+		ADDRESS_DETAIL, ZIP_CODE,PROFILE_URL
+		FROM CLIENTS WHERE CLIENT_ID = #{clientId}
+	</select>
+
+	<update id="modifyPwd" parameterType="clients">
+		UPDATE CLIENTS SET PASSWORD = #{password} WHERE CLIENT_ID = #{clientId}
+	</update>
+
+	<update id="modifyUserInfo" parameterType="String">
+		UPDATE CLIENTS SET PHONE =
+		#{phone}, ADDRESS = #{address}, ADDRESS_DETAIL = #{addressDetail},
+		ZIP_CODE = #{zipCode} WHERE CLIENT_ID =
+		#{clientId}
+	</update>
+	
+	<update id="modifyProfileURL" parameterType="String">
+		UPDATE CLIENTS SET PROFILE_URL = #{profileURL} WHERE CLIENT_ID = #{clientId}
+	</update>
+	
+	
 </mapper>

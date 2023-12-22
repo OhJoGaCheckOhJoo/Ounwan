@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ounwan.entity.Aeta;
+import com.ounwan.entity.Clients;
 
 @Repository
 public class MyPageDAO {
@@ -65,5 +66,30 @@ public class MyPageDAO {
 	public int deleteReviewList(int reviewNumber) {
 		return sqlSession.delete(NAMESPACE + "deleteReview", reviewNumber);
 	}
+
+	
+	public String getPwdById(String clientId) {
+	    return sqlSession.selectOne(NAMESPACE + "getPwdById", clientId);
+	}
+
+	public Clients getUserInfo(String clientId) {
+		return sqlSession.selectOne(NAMESPACE + "getUserInfo", clientId);
+	}
+	
+
+	public int modifyPwd(Clients client) {
+		return sqlSession.update(NAMESPACE + "modifyPwd", client);
+	}
+	
+	
+	public int modifyUserInfo(Clients client) {
+		return sqlSession.update(NAMESPACE + "modifyUserInfo", client);
+	}
+
+	public int modifyProfileURL(Clients client) {
+		return sqlSession.update(NAMESPACE + "modifyProfileURL", client);
+	}
+
+	
 
 }
