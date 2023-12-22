@@ -51,9 +51,9 @@ prefix="c" %>
             </div>
           </div>
           <div>
-            <a href="#">고객센터</a>
+            <a href="#" id="chat" type="button">고객센터</a>
             <div class="nav-submenu">
-              <a href="#">상품문의</a>
+              <a href="#" id="chat" type="button">상품문의</a>
               <a href="#">배송문의</a>
               <a href="#">중고거래</a>
               <a href="#">커뮤니티</a>
@@ -85,5 +85,11 @@ prefix="c" %>
 
     <%@ include file="./common/footer.jsp" %>
     <script src="./js/main.js"></script>
+    <script>
+    	$("#chat").on("click",function(e){
+    		e.preventDefault();
+    		window.open("${appPath}/bixSiri/chat","/bixSiri/chat","width=500, height=800, top=200, left=200");
+    	});
+    </script>
   </body>
 </html>

@@ -20,7 +20,7 @@
 			<!-- 대표 이미지 라인 -->
 			<div class="danggun-product">
 				<div class="product-explain">
-					대표 이미지 <span>*</span>
+					대표 이미지 <span class="star">*</span>
 				</div>
 				<div class="danggun-main-image">
 					<label for="uploadImageInput"></label>
@@ -81,7 +81,7 @@
 			<!-- 상품명 라인 -->
 			<div class="danggun-product">
 				<div class="product-explain">
-					상품명 <span>*</span>
+					상품명 <span class="star">*</span>
 				</div>
 				<div class="text-input-description">
 					<div class="input-area">
@@ -96,7 +96,7 @@
 			<!-- 거래현황 라인 -->
 			<div class="danggun-product">
 				<div class="product-explain">
-					거래 현황 <span>*</span>
+					거래 현황 <span class="star">*</span>
 				</div>
 				<div class="text-input-description">
 					<select id="options" name="options">
@@ -109,7 +109,7 @@
 			<!-- 가격 라인 -->
 			<div class="danggun-product">
 				<div class="product-explain">
-					가격<span> *</span>
+					가격<span class="star"> *</span>
 				</div>
 				<input class="input-area" id="modalDanggunPrice"
 					value="${post.price}" required type="number" />
@@ -117,7 +117,7 @@
 			<!-- 설명 라인 -->
 			<div class="danggun-product">
 				<div class="product-explain">
-					설명 <span>*</span>
+					설명 <span class="star">*</span>
 				</div>
 				<div class="text-input-description">
 					<textarea class="input-area" id="modalInputText" required>${post.detail}</textarea>
