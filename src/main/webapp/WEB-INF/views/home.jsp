@@ -17,6 +17,9 @@ prefix="c" %>
 <head>
 	<c:set var="appPath" scope="application"  value="${pageContext.request.contextPath}" />
     <link href="${appPath}/css/main.css" rel="stylesheet" />
+    <link href="${appPath}/css/main2.css" rel="stylesheet" />
+    <link href="${appPath}/css/header.css" rel="stylesheet" />
+    <link href="${appPath}/css/nav.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>오운완</title>
 </head>

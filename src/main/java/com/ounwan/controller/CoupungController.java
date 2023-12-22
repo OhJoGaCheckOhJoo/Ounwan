@@ -32,8 +32,6 @@ public class CoupungController {
 	@Autowired
 	OrderService orderService;
 	
-	
-	
 	@GetMapping("/products")
 	public String getProductMain (@RequestParam(defaultValue = "0")String categoryNum, Model model) {
 		List<CoupungDTO> productList = coupungService.getProductList(Integer.parseInt(categoryNum));

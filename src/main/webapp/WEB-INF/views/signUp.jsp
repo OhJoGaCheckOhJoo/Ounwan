@@ -7,6 +7,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="${appPath}/css/main.css" rel="stylesheet">
+<link href="${appPath}/css/main2.css" rel="stylesheet">
 <link href="${appPath}/css/signUp.css" rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -88,13 +90,14 @@ $(document).ready(function() {
 			</div>
 			<div class="profile-password">
 				<label class="attribute-name" >비밀번호<span
-					class="red-star">*</span></label> <input type="password" class="input-form"
-					id="firstPass" placeholder="비밀번호를 입력하세요"> <span id="wrongForm-inform">잘못된 형식입니다.</span>
+					class="red-star">*</span></label> <input type="password" class="input-form" id="firstPass" placeholder="비밀번호를 입력하세요">
+					<span id="wrongForm-inform">잘못된 형식입니다.</span>
 			</div>
 			<div class="profile-password">
-				<label class="attribute-name" >비밀번호 확인<span
-					class="red-star">*</span></label> <input type="password" class="input-form"
-					placeholder="비밀번호를 입력하세요"  id="secondPass" required/> <span id="notMatch-inform">비밀번호가 일치하지 않습니다.</span>
+				<label class="attribute-name" >비밀번호 확인
+				<span class="red-star">*</span>
+				</label> <input type="password" class="input-form" placeholder="비밀번호를 입력하세요"  id="secondPass" required/>
+					<span id="notMatch-inform">비밀번호가 일치하지 않습니다.</span>
 			</div>
 			<div class="profile-birthday">
 				<div class="info-title">생년월일</div>
@@ -145,7 +148,7 @@ $(document).ready(function() {
 		</div>
 		<br>
 		<div class="agreement">
-			<label for="agree5"> <input type="checkbox" id="agree5" checked>
+			<label for="agree5"> <input type="checkbox" id="agree5" required>
 				<i class="circle"></i> [필수] 탈퇴 시 일시적 정보 보유동의
 			</label>
 		</div>
@@ -359,17 +362,17 @@ $(document).ready(function() {
        	
         
         if (idCheck === 'N') {
-            alert('아이디 중복확인 해라');
+            alert('아이디 중복확인 해주세요.');
             $('#clientId').focus();
         } else if (emailCheck === 'N') {
-            alert('이메일 중복확인 해라');
+            alert('이메일 중복확인 해주세요.');
             $('#clientEmail').focus();
         } else if (firstPwdCheck === 'visible') {
-            alert('비번 형식에 맞게 작성해라');
+            alert('비밀번호 형식이 알맞지 않습니다.');
             $('#firstPass').val('');
             $('#firstPass').focus();
         } else if (secondPwdCheck === 'visible') {
-            alert('비밀번호 다르다 확인해');
+            alert('비밀번호가 일치하지 않습니다.');
             $('#secondPass').val('');
             $('#secondPass').focus();
         } else if (!$('#agree1').is(':checked')) {

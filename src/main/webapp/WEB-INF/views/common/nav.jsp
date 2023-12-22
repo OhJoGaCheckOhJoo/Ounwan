@@ -13,9 +13,8 @@
             </a>
         </div>
         <div>
-            <a href="#">쇼핑몰</a>
+            <a href="${appPath}/coupung/products">쇼핑몰</a>
             <div id="navSubmenu" class="nav-submenu">
-                <a href="#">전체 보기</a>
                 <a href="#">운동 기구</a>
                 <a href="#">건강 보조 식품</a>
                 <a href="#">헬스 이용권</a>
@@ -23,7 +22,7 @@
             </div>
         </div>
         <div>
-            <a href="#">중고거래</a>
+            <a href="${appPath}/danggun/main">중고거래</a>
             <div id="navSubmenu" class="nav-submenu">
                 <a href="${appPath}/danggun/main">전체 보기</a>
                 <a href="#">관심 상품</a>
@@ -32,8 +31,8 @@
         <div>
             <a href="#">커뮤니티</a>
             <div id="navSubmenu" class="nav-submenu">
-                <a class="ounwangram" href="ounwangram">오운완 커뮤니티</a>
-                <a href="#">고민 게시판</a>
+                <a class="ounwangram" href="${appPath}/community/ounwangram">오운완 커뮤니티</a>
+                <a href="${appPath}/community/aetaBoards">고민 게시판</a>
             </div>
         </div>
         <div>
@@ -49,19 +48,18 @@
     <div id="navMenu" class="nav-menu">
         <div>
             <div>
-                <a href="#">전체 보기</a>
                 <a href="#">운동 기구</a>
                 <a href="#">건강 보조 식품</a>
                 <a href="#">헬스 이용권</a>
                 <a href="#">의류</a>
             </div>
             <div>
-                <a href="#">전체 보기</a>
+                <a href="${appPath}/danggun/main">전체 보기</a>
                 <a href="#">관심 상품</a>
             </div>
             <div>
-                <a class="ounwangram" href="ounwangram">오운완 커뮤니티</a>
-                <a href="#">고민 게시판</a>
+                <a class="ounwangram" href="${appPath}/community/ounwangram">오운완 커뮤니티</a>
+                <a href="${appPath}/community/aetaBoards">고민 게시판</a>
             </div>
             <div>
                 <a href="#">상품문의</a>

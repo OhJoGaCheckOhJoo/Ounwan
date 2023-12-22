@@ -7,32 +7,36 @@
 <title>ounwan1</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link href="${appPath}/css/main.css" rel="stylesheet" />
+<link href="${appPath}/css/main2.css" rel="stylesheet" />
+<link href="${appPath}/css/header.css" rel="stylesheet" />
 </head>
 <body>
-    <header><a class="logo" href= "./"></a></header>
+    <header>
+    	<div class="header">
+	    	<a class="logo" href= "${appPath}"></a>
+	    </div>
+    </header>
     <div class="container">
         <div class="login-menu">
             <div><a href="#" class="login-menu-selected" id="loginAccount">&nbsp;로그인&nbsp;</a></div>
             <div class="float-right"><a href="#" id="findAccount">&nbsp;아이디/비밀번호 찾기&nbsp;</a></div>
         </div>
-        <!-- 로그인 -->
+
         <div class="login-container" id="loginAccountSelected">
-            <!-- 소셜 로그인 -->
             <div class="social-wrap">
                 <a href="/myapp/clients/login/google"><img class="login login-radius" src="../images/google.png"></a><br>
                 <a href="/myapp/clients/login/naver"><img class="login login-radius" src="../images/naver_btn.png"></a><br>
-                <a href="/myapp/clients/login/kakao"><img class="login login-radius" src="../images/kakao.png"></a><br>
+                <a href="/myapp/clients/login/kakao"><img class="login login-radius" src="../images/kakao_btn.png"></a><br>
             </div>
-            <!-- 일반 로그인 -->
             <div class="login-wrap-1 float-right">
                 <form>
                     <div class="login">
-                        <input value="jj1234" type="text" id="loginId" required >
+                        <input type="text" id="loginId" required >
                         <label>아이디</label>
                         <span></span>
                     </div>
                     <div class="login">
-                        <input value="123456789" type="password" id="loginPassword" required>
+                        <input type="password" id="loginPassword" required>
                         <label>비밀번호</label>
                         <span></span>
                     </div>
@@ -42,7 +46,7 @@
                 <div class="login-sub"><a class="login-sub-2" href="#">비회원 주문조회</a></div>
             </div>
         </div>
-        <!-- 아이디/비밀번호 찾기 -->
+
         <div class="login-container" id="findAccountSelected" hidden>
             <div class="login-wrap-2">
                 <h3>아이디 찾기</h3>

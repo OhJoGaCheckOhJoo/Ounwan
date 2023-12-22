@@ -1,0 +1,370 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="appPath" scope="application"
+	value="${pageContext.request.contextPath}" />
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../css/main.css" />
+<link rel="stylesheet" type="text/css" href="../css/cart.css" />
+<link rel="stylesheet" type="text/css" href="../css/styleguide.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<!-- 전체 화면 모달 -->
+<div class="modal fade" id="fullScreenModal" tabindex="-1" aria-labelledby="fullScreenModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="fullScreenModalLabel">전체 화면 모달</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- 모달 내용 -->
+       	이메일 : <input type="text" id="guestEmail" />
+        핸드폰 번호 : <input type="text" id="guestPhone"/>
+        <button type="button" id="guestSubmitBtn">입력</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-primary">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+	<header>
+		<a class="logo" href="#"></a>
+		<div class="float-right">
+			<a href="./html/signup.html">회원가입</a> <a class="pointer"
+				id="loginSelect" href="${appPath}/clients/login">로그인</a>
+			<!--# : DB(회원)/세션(비회원)에서 가져올 것-->
+			<button class="pointer" onclick="goToCart()">Basket (#)</button>
+		</div>
+	</header>
+
+	<div class="container">
+		<nav>
+			<div class="nav-main">
+				<div class="pointer">
+					<a id="hamberger-btn" class="menu-trigger"> <span></span> <span></span>
+						<span></span>
+					</a>
+				</div>
+				<div>
+					<a href="#">쇼핑몰</a>
+					<div class="nav-submenu">
+						<a href="${appPath}/cart/test">전체 보기</a> <a href="#">운동 기구</a> <a
+							href="#">건강 보조 식품</a> <a href="#">헬스 이용권</a> <a href="#">의류</a>
+					</div>
+				</div>
+				<div>
+					<a href="${appPath}/danggun/main">중고거래</a>
+					<div class="nav-submenu">
+						<a href="#">전체 보기</a> <a href="#">관심 상품</a>
+					</div>
+				</div>
+				<div>
+					<a href="#">커뮤니티</a>
+					<div class="nav-submenu">
+						<a href="#">오운완 커뮤니티</a> <a href="#">고민 게시판</a>
+					</div>
+				</div>
+				<div>
+					<a href="#">고객센터</a>
+					<div class="nav-submenu">
+						<a href="#">상품문의</a> <a href="#">배송문의</a> <a href="#">중고거래</a> <a
+							href="#">커뮤니티</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<div class="contents">
+
+			<div class="cartList" id="cartList">
+				<c:choose>
+		<c:when test="${clientId == null}">
+			<!-- 비회원정보 -->
+			<h1>비회원입니다.</h1>
+			<c:forEach var="cart" items="${cartList}" varStatus="status">
+				<div class="productContainer">
+					<div class="product">
+
+						<div class="checkbox">
+							<input type="checkbox" name="checkbox" class="selectCheckbox">
+							<input type="hidden" value="${cart.coupungNumber}" class="productNum" />
+							<input type="hidden" value="${cart.coupungOptionNumber}" class="optionNum" />
+							<input type="hidden" value="${cart.quantity}" class="productQuantity" />
+						</div>
+
+						<img src="${cart.url}" alt="productImage"
+							style="height: 120px; margin-left: 16px; width: 120px;">
+						<div class="flex-col flex">
+							<div
+								class="coupungName valign-text-middle inter-normal-black-16px">
+								상품명 : ${cart.name}</div>
+							<div
+								class="coupungOption valign-text-middle inter-normal-star-dust-12px">
+								구매옵션 : ${cart.option }</div>
+							<div>
+								<span>단가:${cart.price}원</span>
+							</div>
+						</div>
+						<div class="num">
+							<div>수량</div>
+							<div class="count">
+								<div class="minus">
+									<input type='hidden' value='${cart.coupungNumber}'
+										class='coupung-num' /> <input type='hidden'
+										value='${cart.price}' class='coupung-price' /> <input
+										type='hidden' value='${status.count}' class='index-num' /> -
+								</div>
+								<span id="result${status.count}">${cart.quantity}</span>
+								<div class="plus">
+									<input type='hidden' value='${cart.coupungNumber}'
+										class='coupung-num' /> <input type='hidden'
+										value='${cart.price}' class='coupung-price' /> <input
+										type='hidden' value='${status.count}' class='index-num' /> +
+								</div>
+
+							</div>
+						</div>
+						<div class="text-1 valign-text-middle inter-normal-black-16px">
+							<div>가격</div>
+
+							<span id="resultPrice${status.count}">금액:${cart.price*cart.quantity}</span>원
+						</div>
+						<button class="delete-button"
+							data-coupung-num="${cart.coupungNumber}" data-option-num="${cart.coupungOptionNumber}">X</button>
+					</div>
+				</div>
+				<br>
+			</c:forEach>
+		</c:when>
+		<c:otherwise>
+			<!-- 회원 정보 -->
+			<h1>회원입니다.</h1>
+			<c:forEach var="cart" items="${UserCartList}" varStatus="status">
+				<div class="productContainer">
+					<div class="product">
+
+						<div class="checkbox">
+							<input type="checkbox" name="checkbox" class="selectCheckbox">
+							<input type="hidden" value="${cart.coupungNumber}" class="productNum" />
+							<input type="hidden" value="${cart.coupungOptionNumber}" class="optionNum" />
+							<input type="hidden" value="${cart.quantity}" class="productQuantity" />
+						</div>
+
+
+						<img src="${cart.URL}" alt="productImage"
+							style="height: 120px; margin-left: 16px; width: 120px;">
+						<div class="flex-col flex">
+							<div
+								class="coupungName valign-text-middle inter-normal-black-16px">
+								상품명 : ${cart.name}</div>
+							<div
+								class="coupungOption valign-text-middle inter-normal-star-dust-12px">
+								
+								구매옵션 : ${cart.option }</div>
+							<div>
+								<span>단가:${cart.price}원</span>
+							</div>
+						</div>
+						<div class="num">
+							<div>수량</div>
+							<div class="count">
+								<div class="minus">
+									<input type='hidden' value='${cart.COUPUNG_NUMBER}'
+										class='coupung-num' /> <input type='hidden'
+										value='${cart.price}' class='coupung-price' /> <input
+										type='hidden' value='${status.count}' class='index-num' /> -
+								</div>
+								<span id="result${status.count}">${cart.QUANTITY}</span>
+								<div class="plus">
+									<input type='hidden' value='${cart.COUPUNG_NUMBER}'
+										class='coupung-num' /> <input type='hidden'
+										value='${cart.price}' class='coupung-price' /> <input
+										type='hidden' value='${status.count}' class='index-num' /> +
+								</div>
+
+							</div>
+						</div>
+						<div class="text-1 valign-text-middle inter-normal-black-16px">
+							<div>가격</div>
+
+							<span id="resultPrice${status.count}">금액:${cart.price*cart.QUANTITY}</span>원
+						</div>
+						<button class="delete-button"
+							data-coupung-num="${cart.COUPUNG_NUMBER}" data-option-num="${cart.COUPUNG_OPTION_NUMBER}">X</button>
+					</div>
+				</div>
+				<br>
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>
+			</div>
+			<div class="payOption">
+				<div class="overlap-group2">
+					<div class="option">
+						<button id="orderBtn" type='button'>
+							<div class="text-11 valign-text-middle">주문하기</div>
+						</button>
+					</div>
+					<div class="view-3 view-4">
+						<div class="text-12 valign-text-middle inter-normal-black-16px">결제
+							금액</div>
+						<div class="text-13 valign-text-middle">
+							<span id="totalAmount">0</span>원
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	$(".delete-button").on("click",function(){
+		 var coupungNum = $(this).data("coupung-num");
+		 var optionNum = $(this).data('option-num');
+		 alert(optionNum);
+			$.ajax({
+				url:"${appPath}/coupung/cartDelete",
+				data : {
+					"coupungNumber" : coupungNum,
+					"optionNumber" : optionNum
+				},
+				success : function(res){
+					if(res === "cart"){
+						location.href = "${appPath}/coupung/cart";
+					}
+				}
+			}); 	
+		});
+		
+	</script>
+
+	<script>
+		var totalPrice = 0;
+			
+			$(".plus").on("click", function(){
+				var price = $(this).find(".coupung-price").val();
+				var index = $(this).find(".index-num").val();
+				var coupungNum = $(this).find(".coupung-num").val();
+				var quantity = Number($("#result" + index).html()) + 1;
+				$('#result'+index).html(quantity);totalPrice += price;
+				
+				$.ajax({
+					url:"${appPath}/coupung/cartUpdate",
+					data : {
+						"coupungNumber" : coupungNum,
+						"quantity" : quantity
+					},
+					success : function(res){
+						if(res === "cart"){
+							location.href = "${appPath}/coupung/cart";
+						}
+					}
+				}); 
+				
+				
+			});
+			$(".minus").on("click", function(){
+				var price = $(this).find(".coupung-price").val();
+				var index = $(this).find(".index-num").val();
+				var coupungNum = $(this).find(".coupung-num").val();
+				var quantity = Number($("#result" + index).html()) - 1;
+				$('#result'+index).html(quantity);
+				
+				$.ajax({
+					url:"${appPath}/coupung/cartUpdate",
+					data : {
+						"coupungNumber" : coupungNum,
+						"quantity" : quantity
+					},
+					success : function(res){
+						if(res === "cart"){
+							location.href = "${appPath}/coupung/cart";
+						}
+					}
+				}); 
+			
+				
+			});
+
+		
+		var productList = [];
+		var optionList = [];
+		var quantityList = [];
+		$("#orderBtn").on("click", function() {
+		    $('.selectCheckbox:checked').each(function() {
+		        var coupungNum = $(this).parent().find('.productNum').val();
+		        var optionNum = $(this).parent().find('.optionNum').val();
+		        var quantity = $(this).parent().find('.productQuantity').val();
+				productList.push(coupungNum);
+				optionList.push(optionNum);
+				quantityList.push(quantity);
+		    });
+		    
+			if('${userInfo}' === '') {
+				if(!confirm('로그인 하시겠습니까?')) {
+					$('#fullScreenModal').modal('show'); // 모달을 띄우는 부분
+				} else {
+					location.href="${appPath}/clients/login";
+				}
+			} else {
+				location.href = '${appPath}/coupung/order?productList=' + productList + '&optionList=' + optionList +'&quantityList=' + quantityList;
+			}
+		});
+		
+		var phone = "";
+	    $('#guestPhone').on('input', function() {
+	        if ($(this).val().length < 14) {
+	            $(this).val($(this).val()
+	                .replace(/[^0-9]/g, '')
+	                .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3"));
+	            phone = $(this).val();
+	        } else {
+	            $(this).val(phone);
+	        }
+
+	    });
+	    
+		$('#guestSubmitBtn').on('click', function() {
+			var email = $('#guestEmail').val();
+			var emailFormat = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+			
+			if (!emailFormat.test(email)) {
+				alert('잘못된 이메일 형식입니다!');
+				$('#guestEmail').val('');
+				$('#guestEmail').focus();
+			} else {
+				var obj = {
+						'email' : email,
+						'phone' : phone
+				}
+				$.ajax({
+					url : '${appPath}/guest',
+					type : 'post',
+					data : JSON.stringify(obj),
+					contentType : 'application/json',
+					success : function(res) {
+						if (res === 'success') {
+							alert("성공하셨습니다.");
+							location.href = '${appPath}/coupung/order?productList=' + productList + '&optionList=' + optionList +'&quantityList=' + quantityList;
+						}
+					},
+		            error: function(request, status, error) {
+		                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		            }
+				});
+			}
+		});
+		</script>
+</body>
+</html>

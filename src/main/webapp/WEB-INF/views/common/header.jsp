@@ -4,21 +4,27 @@
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
 <header>
-    <a class="logo" href="/myapp"></a>
-    <c:if test="${clientInfo.clientId eq null}">
-    	<div class="float-right">
-	        <a href="./html/signup.html">회원가입</a>
-	        <a class="pointer" id="loginSelect" href="${appPath}/clients/login">로그인</a>
-	        <button class="pointer">Basket (#)</button>
-	    </div>
-    </c:if>
-    <c:if test="${clientInfo.clientId ne null}">
-    	<div class="float-right">
-    		<div id="myProfile">
-		        <img src="${clientInfo.profileURL}">
-		        <span>${clientInfo.name}님 환영합니다!</span>
-	        </div>
-	        <button class="pointer">Basket (#)</button>
-	    </div>
-    </c:if>
+	<div class="header">
+	    <a class="logo" href="/${appPath}"></a>
+	    <c:if test="${userInfo.clientId eq null}">
+	    	<div class="float-right">
+                <a id="signUp" href="${appPath}/clients/signUp"></a>
+                <a id="loginSelect" href="${appPath}/clients/login"></a>
+                <button id="cart"></button>
+                <c:if test="${cartList ne null}">
+                	<div id="cartNotice"></div>
+                </c:if>
+            </div>
+	    </c:if>
+	    <c:if test="${userInfo.clientId ne null}">
+	    	<div class="float-right">
+                <a id="profileImage" href="#">
+                    <img src="../images/google.png">
+                </a>
+                <span>${userInfo.name}님 환영합니다</span>
+                <button id="cart"></button>
+                <div id="cartNotice"></div>
+            </div>
+	    </c:if>
+    </div>
 </header>
