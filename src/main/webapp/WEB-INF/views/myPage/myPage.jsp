@@ -104,7 +104,7 @@
 					</div>
 					<div class="side-bar menu">
 						<div class="menu-container coupung">
-							<a href="#">
+							<a href="javascript:orderList()">
 								<div class="coupung-menu order-list">주문내역 조회</div>
 							</a> <a href="#">
 								<div class="coupung-menu mileage">마일리지</div>
@@ -337,6 +337,16 @@
 
 		<script src="./js/main.js" ></script>
 		<script>
+			function orderList() {
+				$.ajax({
+					type : "GET",
+					url : "${appPath}/myPage/coupungOrderList",
+					success : function(res) {
+						$("#content").html(res);
+					}
+				});
+			}
+		
 			function danggunSaleList() {
 				$.ajax({
 					type : "GET",
