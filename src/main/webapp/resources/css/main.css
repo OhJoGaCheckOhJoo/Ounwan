@@ -27,12 +27,13 @@ header div {
 
 header div a {
   display: inline-block;
-  margin: 26.8px 0px 0px 15px;
+  margin: 26.8px 15px 0px 0px;
   font-size: 1.25em;
   font-weight: bold;
 }
 
 header div button {
+  position: relative;
   height: 50px;
   width: 120px;
   font-size: 1.25em;
@@ -40,6 +41,27 @@ header div button {
   color: #fff;
   border-radius: 10px;
   background-color: var( --main-color);
+  bottom: 10px;
+}
+
+#myProfile {
+	display: inline-block;
+	cursor: pointer;
+}
+
+#myProfile img {
+	margin: 20px 10px 0px 0px;
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+}
+
+#myProfile span {
+	position: relative;
+	display: inline-block;
+	margin-right: 10px;
+	height: 40px;
+	bottom: 12px;
 }
 
 nav {
@@ -107,6 +129,34 @@ nav a:hover {
 
 .nav-submenu:hover {
   transform: scaleY(1);
+}
+
+.nav-menu {
+	width: 1125px;
+	position: relative;
+	padding-left: 125px;
+	z-index: 10;
+	background-color: #fff;
+	transform: scaleY(0);
+	transform-origin: top;
+  	transition: transform 0.25s ease;
+  	box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+  	border-bottom-left-radius: 10px;
+  	border-bottom-right-radius: 10px;
+  	bottom: 20%;
+}
+
+.nav-menu div > div {
+	width: 130px;
+	margin-left: 102px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.nav-menu div div a {
+	display: block;
+	width: 130px;
+	text-align: center;
 }
 
 .menu-trigger,
@@ -188,6 +238,14 @@ footer div {
 .img-2 {
   width: 220px;
   height: 220px;
+}
+
+.margin-1 {
+	margin: 0px 30px 0px 30px;
+}
+
+.margin-2 {
+	margin: 0px 30px 0px 30px;
 }
 
 .pointer {

@@ -1,5 +1,7 @@
 package com.ounwan.controller;
 	
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -45,11 +47,14 @@ public class ClientsController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public String loginPost(String clientId, String password, HttpServletRequest request, RedirectAttributes attr,
 			HttpSession session) {
-		boolean result = clientService.checkLogin(clientId, password);
-		if (result) {
-			session.setAttribute("clientId", clientId);
+		Map<String, Object> result = clientService.checkLogin(clientId, password);
+		
+		if ((boolean) result.get("loginResult")) {
+			session.setAttribute("clientInfo", result.get("clientInfo"));
+			return "로그인 성공";
+		} else {
+			return "로그인 실패";
 		}
-		return (result) ? "로그인 성공" : "로그인 실패";
 	}
 
 	@SuppressWarnings("static-access")
