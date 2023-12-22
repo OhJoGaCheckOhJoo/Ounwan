@@ -1,0 +1,154 @@
+.danggun-container {
+    margin: 20px 0px 180px 0px; 
+    position: relative;
+}
+
+.register-container {
+    padding: 20px 20px 50px 20px;
+    border-bottom: 5px solid black;
+    position: relative;
+}
+
+.register-info {
+    padding: 20px;
+    font-size: 50px;
+    display: inline-block;
+}
+
+.register-required {
+    font-size: 20px;
+    color: rgb(214, 42, 42);
+    display: inline-block;
+}
+
+.prohibit-list {
+    display: inline-block;
+    text-decoration: underline;
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(80%);
+}
+
+.prohibit-list > button {
+	text-decoration: underline;
+	border: 0;
+	background-color: transparent;
+}
+
+.register-content {
+    padding: 80px 30px 30px 30px;
+}
+
+.danggun-product {
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+}
+
+
+
+
+
+
+.danggun-image {
+    width: 150px;
+    height: 150px;
+    margin-right: 150px;
+    position: relative;
+    
+    display: inline-block;
+}
+
+.danggun-image>label {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	font-size: 30px;
+	z-index: 3;
+}
+
+.danggun-image>label:hover {
+	background-color: rgba(100, 100, 100, 0.5);
+}
+
+.danggun-image>img {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 0;
+    left: 0;
+} 
+
+.danggun-product-description {
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.danggun-product-text {
+    width: 180px;
+    height: 50px;
+    margin-top: 10px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.danggun-product-text.plus {
+    font-size: 12px;
+}
+
+.danggun-product > input, .text-input-name > input {
+    height: 50px;
+}
+
+.text-input-description > input {
+    height: 450px;
+}
+
+.text-input-name, .text-input-description {
+    position: relative;
+}
+
+.text-count {
+    display: inline-block;
+    bottom: 13px;
+    right: 13px;
+    background-color: aliceblue;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    margin-bottom: -30px;
+}
+
+.submit-btn {
+    width: 180px;
+    height: 60px;
+    position: absolute;
+    right: 55px;
+}
+
+input, textarea {
+    width: 950px;
+    padding-left: 10px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+
+.text-input-description > textarea {
+    height: 400px;
+    padding-top: 10px;
+    resize: none;
+}
+
+.input-file {
+    display: none; 
+}
+
+.main-send {
+	background-color: red;
+}

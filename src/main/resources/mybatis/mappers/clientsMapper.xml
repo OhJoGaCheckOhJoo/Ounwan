@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.ounwan.clients">
+
+	<insert id="insertClient" parameterType="clients">
+        insert into
+        clients(client_id, name, password, email, birthday, phone, address, address_detail, 
+        zip_code, privacy_terms, email_check, activation_check, qualified_check, 
+        profile_url, email_auth, social_type, social_id)
+        values (#{clientId}, #{name}, #{password},#{email}, #{birthday}, #{phone}, #{address}, #{addressDetail},
+        #{zipCode},#{privacyTerms},#{emailCheck},#{activationCheck},#{qualifiedCheck},
+        #{profileURL},#{emailAuth},#{socialType},#{socialId})
+    </insert>
+    
+    <select id="selectForFindId" parameterType="clients" resultType="clients">
+    	SELECT * FROM CLIENTS WHERE NAME = #{name} AND email = #{email}
+    </select>
+    
+    <select id="selectForFindPassword" parameterType="clients" resultType="int">
+    	SELECT COUNT(*) FROM CLIENTS WHERE CLIENT_ID = #{clientId} AND EMAIL = #{email}
+    </select>
+    
+    <update id="updatePassword" parameterType="clients">
+    	UPDATE CLIENTS SET PASSWORD = #{password} WHERE CLIENT_ID = #{clientId}
+    </update>
+    
+    <update id="withdrawal" parameterType="clients">
+    	UPDATE CLIENTS SET WITHDRAWAL_DATE = NOW(), ACTIVATION_CHECK = 1, PRIVACY_TERMS = #{privacyTerms} WHERE CLIENT_ID = #{clientId}
+    </update>
+
+    <select id="checkLogin" parameterType="String" resultType="clients">
+    	select * from CLIENTS where client_id=#{clientId}
+    </select>
+
+    <select id="checkNaverToken" parameterType="String" resultType="clients">
+    	select * from CLIENTS where social_id = #{token} and social_type = 'NAVER'
+    </select>
+    
+    <select id="checkKakaoToken" parameterType="String" resultType="clients">
+    	select * from CLIENTS where social_id = #{token} and social_type = 'KAKAO'
+    </select>
+
+	<select id="checkGoogleToken" parameterType="String" resultType="clients">
+    	select * from CLIENTS where social_id = #{token} and social_type = 'GOOGLE'
+    </select>
+    
+    <select id="getClientInfo" parameterType="String" resultType="clients">
+    	select * from CLIENTS WHERE CLIENT_ID = #{clientId}
+    </select>
+	
+	<select id="checkClientId" parameterType="String" resultType="int">
+		select count(*) from clients where client_id = #{clientId}
+	</select>
+
+	<select id="checkEmail" parameterType="String" resultType="int">
+		select count(*) from clients where email = #{email}
+	</select>
+	
+	<select id="getEmailAuth" parameterType="String" resultType="String">
+		SELECT EMAIL_AUTH FROM CLIENTS WHERE CLIENT_ID = #{clientId}
+	</select>
+	
+	<update id="updateActivation" parameterType="String">
+		UPDATE CLIENTS SET EMAIL_CHECK = TRUE, EMAIL_AUTH =' ' WHERE CLIENT_ID = #{clientId}
+	</update>
+	
+	<select id="checkAuthorization" parameterType="String" resultType="boolean">
+		SELECT EMAIL_CHECK FROM CLIENTS WHERE CLIENT_ID = #{clientId}
+	</select>
+	
+</mapper>
