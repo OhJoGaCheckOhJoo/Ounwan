@@ -36,8 +36,10 @@ public class CommunityService {
 	@Autowired
 	CommunityDAO communityDAO;
 	
+	//이미지 저장 경로 지정
 	private final static String UPLOADPATH = "C:/shinhan/sts-workspace/ounwan/src/main/webapp/resources";
 	private final static String IMAGEPATH = "/images/uploads/";
+	public static final String AETA_IMAGE_REPO="/Users/jungwoo/Desktop/importance/photo";
 	
 	public OunwanGramDTO selectOunwangramBoardDetail(int communityNumber, String clientId) {
 		Map<String, Object> data = new HashMap<>();
@@ -431,12 +433,6 @@ public class CommunityService {
 				.updatedDate(inbody.getUpdatedDate())
 				.build();
 	}
-
-	@Autowired
-	CommunityDAO communityDAO;
-	
-	//이미지 저장 경로 지정
-	public static final String AETA_IMAGE_REPO="/Users/jungwoo/Desktop/importance/photo";
 	
 	//이미지 저장 메소드
 	public String saveFile(MultipartFile file) {

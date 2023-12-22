@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.clients">
+
 	<insert id="insertClient" parameterType="clients">
         insert into
         clients(client_id, name, password, email, birthday, phone, address, address_detail, 
@@ -43,6 +44,7 @@
 
 	<select id="checkGoogleToken" parameterType="String" resultType="clients">
     	select * from CLIENTS where social_id = #{token} and social_type = 'GOOGLE'
+    </select>
     
     <select id="getClientInfo" parameterType="String" resultType="clients">
     	select * from CLIENTS WHERE CLIENT_ID = #{clientId}
@@ -67,4 +69,5 @@
 	<select id="checkAuthorization" parameterType="String" resultType="boolean">
 		SELECT EMAIL_CHECK FROM CLIENTS WHERE CLIENT_ID = #{clientId}
 	</select>
+	
 </mapper>

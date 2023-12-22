@@ -22,112 +22,94 @@ import com.ounwan.entity.OunwanGramLikes;
 public class CommunityDAO {
 
 	@Autowired
-	SqlSession sqlsession;
+	SqlSession sqlSession;
 	private static final String NAMESPACE = "net.ounwan.community.";
 	
 	//게시판 조회
 	public List<AetaDTO> AetaList(Map<String, Object> paginateParams) {
-		return sqlsession.selectList(NAMESPACE+"AetaList",paginateParams );
+		return sqlSession.selectList(NAMESPACE+"AetaList",paginateParams );
 	}
 	
 	//게시판 검색기능
 	public List<Aeta> aetaSearchAll(Map<String, Object> paginateParams){		
-		return sqlsession.selectList(NAMESPACE+"AetaSearchAll",paginateParams);
+		return sqlSession.selectList(NAMESPACE+"AetaSearchAll",paginateParams);
 	}
 	public List<Aeta> aetaSearchTitle(Map<String, Object> paginateParams){
-		return sqlsession.selectList(NAMESPACE+"AetaSearchTitle",paginateParams);
+		return sqlSession.selectList(NAMESPACE+"AetaSearchTitle",paginateParams);
 	}
 	public List<Aeta> aetaSearchId(Map<String, Object> paginateParams){
-		return sqlsession.selectList(NAMESPACE+"AetaSearchId",paginateParams);
+		return sqlSession.selectList(NAMESPACE+"AetaSearchId",paginateParams);
 	}
-	
-	
 	
 	//게시글 조회
 	public List<Map<String, Object>> aetaReadPost(int boardNumber){
-		
-		return sqlsession.selectList(NAMESPACE+"AetaReadPost", boardNumber);
+		return sqlSession.selectList(NAMESPACE+"AetaReadPost", boardNumber);
 	}
 	public int aetaCountLikes(int boardNumber) {
-		return sqlsession.selectOne(NAMESPACE+"AetaCountLikes",boardNumber);
+		return sqlSession.selectOne(NAMESPACE+"AetaCountLikes",boardNumber);
 	}
 	public int aetaLikesCheck(AetaLikes aetaLikesDTO) {
-		return sqlsession.selectOne(NAMESPACE+"AetaLikesCheck",aetaLikesDTO);
+		return sqlSession.selectOne(NAMESPACE+"AetaLikesCheck",aetaLikesDTO);
 	}
 	public int aetaLike(AetaLikes aetaLikesDTO) {
-		return sqlsession.insert(NAMESPACE+"AetaLike",aetaLikesDTO);
+		return sqlSession.insert(NAMESPACE+"AetaLike",aetaLikesDTO);
 	}
 	public int aetaDislike(AetaLikes aetaLikesDTO) {
-		return sqlsession.delete(NAMESPACE+"AetaDislike",aetaLikesDTO);
+		return sqlSession.delete(NAMESPACE+"AetaDislike",aetaLikesDTO);
 	}
 	
 	//게시글 등록
 	public int aetaInsertPost(Aeta post) {
-		return sqlsession.insert(NAMESPACE+"AetaInsertPost",post);
+		return sqlSession.insert(NAMESPACE+"AetaInsertPost",post);
 	}
 	public int aetaInsertImageURL(String images) {
-		return sqlsession.insert(NAMESPACE+"AetaInsertImageURL",images);
+		return sqlSession.insert(NAMESPACE+"AetaInsertImageURL",images);
 	}
 	
 	//게시글 조회수 증가
 	public int aetaUpdateViews(int boardNumber) {
-		return sqlsession.update(NAMESPACE+"AetaUpdateView",boardNumber);
+		return sqlSession.update(NAMESPACE+"AetaUpdateView",boardNumber);
 	}
 	
 	//게시글 댓글 등록/삭제
 	public int aetaInsertComment(Comments comment) {
-		return sqlsession.insert(NAMESPACE+"AetaInsertComment", comment);
+		return sqlSession.insert(NAMESPACE+"AetaInsertComment", comment);
 	}
 	public int aetaDeleteComment(Comments comment) {
-		return sqlsession.delete(NAMESPACE+"AetaDeleteComment",comment);
+		return sqlSession.delete(NAMESPACE+"AetaDeleteComment",comment);
 	}
 	
-
 	//게시글 수정 시 보여줄 데이터
 	public List<Map<String, Object>> aetaPostToBeUpdated(int boardNumber){
-		return sqlsession.selectList(NAMESPACE+"AetaPostToBeUpdated",boardNumber);
+		return sqlSession.selectList(NAMESPACE+"AetaPostToBeUpdated",boardNumber);
 	}
 	//게시글 수정 // title,contents,boardNumber 
 	public int aetaUpdatePost(Aeta post) {
-		return sqlsession.update(NAMESPACE+"AetaUpdatePost", post);
+		return sqlSession.update(NAMESPACE+"AetaUpdatePost", post);
 	}
 	//게시글 이미지url 수정 // imageUrl,boardNumber
 	public int aetaUpdatePostURL(AetaImages aetaImages) {
-		return sqlsession.update(NAMESPACE+"AetaUpdatePostURL",aetaImages);
+		return sqlSession.update(NAMESPACE+"AetaUpdatePostURL",aetaImages);
 	}
-	
-
-	
 	//게시글 삭제
 	public int aetaDeletePost(int boardNumber) {
-		return sqlsession.delete(NAMESPACE+"AetaDeletePost",boardNumber);
+		return sqlSession.delete(NAMESPACE+"AetaDeletePost",boardNumber);
 	}
-
-
-
-	
 	public int CountAllPosts() {
-		return sqlsession.selectOne(NAMESPACE+"AetaCountAllPosts");
+		return sqlSession.selectOne(NAMESPACE+"AetaCountAllPosts");
 	}
 	public int CountSearchAll(String inputValue) {
-		return sqlsession.selectOne(NAMESPACE+"AetaCountSearchAll",inputValue);
+		return sqlSession.selectOne(NAMESPACE+"AetaCountSearchAll",inputValue);
 	}
 	public int CountSearchTitle(String inputValue) {
-		return sqlsession.selectOne(NAMESPACE+"AetaCountSearchTitle",inputValue);
+		return sqlSession.selectOne(NAMESPACE+"AetaCountSearchTitle",inputValue);
 	}
 	public int CountSearchId(String inputValue) {
-		return sqlsession.selectOne(NAMESPACE+"AetaCountSearchId",inputValue);
+		return sqlSession.selectOne(NAMESPACE+"AetaCountSearchId",inputValue);
 	}
-	
-	
-	private String addPercentage(String inputValue) {
-		return "%"+inputValue+"%";
-	}
-
-	
 	public String findClientId(int boardNumber) {
-		return sqlsession.selectOne(NAMESPACE+"FindClientId"+boardNumber);
-
+		return sqlSession.selectOne(NAMESPACE+"FindClientId"+boardNumber);
+	}
 	public List<OunwanGram> gramFollowBoard(Map<String, Object> dataMap) {
 		return sqlSession.selectList(NAMESPACE + "gramFollowBoard", dataMap);
 	}
@@ -151,7 +133,6 @@ public class CommunityDAO {
 	public List<Map<String, Object>> getProfileBoard(Map<String, Object> data) {
 		return sqlSession.selectList(NAMESPACE + "getProfileBoard", data);
 	}
-	
 	public List<OunwanGram> selectBoardsByTag(Map<String, Object> data) {
 		return sqlSession.selectList(NAMESPACE + "selectBoardsByTag", data);
 	}
@@ -159,27 +140,21 @@ public class CommunityDAO {
 	public List<Inbody> selectMyInbody(String clientId) {
 		return sqlSession.selectList(NAMESPACE + "selectMyInbody", clientId);
 	}
-	
 	public List<Map<String, Object>> selectFollowerList(Map<String, Object> data) {
 		return sqlSession.selectList(NAMESPACE + "selectFollowerList", data);
 	}
-	
 	public List<Map<String, Object>> selectFollowingList(Map<String, Object> data) {
 		return sqlSession.selectList(NAMESPACE + "selectFollowingList", data);
 	}
-	
 	public int checkFollow(Map<String, Object> data) {
 		return sqlSession.selectOne(NAMESPACE + "checkFollow", data);
 	}
-	
 	public Map<String, Object> searchHashTag(String keyword) {
 		return sqlSession.selectOne(NAMESPACE + "searchHashTag", keyword); 
 	}
-	
 	public OunwanGram aGramBoard(int communityNumber) {
 		return sqlSession.selectOne(NAMESPACE + "selectOneBoard", communityNumber);
 	}
-	
 	public OunwanGram selectBoardByCommunityNum(int communityNumber) {
 		return sqlSession.selectOne(NAMESPACE + "selectBoardByCommunityNum", communityNumber);
 	}

@@ -6,3 +6,5 @@ src/main/webapp/WEB-INF/spring/appServlet/mariaDB.properties
 *.class
 *.jpeg
 *.jpg
+*.jar
+*.svg

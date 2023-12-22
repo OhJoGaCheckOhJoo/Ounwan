@@ -8,8 +8,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,9 +33,6 @@ public class CommunityRestController {
 	
 	@Autowired
 	CommunityService communityService;
-	
-	
-	
 	
 	//게시글 등록(사진제외)
 	@PostMapping(value="/aetaPosting")
@@ -118,18 +119,6 @@ public class CommunityRestController {
 		boolean result = communityService.aetaDeleteComment(comment);
 		return (result) ? "success" : "fail";
 	}
-	
-	
-}
-
-
-
-
-
-
-
-
-
 
 	// 친구보기 요청
 	@RequestMapping("/ounwangram/followBoard")

@@ -426,9 +426,6 @@
 		and CLIENT_ID=#{clientId}
 	</delete>
 
-
-
-
 	<insert id="AetaInsertComment" parameterType="aetaComments">
 		INSERT INTO
 		COMMENTS(CLIENT_ID, BOARD_NUMBER, CONTENTS, CREATED_DATE)
