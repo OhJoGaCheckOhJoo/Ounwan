@@ -4,10 +4,8 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.community">
 
-	<!-- <select id="AetaList" resultType="aeta">
-		select * from CONCERN_BOARDS
-		order by BOARD_NUMBER DESC
-	</select> -->
+	<!-- <select id="AetaList" resultType="aeta"> select * from CONCERN_BOARDS 
+		order by BOARD_NUMBER DESC </select> -->
 	<select id="AetaList" parameterType="map" resultType="aeta">
 		select *
 		from CONCERN_BOARDS
@@ -15,32 +13,36 @@
 		limit #{start},#{limit}
 	</select>
 
-	<select id="AetaSearchAll" parameterType="map"
-		resultType="aeta">
+	<select id="AetaSearchAll" parameterType="map" resultType="aeta">
 		select * from CONCERN_BOARDS
 		where
-		title like CONCAT('%',#{inputValue},'%')
+		title like
+		CONCAT('%',#{inputValue},'%')
 		or
-		CLIENT_ID like CONCAT('%',#{inputValue},'%')
+		CLIENT_ID like
+		CONCAT('%',#{inputValue},'%')
 		order by BOARD_NUMBER DESC
-		limit #{start},#{limit}
+		limit
+		#{start},#{limit}
 	</select>
-	
+
 	<select id="AetaSearchTitle" parameterType="map"
 		resultType="aeta">
 		select * from CONCERN_BOARDS
-		where 
+		where
 		TITLE like CONCAT('%',#{inputValue},'%')
 		order by BOARD_NUMBER DESC
-		limit #{start},#{limit}
+		limit
+		#{start},#{limit}
 	</select>
-	<select id="AetaSearchId" parameterType="map"
-		resultType="aeta">
-		select * from CONCERN_BOARDS
-		where 
+	<select id="AetaSearchId" parameterType="map" resultType="aeta">
+		select
+		* from CONCERN_BOARDS
+		where
 		CLIENT_ID like CONCAT('%',#{inputValue},'%')
 		order by BOARD_NUMBER DESC
-		limit #{start},#{limit}
+		limit
+		#{start},#{limit}
 	</select>
 
 
@@ -48,32 +50,41 @@
 		select count(*) from
 		CONCERN_BOARDS
 	</select>
-	
-	<select id="AetaCountSearchAll" parameterType="String" resultType="int">
+
+	<select id="AetaCountSearchAll" parameterType="String"
+		resultType="int">
 		select count(*) from
 		CONCERN_BOARDS
 		where
-		title like CONCAT('%',#{inputValue},'%')
+		title like
+		CONCAT('%',#{inputValue},'%')
 		or
-		CLIENT_ID like CONCAT('%',#{inputValue},'%')
+		CLIENT_ID like
+		CONCAT('%',#{inputValue},'%')
 	</select>
-	<select id="AetaCountSearchTitle" parameterType="String" resultType="int">
+	<select id="AetaCountSearchTitle" parameterType="String"
+		resultType="int">
 		select count(*) from
 		CONCERN_BOARDS
 		where
-		title like CONCAT('%',#{inputValue},'%')
+		title like
+		CONCAT('%',#{inputValue},'%')
 		or
-		CLIENT_ID like CONCAT('%',#{inputValue},'%')
+		CLIENT_ID like
+		CONCAT('%',#{inputValue},'%')
 	</select>
-	<select id="AetaCountSearchId" parameterType="String" resultType="int">
+	<select id="AetaCountSearchId" parameterType="String"
+		resultType="int">
 		select count(*) from
 		CONCERN_BOARDS
 		where
-		title like CONCAT('%',#{inputValue},'%')
+		title like
+		CONCAT('%',#{inputValue},'%')
 		or
-		CLIENT_ID like CONCAT('%',#{inputValue},'%')
+		CLIENT_ID like
+		CONCAT('%',#{inputValue},'%')
 	</select>
-	
+
 
 
 
@@ -81,35 +92,36 @@
 
 
 	<insert id="AetaInsertPost" parameterType="aeta">
-		<selectKey keyColumn="BOARD_NUMBER"
-			keyProperty="boardNumber" order="AFTER" resultType="int">
-			select
-			BOARD_NUMBER
-			from CONCERN_BOARDS
-			where CLIENT_ID = #{clientId}
-			and TITLE
-			= #{title}
-			and CONTENTS= #{contents}
-		</selectKey>
-
 		INSERT INTO CONCERN_BOARDS (
 		CLIENT_ID,TITLE,CONTENTS,CREATED_DATE)
 		value(#{clientId},#{title},#{contents},now())
 	</insert>
-	<insert id="AetaInsertImageURL" parameterType="aetaImages">
-		INSERT INTO
-		CONCERN_BOARD_IMAGES (BOARD_NUMBER,URL)
-		values(#{boardNumber},#{imageUrl});
+	
+	<insert id="AetaInsertImageURL" parameterType="String">
+		INSERT INTO CONCERN_BOARD_IMAGES 
+		(BOARD_NUMBER,URL)
+		values(
+		(
+			select MAX(BOARD_NUMBER) from CONCERN_BOARDS),
+			#{imageUrl}
+		);
 	</insert>
 
 
 
-	<delete id="AetaDeletePost" parameterType="int">
-		DELETE FROM
-		CONCERN_BOARDS
-		WHERE BOARD_NUMBER =#{boardNumber};
-		
-	</delete>
+	<select id="AetaPostToBeUpdated" parameterType="int"
+		resultType="map">
+		select cb.BOARD_NUMBER ,
+		cb.TITLE ,
+		cb.CONTENTS ,
+		cbi.BOARD_IMAGE_NUMBER ,
+		cbi.URL
+		FROM CONCERN_BOARDS cb
+		left outer join CONCERN_BOARD_IMAGES cbi
+		on cb.BOARD_NUMBER =cbi.BOARD_NUMBER
+		where cb.BOARD_NUMBER
+		=#{boardNumber}
+	</select>
 
 	<update id="AetaUpdatePost" parameterType="aeta">
 		UPDATE CONCERN_BOARDS
@@ -120,7 +132,21 @@
 		where
 		BOARD_NUMBER =#{boardNumber};
 	</update>
+	
+	<update id="AetaUpdatePostURL" parameterType="aetaImages">
+		UPDATE CONCERN_BOARD_IMAGES 
+		SET 
+		URL= #{imageUrl}	
+		where BOARD_NUMBER =#{boardNumber};
 
+	</update>
+
+	<delete id="AetaDeletePost" parameterType="int">
+		DELETE FROM
+		CONCERN_BOARDS
+		WHERE BOARD_NUMBER =#{boardNumber};
+
+	</delete>
 
 
 	<select id="AetaReadPost" parameterType="int" resultType="map">
@@ -174,43 +200,43 @@
 		cmt.CREATED_DATE, cmt.CONTENTS,
 		cmt.UPDATED_DATE, COM_LIKES
 		ORDER BY cmt.COMMENT_NUMBER;
-
 	</select>
-	
+
 	<select id="AetaCountLikes" parameterType="int" resultType="int">
 		select count(BOARD_NUMBER) from AETA_LIKES
-		where BOARD_NUMBER= #{boardNumber};
-	</select> 
-	
-	<select id="AetaLikesCheck" parameterType="aetaLikes" resultType="int">
-		select count(BOARD_NUMBER) from AETA_LIKES
-		where BOARD_NUMBER=#{boardNumber}
-		and CLIENT_ID=#{clientId};
+		where BOARD_NUMBER=
+		#{boardNumber};
 	</select>
 
+	<select id="AetaLikesCheck" parameterType="aetaLikes"
+		resultType="int">
+		select count(BOARD_NUMBER) from AETA_LIKES
+		where
+		BOARD_NUMBER=#{boardNumber}
+		and CLIENT_ID=#{clientId};
+	</select>
 
 	<insert id="AetaLike" parameterType="aetaLikes">
 		INSERT INTO AETA_LIKES
 		(BOARD_NUMBER,CLIENT_ID)
 		values(#{boardNumber} ,#{clientId})
-
 	</insert>
-	
-	<delete id="AetaDislike" parameterType="aetaLikes">	
+
+	<delete id="AetaDislike" parameterType="aetaLikes">
 		DELETE from AETA_LIKES
-		where BOARD_NUMBER=#{boardNumber}  
+		where BOARD_NUMBER=#{boardNumber}
 		and CLIENT_ID=#{clientId}
-	</delete>	
-	
-	
-	
+	</delete>
+
+
+
 
 	<insert id="AetaInsertComment" parameterType="aetaComments">
 		INSERT INTO
 		COMMENTS(CLIENT_ID, BOARD_NUMBER, CONTENTS, CREATED_DATE)
 		values(#{clientId},#{boardNumber},#{contents},now())
 	</insert>
-	<delete id="AetaDeleteComment" parameterType="int">
+	<delete id="AetaDeleteComment" parameterType="aetaComments">
 		DELETE from
 		COMMENTS
 		where
@@ -223,6 +249,12 @@
 		where BOARD_NUMBER=#{boardNumber}
 	</update>
 
+
+	<select id="FindClientId" parameterType="int">
+		select CLIENT_ID
+		from CONCERN_BOARDS
+		where BOARD_NUMBER=#{boardNumber}
+	</select>
 
 </mapper>
 

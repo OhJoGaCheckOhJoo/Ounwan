@@ -61,7 +61,7 @@ public class CommunityDAO {
 	public int aetaInsertPost(Aeta post) {
 		return sqlsession.insert(NAMESPACE+"AetaInsertPost",post);
 	}
-	public int aetaInsertImageURL(AetaImages images) {
+	public int aetaInsertImageURL(String images) {
 		return sqlsession.insert(NAMESPACE+"AetaInsertImageURL",images);
 	}
 	
@@ -74,15 +74,26 @@ public class CommunityDAO {
 	public int aetaInsertComment(Comments comment) {
 		return sqlsession.insert(NAMESPACE+"AetaInsertComment", comment);
 	}
-	public int aetaDeleteComment(int commentId) {
-		return sqlsession.delete(NAMESPACE+"AetaDeleteComment",commentId);
+	public int aetaDeleteComment(Comments comment) {
+		return sqlsession.delete(NAMESPACE+"AetaDeleteComment",comment);
 	}
 	
 
-	//게시글 수정
+	//게시글 수정 시 보여줄 데이터
+	public List<Map<String, Object>> aetaPostToBeUpdated(int boardNumber){
+		return sqlsession.selectList(NAMESPACE+"AetaPostToBeUpdated",boardNumber);
+	}
+	//게시글 수정 // title,contents,boardNumber 
 	public int aetaUpdatePost(Aeta post) {
 		return sqlsession.update(NAMESPACE+"AetaUpdatePost", post);
 	}
+	//게시글 이미지url 수정 // imageUrl,boardNumber
+	public int aetaUpdatePostURL(AetaImages aetaImages) {
+		return sqlsession.update(NAMESPACE+"AetaUpdatePostURL",aetaImages);
+	}
+	
+
+	
 	//게시글 삭제
 	public int aetaDeletePost(int boardNumber) {
 		return sqlsession.delete(NAMESPACE+"AetaDeletePost",boardNumber);
@@ -110,7 +121,9 @@ public class CommunityDAO {
 	}
 
 	
-	
+	public String findClientId(int boardNumber) {
+		return sqlsession.selectOne(NAMESPACE+"FindClientId"+boardNumber);
+	}
 }
 	
 	

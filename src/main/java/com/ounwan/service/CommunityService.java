@@ -1,12 +1,16 @@
 package com.ounwan.service;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.AetaCommentsDTO;
 import com.ounwan.dto.AetaDTO;
@@ -25,6 +29,29 @@ public class CommunityService {
 
 	@Autowired
 	CommunityDAO communityDAO;
+	
+	//이미지 저장 경로 지정
+	public static final String AETA_IMAGE_REPO="/Users/jungwoo/Desktop/importance/photo";
+	
+	//이미지 저장 메소드
+	public String saveFile(MultipartFile file) {
+		SimpleDateFormat aetaDateFormat=new SimpleDateFormat("yyyyMMddHHmmss-"); //날짜 형태로 저장
+		Calendar calendar = Calendar.getInstance();
+		
+		String aetaFileName =
+				aetaDateFormat.format(calendar.getTime())+file.getOriginalFilename();
+		
+		File aetaSaveFile = new File(AETA_IMAGE_REPO+"/"+aetaFileName);
+		
+		try {
+			file.transferTo(aetaSaveFile);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return aetaFileName;
+		
+	}
+	
 
 	int pageLimit = 10; // the number of posts to show on a page
 	int blockLimit = 10; // the number of paginated number on the bottom
@@ -47,28 +74,10 @@ public class CommunityService {
 			return changeDTOList(communityDAO.aetaSearchTitle(paginateParams));
 		if (selectedOption.equals("aetaSearchId"))
 			return changeDTOList(communityDAO.aetaSearchId(paginateParams));
-		return communityDAO.AetaList(paginateParams); // 애게시판메인
+		return communityDAO.AetaList(paginateParams); // 애타 게시판메인
 	}
 
-	// 페이징 구현
-	public PaginatingDTO paginatingParam(int page) {
-
-		// 전체 게시글 갯수
-		int CountAllPosts = communityDAO.CountAllPosts();
-		// 전체 페이지 갯수
-		int maxPageNumber = (int) (Math.ceil((double) CountAllPosts / pageLimit));
-		// 시작할 페이지 값 계산
-		int startPageNumber = (((int) (Math.ceil((double) page / blockLimit))) - 1) * blockLimit + 1;
-		// 끝 페이지 값 계산
-		int endPageNumber = startPageNumber + blockLimit - 1;
-		if (endPageNumber > maxPageNumber) {
-			endPageNumber = maxPageNumber;
-		}
-		return PaginatingDTO.builder().pageNumber(page).maxPageNumber(maxPageNumber).startPageNumber(startPageNumber)
-				.endPageNumber(endPageNumber).build();
-	}
-
-	// 하단 페이징한 데이터
+	//페이징 구현
 	public PaginatingDTO getPages(int page, String inputValue, String selectedOption) {
 		int countPosts = 0;
 		// 출력할 게시글 갯수
@@ -102,18 +111,28 @@ public class CommunityService {
 	}
 
 	// 게시글 등록
-	public int aetaInsertPost(AetaDTO post) {
-		System.out.println("insertPost service");
-		Aeta board = changeEntity(post);
-		int result = communityDAO.aetaInsertPost(board);
-
-		// 에러
-		System.out.println("추가된 게시글번호:" + post.getBoardNumber());
-//		if (result > 0) {
-//			images.setBoardNumber(post.getBoardNumber());
-//			System.out.println("boardNum:" + images.getBoardNumber());
-//			result=communityDAO.aetaInsertImageURL(changeEntity(images));
-//		}
+	public int aetaInsertPost(String clientId,String title,String contents,String imageUrl1,String imageUrl2,String imageUrl3) {
+		
+		int imageResult=0;
+		List<String> urlList = List.of(imageUrl1,imageUrl2,imageUrl3);	
+		int postResult=communityDAO.aetaInsertPost(changeEntity(AetaDTO
+				.builder()
+				.clientId(clientId)
+				.title(title)
+				.contents(contents)
+				.build()));
+		if(urlList!=null) {
+			for(int i=0;i<urlList.size() ;i++) {
+				System.out.println("imageurl "+i+":"+urlList.indexOf(i));
+				imageResult=imageResult=communityDAO.aetaInsertImageURL(urlList.get(i));
+			}
+		}else {
+			//image null이면 참
+			imageResult=1;
+		}
+		
+		int result=0;
+		if(imageResult==1&&postResult==1)result=1;
 
 		return result;
 	}
@@ -133,8 +152,12 @@ public class CommunityService {
 		return communityDAO.aetaCountLikes(boardNumber);
 	}
 
-	public int aetaLikesCheck(AetaLikesDTO aetaLikesDTO) {
-		return communityDAO.aetaLikesCheck(changeEntity(aetaLikesDTO));
+	public int aetaLikesCheck(int boardNumber,String clientId) {
+		return communityDAO.aetaLikesCheck(changeEntity(AetaLikesDTO
+				.builder()
+				.boardNumber(boardNumber)
+				.clientId(clientId)
+				.build()));
 	}
 
 	//좋아요 버튼 기능
@@ -160,11 +183,23 @@ public class CommunityService {
 	}
 
 
-	// 게시글 수정
-	public int aetaUpdatePost(AetaDTO post) {
-		int result = communityDAO.aetaUpdatePost(changeEntity(post));
+	// 게시글 수정페이지에 보여줄 데이터
+	public List<Map<String, Object>> aetaPostToBeUpdated(int boardNumber){
+		return communityDAO.aetaPostToBeUpdated(boardNumber);
+	}
+	
+	// 게시글 수정 //title,contents,boardNumber | imageUrl,boardNumber
+	public int aetaUpdatePost(AetaDTO post, AetaImagesDTO images) {
+		int result=0;
+		int postResult = communityDAO.aetaUpdatePost(changeEntity(post));
+		int imageResult = communityDAO.aetaUpdatePostURL(changeEntity(images));
+		
+		if(postResult==1 && imageResult==1) {
+			result=1;
+		}
 		return result;
 	}
+
 
 	// 게시글 삭제
 	public int aetaDeletePost(AetaDTO post) {
@@ -182,9 +217,19 @@ public class CommunityService {
 		Comments c = changeEntity(comment);
 		System.out.println("boardNum: " + c.getBoardNumber());
 
-		return (communityDAO.aetaDeleteComment(comment.getCommentNumber()) > 0) ? true : false;
+		return (communityDAO.aetaDeleteComment(changeEntity(comment)) > 0) ? true : false;
+		
 	}
 
+	
+	
+
+	//게시글 번호(BOARD_NUMBER)로 작성자(CLIENT_ID) 아이디 가져오기 
+	public String findClientId(int boardNumber) {
+		return communityDAO.findClientId(boardNumber);
+	}
+	
+	
 	/* DTO와 Entity 타입바꿔주는 함수들 */
 	private Aeta changeEntity(AetaDTO aeta) {
 		return Aeta.builder().boardNumber(aeta.getBoardNumber()).title(aeta.getTitle()).contents(aeta.getContents())
@@ -199,7 +244,7 @@ public class CommunityService {
 	private Comments changeEntity(AetaCommentsDTO comment) {
 		return Comments.builder().clientId(comment.getClient_id()).commentNumber(comment.getCommentNumber())
 				.boardNumber(comment.getBoardNumber()).contents(comment.getContents())
-				.createdDate(comment.getCreatedDate()).updatedDate(comment.getUpdatedDate()).likes(comment.getLikes())
+				.createdDate(comment.getCreatedDate()).updatedDate(comment.getUpdatedDate())
 				.build();
 	}
 
@@ -210,8 +255,7 @@ public class CommunityService {
 		}
 		return list;
 
-	}
-
+	}	
 	private AetaDTO changeDTO(Aeta aeta) {
 		return AetaDTO.builder().boardNumber(aeta.getBoardNumber()).title(aeta.getTitle()).contents(aeta.getContents())
 				.clientId(aeta.getClientId()).createdDate(aeta.getCreatedDate()).updatedDate(aeta.getCreatedDate())
@@ -222,12 +266,5 @@ public class CommunityService {
 		return AetaLikes.builder().likeNumber(aetaLikesDTO.getLikeNumber()).boardNumber(aetaLikesDTO.getBoardNumber())
 				.clientId(aetaLikesDTO.getClientId()).build();
 	}
-//	private AetaLikesDTO changeAetaLikesDTO(int boardNumber, ClientsDTO user) {
-//		return AetaLikesDTO
-//		.builder()
-//		.boardNumber(boardNumber)
-//		.clientId(user.getClientId())
-//		.build();
-//	}
 
 }

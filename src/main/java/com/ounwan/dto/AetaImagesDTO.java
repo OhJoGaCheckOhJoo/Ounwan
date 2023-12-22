@@ -1,5 +1,7 @@
 package com.ounwan.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -21,4 +23,5 @@ public class AetaImagesDTO {
 	private Integer boardNumber;
 	private Integer boardImageNumber;
 	private String imageUrl;
+	private List<String> urlLists;
 }

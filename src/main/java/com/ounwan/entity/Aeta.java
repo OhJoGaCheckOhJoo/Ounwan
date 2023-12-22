@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AetaBoards {
+public class Aeta {
 	private Integer boardNumber;
 	private String title;
 	private String contents;

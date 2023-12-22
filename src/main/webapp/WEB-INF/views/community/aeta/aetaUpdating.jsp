@@ -7,32 +7,35 @@
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<title>애타 게시글 작성</title>
+<title>애타 게시글 수정</title>
 </head>
 <body>
+<!-- <script>
+	console.log("${aetaUpdate}");
+</script> -->
 	<br>
 	<br>
-
-	<h1>글쓰기</h1>
+	<h1>애타편집</h1>
 	<hr>
 		<div>
+			<input type="hidden" id='boardNO' value="${aetaPost[0].BOARD_NUMBER}">
 			<div>
-				<label for="inputTitle">제목</label><input id="inputTitle">
+				<label for="inputTitle"></label><input id="inputTitle" value="${aetaPost[0].TITLE}">
 			</div>
 
-			<form enctype="multipart/form-data" action="${appPath}/community/aetaPosting" method="post">
+			<form id="selectedImg" enctype="multipart/form-data">
 				<label for="inputImg">이미지</label> 
-				<input type="file" multiple="multiple" id="inputImg" name="inputImg" onchange="readURL(this);"/> <br>
-				<img id="imgPreview" src="#" width=200 height=150 alt="선택된 이미지가 없습니다">
+				<input type="file" id="inputImg"/><br>
+				<img class="imgURL" id="imgURL" src="">
 			</form>
 
 			<div>
 				<br> <label for="inputContent">내용</label><br>
-				<textarea id="inputContent" placeholder=""></textarea>
+				<textarea id="inputContent" >${aetaPost[0].CONTENTS}</textarea>
 				<br>
 			</div>
 			<div class="">
-				<button type="button" id="PostingBtn">등록</button>
+				<button type="button" id="updateConfirmBtn">수정</button>
 			</div>
 		</div>
 	<br>
@@ -41,5 +44,9 @@
 	<script>
 		var appPath = "${appPath}";
 	</script>
+		
+		
+		  
+
 </body>
 </html>
