@@ -112,7 +112,7 @@ public class NaverLoginBO {
 							.email((String) response.get("email"))
 							.phone((String) response.get("mobile"))
 							.birthday(Date.valueOf(birthday))
-							.profileURL((String) response.get("profile_image"))
+							.profileUrl((String) response.get("profile_image"))
 							.socialId((String) response.get("id"))
 							.socialType("NAVER")
 							.build();

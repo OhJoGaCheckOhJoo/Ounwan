@@ -11,81 +11,21 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="../css/main.css" />
-<link rel="stylesheet" type="text/css" href="../css/cart.css" />
-<link rel="stylesheet" type="text/css" href="../css/styleguide.css" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="${appPath }/css/main.css" />
+<link href="${appPath }/css/main2.css" rel="stylesheet">
+<link href="${appPath }/css/header.css" rel="stylesheet">
+<link href="${appPath }/css/nav.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="${appPath }/css/cart.css" />
+<link rel="stylesheet" type="text/css" href="${appPath }/css/styleguide.css" />
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<!-- 전체 화면 모달 -->
-<div class="modal fade" id="fullScreenModal" tabindex="-1" aria-labelledby="fullScreenModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="fullScreenModalLabel">전체 화면 모달</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- 모달 내용 -->
-       	이메일 : <input type="text" id="guestEmail" />
-        핸드폰 번호 : <input type="text" id="guestPhone"/>
-        <button type="button" id="guestSubmitBtn">입력</button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary">저장</button>
-      </div>
-    </div>
-  </div>
-</div>
 
-	<header>
-		<a class="logo" href="#"></a>
-		<div class="float-right">
-			<a href="./html/signup.html">회원가입</a> <a class="pointer"
-				id="loginSelect" href="${appPath}/clients/login">로그인</a>
-			<!--# : DB(회원)/세션(비회원)에서 가져올 것-->
-			<button class="pointer" onclick="goToCart()">Basket (#)</button>
-		</div>
-	</header>
+	 <%@ include file="../common/header.jsp" %>
 
-	<div class="container">
-		<nav>
-			<div class="nav-main">
-				<div class="pointer">
-					<a id="hamberger-btn" class="menu-trigger"> <span></span> <span></span>
-						<span></span>
-					</a>
-				</div>
-				<div>
-					<a href="#">쇼핑몰</a>
-					<div class="nav-submenu">
-						<a href="${appPath}/cart/test">전체 보기</a> <a href="#">운동 기구</a> <a
-							href="#">건강 보조 식품</a> <a href="#">헬스 이용권</a> <a href="#">의류</a>
-					</div>
-				</div>
-				<div>
-					<a href="${appPath}/danggun/main">중고거래</a>
-					<div class="nav-submenu">
-						<a href="#">전체 보기</a> <a href="#">관심 상품</a>
-					</div>
-				</div>
-				<div>
-					<a href="#">커뮤니티</a>
-					<div class="nav-submenu">
-						<a href="#">오운완 커뮤니티</a> <a href="#">고민 게시판</a>
-					</div>
-				</div>
-				<div>
-					<a href="#">고객센터</a>
-					<div class="nav-submenu">
-						<a href="#">상품문의</a> <a href="#">배송문의</a> <a href="#">중고거래</a> <a
-							href="#">커뮤니티</a>
-					</div>
-				</div>
-			</div>
-		</nav>
+    <div class="container">
+        <%@ include file="../common/nav.jsp" %>
+	
 		<div class="contents">
 
 			<div class="cartList" id="cartList">
@@ -228,6 +168,28 @@
 			</div>
 		</div>
 	</div>
+	<!-- 전체 화면 모달 -->
+<div class="modal fade" id="fullScreenModal" tabindex="-1" aria-labelledby="fullScreenModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="fullScreenModalLabel">전체 화면 모달</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- 모달 내용 -->
+       	이메일 : <input type="text" id="guestEmail" />
+        핸드폰 번호 : <input type="text" id="guestPhone"/>
+        <button type="button" id="guestSubmitBtn">입력</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-primary">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+	
 	<script>
 	$(".delete-button").on("click",function(){
 		 var coupungNum = $(this).data("coupung-num");
@@ -271,30 +233,29 @@
 						}
 					}
 				}); 
-				
-				
 			});
-			$(".minus").on("click", function(){
-				var price = $(this).find(".coupung-price").val();
-				var index = $(this).find(".index-num").val();
-				var coupungNum = $(this).find(".coupung-num").val();
-				var quantity = Number($("#result" + index).html()) - 1;
-				$('#result'+index).html(quantity);
-				
-				$.ajax({
-					url:"${appPath}/coupung/cartUpdate",
-					data : {
-						"coupungNumber" : coupungNum,
-						"quantity" : quantity
-					},
-					success : function(res){
-						if(res === "cart"){
-							location.href = "${appPath}/coupung/cart";
-						}
-					}
-				}); 
 			
-				
+			$(".minus").on("click", function(){
+				var index = $(this).find(".index-num").val();
+				if($("#result" + index).html() > 1) {
+					var price = $(this).find(".coupung-price").val();
+					var coupungNum = $(this).find(".coupung-num").val();
+					var quantity = Number($("#result" + index).html()) - 1;
+					$('#result'+index).html(quantity);
+					
+					$.ajax({
+						url:"${appPath}/coupung/cartUpdate",
+						data : {
+							"coupungNumber" : coupungNum,
+							"quantity" : quantity
+						},
+						success : function(res){
+							if(res === "cart"){
+								location.href = "${appPath}/coupung/cart";
+							}
+						}
+					}); 
+				}
 			});
 
 		

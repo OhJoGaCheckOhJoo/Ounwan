@@ -1,5 +1,6 @@
 package com.ounwan.controller;
 	
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ounwan.dto.CartsDTO;
 import com.ounwan.dto.ClientsDTO;
@@ -89,15 +89,15 @@ public class ClientsController {
 	}
 	// Rest Api 처리 필
 	@RequestMapping("/logout")
-	public String logoutGet(HttpSession session) {
+	public @ResponseBody String logoutGet(HttpSession session) {
 		String accessToken = (String) session.getAttribute("accessToken");
 		if (accessToken != null) {
 			kakaoLogin.logout(session);
 			session.invalidate();
-			return "home";
+			return "success";
 		}
 		session.invalidate();
-		return "home";
+		return "success";
 	}
 
 	@RequestMapping("/login/kakao")
@@ -128,6 +128,7 @@ public class ClientsController {
 	
 	@GetMapping("/checkId")
 	public @ResponseBody String checkId(String clientId) {
+		System.out.println(clientId);
 		// true = id 존재, false = id 없음
 		boolean result = clientService.checkId(clientId);
 		return (result) ? "exist" : "available";
@@ -152,7 +153,7 @@ public class ClientsController {
 	}
 	
 	@PostMapping(value="/setImage")
-	public @ResponseBody String setImage(@RequestParam("image") MultipartFile image) {
+	public @ResponseBody String setImage(@RequestParam("image") MultipartFile image) throws IllegalStateException, IOException {
 		String imgString = clientService.setImage(image);
 		return imgString;
 	}

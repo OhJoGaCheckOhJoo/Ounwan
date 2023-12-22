@@ -3,8 +3,8 @@
 .banner {
     width: 1250px;
     height: 350px;
-    background-image: url("../images/v616_37.png");
-    background-size: cover;
+    background-image: url("../../images/banner/005.png");
+    background-size: 1250px 350px;
     background-repeat: no-repeat;
 }
 .banner:hover a {
@@ -23,11 +23,11 @@
 .banner-pointer-right {
     float: right;
     right: 80px;
-    background-image: url("./right_1.png");
+    background-image: url("../../images/right_1.png");
 }
 .banner-pointer-left {
     left: 70px;
-    background-image: url("./left_1.png");
+    background-image: url("../../images/left_1.png");
 }
 .banner-page {
     position: absolute;
@@ -70,19 +70,19 @@
     background-repeat: no-repeat;
 }
 .whole {
-    background-image: url("./hamberger.png");
+    background-image: url("../../images/hamberger.png");
 }
 .clothing {
-    background-image: url("./clothing.png");
+    background-image: url("../../images/clothing.png");
 }
 .vitamin {
-    background-image: url("./vitamin.png");
+    background-image: url("../../images/vitamin.png");
 }
 .ticket {
-    background-image: url("./ticket.png");
+    background-image: url("../../images/ticket.png");
 }
 .machine {
-    background-image: url("./machine.png");
+    background-image: url("../../images/machine.png");
 }
 .search {
     padding-bottom: 20px;
@@ -105,7 +105,7 @@
     width: 30px;
     height: 30px;
     top: 14px;
-    background-image: url("./search_0.png");
+    background-image: url("../../images/search_0.png");
     background-size: cover;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -355,4 +355,9 @@
 }
 .product-explain img {
     width: 100%;
+}
+.product-name {
+	width: 180px;
+	height: 21.8px;
+	overflow: hidden;
 }

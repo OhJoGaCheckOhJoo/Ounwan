@@ -4,135 +4,36 @@
 <c:set var="appPath" scope="application" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
-<<head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Document</title>
-    <link href="${appPath }/css/coupung/main2.css" rel="stylesheet">
-    <link href="${appPath }/css/coupung/header.css" rel="stylesheet">
-    <link href="${appPath }/css/coupung/nav.css" rel="stylesheet">
+    <link href="${appPath }/css/main.css" rel="stylesheet">
+    <link href="${appPath }/css/main2.css" rel="stylesheet">
+    <link href="${appPath }/css/header.css" rel="stylesheet">
+    <link href="${appPath }/css/nav.css" rel="stylesheet">
     <link href="${appPath }/css/coupung/coupung.css" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
-	<!-- 전체 화면 모달 -->
-	<div class="modal fade" id="fullScreenModal" tabindex="-1" aria-labelledby="fullScreenModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-fullscreen">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="fullScreenModalLabel">전체 화면 모달</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        <!-- 모달 내용 -->
-	       	이메일 : <input type="text" id="guestEmail" />
-	        핸드폰 번호 : <input type="text" id="guestPhone"/>
-	        <button type="button" id="guestSubmitBtn">입력</button>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="button" class="btn btn-primary">저장</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<!-- header -->
-    <header>
-        <div class="header">
-            <a class="logo" href="/ounwan"></a>
-            <div class="float-right">
-                <a id="signUp" href="./html/signup.html"></a>
-                <a id="loginSelect" href="#"></a>
-                <button id="cart"></button>
-                <div id="cartNotice"></div>
-            </div>
-        </div>
-    </header>
+	<%@ include file="../common/header.jsp" %>
 
     <div class="container">
-        <nav>
-            <div class="nav-main">
-                <div class="pointer">
-                    <a id="hamberger-btn" class="menu-trigger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </a>
-                </div>
-                <div>
-                    <a href="${appPath}/coupung/products">쇼핑몰</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a href="${appPath}/coupung/products">전체 보기</a>
-                        <a href="${appPath}/coupung/products?categoryNum=3">운동 기구</a>
-                        <a href="${appPath}/coupung/products?categoryNum=2">건강 보조 식품</a>
-                        <a href="${appPath}/coupung/products?categoryNum=4">헬스 이용권</a>
-                        <a href="${appPath}/coupung/products?categoryNum=1">의류</a>
-                    </div>
-                </div>
-                <div>
-                    <a href="#">중고거래</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a href="#">전체 보기</a>
-                        <a href="#">관심 상품</a>
-                    </div>
-                </div>
-                <div>
-                    <a href="#">커뮤니티</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a class="ounwangram" href="ounwangram">오운완 커뮤니티</a>
-                        <a href="#">고민 게시판</a>
-                    </div>
-                </div>
-                <div>
-                    <a href="#">고객센터</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a href="#">상품문의</a>
-                        <a href="#">배송문의</a>
-                        <a href="#">중고거래</a>
-                        <a href="#">커뮤니티</a>
-                    </div>
-                </div>
-            </div>
-            <div id="navMenu" class="nav-menu">
-                <div>
-                    <div>
-                        <a href="#">전체 보기</a>
-                        <a href="#">운동 기구</a>
-                        <a href="#">건강 보조 식품</a>
-                        <a href="#">헬스 이용권</a>
-                        <a href="#">의류</a>
-                    </div>
-                    <div>
-                        <a href="#">전체 보기</a>
-                        <a href="#">관심 상품</a>
-                    </div>
-                    <div>
-                        <a class="ounwangram" href="ounwangram">오운완 커뮤니티</a>
-                        <a href="#">고민 게시판</a>
-                    </div>
-                    <div>
-                        <a href="#">상품문의</a>
-                        <a href="#">배송문의</a>
-                        <a href="#">중고거래</a>
-                        <a href="#">커뮤니티</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <%@ include file="../common/nav.jsp" %>
 
         <div>
             <div class="product-detail">
                 <div class="product-img-2">
                 	<c:forEach var="image" items="${detail.image }" begin='1'>
-                		<img class="detail-img" src="../${image.url }">
+                		<img class="detail-img" src="${image.url }">
                 	</c:forEach>
                 </div>
                 <div class="product-img-1">
                     <!-- <%-- 메인 이미지 수정--%> -->
-                    <img src="../${detail.image[0].url }">
+                    <img src="${detail.image[0].url }">
                 </div>
                 <div class="product-box">
                     <div class="product-title">
@@ -201,7 +102,9 @@
                 </div>
                 <div class="product-additional-view">
                     <div class="product-explain">
-                        <img src="./hamberger.png">
+	                    <c:forEach var="image" items="${detail.detailImages }">
+	                		<img class="detail-img" src="${image.url }">
+	                	</c:forEach>
                     </div>
                     <div class="product-comment" hidden>
                         <div>
@@ -227,6 +130,29 @@
             </div>
         </div>
     </div>
+    
+    <!-- 전체 화면 모달 -->
+	<div class="modal fade" id="fullScreenModal" tabindex="-1" aria-labelledby="fullScreenModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-fullscreen">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="fullScreenModalLabel">전체 화면 모달</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <!-- 모달 내용 -->
+	       	이메일 : <input type="text" id="guestEmail" />
+	        핸드폰 번호 : <input type="text" id="guestPhone"/>
+	        <button type="button" id="guestSubmitBtn">입력</button>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary">저장</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
     <script src="../js/main.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -307,6 +233,8 @@ const unitPrice = $("#unitPrice").html().replaceAll(",",""); // jsp에서는 DB�
 			alert('수량을 선택해 주세요');
 		} else {
 			var option = $('#productOption option:selected').val();
+			var quantity = (Number)($('#quantity').val());
+			alert(quantity);
 			var obj = {
 					'coupungNumber' : ${detail.coupungNumber},
 					'quantity' : quantity,

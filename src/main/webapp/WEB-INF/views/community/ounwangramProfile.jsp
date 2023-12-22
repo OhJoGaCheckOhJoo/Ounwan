@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<c:set var="appPath" scope="application" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./css/main.css" rel="stylesheet" >
-    <link href="./css/community.css" rel="stylesheet" >
+    <link href="${appPath}/css/main.css" rel="stylesheet" >
+    <link href="${appPath}/css/main2.css" rel="stylesheet" />
+    <link href="${appPath}/css/header.css" rel="stylesheet" />
+    <link href="${appPath}/css/nav.css" rel="stylesheet" />
+    <link href="${appPath}/css/community.css" rel="stylesheet" >
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script>
@@ -94,7 +97,7 @@
 		</div>
 	</div>
 	
-    <script src="./js/main.js"></script>
-    <script src="./js/community.js"></script>
+    <script src="${appPath}/js/main.js"></script>
+    <script src="${appPath}/js/community.js"></script>
 </body>
 </html>

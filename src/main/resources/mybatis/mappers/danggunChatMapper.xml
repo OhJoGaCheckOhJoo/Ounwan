@@ -5,7 +5,7 @@
 <mapper namespace="net.ounwan.danggunChat">
 	<!-- 해당 채팅 내역 가져오기 -->
 	<select id="selectDanggunChatList" resultType="danggunChatMessage">
-		SELECT * FROM danggun_chat_message WHERE ROOM_ID = #{roomId}
+		SELECT * FROM DANGGUN_CHAT_MESSAGE WHERE ROOM_ID = #{roomId}
 	</select>
 	<!-- 방 여부 확인 -->
 	<select id="selectRoomList" resultType="string">
@@ -18,16 +18,16 @@
 	</insert>
 	
 	<insert id="insertMessage">
-		insert into danggun_chat_message (ROOM_ID, SENDER, MESSAGE)
+		insert into DANGGUN_CHAT_MESSAGE (ROOM_ID, SENDER, MESSAGE)
 		VALUES (#{roomId}, #{sender}, #{message})
 	</insert>
 	
 	<delete id="deleteMessage">
-		DELETE FROM danggun_chat_message WHERE MESSAGE_ID = #{messageId}
+		DELETE FROM DANGGUN_CHAT_MESSAGE WHERE MESSAGE_ID = #{messageId}
 	</delete>
 	
 	<select id="lastMessageId" resultType="int">
- 		select max(message_id) from danggun_chat_message where ROOM_ID = #{roomId}
+ 		select max(message_id) from DANGGUN_CHAT_MESSAGE where ROOM_ID = #{roomId}
  	</select>
 	
 </mapper>

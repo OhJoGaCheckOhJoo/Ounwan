@@ -24,6 +24,7 @@ public class CoupungDTO {
 	private Boolean availableCheck;
 	// 이미지 추가
 	private List<ProductImagesDTO> image;
+	private List<ProductImagesDTO> detailImages;
 	private List<CoupungOptionsDTO> options;
 	private Integer quantity;
 }

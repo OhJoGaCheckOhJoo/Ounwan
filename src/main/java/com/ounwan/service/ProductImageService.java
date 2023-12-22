@@ -16,8 +16,12 @@ public class ProductImageService {
 	@Autowired
 	ProductImageDAO productImageDAO;
 
-	public List<ProductImagesDTO> getImageByCoupungId(Integer coupungNumber) {
-		return changeDTOList(productImageDAO.getImageByCoupungId(coupungNumber));
+	public List<ProductImagesDTO> getProductImageByCoupungId(Integer coupungNumber) {
+		return changeDTOList(productImageDAO.getProductImageByCoupungId(coupungNumber));
+	}
+	
+	public List<ProductImagesDTO> getDetailImageByCoupungId(Integer coupungNumber) {
+		return changeDTOList(productImageDAO.getDetailImageByCoupungId(coupungNumber));
 	}
 	
 	public List<ProductImagesDTO> changeDTOList(List<ProductImages> productImage) {

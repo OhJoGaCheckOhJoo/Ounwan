@@ -7,6 +7,9 @@
 <html>
 <head>
 <link href="${appPath}/css/main.css" rel="stylesheet" />
+<link href="${appPath}/css/main2.css" rel="stylesheet" />
+<link href="${appPath}/css/header.css" rel="stylesheet" />
+<link href="${appPath}/css/nav.css" rel="stylesheet" />
 <link href="${appPath}/css/danggunDetail.css" rel="stylesheet" />
 <link href="${appPath}/css/danggunUpdateModal.css" rel="stylesheet" />
 <link href="${appPath}/css/danggunReportModal.css" rel="stylesheet" />
@@ -20,44 +23,10 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-	<%@ include file="../common/header.jsp"%>
-	<main id="main">
-		<div class="container">
-			<nav>
-				<div class="nav-main">
-					<div class="pointer">
-						<a id="hamberger-btn" class="menu-trigger"> <span></span> <span></span>
-							<span></span>
-						</a>
-					</div>
-					<div>
-						<a href="#">쇼핑몰</a>
-						<div class="nav-submenu">
-							<a href="#">전체 보기</a> <a href="#">운동 기구</a> <a href="#">건강 보조
-								식품</a> <a href="#">헬스 이용권</a> <a href="#">의류</a>
-						</div>
-					</div>
-					<div>
-						<a href="#">중고거래</a>
-						<div class="nav-submenu">
-							<a href="${appPath}/danggun/main">전체 보기</a> <a href="#">관심 상품</a>
-						</div>
-					</div>
-					<div>
-						<a href="#">커뮤니티</a>
-						<div class="nav-submenu">
-							<a href="#">오운완 커뮤니티</a> <a href="#">고민 게시판</a>
-						</div>
-					</div>
-					<div>
-						<a href="#">고객센터</a>
-						<div class="nav-submenu">
-							<a href="#">상품문의</a> <a href="#">배송문의</a> <a href="#">중고거래</a> <a
-								href="#">커뮤니티</a>
-						</div>
-					</div>
-				</div>
-			</nav>
+	<%@ include file="../common/header.jsp" %>
+
+    <div class="container">
+        <%@ include file="../common/nav.jsp" %>
 
 			<div class="product-all">
 				<div class="toList">
@@ -65,17 +34,17 @@
 				</div>
 				<div class="details">
 					<div class="photos">
-						<div class="small-img">
+						<div class="product-img-2 small-img">
 							<c:forEach var="images" items="${post.productImagesList}">
 								<c:if test="${images.type eq 1}">
 									<div>
-										<img class="small-img" src="${images.url}" />
+										<img class="small-img detail-img" src="${images.url}" />
 									</div>
 								</c:if>
 							</c:forEach>
 						</div>
 						<!-- small_img -->
-						<div class="big-img">
+						<div class="product-img-1 big-img">
 							<c:forEach var="images" items="${post.productImagesList}">
 								<c:if test="${images.type eq 0}">
 									<img class="big-img" src="${images.url }" />
@@ -112,8 +81,10 @@
 							<div class="product-bottom">
 								<c:if test="${userInfo.clientId != post.clientId}">
 									<!-- session의 clientid와 작성자의 clientid가 다를 때 -->
-									<button class="zzimBtn" id="wishListBtn" type="button" value="${post.danggunNumber}">
-										<img id="wishListImg" class="wish-list-img" src="${appPath}/images/danggun_wishlist_${post.wishListImg}.png" /> 
+									<button class="zzimBtn" id="wishListBtn" type="button"
+										value="${post.danggunNumber}">
+										<img id="wishListImg" class="wish-list-img"
+											src="${appPath}/images/danggun_wishlist_${post.wishListImg}.png" />
 										<div id="small" class="small">${post.countZzim}</div>
 									</button>
 									<button class="chatting main-btn" id="chatting" type="button">

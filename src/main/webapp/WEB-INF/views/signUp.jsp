@@ -20,7 +20,7 @@ $(document).ready(function() {
 		$('#clientEmail').attr('readOnly', true);
 		$('#emailCheckBtn').attr('value', 'Y');
 		$('#emailCheckBtn').attr('disabled', true);
-		$('#profileImage').attr('src', '${kakaoClient.profileURL}');
+		$('#profileImage').attr('src', '${kakaoClient.profileUrl}');
 	} 
 	if ('${naverClient}' != '') {
 		$('#clientName').val('${naverClient.name}');
@@ -33,7 +33,7 @@ $(document).ready(function() {
 		$('#phoneNum').attr('readOnly', true);
 		$('#clientBirthday').val('${naverClient.birthday}');
 		$('#clientBirthday').attr('readOnly', true);
-		$('#profileImage').attr('src', '${naverClient.profileURL}');
+		$('#profileImage').attr('src', '${naverClient.profileUrl}');
 	} 
 	if ('${googleClient}' != '') {
 		$('#clientName').val('${googleClient.name}');
@@ -42,7 +42,7 @@ $(document).ready(function() {
 		$('#clientEmail').attr('readOnly', true);
 		$('#emailCheckBtn').attr('value', 'Y');
 		$('#emailCheckBtn').attr('disabled', true);
-		$('#profileImage').attr('src', '${googleClient.profileURL}');
+		$('#profileImage').attr('src', '${googleClient.profileUrl}');
 	}
 });
 </script>
@@ -184,6 +184,7 @@ $(document).ready(function() {
 
     $('#checkId').on('click', function() {
         var id = $('#clientId').val();
+        alert(id);
         var idFormat = /^[a-z]+[a-z0-9]{5,11}$/g;
         if (!idFormat.test(id)) {
             alert('형식에 맞게 작성해 주세요 (6 ~ 12자리)');
@@ -438,7 +439,7 @@ $(document).ready(function() {
      		    "addressDetail" : $('#addrDetail').val(),
      		    "zipCode" : $('#zipCode').val(),
      		    "privacyTerms" : "3",
-     		    "profileURL" : imgUrl,
+     		    "profileUrl" : imgUrl,
      		    "socialType" : "KAKAO",
      		    "socialId" : "${kakaoClient.socialId}"
      		};
@@ -457,7 +458,7 @@ $(document).ready(function() {
      		    "addressDetail" : $('#addrDetail').val(),
      		    "zipCode" : $('#zipCode').val(),
      		    "privacyTerms" : "3",
-     		    "profileURL" : imgUrl,
+     		    "profileUrl" : imgUrl,
      		    "socialType" : "NAVER",
      		    "socialId" : "${naverClient.socialId}"
      		};
@@ -476,7 +477,7 @@ $(document).ready(function() {
 	     		    "addressDetail" : $('#addrDetail').val(),
 	     		    "zipCode" : $('#zipCode').val(),
 	     		    "privacyTerms" : "3",
-	     		    "profileURL" : imgUrl,
+	     		    "profileUrl" : imgUrl,
 	     		    "socialType" : "GOOGLE",
 	     		    "socialId" : "${googleClient.socialId}"
 	     		};
@@ -494,7 +495,7 @@ $(document).ready(function() {
      		    "addressDetail" : $('#addrDetail').val(),
      		    "zipCode" : $('#zipCode').val(),
      		    "privacyTerms" : "3",
-     		    "profileURL" : imgUrl
+     		    "profileUrl" : imgUrl
      		};
 	 }
 </script>

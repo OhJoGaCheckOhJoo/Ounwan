@@ -114,7 +114,6 @@
     display: inline-block;
     bottom: 13px;
     right: 13px;
-    background-color: aliceblue;
     position: absolute;
     right: 0px;
     bottom: 0px;
@@ -131,6 +130,10 @@
 input, textarea {
     width: 950px;
     padding-left: 10px;
+}
+
+input, textarea, select {
+	background-color: var(--main-back);
 }
 
 input[type="number"]::-webkit-outer-spin-button,

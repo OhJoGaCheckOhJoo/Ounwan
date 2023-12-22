@@ -108,7 +108,7 @@ public class GoogleLoginBO {
         							.name(name)
         							.socialId(token)
         							.socialType("GOOGLE")
-        							.profileURL(profilePic)
+        							.profileUrl(profilePic)
         							.build();
 	}
 }

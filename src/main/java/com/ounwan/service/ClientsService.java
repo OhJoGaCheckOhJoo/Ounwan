@@ -1,6 +1,7 @@
 package com.ounwan.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,8 +28,8 @@ public class ClientsService {
 	@Autowired
 	MailSender sender;
 	
-	private final static String UPLOADPATH = "/Users/karenyoon/Documents/GitHub/Back-end/src/main/webapp/resources";
-	private final static String IMAGEPATH = "/images/uploads/";
+	private final static String UPLOADPATH = "C:/shinhan/sts-workspace/ounwan/src/main/webapp/resources";
+	private final static String IMAGEPATH = "/images/profileUploads/";
  
 	public boolean createAccount(ClientsDTO client) {
 		String password = hashPassword(client.getPassword());
@@ -143,10 +144,10 @@ public class ClientsService {
 	}
 	
 
-	public String setImage(MultipartFile multipartFile) {
+	public String setImage(MultipartFile multipartFile) throws IllegalStateException, IOException {
 		String newFileName = System.currentTimeMillis() + "." + multipartFile.getContentType().split("/")[1]; // image/jpg
 		File file = new File(UPLOADPATH + IMAGEPATH + newFileName);
-		
+		multipartFile.transferTo(file);
 		return "." + IMAGEPATH + newFileName;
 	}
 
@@ -242,7 +243,7 @@ public class ClientsService {
                 .emailCheck(client.getEmailCheck())
                 .activationCheck(client.getActivationCheck())
                 .qualifiedCheck(client.getQualifiedCheck())
-                .profileURL(client.getProfileURL())
+                .profileUrl(client.getProfileUrl())
                 .emailAuth(client.getEmailAuth())
                 .socialType(client.getSocialType())
                 .socialId(client.getSocialId())
@@ -264,7 +265,7 @@ public class ClientsService {
                 .emailCheck(client.getEmailCheck())
                 .activationCheck(client.getActivationCheck())
                 .qualifiedCheck(client.getQualifiedCheck())
-                .profileURL(client.getProfileURL())
+                .profileUrl(client.getProfileUrl())
                 .emailAuth(client.getEmailAuth())
                 .socialType(client.getSocialType())
                 .socialId(client.getSocialId())

@@ -15,7 +15,11 @@ public class ProductImageDAO {
 	SqlSession sqlSession;
 	private static final String NAMESPACE = "net.ounwan.productImage.";
 	
-	public List<ProductImages> getImageByCoupungId(Integer coupungProductId) {
-		return sqlSession.selectList(NAMESPACE + "selectByCoupungId", coupungProductId);
+	public List<ProductImages> getProductImageByCoupungId(Integer coupungProductId) {
+		return sqlSession.selectList(NAMESPACE + "selectProductImageByCoupungId", coupungProductId);
+	}
+	
+	public List<ProductImages> getDetailImageByCoupungId(Integer coupungProductId) {
+		return sqlSession.selectList(NAMESPACE + "selectDetailImageByCoupungId", coupungProductId);
 	}
 }

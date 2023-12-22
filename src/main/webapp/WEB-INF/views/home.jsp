@@ -46,7 +46,7 @@ prefix="c" %>
     <hr>
     
     <%@ include file="./common/footer.jsp" %>
-    <script src="./js/main.js"></script>
+    <script src="${appPath}/js/main.js"></script>
     <script>
     	$("#chat").on("click",function(e){
     		e.preventDefault();

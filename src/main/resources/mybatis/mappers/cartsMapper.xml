@@ -28,7 +28,7 @@
 
 	<select id="updateQuantity" parameterType="carts"
 		resultType="carts">
-		update carts
+		update CARTS
 		set QUANTITY = #{quantity}
 		where CART_NUMBER = #{cartNumber}
 	</select>

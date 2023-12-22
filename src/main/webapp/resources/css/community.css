@@ -1,75 +1,5 @@
 @charset "UTF-8";
 
-/* 애타 css*/
-.aeta {
-    width: 1000px;
-    margin: 100px auto;
-}
-.aeta-title {
-    margin-bottom: 30px;
-}
-.aeta-title strong {
-    font-size: 2rem;
-}
-.aeta-title p {
-    margin-top: 5px;
-    font-size: 1.2rem;
-}
-.aeta-list {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-}
-/* .aeta-list1 {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-} */
-
-    
-
-.aeta-list .contents {
-    display: flex;
-}
-.aeta-list .num{
-    width: 60px;
-}
-.aeta-list .title{
-    width: 660px;
-}
-.aeta-list .writer{
-    width: 100px;
-}
-.aeta-list .date{
-    width: 100px;
-}
-.aeta-list .count{
-    width: 80px;
-}
-.aeta-page {
-    text-align: center;
-}
-.search{
-    display: flex;
-    justify-content: center;
-}
-/* 버튼 숨기기*/
-
-
-
-/*좋아요 */
-.aeta-like{
-	width:100px;
-	height:30px;
-}
-.aeta-like-png{
-	width:30px;
-	height:30px;
-}
-:root {
-	--main-color: #2E3C8A;
-}
-
 footer {
 	position: relative;
 	z-index: 10;
@@ -593,7 +523,7 @@ nav .ounwangram {
 #gramSearchResult {
 	position: relative;
 	z-index: 5;
-	background-color: #fff;
+	background-color: var(--main-back);
 	max-height: 200px;
 	bottom: 10px;
 	border-bottom-left-radius: 5px;
@@ -646,6 +576,7 @@ nav .ounwangram {
 	border: 0;
 	border-radius: 10px;
 	bottom: 10px;
+	background-color: var(--main-back);
 }
 
 #gramSearch:focus {

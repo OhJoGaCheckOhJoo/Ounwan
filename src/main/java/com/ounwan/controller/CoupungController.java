@@ -63,7 +63,7 @@ public class CoupungController {
 	
 	@GetMapping("/hot-deal")
 	public String getHotDeal(HttpSession session, Model model) {
-		String clientId = (String) session.getAttribute("clientId");
+		String clientId = ((ClientsDTO) session.getAttribute("userInfo")).getClientId();
 		boolean history = coupungService.checkOrderHistory(clientId);
 		List<CoupungDTO> productList = coupungService.getHotDealProductList();
 		
@@ -100,7 +100,7 @@ public class CoupungController {
 
 	@PostMapping("/order")
 	public @ResponseBody String setOrder(@RequestBody OrdersDTO order, HttpSession session) {
-		ClientsDTO client = (ClientsDTO) session.getAttribute("client");
+		ClientsDTO client = (ClientsDTO) session.getAttribute("userInfo");
 		GuestsDTO guest = (GuestsDTO) session.getAttribute("guest");
 		if (client == null && guest == null) {
 			session.setAttribute("guestOrderList", order.getOrderDetails());

@@ -117,7 +117,7 @@ public class KakaoLoginBO {
 				client : ClientsDTO.builder()
 									.socialId(token)
 									.socialType("KAKAO")
-									.profileURL(profileURL)
+									.profileUrl(profileURL)
 									.email(email)
 									.build();
 	}

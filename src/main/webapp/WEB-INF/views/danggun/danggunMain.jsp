@@ -10,6 +10,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${appPath}/css/main.css" rel="stylesheet" />
+<link href="${appPath}/css/main2.css" rel="stylesheet" />
+<link href="${appPath}/css/header.css" rel="stylesheet" />
+<link href="${appPath}/css/nav.css" rel="stylesheet" />
 <link href="${appPath}/css/danggunMain.css" rel="stylesheet" />
 <title>오운완</title>
 <script
@@ -18,54 +21,10 @@
 </head>
 <body>
 
-	<!-- header -->
-	<header>
-		<a class="logo" href="${appPath}"></a>
-		<div class="float-right">
-			<a href="./html/signup.html">회원가입</a> <a class="pointer"
-				id="loginSelect">로그인</a>
-			<!--# : DB(회원)/세션(비회원)에서 가져올 것-->
-			<button class="pointer">Basket (#)</button>
-		</div>
-	</header>
-	​
-	<div class="container">
-		<!-- nav -->
-		<nav>
-			<div class="nav-main">
-				<div class="pointer">
-					<a id="hamberger-btn" class="menu-trigger"> <span></span> <span></span>
-						<span></span>
-					</a>
-				</div>
-				<div>
-					<a href="#">쇼핑몰</a>
-					<div id="navSubmenu" class="nav-submenu">
-						<a href="#">전체 보기</a> <a href="#">운동 기구</a> <a href="#">건강 보조
-							식품</a> <a href="#">헬스 이용권</a> <a href="#">의류</a>
-					</div>
-				</div>
-				<div>
-					<a href="${appPath}/danggun/main">중고거래</a>
-					<div id="navSubmenu" class="nav-submenu">
-						<a href="#">전체 보기</a> <a href="#">관심 상품</a>
-					</div>
-				</div>
-				<div>
-					<a href="#">커뮤니티</a>
-					<div id="navSubmenu" class="nav-submenu">
-						<a href="#">오운완 커뮤니티</a> <a href="#">고민 게시판</a>
-					</div>
-				</div>
-				<div>
-					<a href="#">고객센터</a>
-					<div id="navSubmenu" class="nav-submenu">
-						<a href="#">상품문의</a> <a href="#">배송문의</a> <a href="#">중고거래</a> <a
-							href="#">커뮤니티</a>
-					</div>
-				</div>
-			</div>
-		</nav>
+	<%@ include file="../common/header.jsp" %>
+
+    <div class="container">
+        <%@ include file="../common/nav.jsp" %>
 
 		<div class="danggun-container">
 			<button id="upButton" class="up-button">위로</button>
@@ -83,10 +42,10 @@
 						onclick="registerPage()">제품등록</button>
 
 				</div>
-				
-					<div id="danggunProductList" class="danggun-product-list">
 
-						<c:forEach var="list" items="${list}">
+				<div id="danggunProductList" class="danggun-product-list">
+
+					<c:forEach var="list" items="${list}">
 						<a
 							href="${appPath}/danggun/detail?danggunNumber=${list.danggunNumber}">
 							<div class="danggun-pointer">
@@ -100,8 +59,8 @@
 							</div>
 						</a>
 					</c:forEach>
-					</div>
-				
+				</div>
+
 			</div>
 		</div>
 		<hr>

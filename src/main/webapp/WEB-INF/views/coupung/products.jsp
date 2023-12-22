@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="appPath" scope="application"
-	value="${pageContext.request.contextPath}" />
+<c:set var="appPath" scope="application" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,102 +9,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Document</title>
-    <link href="${appPath }/css/coupung/main2.css" rel="stylesheet">
-    <link href="${appPath }/css/coupung//header.css" rel="stylesheet">
-    <link href="${appPath }/css/coupung//nav.css" rel="stylesheet">
-    <link href="${appPath }/css/coupung//coupung.css" rel="stylesheet">
+    <link href="${appPath }/css/main.css" rel="stylesheet">
+    <link href="${appPath }/css/main2.css" rel="stylesheet">
+    <link href="${appPath }/css/header.css" rel="stylesheet">
+    <link href="${appPath }/css/nav.css" rel="stylesheet">
+    <link href="${appPath }/css/coupung/coupung.css" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="header">
-            <a class="logo" href="/ounwan"></a>
-            <div class="float-right">
-                <a id="profileImage" href="#">
-                    <img src="../images/google.png">
-                </a>
-                <span>0000님 환영합니다</span>
-                <button id="cart"></button>
-                <div id="cartNotice"></div>
-            </div>
-        </div>
-        <div class="header-sub-menu">
-            <div>
-                <a href="#">마이페이지</a>
-                <a href="${appPath }/clients/logout">로그아웃</a>
-            </div>
-        </div>
-    </header>
+    <%@ include file="../common/header.jsp" %>
 
     <div class="container">
-        <nav>
-            <div class="nav-main">
-                <div class="pointer">
-                    <a id="hamberger-btn" class="menu-trigger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </a>
-                </div>
-                <div>
-                    <a href="${appPath}/coupung/products">쇼핑몰</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a href="${appPath}/coupung/products">전체 보기</a>
-                        <a href="${appPath}/coupung/products?categoryNum=3">운동 기구</a>
-                        <a href="${appPath}/coupung/products?categoryNum=2">건강 보조 식품</a>
-                        <a href="${appPath}/coupung/products?categoryNum=4">헬스 이용권</a>
-                        <a href="${appPath}/coupung/products?categoryNum=1">의류</a>
-                    </div>
-                </div>
-                <div>
-                    <a href="#">중고거래</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a href="#">전체 보기</a>
-                        <a href="#">관심 상품</a>
-                    </div>
-                </div>
-                <div>
-                    <a href="#">커뮤니티</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a class="ounwangram" href="ounwangram">오운완 커뮤니티</a>
-                        <a href="#">고민 게시판</a>
-                    </div>
-                </div>
-                <div>
-                    <a href="#">고객센터</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a href="#">상품문의</a>
-                        <a href="#">배송문의</a>
-                        <a href="#">중고거래</a>
-                        <a href="#">커뮤니티</a>
-                    </div>
-                </div>
-            </div>
-            <div id="navMenu" class="nav-menu">
-                <div>
-                    <div>
-                        <a href="#">전체 보기</a>
-                        <a href="#">운동 기구</a>
-                        <a href="#">건강 보조 식품</a>
-                        <a href="#">헬스 이용권</a>
-                        <a href="#">의류</a>
-                    </div>
-                    <div>
-                        <a href="#">전체 보기</a>
-                        <a href="#">관심 상품</a>
-                    </div>
-                    <div>
-                        <a class="ounwangram" href="ounwangram">오운완 커뮤니티</a>
-                        <a href="#">고민 게시판</a>
-                    </div>
-                    <div>
-                        <a href="#">상품문의</a>
-                        <a href="#">배송문의</a>
-                        <a href="#">중고거래</a>
-                        <a href="#">커뮤니티</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <%@ include file="../common/nav.jsp" %>
 
         <div class="coupung-main">
             <div class="banner">
@@ -165,7 +79,7 @@
 								<a>
 			                		<input type="hidden" value="${product.coupungNumber}"class="item-number">
 			                		<img class="product-image" src="${product.image[0].url }">
-			                		<div>${product.name}</div>
+			                		<div class='product-name'>${product.name}</div>
 			                		<div><span>${product.price }</span>원</div>
 		                		</a>
 		            		</div>
@@ -197,6 +111,7 @@ $('.productList').html('');
 
                 	// Loop through each product in the response and construct HTML
                 	res.forEach(function(product) {
+                		console.log(product.image[0].url);
 	                    inside += '<div class="product"><a><input type="hidden" value="' + product.coupungNumber + '"class="item-number">' + 
 	                    '<img class="product-image" src="' + product.image[0].url + '">' + 
 	                    '<div>' + product.name + '</div>' + 
