@@ -5,7 +5,7 @@
 <mapper namespace="net.ounwan.danggun">
 	<!-- 전체 상품 - 정보 출력 -->
 	<select id="selectAll" resultType="danggun">
-		SELECT * FROM DANGGUN ORDER BY danggun_Number desc
+		SELECT * FROM DANGGUN WHERE VISIBILITY = 1 ORDER BY danggun_Number desc
 	</select>
 	
 	<!-- 전체 상품 - 이미지 출력 -->
@@ -108,4 +108,26 @@
 	<delete id="minusZzim" parameterType="wishlists">
 		DELETE FROM WISH_LISTS WHERE CLIENT_ID = #{clientId} AND DANGGUN_NUMBER = #{danggunNumber}
 	</delete>
+	
+	<!-- 신고 -->
+	<insert id="insertReport">
+		INSERT INTO STORE_REPORTS (DANGGUN_NUMBER, CLIENT_ID, REGISTERED_DATE, REASON)
+		VALUES
+		(#{danggunNumber}, #{clientId}, now(), #{reason})
+	</insert>
+	
+	<!-- 신고 개수 세기 -->
+	<select id="countReport" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM STORE_REPORTS
+		WHERE DANGGUN_NUMBER = #{danggunNumber}
+	</select>
+	
+	<!-- visibility 변경 -->
+	<update id="updateReport">
+		UPDATE DANGGUN
+		SET VISIBILITY = 0
+		WHERE DANGGUN_NUMBER = #{danggunNumber}
+	</update>
+	
 </mapper>
