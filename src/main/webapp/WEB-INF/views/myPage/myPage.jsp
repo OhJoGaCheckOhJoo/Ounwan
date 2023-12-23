@@ -115,6 +115,8 @@
 								<div class="danggun-menu sale-list">내 판매 내역</div>
 							</a> <a href="javascript:danggunWishList()">
 								<div class="danggun-menu wish-list">관심 상품</div>
+							</a><a href="#">
+								<div class="chat-menu danggun">내 채팅방</div>
 							</a>
 						</div>
 
@@ -123,15 +125,7 @@
 								<div class="aeta-menu writing-list">내 게시글 목록</div>
 							</a>
 						</div>
-						<div class="menu-container chat">
-							<a href="#">
-								<div class="chat-menu admin">관리자와 채팅</div>
-							</a> <a href="#">
-								<div class="chat-menu danggun">쪽지 내역</div>
-							</a>
-						</div>
 						<div class="menu-container user">
-<%-- 							<a href="${appPath}/myPage/checkPwd"> --%>
 							<a href="javascript:checkPassword()">
 								<div class="user-menu update-user-info">회원 정보 수정</div>
 							</a>
