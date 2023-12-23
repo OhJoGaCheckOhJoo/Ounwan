@@ -115,7 +115,7 @@
 								<div class="danggun-menu sale-list">내 판매 내역</div>
 							</a> <a href="javascript:danggunWishList()">
 								<div class="danggun-menu wish-list">관심 상품</div>
-							</a><a href="#">
+							</a><a href="javascript:chatList()">
 								<div class="chat-menu danggun">내 채팅방</div>
 							</a>
 						</div>
@@ -384,6 +384,15 @@
 				$.ajax({
 					type : "GET",
 					url : "${appPath}/myPage/checkPwd",
+					success : function(res) {
+						$("#content").html(res);
+					}
+				});
+			}
+			function chatList() {
+				$.ajax({
+					type : "GET",
+					url : "${appPath}/myPage/chatList",
 					success : function(res) {
 						$("#content").html(res);
 					}

@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -137,8 +137,9 @@ public class MyPageController {
 
 	@GetMapping(value = "/checkPwd")
 	public String checkPwd(HttpSession session) {
-		String clientId = "jj1234";
-		session.setAttribute("testUser", clientId);
+		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
+//		String clientId = userInfo.getClientId();	
+		
 		return "myPage/checkPwd";
 	}
 
@@ -195,6 +196,38 @@ public class MyPageController {
 	    
 		String imgString = myPageService.updateImage(image, clientId);
 	    return imgString;
+	}
+	/*
+	@RequestMapping(value = "/chattingList", method = RequestMethod.GET)
+	public String chattingList(HttpSession session, Model model) {
+		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
+//		String clientId = userInfo.getClientId();		
+		
+		model.addAttribute("chattingList", myPageService.getchattingList(id));
+		
+		return "myPage/chattingList";
+	}
+	*/
+	@GetMapping(value = "/chatList")
+	public String chatList(HttpSession session, Model model) {
+		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
+//		String clientId = userInfo.getClientId();	
+		
+		model.addAttribute("chatList", myPageService.getchatList(id));
+		return "myPage/chatList";
+	}
+	
+	
+	
+	@GetMapping(value = "/getChatInfo")
+	public String getChatRoom(HttpSession session, Model model) {
+		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
+//		String clientId = userInfo.getClientId();	
+		List<Map<String,Object>> chatInfo = myPageService.getchatList(id);
+//		model.addAttribute("chatInfo", myPageService.getchatList(id));
+		System.out.println("chatInfo : " + chatInfo);
+		model.addAttribute("chatInfo",chatInfo);
+		return "myPage/chatInfo";
 	}
 	
 }

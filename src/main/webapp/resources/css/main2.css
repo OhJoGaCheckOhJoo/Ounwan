@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+@font-face {
+    font-family: 'Giants-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-family: 'Giants-Bold';
+}
 :root {
     --main-back: #333;
     --main-color-1: #EEE7D8;
@@ -10,6 +17,7 @@
     margin: 0;
     padding: 0;
     color: var(--main-color-1);
+    font-family: 'Giants-Bold';
 }
 html, body {
     background-color: var(--main-back);

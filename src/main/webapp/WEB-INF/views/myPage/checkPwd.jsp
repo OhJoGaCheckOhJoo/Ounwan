@@ -18,7 +18,7 @@
 	</div>
 	<div class="pwd-check">
 		<input id="pwd-checkPassword" type="password" required
-			value="jj123456!"> <label>비밀번호</label> <span></span>
+			value="Fz202302!"> <label>비밀번호</label> <span></span>
 	</div>
 
 	<div class="button-container">

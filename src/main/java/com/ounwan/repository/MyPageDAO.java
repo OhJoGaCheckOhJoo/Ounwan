@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ounwan.entity.Aeta;
 import com.ounwan.entity.Clients;
+import com.ounwan.entity.DanggunChatRoom;
 
 @Repository
 public class MyPageDAO {
@@ -89,6 +90,21 @@ public class MyPageDAO {
 	public int modifyProfileURL(Clients client) {
 		return sqlSession.update(NAMESPACE + "modifyProfileURL", client);
 	}
+
+	public List<DanggunChatRoom> getchatList(String userId) {
+		return sqlSession.selectList(NAMESPACE + "getchatList", userId);
+		
+	}
+	
+	public Clients getPartnerInfo(String buyer) {
+		return sqlSession.selectOne(NAMESPACE + "getPartnerInfo", buyer);
+	}
+
+	
+
+	
+
+
 
 	
 
