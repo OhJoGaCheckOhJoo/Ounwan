@@ -185,7 +185,7 @@ public class MyPageService {
 		ClientsDTO client = new ClientsDTO();
 		
 		client.setClientId(clientId);
-		client.setProfileURL(newProfile);
+		client.setProfileUrl(newProfile);
 		
 		int result = myPageDAO.modifyProfileURL(changeEntity(client));
 		if (result > 0) {
@@ -218,7 +218,7 @@ public class MyPageService {
 					.emailCheck(client.getEmailCheck())
 					.activationCheck(client.getActivationCheck())
 					.qualifiedCheck(client.getQualifiedCheck())
-					.profileURL(client.getProfileURL())
+					.profileUrl(client.getProfileUrl())
 					.emailAuth(client.getEmailAuth())
 					.socialType(client.getSocialType())
 					.socialId(client.getSocialId())
@@ -240,7 +240,7 @@ public class MyPageService {
 	                .emailCheck(client.getEmailCheck())
 	                .activationCheck(client.getActivationCheck())
 	                .qualifiedCheck(client.getQualifiedCheck())
-	                .profileURL(client.getProfileURL())
+	                .profileUrl(client.getProfileUrl())
 	                .emailAuth(client.getEmailAuth())
 	                .socialType(client.getSocialType())
 	                .socialId(client.getSocialId())

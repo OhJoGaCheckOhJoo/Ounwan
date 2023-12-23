@@ -14,7 +14,7 @@
 		#{phone},
 		#{address}, #{addressDetail},
 		#{zipCode},#{privacyTerms},#{emailCheck},#{activationCheck},#{qualifiedCheck},
-		#{profileURL},#{emailAuth},#{socialType},#{socialId})
+		#{profileUrl},#{emailAuth},#{socialType},#{socialId})
 	</insert>
 
 	<select id="selectForFindId" parameterType="clients"

@@ -29,7 +29,7 @@ public class ClientsDTO {
 	private Boolean emailCheck;
 	private Boolean activationCheck;
 	private Boolean qualifiedCheck;
-	private String profileURL;
+	private String profileUrl;
 	private String emailAuth;
 	private String socialType;
 	private String socialId;

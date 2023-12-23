@@ -61,7 +61,7 @@ public class KakaoOauthController {
 
 	public ClientsDTO convertResult(Map<String, Object> result) {
 		return ClientsDTO.builder().name((String) result.get("name")).clientId((String) result.get("clientId"))
-				.profileURL((String) result.get("profileURL")).socialId((String) result.get("token"))
+				.profileUrl((String) result.get("profileURL")).socialId((String) result.get("token"))
 				.socialType("KAKAO").build();
 	}
 }

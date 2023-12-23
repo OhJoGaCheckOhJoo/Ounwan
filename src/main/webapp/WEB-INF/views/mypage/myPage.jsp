@@ -11,11 +11,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <title>Document</title>
+    <title>오운완</title>
     <link href="${appPath}/css/main2.css" rel="stylesheet">
     <link href="${appPath}/css/header.css" rel="stylesheet">
     <link href="${appPath}/css/nav.css" rel="stylesheet">
     <link href="${appPath}/css/mypagemain.css" rel="stylesheet">
+    <link href="${appPath}/css/aetaList.css" rel="stylesheet">
 </head>
 
 <body>
@@ -24,7 +25,7 @@
 			<a class="logo" href="/ounwan"></a>
 			<div class="float-right">
 				<a id="profileImage" href="#"> <img src="./images/google.png">
-				</a> <span>0000님 환영합니다</span>
+				</a> <span>${userInfo.name} </span><span> 님 환영합니다</span>
 				<button id="cart"></button>
 				<div id="cartNotice"></div>
 			</div>
@@ -141,7 +142,7 @@
 				<div class="content-container">
 					<div class="preview-container">
 						<div class="preview user">
-							<img>
+							<img src="${userInfo.profileUrl}">
 							<div>
 								<p class="preview-user text">반갑습니다</p>
 								<p class="preview-user name">

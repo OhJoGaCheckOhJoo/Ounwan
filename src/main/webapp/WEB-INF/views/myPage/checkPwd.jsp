@@ -23,9 +23,6 @@
 
 	<div class="button-container">
 		<div class="pwd-check pwd-check-radius">
-			<button id="cancleButton">취소</button>
-		</div>
-		<div class="pwd-check pwd-check-radius">
 			<button id="confirmButton">확인</button>
 		</div>
 	</div>

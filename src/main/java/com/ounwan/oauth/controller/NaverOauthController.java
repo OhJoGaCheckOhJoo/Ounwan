@@ -65,7 +65,7 @@ public class NaverOauthController {
 
 		return ClientsDTO.builder().name((String) response.get("name")).email((String) response.get("email"))
 				.phone((String) response.get("phone")).birthday(Date.valueOf(birthday))
-				.profileURL((String) response.get("profile_image")).socialId((String) response.get("id"))
+				.profileUrl((String) response.get("profile_image")).socialId((String) response.get("id"))
 				.socialType("NAVER").build();
 	}
 }

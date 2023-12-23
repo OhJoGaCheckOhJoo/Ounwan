@@ -238,7 +238,7 @@
 	</update>
 	
 	<update id="modifyProfileURL" parameterType="String">
-		UPDATE CLIENTS SET PROFILE_URL = #{profileURL} WHERE CLIENT_ID = #{clientId}
+		UPDATE CLIENTS SET PROFILE_URL = #{profileUrl} WHERE CLIENT_ID = #{clientId}
 	</update>
 	
 	

@@ -12,8 +12,7 @@
 	<div class="profile-photo">
 		<input type="file" name="uploadImageInput" id="uploadImageInput"
 			accept="image/*" /> <img class="profile-photo-file"
-			src="${userInfo.profileURL}" id="registerProfileImage">
-		<!--src="${userInfo.profileURL}"-->
+			src="${userInfo.profileUrl}" id="registerProfileImage">
 		<button id="uploadImageButton">사진수정</button>
 		<br> <br>
 	</div>
