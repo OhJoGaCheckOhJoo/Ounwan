@@ -23,8 +23,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.dto.DanggunDTO;
 import com.ounwan.dto.ProductImagesDTO;
+import com.ounwan.dto.StoreReportsDTO;
 import com.ounwan.service.DanggunService;
 import com.ounwan.service.ProductImagesService;
+import com.ounwan.service.StoreReportsService;
 import com.ounwan.service.TradeHistoryService;
 import com.ounwan.service.WishListsService;
 
@@ -42,6 +44,9 @@ public class DanggunController {
 
 	@Autowired
 	WishListsService wishListsService;
+	
+	@Autowired
+	StoreReportsService storeReportsService;
 	
 	// 채팅 방으로 seller 데리고 이동
 	@GetMapping("/bixSiri/chat")
@@ -151,7 +156,15 @@ public class DanggunController {
 		} else { // 다를 때
 			result = false;
 		}
-		return (result == true) ? "삭제 성공" : "삭제 실패";
+		return (result) ? "success" : "fail";
+	}
+	
+	@PostMapping("/report")
+	public @ResponseBody String reportPost(@RequestBody StoreReportsDTO storeReports, HttpSession session) {
+		ClientsDTO clients = (ClientsDTO) session.getAttribute("userInfo");
+		storeReports.setClientId(clients.getClientId());
+		boolean result = storeReportsService.insertReport(storeReports);
+		return (result) ? "success" : "fail";
 	}
 	
 }
