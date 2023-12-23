@@ -224,19 +224,28 @@ public class DanggunService {
 	return(result==count)?true:false;
 
 	}
+	
+	public boolean updateReport(int danggunNumber) {
+		int result = danggunDAO.updateReport(danggunNumber);
+		return (result > 0)?true:false;
+		
+	}
+	
 
 	public Danggun changeEntity(DanggunDTO danggun) {
 		return Danggun.builder().danggunNumber(danggun.getDanggunNumber())
 				.tradeHistoryNumber(danggun.getTradeHistoryNumber()).clientId(danggun.getClientId())
 				.productName(danggun.getProductName()).price(danggun.getPrice()).detail(danggun.getDetail())
-				.uploadDate(danggun.getUploadDate()).build();
+				.uploadDate(danggun.getUploadDate()).visibility(danggun.getVisibility()).build();
 	}
 
 	public DanggunDTO changeDTO(Danggun danggun) {
 		return DanggunDTO.builder().danggunNumber(danggun.getDanggunNumber())
 				.tradeHistoryNumber(danggun.getTradeHistoryNumber()).clientId(danggun.getClientId())
 				.productName(danggun.getProductName()).price(danggun.getPrice()).detail(danggun.getDetail())
-				.uploadDate(danggun.getUploadDate()).build();
+				.uploadDate(danggun.getUploadDate()).visibility(danggun.getVisibility()).build();
 	}
+
+	
 
 }
