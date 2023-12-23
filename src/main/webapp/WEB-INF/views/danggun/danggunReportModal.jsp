@@ -42,5 +42,4 @@
 <!-- 배경 회색 불투명도 -->
 <div id="reportModalOverlay" class="report-modal-overlay" onclick="closeReportModal()"></div>
 
-<div id="reportSelectModal" postClientId="${post.clientId}"
-		sessionClientId="${userInfo.clientId}"></div>
+<div id="reportSelectModal" postClientId="${post.clientId}" danggunNumber="${post.danggunNumber}" sessionClientId="${userInfo.clientId}"></div>
