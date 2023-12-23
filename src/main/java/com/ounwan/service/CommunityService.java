@@ -539,33 +539,33 @@ public class CommunityService {
 	}
 
 	// 게시글 조회
-	public List<Map<String, Object>> aetaReadPost(int boardNumber) {
-		return communityDAO.aetaReadPost(boardNumber);
+	public List<Map<String, Object>> aetaReadPost(int aetaNumber) {
+		return communityDAO.aetaReadPost(aetaNumber);
 	}
 
 	// 게시글 조회수 증가 기능
-	public boolean aetaUpdateViews(int boardNumber) {
-		return (communityDAO.aetaUpdateViews(boardNumber) > 0) ? true : false;
+	public boolean aetaUpdateViews(int aetaNumber) {
+		return (communityDAO.aetaUpdateViews(aetaNumber) > 0) ? true : false;
 	}
 
 	// 게시글 좋아요 기능
-	public int aetaCountLikes(int boardNumber) {
-		return communityDAO.aetaCountLikes(boardNumber);
+	public int aetaCountLikes(int aetaNumber) {
+		return communityDAO.aetaCountLikes(aetaNumber);
 	}
 
-	public int aetaLikesCheck(int boardNumber,String clientId) {
+	public int aetaLikesCheck(int aetaNumber,String clientId) {
 		return communityDAO.aetaLikesCheck(changeEntity(AetaLikesDTO
 				.builder()
-				.boardNumber(boardNumber)
+				.aetaNumber(aetaNumber)
 				.clientId(clientId)
 				.build()));
 	}
 
 	//좋아요 버튼 기능
-	public AetaLikesDTO aetaLikesButton(int boardNumber,ClientsDTO user) {		
+	public AetaLikesDTO aetaLikesButton(int aetaNumber,ClientsDTO user) {		
 		AetaLikesDTO data= AetaLikesDTO
 				.builder()
-				.boardNumber(boardNumber)
+				.aetaNumber(aetaNumber)
 				.clientId(user.getClientId())
 				.build();
 		
@@ -579,17 +579,17 @@ public class CommunityService {
 		} else {
 			dislike = (communityDAO.aetaDislike(changeEntity(data)) > 0) ? true : false;
 		}
-		int count = communityDAO.aetaCountLikes(boardNumber);
+		int count = communityDAO.aetaCountLikes(aetaNumber);
 		return AetaLikesDTO.builder().like(like).dislike(dislike).likesCount(count).build();
 	}
 
 
 	// 게시글 수정페이지에 보여줄 데이터
-	public List<Map<String, Object>> aetaPostToBeUpdated(int boardNumber){
-		return communityDAO.aetaPostToBeUpdated(boardNumber);
+	public List<Map<String, Object>> aetaPostToBeUpdated(int aetaNumber){
+		return communityDAO.aetaPostToBeUpdated(aetaNumber);
 	}
 	
-	// 게시글 수정 //title,contents,boardNumber | imageUrl,boardNumber
+	// 게시글 수정 //title,contents,aetaNumber | imageUrl,aetaNumber
 	public int aetaUpdatePost(AetaDTO post, AetaImagesDTO images) {
 		int result=0;
 		int postResult = communityDAO.aetaUpdatePost(changeEntity(post));
@@ -604,7 +604,7 @@ public class CommunityService {
 
 	// 게시글 삭제
 	public int aetaDeletePost(AetaDTO post) {
-		int result = communityDAO.aetaDeletePost(post.getBoardNumber());
+		int result = communityDAO.aetaDeletePost(post.getAetaNumber());
 		return result;
 	}
 
@@ -616,7 +616,7 @@ public class CommunityService {
 	// 댓글 삭제
 	public boolean aetaDeleteComment(AetaCommentsDTO comment) {
 		Comments c = changeEntity(comment);
-		System.out.println("boardNum: " + c.getBoardNumber());
+		System.out.println("boardNum: " + c.getAetaNumber());
 
 		return (communityDAO.aetaDeleteComment(changeEntity(comment)) > 0) ? true : false;
 		
@@ -626,31 +626,32 @@ public class CommunityService {
 	
 
 	//게시글 번호(BOARD_NUMBER)로 작성자(CLIENT_ID) 아이디 가져오기 
-	public String findClientId(int boardNumber) {
-		return communityDAO.findClientId(boardNumber);
+	public String findClientId(int aetaNumber) {
+		return communityDAO.findClientId(aetaNumber);
 	}
 	
 	
 	/* DTO와 Entity 타입바꿔주는 함수들 */
 	private Aeta changeEntity(AetaDTO aeta) {
-		return Aeta.builder().boardNumber(aeta.getBoardNumber()).title(aeta.getTitle()).contents(aeta.getContents())
+		return Aeta.builder().aetaNumber(aeta.getAetaNumber()).title(aeta.getTitle()).contents(aeta.getContents())
 				.clientId(aeta.getClientId()).createdDate(aeta.getCreatedDate()).updatedDate(aeta.getCreatedDate())
 				.views(aeta.getViews()).likes(aeta.getLikes()).build();
 	}
 
 	private AetaImages changeEntity(AetaImagesDTO images) {
-		return AetaImages.builder().imageUrl(images.getImageUrl()).boardNumber(images.getBoardNumber()).build();
+		return AetaImages.builder().imageUrl(images.getImageUrl()).aetaNumber(images.getAetaNumber()).build();
 	}
 
 	private Comments changeEntity(AetaCommentsDTO comment) {
-		return Comments.builder().clientId(comment.getClient_id()).commentNumber(comment.getCommentNumber())
-				.boardNumber(comment.getBoardNumber()).contents(comment.getContents())
+		return Comments.builder().clientId(comment.getClientId()).commentNumber(comment.getCommentNumber())
+				.aetaNumber(comment.getAetaNumber()).contents(comment.getContents())
 				.createdDate(comment.getCreatedDate()).updatedDate(comment.getUpdatedDate())
 				.build();
 	}
 
 	private List<AetaDTO> changeDTOList(List<Aeta> boardList) {
 		List<AetaDTO> list = new ArrayList<AetaDTO>();
+	
 		for (Aeta aeta : boardList) {
 			list.add(changeDTO(aeta));
 		}
@@ -658,13 +659,13 @@ public class CommunityService {
 
 	}	
 	private AetaDTO changeDTO(Aeta aeta) {
-		return AetaDTO.builder().boardNumber(aeta.getBoardNumber()).title(aeta.getTitle()).contents(aeta.getContents())
+		return AetaDTO.builder().aetaNumber(aeta.getAetaNumber()).title(aeta.getTitle()).contents(aeta.getContents())
 				.clientId(aeta.getClientId()).createdDate(aeta.getCreatedDate()).updatedDate(aeta.getCreatedDate())
 				.views(aeta.getViews()).likes(aeta.getLikes()).build();
 	}
 
 	private AetaLikes changeEntity(AetaLikesDTO aetaLikesDTO) {
-		return AetaLikes.builder().likeNumber(aetaLikesDTO.getLikeNumber()).boardNumber(aetaLikesDTO.getBoardNumber())
+		return AetaLikes.builder().likeNumber(aetaLikesDTO.getLikeNumber()).aetaNumber(aetaLikesDTO.getAetaNumber())
 				.clientId(aetaLikesDTO.getClientId()).build();
 	}
 

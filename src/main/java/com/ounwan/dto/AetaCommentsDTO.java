@@ -19,8 +19,8 @@ import lombok.ToString;
 public class AetaCommentsDTO {
 	
 	private Integer commentNumber;
-	private String client_id;
-	private Integer boardNumber;
+	private String clientId;
+	private Integer aetaNumber;
 	private String contents;
 	private Timestamp createdDate;
 	private Timestamp updatedDate;

@@ -18,9 +18,10 @@
 	<tbody>
 		<c:forEach var="aeta" items="${aetaList}">
 			<tr class="content">
-				<td class="num">${aeta.boardNumber}</td>
-				<td class="title"><a
-					href="${appPath}/community/aetaPost?boardNumber=${aeta.boardNumber}">${aeta.title}</a></td>
+				<td class="num">${aeta.aetaNumber}</td>
+				<td class="title">
+					<a href="${appPath}/community/aetaPost?aetaNumber=${aeta.aetaNumber}">${aeta.title}</a>
+				</td>
 				<td class="writer">${aeta.clientId}</td>
 				<td class="date">${aeta.createdDate}</td>
 				<td class="count">${aeta.views}</td>
@@ -35,17 +36,10 @@
 	<c:choose>
 		<c:when test="${paginating.pageNumber<=1}">
 			<span>[<<]</span>
-		</c:when>
-		<c:otherwise>
-			<a href="javascript:search(1)">[<<]</a>
-		</c:otherwise>
-	</c:choose>
-
-	<c:choose>
-		<c:when test="${paginating.pageNumber<=1}">
 			<span>[<]</span>
 		</c:when>
 		<c:otherwise>
+			<a href="javascript:search(1)">[<<]</a>
 			<a href="javascript:search(${paginating.pageNumber-1})">[<]</a>
 		</c:otherwise>
 	</c:choose>
@@ -58,19 +52,13 @@
 	<c:choose>
 		<c:when test="${paginating.pageNumber==paginating.maxPageNumber}">
 			<span>[>]</span>
-		</c:when>
-		<c:otherwise>
-			<a href="javascript:search(${paginating.pageNumber+1})">[>]</a>
-		</c:otherwise>
-	</c:choose>
-
-	<c:choose>
-		<c:when test="${paginating.pageNumber==paginating.maxPageNumber}">
 			<span>[>>]</span>
 		</c:when>
 		<c:otherwise>
+			<a href="javascript:search(${paginating.pageNumber+1})">[>]</a>
 			<a href="javascript:search(${paginating.maxPageNumber})">[>>]</a>
 		</c:otherwise>
 	</c:choose>
+
 </div>
-<script src="../js/community.js"></script>
+<script src="../js/aeta.js"></script>

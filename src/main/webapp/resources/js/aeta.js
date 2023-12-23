@@ -1,11 +1,12 @@
 /* 애타 좋아요 버튼*/ 
 
 	$("#like-button").on("click",function(){
-		var boardNumber = $('#boardNO').val();
+		var aetaNumber = $("#aetaNumber").val();
+		console.log(aetaNumber);
 		var obj={
-			'boardNumber':boardNumber
-			
+			"aetaNumber":aetaNumber
 		}
+		console.log(aetaNumber);
 
 	$.ajax({
 		url : appPath+"/community/likeButton",
@@ -43,7 +44,6 @@ function search(page) {
 				data : obj,
 				success : function(response) {
 					console.log("button works");
-					//location.href=appPath+"/community/aetaBoard";
 					$('#aeta-list').html(response);
 				},
 				error : function() {
@@ -145,10 +145,10 @@ $('#PostingBtn').on('click',function(){
 /*댓글*/
 /*댓글입력 insertCommentBtn*/
 $("#insertCommentBtn").click(function(){
-	var boardNo = $('#boardNO').val();
+	var aetaNumber = $('#aetaNumber').val();
 	var contents = $('#inputComment').val();
 	var obj = {
-			"boardNumber": boardNo,
+			"aetaNumber": aetaNumber,
 			"contents": contents
 		};
 	console.log(obj);
@@ -159,7 +159,7 @@ $("#insertCommentBtn").click(function(){
 		contentType : "application/json",
 		success : function(response) {
 			alert(response);
-			location.href=appPath+"/community/aetaPost?boardNumber="+boardNo;
+			location.href=appPath+"/community/aetaPost?aetaNumber="+aetaNumber;
 		}
 	});
 })
@@ -167,7 +167,7 @@ $("#insertCommentBtn").click(function(){
 /*댓글 삭제*/
 $(".commentList").on('click', "#deleteCommentBtn", function(){
 	var commentNo=$(this).parent().parent().find('.commentId').val();
-	var boardNo = $('#boardNO').val(); 
+	var aetaNumber = $('#aetaNumber').val(); 
 	
 	var obj = {		
 
@@ -181,7 +181,7 @@ $(".commentList").on('click', "#deleteCommentBtn", function(){
 		contentType : "application/json",
 		success:function(res){
 			alert("delete "+res);
-			location.href=appPath+"/community/aetaPost?boardNumber="+boardNo;
+			location.href=appPath+"/community/aetaPost?aetaNumber="+aetaNumber;
 		}
 	})
 });

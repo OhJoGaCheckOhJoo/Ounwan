@@ -63,7 +63,7 @@
 
 	<%@ include file="../../common/footer.jsp"%>
 
-	<script src="../js/community.js"></script>
+<script src="../js/aeta.js"></script>
 	<script>
 		var appPath = "${appPath}";
 		

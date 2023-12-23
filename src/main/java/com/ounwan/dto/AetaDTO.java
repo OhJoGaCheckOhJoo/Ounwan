@@ -18,7 +18,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class AetaDTO {
-	private Integer boardNumber;
+	private Integer aetaNumber;
 	private String title;
 	private String contents;
 	private String clientId;

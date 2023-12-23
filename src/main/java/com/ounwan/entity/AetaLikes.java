@@ -16,8 +16,11 @@ import lombok.ToString;
 public class AetaLikes {
 
 	private Integer likeNumber;
-	private Integer boardNumber;
+	private Integer aetaNumber;
 	private String clientId;
-	
-}
+	// front를 위한 값 추가
+	private Boolean like;
+	private Boolean dislike;
+	private Integer likesCount;
 
+}
