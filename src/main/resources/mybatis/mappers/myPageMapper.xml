@@ -4,6 +4,15 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.myPage">
 	<!-- main -->
+	
+	
+	<!-- refund -->
+	<insert id="refundOrder" parameterType="refund">
+		INSERT INTO REFUNDS (ORDER_NUMBER, REASON , REGISTERED_DATE)
+		VALUES
+		(#{orderNumber}, #{reason} , now())
+	</insert>
+	
 	<!-- wish list count -->
 	<select id="wishListCount" parameterType="String"
 		resultType="int">

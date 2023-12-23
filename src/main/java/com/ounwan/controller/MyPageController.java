@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.ClientsDTO;
+import com.ounwan.dto.RefundsDTO;
 import com.ounwan.service.ClientsService;
 import com.ounwan.service.MyPageService;
+import com.ounwan.service.RefundsService;
 
 @RequestMapping("/myPage")
 @Controller
@@ -32,6 +34,9 @@ public class MyPageController {
 
 	@Autowired
 	MyPageService myPageService;
+	
+	@Autowired
+	RefundsService refundsService;
 
 	String id="jj1234";
 	
@@ -62,6 +67,16 @@ public class MyPageController {
 		model.addAttribute("coupungOrderList", lists);
 		
 		return "myPage/coupungOrderList";
+	}
+	
+	@RequestMapping(value = "/refund", method= RequestMethod.POST) 
+	public String OrderRefund(@RequestBody RefundsDTO refund) {
+		System.out.println("refundOrderNumber: " + refund.getOrderNumber());
+		System.out.println("reason: " + refund.getReason());
+		
+		boolean result = refundsService.orderRefund(refund);
+		
+		return result? "success" : "fail";
 	}
 	
 	@RequestMapping(value = "/danggunSaleList", method = RequestMethod.GET)
