@@ -7,24 +7,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ounwan.dto.ChatDTO;
-import com.ounwan.service.ChatService;
+import com.ounwan.dto.SomsomiChatDTO;
+import com.ounwan.service.SomsomiChatService;
 
 @RequestMapping("/bixSiri")
 @RestController
-public class ChatRestController {
+public class SomsomiChatRestController {
 	
 	@Autowired
-	ChatService chatService;
+	SomsomiChatService chatService;
 	
 	@RequestMapping("/chat/list")
-	public List<ChatDTO> selectChatList(){
-		List<ChatDTO> result = chatService.selectChatList();
+	public List<SomsomiChatDTO> selectChatList(){
+		List<SomsomiChatDTO> result = chatService.selectChatList();
 		return result;
 	}
 	
 	@PostMapping("/chat/insertMessage")
-	public Boolean insertMessage(ChatDTO chatDTO) {
+	public Boolean insertMessage(SomsomiChatDTO chatDTO) {
 		return chatService.insertMessage(chatDTO);
 	}
 	

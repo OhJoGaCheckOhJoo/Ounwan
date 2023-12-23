@@ -6,36 +6,36 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ounwan.dto.ChatDTO;
-import com.ounwan.entity.Chat;
-import com.ounwan.repository.ChatDAO;
+import com.ounwan.dto.SomsomiChatDTO;
+import com.ounwan.entity.SomsomiChat;
+import com.ounwan.repository.SomsomiChatDAO;
 
 @Service
-public class ChatService {
+public class SomsomiChatService {
 
 	@Autowired
-	ChatDAO chatDAO;
+	SomsomiChatDAO chatDAO;
 	
-	public List<ChatDTO> selectChatList() {
+	public List<SomsomiChatDTO> selectChatList() {
 		return changeDTOlist(chatDAO.selectChatList());
 	}
 	
-	public boolean insertMessage(ChatDTO chatDTO) {
+	public boolean insertMessage(SomsomiChatDTO chatDTO) {
 		int result = chatDAO.insertMessage(changeEntity(chatDTO));
 		return (result > 0) ? true : false;
 	}	
 	
-	public List<ChatDTO> changeDTOlist(List<Chat> chat){
-		List<ChatDTO> changeList = new ArrayList<>();
-		for(Chat p : chat) {
+	public List<SomsomiChatDTO> changeDTOlist(List<SomsomiChat> chat){
+		List<SomsomiChatDTO> changeList = new ArrayList<>();
+		for(SomsomiChat p : chat) {
 			changeList.add(changeDTO(p));
 		}
 		return changeList;
 	}
 	
 	
-	public ChatDTO changeDTO(Chat chat) {
-		return ChatDTO.builder()
+	public SomsomiChatDTO changeDTO(SomsomiChat chat) {
+		return SomsomiChatDTO.builder()
 				.messageId(chat.getMessageId())
 				.sender(chat.getSender())
 				.message(chat.getMessage())
@@ -43,8 +43,8 @@ public class ChatService {
 				.build();
 	}
 	
-	public Chat changeEntity(ChatDTO chat) {
-		return Chat.builder()
+	public SomsomiChat changeEntity(SomsomiChatDTO chat) {
+		return SomsomiChat.builder()
 				.messageId(chat.getMessageId())
 				.sender(chat.getSender())
 				.message(chat.getMessage())

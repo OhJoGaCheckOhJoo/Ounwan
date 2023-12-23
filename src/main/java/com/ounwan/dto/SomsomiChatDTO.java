@@ -1,4 +1,4 @@
-package com.ounwan.entity;
+package com.ounwan.dto;
 
 import java.sql.Timestamp;
 
@@ -17,10 +17,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Chat {
+public class SomsomiChatDTO {
 	private Integer messageId;
 	private String sender;
 	private String message;
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="Asia/Seoul")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone="Asia/Seoul")
 	private Timestamp regdate;
 }
