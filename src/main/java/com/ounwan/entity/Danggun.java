@@ -23,5 +23,6 @@ public class Danggun {
 	private Integer price;
 	private String detail;
 	private Date uploadDate;
+	private Integer visibility;
 	private ProductImages productImages; 
 }
