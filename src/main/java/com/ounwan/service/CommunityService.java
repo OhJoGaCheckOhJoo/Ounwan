@@ -42,7 +42,7 @@ public class CommunityService {
 	public static final String AETA_IMAGE_REPO="/Users/jungwoo/Desktop/importance/photo";
 	
 	public OunwanGramDTO selectOunwangramBoardDetail(int communityNumber, String clientId) {
-		Map<String, Object> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("communityNumber", communityNumber);
 		data.put("clientId", clientId);
 		OunwanGramDTO ounwangram = changeOunwanGram(communityDAO.selectOunwangramBoardDetail(data));
@@ -52,7 +52,7 @@ public class CommunityService {
 	}
 	
 	public int addFollowing(String clientId, String profileId) {
-		Map<String, Object> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("relationId", profileId + "-" + clientId);
 		data.put("clientId", clientId);
 		data.put("profileId", profileId);
@@ -60,21 +60,21 @@ public class CommunityService {
 	}
 	
 	public int cancelFollowing(String clientId, String profileId) {
-		Map<String, Object> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("clientId", clientId);
 		data.put("profileId", profileId);
 		return communityDAO.cancelFollowing(data);
 	}
 	
 	public int checkFollowing(String clientId, String profileId) {
-		Map<String, Object> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("clientId", clientId);
 		data.put("profileId", profileId);
 		return communityDAO.checkFollow(data);
 	}
 	
 	public Map<String, Object> getProfile(String profileId) {
-		Map<String, Object> result = new HashMap<>();
+		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("image", communityDAO.getProfileImage(profileId));
 		result.put("clientId", profileId);
 		return result;
@@ -82,7 +82,7 @@ public class CommunityService {
 	
 	public Map<String, Object> updateInbody(String clientId, InbodyDTO inbody) {
 		inbody.setClientId(clientId);
-		Map<String, Object> result = new HashMap<>();
+		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("clientId", clientId);
 		if(communityDAO.updateInbody(changeInbodyEntity(inbody)) > 0) {
 			result.put("result", "success");
@@ -94,7 +94,7 @@ public class CommunityService {
 	
 	public Map<String, Object> insertInbody(String clientId, InbodyDTO inbody) {
 		inbody.setClientId(clientId);
-		Map<String, Object> result = new HashMap<>();
+		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("clientId", clientId);
 		if(communityDAO.insertInbody(changeInbodyEntity(inbody)) > 0) {
 			result.put("result", "success");
@@ -105,21 +105,21 @@ public class CommunityService {
 	}
 	
 	public List<Map<String, Object>> selectFollowerList(String clientId, String profileId) {
-		Map<String, Object> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("clientId", clientId);
 		data.put("profileId", profileId);
 		return communityDAO.selectFollowerList(data);
 	}
 	
 	public List<Map<String, Object>> selectFollowingList(String clientId, String profileId) {
-		Map<String, Object> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("clientId", clientId);
 		data.put("profileId", profileId);
 		return communityDAO.selectFollowingList(data);
 	}
 	
 	public List<InbodyDTO> selectMyInbodyInfo(String clientId) {
-		List<InbodyDTO> result = new ArrayList<>();
+		List<InbodyDTO> result = new ArrayList<InbodyDTO>();
 		for(Inbody inbody : communityDAO.selectMyInbody(clientId)) {
 			result.add(changeInbody(inbody));
 		}
@@ -127,14 +127,14 @@ public class CommunityService {
 	}
 	
 	public Map<String, Object> selectMyInbodyGraph(String clientId) {
-		Map<String, Object> inbodyData = new HashMap<>();
-		List<Object> weight = new ArrayList<>();
-		List<Object> skeletalMusclesMass = new ArrayList<>();
-		List<Object> bodyWater = new ArrayList<>();
-		List<Object> bmr = new ArrayList<>();
-		List<Object> bmi = new ArrayList<>();
-		List<Object> inbodyScore = new ArrayList<>();
-		List<Object> updatedDate = new ArrayList<>();
+		Map<String, Object> inbodyData = new HashMap<String, Object>();
+		List<Object> weight = new ArrayList<Object>();
+		List<Object> skeletalMusclesMass = new ArrayList<Object>();
+		List<Object> bodyWater = new ArrayList<Object>();
+		List<Object> bmr = new ArrayList<Object>();
+		List<Object> bmi = new ArrayList<Object>();
+		List<Object> inbodyScore = new ArrayList<Object>();
+		List<Object> updatedDate = new ArrayList<Object>();
 		
 		for(Inbody inbody : communityDAO.selectMyInbody(clientId)) {
 			weight.add(0, inbody.getWeight());
@@ -156,7 +156,7 @@ public class CommunityService {
 	}
 
 	public String reportBoard(String clientId, int communityNumber, int[] reason) {
-		Map<String, Object> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<String, Object>();
 		String[] stringReason = {
 				"스팸홍보/도배글입니다.",
 				"음란물입니다.",
@@ -183,10 +183,10 @@ public class CommunityService {
 	}
 	
 	public List<OunwanGramDTO> gramFollowBoard(String clientId, int rowNum) {
-		Map<String, Object> dataMap = new HashMap<>();
+		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("clientId", clientId);
 		dataMap.put("rowNum", rowNum);
-		List<OunwanGramDTO> result = new ArrayList<>();
+		List<OunwanGramDTO> result = new ArrayList<OunwanGramDTO>();
 		List<Integer> likeBoars = communityDAO.gramLikeBoards(clientId);
 
 		for(OunwanGram ounwangram : communityDAO.gramFollowBoard(dataMap)) {
@@ -201,9 +201,9 @@ public class CommunityService {
 	}
 
 	public List<OunwanGramDTO> gramWholeBoard(String clientId, int rowNum) {
-		List<OunwanGramDTO> result = new ArrayList<>();
+		List<OunwanGramDTO> result = new ArrayList<OunwanGramDTO>();
 		List<Integer> likeBoars = communityDAO.gramLikeBoards(clientId);
-		Map<String, Object> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("clientId", clientId);
 		data.put("rowNum", rowNum);
 		for(OunwanGram ounwangram : communityDAO.gramWholeBoard(rowNum)) {
@@ -222,7 +222,7 @@ public class CommunityService {
 	
 	@SuppressWarnings("static-access")
 	public Map<String, Integer> gramLikeBoard(String clientId, int communityNumber) {
-		Map<String, Integer> result = new HashMap<>();
+		Map<String, Integer> result = new HashMap<String, Integer>();
 		List<Integer> likeBoars = communityDAO.gramLikeBoards(clientId);
 		if(likeBoars.contains(communityNumber)) {
 			if(communityDAO.cancelLikeOunwanBoard(communityNumber + "-" + clientId) > 0) {
@@ -267,7 +267,7 @@ public class CommunityService {
 									.build();
 		if(communityDAO.writeGramBoard(board) > 0) {
 			image.transferTo(file);
-			Map<String, Object> data = new HashMap<>();
+			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("communityNumber", board.getCommunityNumber());
 			for(String name : hashTag) {
 				data.put("name", name);
@@ -289,7 +289,7 @@ public class CommunityService {
 	public Map<String, Object> getUserProfile(String profileId, String clientId) {
 		Map<String, Object> result = communityDAO.getUserProfileInfo(profileId);
 		if(!profileId.equals(clientId)) {
-			Map<String, Object> data = new HashMap<>();
+			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("profileId", profileId);
 			data.put("clientId", clientId);
 			result.put("check", communityDAO.checkFollow(data) > 0 ? true : false);
@@ -298,7 +298,7 @@ public class CommunityService {
 	}
 	
 	public List<Map<String, Object>> getUserBoards(String profileId, String clientId) {
-		Map<String, Object> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("profileId", profileId);
 		data.put("clientId", clientId);
 		return communityDAO.getProfileBoard(data);
@@ -333,7 +333,7 @@ public class CommunityService {
 	}
 	
 	public int tagUpdate(int communityNumber, String[] hashTag) {
-		Map<String, Object> dataMap = new HashMap<>();
+		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("communityNumber", communityNumber);
 		int result = 1;
 		
@@ -351,8 +351,8 @@ public class CommunityService {
 	}
 	
 	public List<OunwanGramDTO> searchByTag(String clientId, int rowNum, String name) {
-		Map<String, Object> data = new HashMap<>();
-		List<OunwanGramDTO> result = new ArrayList<>();
+		Map<String, Object> data = new HashMap<String, Object>();
+		List<OunwanGramDTO> result = new ArrayList<OunwanGramDTO>();
 		List<Integer> likeBoars = communityDAO.gramLikeBoards(clientId);
 		
 		data.put("rowNum", rowNum);
@@ -463,7 +463,7 @@ public class CommunityService {
 
 		int pageStartNum = (page - 1) * pageLimit;
 
-		Map<String, Object> paginateParams = new HashMap<>();
+		Map<String, Object> paginateParams = new HashMap<String, Object>();
 
 		paginateParams.put("start", pageStartNum);
 		paginateParams.put("limit", pageLimit);

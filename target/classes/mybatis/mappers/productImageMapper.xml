@@ -10,4 +10,8 @@
     <select id="selectDetailImageByCoupungId" parameterType="int" resultType="productImages">
     	SELECT * FROM PRODUCT_IMAGES WHERE COUPUNG_NUMBER = #{coupungNumber} AND TYPE = 2
     </select>
+    
+    <insert id="insertCoupungImage" parameterType="coupung">
+    	INSERT INTO PRODUCT_IMAGES(COUPUNG_NUMBER, URL, TYPE) VALUES (#{coupungNumber}, #{url}, #{type})
+    </insert>
 </mapper>

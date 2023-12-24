@@ -81,6 +81,17 @@ public class CoupungService {
 		}
 		return changeDTOList(coupungDAO.getHotDealProductList());
 	}
+
+	public int insertProduct(CoupungDTO product) {
+		Coupung coupung = changeEntity(product);
+		int result = coupungDAO.insertProduct(coupung);
+		if (result > 0) {
+			int coupungNumber = coupung.getCoupungNumber();
+			result = coupungOptionsService.insertOption(product.getOptions(), coupungNumber);
+			result = productImageService.insertImage(product.getImage(), coupungNumber);
+		}
+		return result;
+	}
 	
 	public List<CoupungDTO> changeDTOList(List<Coupung> productList) {
 		List<CoupungDTO> changedList = new ArrayList<CoupungDTO>();
@@ -99,5 +110,16 @@ public class CoupungService {
 				.availableStock(coupung.getAvailableStock())
 				.availableCheck(coupung.getAvailableCheck())
 				.build();
+	}
+	
+	public Coupung changeEntity(CoupungDTO coupungDTO) {
+		return Coupung.builder()
+						.coupungNumber(coupungDTO.getCoupungNumber())
+						.coupungCategoryNumber(coupungDTO.getCoupungCategoryNumber())
+						.name(coupungDTO.getName())
+						.price(coupungDTO.getPrice())
+						.availableStock(coupungDTO.getAvailableStock())
+						.availableCheck(coupungDTO.getAvailableCheck())
+						.build();
 	}
 }

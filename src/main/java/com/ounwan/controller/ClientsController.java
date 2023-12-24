@@ -63,6 +63,7 @@ public class ClientsController {
             	for (CartsDTO cart : cartList) {
             		cart.setClientId(loginUser.getClientId());
             		cartService.addToCart(cart);
+            		session.removeAttribute("cartList");
             	}
             }
             return "success";

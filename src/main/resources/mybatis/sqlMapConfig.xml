@@ -30,5 +30,6 @@
 		<typeAlias type="com.ounwan.entity.OunwanGramLikes" alias="gramLikes" />
 		<typeAlias type="com.ounwan.entity.Follower" alias="follower" />
 		<typeAlias type="com.ounwan.entity.Inbody" alias="inbody" />
+		<typeAlias type="com.ounwan.entity.Admin" alias="admin" />
 	</typeAliases>
 </configuration>

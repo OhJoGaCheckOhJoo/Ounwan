@@ -8,8 +8,8 @@
 		SELECT coupung.name, option.name AS option, coupung.price, cart.*, image.URL
 		FROM COUPUNG coupung
 		JOIN CARTS cart ON coupung.COUPUNG_NUMBER = cart.COUPUNG_NUMBER
-		JOIN product_images image ON cart.coupung_number = image.coupung_number
-		JOIN coupung_options option ON cart.coupung_option_number = option.coupung_option_number
+		JOIN PRODUCT_IMAGES image ON cart.coupung_number = image.coupung_number
+		JOIN COUPUNG_OPTIONS option ON cart.coupung_option_number = option.coupung_option_number
 		WHERE cart.CLIENT_ID = #{clientId}
         and image.type=0
 	</select>

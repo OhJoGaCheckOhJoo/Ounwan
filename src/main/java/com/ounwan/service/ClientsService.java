@@ -54,6 +54,7 @@ public class ClientsService {
 	}
 
 	public boolean checkId(String clientId) {
+		if(clientId.contains("admin")) return false;
 		int result = clientsDAO.checkId(clientId);
 		return (result > 0) ? true : false;
 	}
@@ -146,9 +147,9 @@ public class ClientsService {
 
 	public String setImage(MultipartFile multipartFile) throws IllegalStateException, IOException {
 		String newFileName = System.currentTimeMillis() + "." + multipartFile.getContentType().split("/")[1]; // image/jpg
-		File file = new File(UPLOADPATH + IMAGEPATH + newFileName);
+		File file = new File(UPLOADPATH + IMAGEPATH + newFileName);	
 		multipartFile.transferTo(file);
-		return "." + IMAGEPATH + newFileName;
+		return ".." + IMAGEPATH + newFileName;
 	}
 
 	

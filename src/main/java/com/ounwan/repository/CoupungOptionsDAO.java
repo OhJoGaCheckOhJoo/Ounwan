@@ -23,4 +23,8 @@ public class CoupungOptionsDAO {
 	public List<CoupungOptions> getOptionByOptionId(int optionNumber) {
 		return sqlSession.selectList(NAMESPACE + "getOptionByOptionId", optionNumber);
 	}
+
+	public int insertOption(CoupungOptions option) {
+		return sqlSession.insert(NAMESPACE + "insertOption", option);
+	}
 }

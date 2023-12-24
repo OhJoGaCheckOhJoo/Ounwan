@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import com.ounwan.dto.CoupungDTO;
 import com.ounwan.entity.Coupung;
 
 @Repository
@@ -33,5 +35,9 @@ public class CoupungDAO {
 
 	public List<Coupung> findByName(String text) {
 		return sqlSession.selectList(NAMESPACE + "findByName", text);
+	}
+
+	public int insertProduct(Coupung product) {
+		return sqlSession.insert(NAMESPACE + "insertProduct",product);
 	}
 }
