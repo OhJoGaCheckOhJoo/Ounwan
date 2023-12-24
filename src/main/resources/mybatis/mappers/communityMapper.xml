@@ -289,13 +289,13 @@
 		value(#{clientId},#{title},#{contents},now())
 	</insert>
 	
-	<insert id="AetaInsertImageURL" parameterType="String">
+	<insert id="AetaInsertImageURL" parameterType="map">
 		INSERT INTO AETA_IMAGES 
 		(AETA_NUMBER,URL)
 		values(
 		(
-			select MAX(AETA_NUMBER) from AETA),
-			#{imageUrl}
+		select MAX(AETA_NUMBER) from AETA),
+		#{url}
 		);
 	</insert>
 

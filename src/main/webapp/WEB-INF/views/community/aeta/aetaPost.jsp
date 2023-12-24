@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <link href="${appPath}/css/main.css" rel="stylesheet" />
 <link href="${appPath}/css/community.css" rel="stylesheet" />
+<link href="${appPath}/css/aeta.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>애타 게시글</title>
@@ -28,20 +29,19 @@
 				<div id="aetaWriter">${aetaPost[0].CLIENT_ID}</div>
 				<div>작성일:${aetaPost[0].AETA_CREATED_DATE}</div>
 				<div>조회수:${aetaPost[0].VIEWS}</div>
-				<div>글번호:${aetaPost[0].AETA_NUMBER}</div>
 				<hr>
 			</div>
 
 			<div id="aetaContent">
-				<div>
-					<!--  
-				<img src="${appPath}/images/${inputImage}"
-				-->
-				</div>
+				<c:forEach items="${aetaPost}" var="aeta">
+					<div>
+						<img class="aeta-photo" src="${appPath}/images/aetaUploads/${aeta.URL}"/>
+					</div>
+				</c:forEach>
 				<div>${aetaPost[0].AETA_CONTENTS}</div>
 			</div>
 			<input type="hidden" value="${aetaPost[0].AETA_NUMBER}" id="aetaNumber"
-				name="aetaNumber" />
+				name="aetaNumber"/>
 
 			<c:if test="${aetaPost[0].CLIENT_ID==clientId}">
 				<button type="button" id="AetaUpdateBtn">수정</button>
@@ -50,14 +50,15 @@
 		</div>
 		<hr>
 
-		<a id="like-button" class="aeta-like"> <c:choose>
+		<a id="like-button" class="aeta-like"> 
+			<c:choose>
 				<c:when test="${aetaLikesCheck==1}">
 					<img id="aeta-like-png" class="aeta-like-png"
-						src="${appPath}/images/like.png">
+						src="${appPath}/images/likeImages/like.png">
 				</c:when>
 				<c:otherwise>
 					<img id="aeta-like-png" class="aeta-like-png"
-						src="${appPath}/images/dislike.png">
+						src="${appPath}/images/likeImages/dislike.png">
 				</c:otherwise>
 			</c:choose> <span>좋아요:<span id="count-likes">${aetaCountLikes}</span></span>
 		</a>

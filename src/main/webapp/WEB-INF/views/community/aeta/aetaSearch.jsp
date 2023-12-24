@@ -8,7 +8,6 @@
 <table id="">
 	<thead>
 		<tr class="top">
-			<th class="num">번호</th>
 			<th class="title">제목</th>
 			<th class="writer">작성자</th>
 			<th class="date">작성일</th>
@@ -18,7 +17,6 @@
 	<tbody>
 		<c:forEach var="aeta" items="${aetaList}">
 			<tr class="content">
-				<td class="num">${aeta.aetaNumber}</td>
 				<td class="title">
 					<a href="${appPath}/community/aetaPost?aetaNumber=${aeta.aetaNumber}">${aeta.title}</a>
 				</td>

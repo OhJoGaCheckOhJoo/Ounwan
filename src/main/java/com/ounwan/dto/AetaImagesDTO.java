@@ -22,6 +22,6 @@ public class AetaImagesDTO {
 
 	private Integer aetaNumber;
 	private Integer aetaImageNumber;
-	private String imageUrl;
+	private String url;
 	private List<String> urlLists;
 }

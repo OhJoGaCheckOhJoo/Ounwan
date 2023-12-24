@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,23 +37,24 @@ public class CommunityRestController {
 	
 	//애타 게시글 등록(사진제외)
 	@PostMapping(value="/aetaPosting")
-	public	String aetaInsertPost(
-			//@RequestParam("title")String title,
+	public	@ResponseBody String aetaInsertPost(
+			@RequestPart(value="images",required=false) MultipartFile[] images,
+			@RequestParam(value="imagesLength",required=false) int imagesLength,
 			String title,
 			String contents,
-			@RequestParam(required=false)String imageUrl1,
-			@RequestParam(required=false)String imageUrl2,
-			@RequestParam(required=false)String imageUrl3,
 			HttpSession session
-			) {		
-		System.out.println(imageUrl1);
-		System.out.println(imageUrl2);
-		System.out.println(imageUrl3);
+			) throws IllegalStateException, IOException {		
 		int result=0;
+		System.out.println(images);
+//		System.out.println(images[0]);
+//		System.out.println(images[1]);
+		System.out.println(imagesLength);
+		System.out.println(title);
+		System.out.println(contents);
 
 		ClientsDTO user=(ClientsDTO)session.getAttribute("userInfo");
 		String clientId=(user.getClientId());
-		result=communityService.aetaInsertPost(clientId,title,contents,imageUrl1,imageUrl2,imageUrl3);
+		result=communityService.aetaInsertPost(clientId,title,contents,images,imagesLength);
 		
 		return (result>0)? "success":"fail";
 	}

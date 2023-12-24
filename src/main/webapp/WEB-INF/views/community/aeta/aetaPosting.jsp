@@ -22,8 +22,8 @@
 
 			<form enctype="multipart/form-data" action="${appPath}/community/aetaPosting" method="post">
 				<label for="inputImg">이미지</label> 
-				<input type="file" multiple="multiple" id="inputImg" name="inputImg" onchange="readURL(this);"/> <br>
-				<img id="imgPreview" src="#" width=200 height=150 alt="선택된 이미지가 없습니다">
+				<input type="file" multiple="multiple" id="inputImg" name="inputImg" onchange="readUrl(this)"/>
+				<br><img id="imgPreview" src="#" width=200 height=150 alt="선택된 이미지가 없습니다">
 			</form>
 
 			<div>
@@ -37,7 +37,7 @@
 		</div>
 	<br>
 	<br>
-	<script src="../js/community.js"></script>
+	<script src="../js/aeta.js"></script>
 	<script>
 		var appPath = "${appPath}";
 	</script>

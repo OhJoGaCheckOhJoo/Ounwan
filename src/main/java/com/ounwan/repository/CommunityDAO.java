@@ -1,6 +1,7 @@
 package com.ounwan.repository;
 
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ounwan.dto.AetaDTO;
 import com.ounwan.entity.Aeta;
 import com.ounwan.entity.AetaImages;
 import com.ounwan.entity.AetaLikes;
@@ -26,7 +26,7 @@ public class CommunityDAO {
 	private static final String NAMESPACE = "net.ounwan.community.";
 	
 	//게시판 조회
-	public List<AetaDTO> AetaList(Map<String, Object> paginateParams) {
+	public List<Aeta> AetaList(Map<String, Object> paginateParams) {
 		return sqlSession.selectList(NAMESPACE+"AetaList",paginateParams );
 	}
 	
@@ -48,22 +48,22 @@ public class CommunityDAO {
 	public int aetaCountLikes(int boardNumber) {
 		return sqlSession.selectOne(NAMESPACE+"AetaCountLikes",boardNumber);
 	}
-	public int aetaLikesCheck(AetaLikes aetaLikesDTO) {
-		return sqlSession.selectOne(NAMESPACE+"AetaLikesCheck",aetaLikesDTO);
+	public int aetaLikesCheck(AetaLikes aetaLikes) {
+		return sqlSession.selectOne(NAMESPACE+"AetaLikesCheck",aetaLikes);
 	}
-	public int aetaLike(AetaLikes aetaLikesDTO) {
-		return sqlSession.insert(NAMESPACE+"AetaLike",aetaLikesDTO);
+	public int aetaLike(AetaLikes aetaLikes) {
+		return sqlSession.insert(NAMESPACE+"AetaLike",aetaLikes);
 	}
-	public int aetaDislike(AetaLikes aetaLikesDTO) {
-		return sqlSession.delete(NAMESPACE+"AetaDislike",aetaLikesDTO);
+	public int aetaDislike(AetaLikes aetaLikes) {
+		return sqlSession.delete(NAMESPACE+"AetaDislike",aetaLikes);
 	}
 	
 	//게시글 등록
 	public int aetaInsertPost(Aeta post) {
 		return sqlSession.insert(NAMESPACE+"AetaInsertPost",post);
 	}
-	public int aetaInsertImageURL(String images) {
-		return sqlSession.insert(NAMESPACE+"AetaInsertImageURL",images);
+	public int aetaInsertImageURL(Map<String,String> url) {
+		return sqlSession.insert(NAMESPACE+"AetaInsertImageURL",url);
 	}
 	
 	//게시글 조회수 증가
@@ -222,6 +222,8 @@ public class CommunityDAO {
 	public int updateInbody(Inbody inbody) {
 		return sqlSession.update(NAMESPACE + "updateInbody", inbody);
 	}
+
+	
 }
 	
 	

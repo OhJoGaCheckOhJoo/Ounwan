@@ -69,6 +69,6 @@
 		<websocket:mapping handler="echoHandler2" path="/danggunEcho"/>
 		<websocket:sockjs />
 	</websocket:handlers>
-	
+
 	
 </beans:beans>

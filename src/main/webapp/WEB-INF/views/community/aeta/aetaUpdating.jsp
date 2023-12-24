@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="appPath" scope="application"
+	value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +29,11 @@
 
 		<form id="selectedImg" enctype="multipart/form-data">
 			<label for="inputImg">이미지</label> <input type="file" id="inputImg" /><br>
-			<img class="imgURL" id="imgURL" src="">
+			<c:forEach items="${aetaPost}" var="aeta">
+				<div>
+					<img class="aeta-photo" id="imgURL" src="${appPath}/images/aetaUploads/${aeta.URL}" />
+				</div>
+			</c:forEach>
 		</form>
 
 		<div>

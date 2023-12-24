@@ -1,5 +1,4 @@
 /* 애타 좋아요 버튼*/ 
-
 	$("#like-button").on("click",function(){
 		var aetaNumber = $("#aetaNumber").val();
 		console.log(aetaNumber);
@@ -7,7 +6,6 @@
 			"aetaNumber":aetaNumber
 		}
 		console.log(aetaNumber);
-
 	$.ajax({
 		url : appPath+"/community/likeButton",
 		type : 'post',
@@ -15,11 +13,11 @@
 		success : function(data){
 			console.log(data);
 				if(data.like === true){
-					$("#aeta-like-png").attr("src",appPath+"/images/like.png");
+					$("#aeta-like-png").attr("src",appPath+"/images/aetaUploads/like.png");
 					$("#count-likes").html(data.likesCount);
 				}
 				else{
-					$("#aeta-like-png").attr("src",appPath+"/images/dislike.png");
+					$("#aeta-like-png").attr("src",appPath+"/images/aetaUploads/dislike.png");
 					$("#count-likes").html(data.likesCount);
 				}
 		},
@@ -28,7 +26,6 @@
 		}
 	});
 	});
-
 
 /* 검색 function */
 function search(page) {
@@ -76,41 +73,61 @@ $("#loginPageBtn").click(function(){
 $("#postBtn").click(function(){
 	location.href = appPath+"/community/aetaPosting";
 })
-/* */
-function readURL(input) {
+
+/*애타 게시글 등록 시 사진미리보 */
+function readUrl(input) {
 	var file = input.files[0] 
-	console.log(file)
+	console.log(input);
 	if (file != '') {
 	   var reader = new FileReader();
 	   reader.readAsDataURL(file);
 	   reader.onload = function (e) { 
 	   console.log(e.target)
-	  console.log(e.target.result)
+	   console.log(e.target.result)
 		 $('#imgPreview').attr('src', e.target.result);
 		}
 	}
 } 
+
+/*
+$("#inputImg").on("change",function(){
+	const input= $("#inputImg")[0].files[0];
+	console.log(input);
+});
+*/
  
 /*등록 데이터 전송 */
 $('#PostingBtn').on('click',function(){
 	
 	var title=$('#inputTitle').val();
 	var content=$('#inputContent').val();
-	var imageUrl1=$('#inputImg').val();
-	var imageUrl2=$('#inputImg').val();
-	var imageUrl3=$('#inputImg').val();
-	var obj = {
-		"title": title,
-		"contents": content,
-		"imageUrl1":imageUrl1,
-		"imageUrl2":imageUrl2,
-		"imageUrl3":imageUrl3,
-	};
+	
+	var images=$('#inputImg')[0].files;
+	var imagesLength=$('#inputImg')[0].files.length;
+	console.log("이미지"+images);
+	console.log("이미지갯수"+imagesLength);
+	
+	var formData= new FormData();
+		
+	if(imagesLength===0){
+		formData.append('imagesLength',0);
+		formData.append('images',null);
+	}else{
+		formData.append('imagesLength',imagesLength);
+		for(var i=0; i<imagesLength; i++){
+			formData.append('images',images[i]);
+		}
+	}
+	formData.append('title',title);
+	formData.append('contents',content);
+	
+	
 	$.ajax({
 	type : "POST",
 	url : appPath+"/community/aetaPosting",
-	data : obj,
-	// contentType : "application/json",
+	data : formData,
+	processData: false,
+	contentType : false,
 	success : function(response) {
 		if(response=="success"){
 			alert("게시물등록완료");
@@ -191,16 +208,16 @@ $(".commentList").on('click', "#deleteCommentBtn", function(){
 /*애타 게시글수정 */
 /* 수정페이지 이동 */
 $("#AetaUpdateBtn").on('click',function(){
-	var boardNumber=$("#boardNO").val();
+	var aetaNumber=$("#aetaNumber").val();
 
 	$.ajax({
 		type:"get",
 		url:appPath+"/community/aetaUpdating",
 		data:{
-			"boardNumber":boardNumber
+			"aetaNumber":aetaNumber
 		},
 		success:function(){	
-				location.href=appPath+"/community/aetaUpdating?boardNumber="+boardNumber;
+				location.href=appPath+"/community/aetaUpdating?aetaNumber="+aetaNumber;
 		}
 	})
 })
@@ -212,12 +229,12 @@ $("#updatePost").on('click',function(){
 
 	var title=$().val();
 	var content=$().val();
-	var boardNumber=$().val();
+	var aetaNumber=$().val();
 
 	obj={
 		"title":title,
 		"content":content,
-		"boardNumber":boardNumber
+		"aetaNumber":aetaNumber
 	}
 	console.log(obj);
 	$.ajax({
@@ -227,7 +244,7 @@ $("#updatePost").on('click',function(){
 		success:function(response){
 			if(res=="success"){		
 				alert("update"+res);
-				location.href=appPath+"/community/aetaPost?boardNumber="+boardNumber;
+				location.href=appPath+"/community/aetaPost?aetaNumber="+aetaNumber;
 			}else{
 				alert("update"+res);
 			}
@@ -238,19 +255,19 @@ $("#updatePost").on('click',function(){
 )
 /* 수정 커밋 버튼*/
 $("#updateConfirmBtn").on('click',function(){
-	var boardNumber = $('#boardNO').val();
+	var aetaNumber = $('#aetaNumber').val();
 	var title= $('#inputTitle').val();
 	var imgageURL =$('#inputImg').val();
 	var content =$('#inputContent').val();
 	
 	// var data={
 	var post={
-		"boardNumber":boardNumber,
+		"aetaNumber":aetaNumber,
 		"title":title,
 		"content":content,
 	};
 	var images={
-		"boardNumber":boardNumber,
+		"aetaNumber":aetaNumber,
 		"imgageURL":imgageURL
 	};
 // };
@@ -266,7 +283,7 @@ $("#updateConfirmBtn").on('click',function(){
 		success:function(res){
 			if(res=="success"){
 				alert("update"+res);
-				location.href=appPath+"/community/aetaPost?boardNumber="+boardNumber;
+				location.href=appPath+"/community/aetaPost?aetaNumber="+aetaNumber;
 			}else{
 				alert("update"+res);
 			}
@@ -276,12 +293,12 @@ $("#updateConfirmBtn").on('click',function(){
 
 
 // $("#").click(function(){
-// 	var boardNo=$('#boardNO').val();
+// 	var aetaNumber=$('#aetaNumber').val();
 // 	var clientId=$('#aetaWriter').attr("value");
 // 	var title=$('#aetaTitle').attr("value");
 // 	var content=$('#aetaContent').attr("value");
 // 	var obj={
-// 		"boardNumber":boardNo,
+// 		"aetaNumber":aetaNumber,
 // 		"clientId":clientId,
 // 		"title":title,
 // 		"contents":content,
@@ -296,7 +313,7 @@ $("#updateConfirmBtn").on('click',function(){
 // 		success:function(res){
 // 			if(res=="success"){
 // 				alert("update"+res);
-// 				location.href=appPath+"/community/aetaPost?boardNumber="+boardNo;
+// 				location.href=appPath+"/community/aetaPost?aetaNumber="+aetaNumber;
 // 			}else{
 // 				alert("update"+res);
 // 			}
@@ -306,10 +323,10 @@ $("#updateConfirmBtn").on('click',function(){
 
 /*애타 게시글삭제*/
 $("#AetaDeleteBtn").click(function(){
-	var boardNo=$('#boardNO').val();
+	var aetaNumber=$('#aetaNumber').val();
 	
 	var obj={
-		"boardNumber":boardNo
+		"aetaNumber":aetaNumber
 	};
 
 	console.log(obj);

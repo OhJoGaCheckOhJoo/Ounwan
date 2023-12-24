@@ -19,5 +19,5 @@ public class AetaImages {
 
 	private Integer aetaNumber;
 	private Integer aetaImageNumber;
-	private String imageUrl;
+	private String url;
 }
