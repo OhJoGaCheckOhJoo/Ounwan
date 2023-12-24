@@ -15,9 +15,12 @@ public class RefundsService {
 	
 	public boolean orderRefund(RefundsDTO refund) {
 		int result = refundsDAO.orderRefund(Refunds.builder().orderNumber(refund.getOrderNumber()).reason(refund.getReason()).build());
+		int stateChange = refundsDAO.changeRefundState(refund.getOrderNumber());
+		int check = 0;
+		if(result > 0 && stateChange > 0) {
+			check =1 ;
+		}
 		
-		return result > 0? true : false;
+		return check >0? true : false;
 	}
-
-
 }

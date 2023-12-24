@@ -55,7 +55,6 @@ public class MyPageController {
 		return "/myPage/myPage";
 	}
 
-	///###################여기 하는 중###############
 	@RequestMapping(value = "/coupungOrderList", method = RequestMethod.GET)
 	public String coupungOrderList(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
@@ -70,14 +69,15 @@ public class MyPageController {
 	}
 	
 	@RequestMapping(value = "/refund", method= RequestMethod.POST) 
-	public String OrderRefund(@RequestBody RefundsDTO refund) {
-		System.out.println("refundOrderNumber: " + refund.getOrderNumber());
-		System.out.println("reason: " + refund.getReason());
-		
-		boolean result = refundsService.orderRefund(refund);
-		
-		return result? "success" : "fail";
+	public @ResponseBody String OrderRefund(@RequestBody RefundsDTO refund) {
+		return refundsService.orderRefund(refund)? "success" : "fail";
 	}
+	
+	@RequestMapping(value = "/confirmPurchase", method = RequestMethod.POST)
+	public @ResponseBody String PurchaseConfirm(String orderNumber) {			
+		return myPageService.changeConfirmState(orderNumber)? "success" : "fail";
+	}
+	
 	
 	@RequestMapping(value = "/danggunSaleList", method = RequestMethod.GET)
 	public String DanggunSaleList(HttpSession session, Model model) {

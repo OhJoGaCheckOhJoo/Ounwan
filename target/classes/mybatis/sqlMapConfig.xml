@@ -13,6 +13,7 @@
 		<typeAlias type="com.ounwan.entity.Danggun" alias="danggun" />
 		<typeAlias type="com.ounwan.entity.ProductImages" alias="productImages" />
 		<typeAlias type="com.ounwan.entity.Aeta" alias="aeta" />		
+		<typeAlias type="com.ounwan.entity.Refunds" alias="refund" />		
 		
 	</typeAliases>
 </configuration>

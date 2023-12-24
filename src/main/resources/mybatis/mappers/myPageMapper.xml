@@ -4,15 +4,31 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.myPage">
 	<!-- main -->
-	
-	
+
+
 	<!-- refund -->
 	<insert id="refundOrder" parameterType="refund">
-		INSERT INTO REFUNDS (ORDER_NUMBER, REASON , REGISTERED_DATE)
+		INSERT INTO REFUNDS
+		(ORDER_NUMBER, REASON , REGISTERED_DATE)
 		VALUES
-		(#{orderNumber}, #{reason} , now())
+		(#{orderNumber},
+		#{reason} , now())
 	</insert>
+
+	<!-- change refund state -->
+	<update id="changeRefundState" parameterType="String">
+		UPDATE `ORDERS`
+		SET `TRADE_HISTORY_NUMBER` = 5
+		WHERE `ORDER_NUMBER` = #{orderNumber}
+	</update>
 	
+	<!-- change purchase confirm state -->
+	<update id="changeConfirmState" parameterType="String">
+		UPDATE `ORDERS`
+		SET `TRADE_HISTORY_NUMBER` = 4
+		WHERE `ORDER_NUMBER` = #{orderNumber}
+	</update>
+
 	<!-- wish list count -->
 	<select id="wishListCount" parameterType="String"
 		resultType="int">
@@ -113,11 +129,14 @@
 		JOIN
 		ORDER_DETAILS OD ON O.ORDER_NUMBER = OD.ORDER_NUMBER
 		JOIN
-		COUPUNG C ON OD.COUPUNG_NUMBER = C.COUPUNG_NUMBER
+		COUPUNG C
+		ON OD.COUPUNG_NUMBER = C.COUPUNG_NUMBER
 		JOIN
-		COUPUNG_OPTIONS CO ON OD.COUPUNG_OPTION_NUMBER = CO.COUPUNG_OPTION_NUMBER
+		COUPUNG_OPTIONS CO ON
+		OD.COUPUNG_OPTION_NUMBER = CO.COUPUNG_OPTION_NUMBER
 		JOIN
-		TRADE_HISTORY TH ON O.TRADE_HISTORY_NUMBER = TH.TRADE_HISTORY_NUMBER
+		TRADE_HISTORY
+		TH ON O.TRADE_HISTORY_NUMBER = TH.TRADE_HISTORY_NUMBER
 		JOIN
 		PRODUCT_IMAGES PI ON C.COUPUNG_NUMBER = PI.COUPUNG_NUMBER
 		WHERE
@@ -232,23 +251,28 @@
 		resultType="clients">
 		SELECT CLIENT_ID, NAME, EMAIL, PHONE, ADDRESS,
 		ADDRESS_DETAIL, ZIP_CODE,PROFILE_URL
-		FROM CLIENTS WHERE CLIENT_ID = #{clientId}
+		FROM CLIENTS WHERE CLIENT_ID =
+		#{clientId}
 	</select>
 
 	<update id="modifyPwd" parameterType="clients">
-		UPDATE CLIENTS SET PASSWORD = #{password} WHERE CLIENT_ID = #{clientId}
+		UPDATE CLIENTS SET PASSWORD
+		= #{password} WHERE CLIENT_ID = #{clientId}
 	</update>
 
 	<update id="modifyUserInfo" parameterType="String">
-		UPDATE CLIENTS SET PHONE =
-		#{phone}, ADDRESS = #{address}, ADDRESS_DETAIL = #{addressDetail},
+		UPDATE CLIENTS SET
+		PHONE =
+		#{phone}, ADDRESS = #{address}, ADDRESS_DETAIL =
+		#{addressDetail},
 		ZIP_CODE = #{zipCode} WHERE CLIENT_ID =
 		#{clientId}
 	</update>
-	
+
 	<update id="modifyProfileURL" parameterType="String">
-		UPDATE CLIENTS SET PROFILE_URL = #{profileUrl} WHERE CLIENT_ID = #{clientId}
+		UPDATE CLIENTS SET
+		PROFILE_URL = #{profileUrl} WHERE CLIENT_ID = #{clientId}
 	</update>
-	
-	
+
+
 </mapper>

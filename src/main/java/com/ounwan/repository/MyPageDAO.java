@@ -39,8 +39,11 @@ public class MyPageDAO {
 	}
 	
 	public List<Map<String, Object>> getCoupungOrderList(String userId) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList(NAMESPACE + "coupungOrderList", userId);
+	}
+	
+	public int changeConfirmState(String orderNumber) {
+		return sqlSession.update(NAMESPACE + "changeConfirmState", orderNumber);
 	}
 	
 	public List<Map<String, Object>> getDanggunSaleList(String userid){
@@ -89,6 +92,8 @@ public class MyPageDAO {
 	public int modifyProfileURL(Clients client) {
 		return sqlSession.update(NAMESPACE + "modifyProfileURL", client);
 	}
+
+
 
 	
 

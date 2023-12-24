@@ -36,6 +36,11 @@ public class MyPageService {
 	private final static String UPLOADPATH = "C:/Users/diana/OneDrive/문서/GitHub/Back-end/src/main/webapp/resources";
 	private final static String IMAGEPATH = "/images/uploads/";
 	
+	public boolean changeConfirmState(String orderNumber) {
+		int stateChange = myPageDAO.changeConfirmState(orderNumber);
+		return stateChange>0? true : false;
+	}
+	
 	public int getWishListCount(String userId) {
 		return myPageDAO.getWishListCount(userId);
 	}
@@ -58,7 +63,6 @@ public class MyPageService {
 	}
 	
 	public List<Map<String, Object>> getCoupungOrderList(String userId) {
-		// TODO Auto-generated method stub
 		return myPageDAO.getCoupungOrderList(userId);
 	}
 
@@ -246,5 +250,7 @@ public class MyPageService {
 	                .socialId(client.getSocialId())
 	                .build();
 	    }
+
+
 
 }

@@ -16,4 +16,8 @@ public class RefundsDAO {
 	public int orderRefund(Refunds refund) {
 		return sqlSession.insert(NAMESPACE + "refundOrder", refund);
 	}
+
+	public int changeRefundState(String orderNumber) {
+		return sqlSession.update(NAMESPACE + "changeRefundState", orderNumber);
+	}
 }
