@@ -197,22 +197,11 @@ public class MyPageController {
 		String imgString = myPageService.updateImage(image, clientId);
 	    return imgString;
 	}
-	/*
-	@RequestMapping(value = "/chattingList", method = RequestMethod.GET)
-	public String chattingList(HttpSession session, Model model) {
-		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-//		String clientId = userInfo.getClientId();		
-		
-		model.addAttribute("chattingList", myPageService.getchattingList(id));
-		
-		return "myPage/chattingList";
-	}
-	*/
+
 	@GetMapping(value = "/chatList")
 	public String chatList(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
 //		String clientId = userInfo.getClientId();	
-		
 		model.addAttribute("chatList", myPageService.getchatList(id));
 		return "myPage/chatList";
 	}
@@ -220,13 +209,13 @@ public class MyPageController {
 	
 	
 	@GetMapping(value = "/getChatInfo")
-	public String getChatRoom(HttpSession session, Model model) {
+	public String getChatInfo(HttpSession session, Model model,String roomId) {
+		System.out.println("!!!!!!roomId : " + roomId);
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
 //		String clientId = userInfo.getClientId();	
-		List<Map<String,Object>> chatInfo = myPageService.getchatList(id);
-//		model.addAttribute("chatInfo", myPageService.getchatList(id));
-		System.out.println("chatInfo : " + chatInfo);
+		List<Map<String,Object>> chatInfo = myPageService.getChatInfo(roomId);
 		model.addAttribute("chatInfo",chatInfo);
+//		model.addAttribute("chatInfo", myPageService.getchatList(id));
 		return "myPage/chatInfo";
 	}
 	

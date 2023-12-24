@@ -8,15 +8,21 @@
 
 <div class="chat-history-container">
 	<div class="user-info-container">
+	
 		<div class="user-info-title">
-			<div>전체 대화</div>
-		</div>
+            <button class="dropbtn">전체 채팅</button>
+            <div class="dropdown-content">
+                <a href="javascript:filterChats('all')">전체 채팅</a>
+                <a href="javascript:filterChats('buy')">구매 채팅</a>
+                <a href="javascript:filterChats('sell')">판매 채팅</a>
+            </div>
+        </div>
 		<c:if test="${empty chatList}">
 			<div>채팅 내역이 없습니다.</div>
 		</c:if>
 		<c:if test="${not empty chatList}">
 			<c:forEach var="roomInfo" items="${chatList}" varStatus="loop">
-				<a href="javascript:getChatRoom()">
+				<a href="javascript:getChatRoom('${roomInfo.chatRoom.roomId}')">
 					<div class="danggun-user-info">
 						<div class="danggun-user-info img">
 							<img src="${roomInfo.partnerInfo.profileUrl}">
@@ -38,10 +44,11 @@
 </div>
 
 <script>
-function getChatRoom() {
+function getChatRoom(roomId) {
 	$.ajax({
 		type : "GET",
 		url : "${appPath}/myPage/getChatInfo",
+		data: { roomId: roomId },
 		success : function(res) {
 			$("#chatRoomView").html(res);
 		}

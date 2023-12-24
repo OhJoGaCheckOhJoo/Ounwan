@@ -192,6 +192,11 @@ public class MyPageService {
 
 		return partners;
 	}
+	
+	public List<Map<String, Object>> getChatInfo(String roomId) {
+		return myPageDAO.getChatInfo(roomId);
+	}
+
 
 
 	public List<DanggunChatRoomDTO> changeDTOList2(List<DanggunChatRoom> danggunChatRoom) {
@@ -254,4 +259,5 @@ public class MyPageService {
 				.socialId(client.getSocialId()).build();
 	}
 
+	
 }

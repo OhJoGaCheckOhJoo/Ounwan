@@ -100,6 +100,10 @@ public class MyPageDAO {
 		return sqlSession.selectOne(NAMESPACE + "getPartnerInfo", buyer);
 	}
 
+	public List<Map<String, Object>> getChatInfo(String roomId) {
+		return sqlSession.selectList(NAMESPACE + "getChatInfo", roomId);
+	}
+
 	
 
 	

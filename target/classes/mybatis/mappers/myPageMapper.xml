@@ -250,27 +250,30 @@
 	</update>
 
 	<!-- chat list -->
-	<select id="getchatList" parameterType="String" resultType="danggunChatRoom">
+	<select id="getchatList" parameterType="String"
+		resultType="danggunChatRoom">
 		select *
 		from DANGGUN_CHAT_ROOM DCR
-		where DCR.SELLER = #{clientId}
+		where DCR.SELLER =
+		#{clientId}
 		UNION
 		SELECT *
 		from DANGGUN_CHAT_ROOM DCR2
-		where DCR2.BUYER = #{clientId}
+		where DCR2.BUYER =
+		#{clientId}
 	</select>
 
-	<select id="getPartnerInfo" parameterType="String" resultType="clients">
+	<select id="getPartnerInfo" parameterType="String"
+		resultType="clients">
 		select *
 		from CLIENTS
 		where CLIENT_ID = #{clientId}
 	</select>
 
-
-
-
-
-
-
-
+	<select id="getChatInfo" parameterType="String" resultType="map">
+		SELECT *
+		FROM DANGGUN_CHAT_MESSAGE
+		WHERE ROOM_ID = #{roomId}
+		ORDER BY REGDATE;
+	</select>
 </mapper>
