@@ -63,8 +63,8 @@
 												<div class="order-detail-state now">${orderList.TRADE_STEP}</div>
 												<div class="order-detail-state buttons">
 													<button class="active refund-button"
-														onclick="openRefundModal(this)">환불접수</button>
-													<button class="active confirm-button">거래확정</button>
+														onclick="openRefundModal('${orderList.ORDER_NUMBER}')">환불접수</button>
+													<button class="active confirm-button" onclick="confirmPurchase('${orderList.ORDER_NUMBER}')">거래확정</button>
 												</div>
 											</div>
 										</td>
@@ -102,7 +102,6 @@
 			</c:if>
 		</tbody>
 	</table>
-	<button onclick="reload()">리로드</button>
 </div>
 <%@ include file="./refundModal.jsp"%>
 <%@ include file="./detailModal.jsp"%>
@@ -110,45 +109,24 @@
 <script src="${appPath}/js/detailModal.js"></script>
 
 <script>
-	function reload() {
-		$.ajax({
-			type : "GET",
-			url : "${appPath}/myPage/coupungOrderList",
-			success : function(res) {
-				$("#content").html(res);
-			}
-		});
-	}
-
-/* 	function submitRefund() {
-		var selectedReason = document.querySelectorAll('.reason:checked');
-		var orderNumber = document.getElementById('refundSelectModal')
-				.getAttribute('orderNumber');
-		var reason = "";
-
-		if (selectedReasons.length > 0) {
-			reason = selectedReason.parentElement.textContent.trim();
-			var obj = {
-				"orderNumber" : orderNumber,
-				"reason" : reason
-			};
-
+	function confirmPurchase(orderNumber) {
+		var confirmCheck =  confirm("구매 확정하시겠습니까?");
+		if(confirmCheck) {
 			$.ajax({
-				url : appPath + '/myPage/refund',
-				type : 'POST',
-				data : JSON.stringify(obj),
-				contentType : 'application/json',
+				url: "${appPath}/myPage/confirmPurchase",
+				type: 'POST',
+				data: {orderNumber: orderNumber},
 				success : function(res) {
-					alert(res + " 환불 접수가 완료되었습니다.");
-				}
-			});
-
-			closeRefundModal();
-		}
-
-		else {
-			alert("환불 사유를 선택해주세요.");
-		}
-	} */
+					if(res === "success") {
+						alert("구매확정 완료되었습니다. 리뷰를 작성해 중세요");
+					}
+					else {
+						alert("구매확정 중 문제가 발생했습니다.");
+					}				
+					orderList();
+				}	
+			});			
+		}		
+	}
 </script>
 

@@ -1,10 +1,13 @@
 	var appPath = '/myapp';
 	
-	function openRefundModal(clickedElement) {
+	var selectedOrderNumber;
+	
+	function openRefundModal(orderNumber) {
 		document.getElementById("refundModal").style.display = "block";
 		document.getElementById("refundtModalOverlay").style.display = "block";
 		
-		var orderNumber = $(clickedElement).parent().parent().parent().parent().find(".send-order-number").text();
+		selectedOrderNumber = orderNumber
+		console.log("openNumber: " + selectedOrderNumber);
 	}
 	
 	function closeRefundModal() {
@@ -13,17 +16,13 @@
 	}
 	
 	function submitRefund(orderNumber) {
-		var selectedReason = document.querySelector('.refund-reason inp`ut[name="refundReason"]:checked');
+		var selectedReason = document.querySelector('.refund-reason input[name="refundReason"]:checked');
+		var reason = "";		
 		
-				
-		console.log("NUM: " + orderNumber);
-		var reason = "";
-		console.log("R: "+selectedReason);
 		if (selectedReason) {
 			reason = selectedReason.value;
-			console.log("2: " + reason);
 			var obj = {
-				"orderNumber" : orderNumber,
+				"orderNumber" : selectedOrderNumber,
 				"reason" : reason
 			};
 
@@ -33,10 +32,23 @@
 				data : JSON.stringify(obj),
 				contentType : 'application/json',
 				success : function(res) {
-					alert(res + " 환불 접수가 완료되었습니다.");
+					if(res === "success") {
+						alert("환불 접수가 완료되었습니다.");
+					}
+					else {
+						alert("환불 중 문제가 발생했습니다." )
+					}
+					
+					$.ajax({
+						type : "GET",
+						url : appPath + "/myPage/coupungOrderList",
+						success : function(res) {
+							$("#content").html(res);
+						}
+					});
+					
 				}
 			});
-
 			closeRefundModal();
 		}
 

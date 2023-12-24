@@ -12,7 +12,7 @@
 }
  
 function showOrderDetails(orderNumber) {
-	$(".order-detail.product-info.modal").hide(); // 모든 주문 상세 정보 감추기
+	$(".order-detail.product-info.modal").hide();
     $(".order-detail[order-number='" + orderNumber + "']").show();
 }
 
