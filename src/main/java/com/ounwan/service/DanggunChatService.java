@@ -20,7 +20,6 @@ public class DanggunChatService {
 	public List<DanggunChatMessageDTO> selectDanggunChatList(Integer danggunNumber ,String seller, String buyer){
 //		일단 채팅방이 있는지 확인하자
 		List<String> danggunChatRoom = danggunChatDAO.selectRoomList();
-		System.out.println("방 있는지 = " + danggunChatRoom);
 		DanggunChatRoom makeChatRoom = new DanggunChatRoom();
 		String roomId = seller + buyer + danggunNumber;
 		makeChatRoom.setRoomId(roomId);
@@ -30,7 +29,6 @@ public class DanggunChatService {
 		if(!danggunChatRoom.contains(roomId)) {
 			int makeRoom = danggunChatDAO.makeRoom(makeChatRoom);
 		}
-		System.out.println("service roomID" + roomId);
 		return changeDTOlist(danggunChatDAO.selectDanggunChatList(roomId));
 	}
 	

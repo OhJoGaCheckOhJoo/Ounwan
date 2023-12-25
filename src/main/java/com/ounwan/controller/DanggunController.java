@@ -54,7 +54,7 @@ public class DanggunController {
 		DanggunDTO danggun = danggunService.selectDanggun(seller, danggunNumber);
 		System.out.println("step = " + danggun.getTradeStep());
 		model.addAttribute("post", danggun);
-		return "/bixSiri/danggunChat";
+		return "/chat/danggunChat";
 	}
 
 //	당군 메인 페이지로 이동
@@ -96,7 +96,9 @@ public class DanggunController {
 	}
 
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public @ResponseBody String insertPost(@RequestParam(value = "detailImagesLength", required=false) int detailImagesLength,@RequestPart(value="detailImages", required = false) MultipartFile[] detailImages, MultipartFile image,
+	public @ResponseBody String insertPost(
+			@RequestParam(value = "detailImagesLength", required=false) int detailImagesLength,
+			@RequestPart(value="detailImages", required = false) MultipartFile[] detailImages, MultipartFile image,
 			String clientId, String productName, int price, String detail) throws IllegalStateException, IOException {
 		return danggunService.danggunInsert(detailImagesLength, detailImages, image, clientId, productName, price, detail)>0 ? "sucess" : "fail";
 	}
