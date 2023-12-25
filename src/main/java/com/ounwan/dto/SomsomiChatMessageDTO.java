@@ -17,10 +17,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class SomsomiChatDTO {
+public class SomsomiChatMessageDTO {
 	private Integer messageId;
+	private String roomId;
 	private String sender;
 	private String message;
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone="Asia/Seoul")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="Asia/Seoul")
 	private Timestamp regdate;
 }

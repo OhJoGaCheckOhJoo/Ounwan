@@ -17,8 +17,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class SomsomiChat {
+public class SomsomiChatMessage {
 	private Integer messageId;
+	private String roomId;
 	private String sender;
 	private String message;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="Asia/Seoul")
