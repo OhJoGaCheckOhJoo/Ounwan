@@ -14,6 +14,7 @@
 		<typeAlias type="com.ounwan.entity.ProductImages" alias="productImages" />
 		<typeAlias type="com.ounwan.entity.Aeta" alias="aeta" />		
 		<typeAlias type="com.ounwan.entity.Refunds" alias="refund" />		
+		<typeAlias type="com.ounwan.entity.Reviews" alias="review" />		
 		
 	</typeAliases>
 </configuration>
