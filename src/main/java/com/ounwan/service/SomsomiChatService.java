@@ -31,7 +31,6 @@ public class SomsomiChatService {
 		}
 		
 		List<SomsomiChatMessageDTO> result = changeDTOlist(chatDAO.selectSomsomiChatList(roomId));
-		System.out.println(result);
 		return result;
 	}
 	
