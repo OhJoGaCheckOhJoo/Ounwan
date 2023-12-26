@@ -137,6 +137,7 @@ public class MyPageController {
 
 	@GetMapping(value = "/checkPwd")
 	public String checkPwd(HttpSession session) {
+		
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
 //		String clientId = userInfo.getClientId();	
 		
@@ -145,12 +146,10 @@ public class MyPageController {
 
 	@RequestMapping(value = "/checkPwd", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String checkPwd(String enteredPassword, HttpSession session) {
-		System.out.println("!!!enteredPassword : " + enteredPassword);
-
-		String clientId = (String) session.getAttribute("testUser");
-		String storedPassword = myPageService.getPwdById(clientId); // DB에서 해당 클라이언트의 암호화된 비밀번호를 가져옵니다.
-
-		System.out.println("!!!storedPassword : " + storedPassword);
+		
+		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
+//		String clientId = userInfo.getClientId();	
+		String storedPassword = myPageService.getPwdById(id); 
 
 		if (storedPassword != null && BCrypt.checkpw(enteredPassword, storedPassword)) {
 			return "success";
@@ -160,11 +159,12 @@ public class MyPageController {
 	
 	@RequestMapping(value = "/modifyUserInfo", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String showUserInfo(HttpSession session, Model model) {
-	
-		String clientId = (String) session.getAttribute("testUser");
-		ClientsDTO userInfo = myPageService.getUserInfo(clientId);
-		System.out.println("!!!userInfo : " + userInfo);
-		model.addAttribute("userInfo", userInfo);
+		
+		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
+//		String clientId = userInfo.getClientId();	
+		
+		ClientsDTO clientInfo = myPageService.getUserInfo(id);
+		model.addAttribute("clientInfo", clientInfo);
 		return "myPage/modifyUserInfo"; // 회원정보 수정 페이지의 뷰 이름
 	}
 

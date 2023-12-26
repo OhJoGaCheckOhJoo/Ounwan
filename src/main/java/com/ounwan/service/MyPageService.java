@@ -59,7 +59,6 @@ public class MyPageService {
 	}
 
 	public List<Map<String, Object>> getCoupungOrderList(String userId) {
-		// TODO Auto-generated method stub
 		return myPageDAO.getCoupungOrderList(userId);
 	}
 
@@ -103,8 +102,7 @@ public class MyPageService {
 
 	public String getPwdById(String clientId) {
 		String encryptedPassword = myPageDAO.getPwdById(clientId); // 암호화된 비밀번호를 가져옵니다.
-		System.out.println("!!!encryptedPassword : " + encryptedPassword);
-
+		
 		if (encryptedPassword != null) {
 			return encryptedPassword; // 암호화된 비밀번호 반환
 		}

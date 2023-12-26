@@ -7,28 +7,27 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-
-<div class="pwd-check-wrap-1 float-right">
-	<p>비밀번호 재확인</p>
-
-	<div class="pwd-check">
-		<input id="pwd-checkId" type="text" readonly="readonly"
-			value="${testUser}">
-
-	</div>
-	<div class="pwd-check">
-		<input id="pwd-checkPassword" type="password" required
-			value="Fz202302!"> <label>비밀번호</label> <span></span>
-	</div>
-
-	<div class="button-container">
-		<div class="pwd-check pwd-check-radius">
-			<button id="confirmButton">확인</button>
+<div class="pwd-check-container">
+	<div class="pwd-check-wrap-1 float-right">
+		<p>비밀번호 재확인</p>
+	
+		<div class="pwd-check">
+			<input id="pwd-checkId" type="text" readonly="readonly"
+				value="${userInfo.clientId}">
+	
+		</div>
+		<div class="pwd-check">
+			<input id="pwd-checkPassword" type="password" required
+				value="Fz202302!"> <label>비밀번호</label> <span></span>
+		</div>
+	
+		<div class="button-container">
+			<div class="pwd-check pwd-check-radius">
+				<button id="confirmButton">확인</button>
+			</div>
 		</div>
 	</div>
-
 </div>
-
 <script>
 	$("#confirmButton").on("click", function() {
 		var enteredPassword = $('#pwd-checkPassword').val();
