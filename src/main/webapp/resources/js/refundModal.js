@@ -6,8 +6,7 @@
 		document.getElementById("refundModal").style.display = "block";
 		document.getElementById("refundtModalOverlay").style.display = "block";
 		
-		selectedOrderNumber = orderNumber
-		console.log("openNumber: " + selectedOrderNumber);
+		selectedOrderNumber = orderNumber;
 	}
 	
 	function closeRefundModal() {

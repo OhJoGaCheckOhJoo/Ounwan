@@ -1,10 +1,100 @@
+/* .table-container {
+    position: relative;
+}
+
+.delete-button {
+    width: 60px;
+    height: 40px;
+    position: absolute;
+    bottom: -70px;
+    right: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px 0px;
+    padding: 5px;
+    background-color: #444;
+    border: 1px solid #ccc5b6;
+}
+
+
+.wish-list-checkbox {
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: yellow;
+}
+
+.wish-list.num {
+    width: 70px;
+}
+
+.wish-list-info-container {
+    width: 400px;
+    background-color: red;
+}
+
+.wish-list.info {
+	
+    padding: 20px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.wish-list.info>a {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.wish-list-info.img {
+    flex: 0.4;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.wish-list-info.name {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.wish-list-info.name p {
+    margin: 0; 텍스트의 기본 마진을 제거합니다.
+}
+
+.wish-list-info.img img {
+    width: 60px;
+    height: 60px;
+    padding: 5px 20px;
+}
+
+.wish-list.price {
+    width: 130px;
+}
+
+.wish-list.upload-date {
+    width: 100px;
+}
+
+.wish-list.state {
+    width: 80px;
+}
+
+.none-content>td {
+    text-align: center;
+    padding: 80px;
+} */
+
 .table-container {
 	position: relative;
 }
 
 .delete-button {
-	width:60px;
-	height:40px;
+	width: 60px;
+	height: 40px;
 	position: absolute;
 	bottom: -70px;
 	right: 10px;
@@ -16,8 +106,26 @@
 	border: 1px solid #ccc5b6;
 }
 
+.wish-list-checkbox {
+	width: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
 .wish-list.num {
 	width: 70px;
+}
+
+.wish-list-info-container {
+	width: 400px;
+	display: flex;
+	align-items: center;
+}
+
+.wish-list.info {
+	padding: 20px 0px;
 }
 
 .wish-list.info>a {
@@ -31,6 +139,10 @@
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;
+}
+
+.wish-list-info {
+	display: inline-block;
 }
 
 .wish-list-info.name {

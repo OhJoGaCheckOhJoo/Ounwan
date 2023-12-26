@@ -14,14 +14,14 @@
 			<span id="closeBtn" class="close-button" onclick="closeDetailModal()">&times;</span>
 			<div>
 				<div class="modal-title">
-				<div>
-					주문번호 <span id="modalOrderNumber"></span>
+					<div>
+						주문번호 <span id="modalOrderNumber"></span>
+					</div>
+					<div>
+						주문일자 <span id="modalOrderDate"></span>
+					</div>
 				</div>
-				<div>
-					주문일자 <span id="modalOrderDate"></span>
-				</div>
-				</div>
-				
+
 				<hr>
 
 				<c:forEach var="orderList" items="${coupungOrderList}">
@@ -29,9 +29,9 @@
 					<!-- 주문 번호와 일치하는 경우에만 아래의 주문 상세 정보를 표시 -->
 					<div class="order-detail product-info modal"
 						order-number="${orderList.ORDER_NUMBER}">
-						
-						
-						<a href="#" class="order-detail-product-info-wrap" >
+
+
+						<a href="#" class="order-detail-product-info-wrap">
 							<div class="order-detail-product-info-container">
 								<div class="order-detail-product-info image">
 									<img src="${orderList.URL}">
@@ -55,8 +55,12 @@
 						</a>
 						<div class="order-detail-product-info-content review-button modal">
 							<c:choose>
-								<c:when test="${orderList.TRADE_HISTORY_NUMBER eq 4}">
-									<button class="active review-button modal">리뷰작성</button>
+								<c:when test="${orderList.TRADE_HISTORY_NUMBER eq 4 && orderList.REVIEW_CHECK eq 0}">
+									<button class="active review-button modal"
+										onclick="insertReview('${orderList.ORDER_DETAIL_NUMBER}', '${orderList.URL}', '${orderList.COUPUNG_NAME}', '${orderList.COUPUNG_OPTION_NAME}')">리뷰작성</button>
+								</c:when>
+								<c:when test="${orderList.TRADE_HISTORY_NUMBER eq 4 && orderList.REVIEW_CHECK eq 1}">
+									<button class="disabled review-button modal" disabled>리뷰작성완료</button>
 								</c:when>
 								<c:otherwise>
 									<button class="disabled review-button modal" disabled>리뷰작성</button>
@@ -77,10 +81,5 @@
 <div id="detailModalOverlay" class="detail-modal-overlay"
 	onclick="closeDetailModal()"></div>
 <script src="${appPath}/js/detailModal.js"></script>
+<script src="${appPath}/js/reviewModal.js"></script>
 
-<script>
-	/* 	function closeDetailModal() {
-	 document.getElementById("detailModal").style.display = "none";
-	 document.getElementById("detailModalOverlay").style.display = "none";
-	 } */
-</script>

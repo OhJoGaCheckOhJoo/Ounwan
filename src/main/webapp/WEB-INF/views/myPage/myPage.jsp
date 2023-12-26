@@ -8,15 +8,16 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <title>오운완</title>
-    <link href="${appPath}/css/main2.css" rel="stylesheet">
-    <link href="${appPath}/css/header.css" rel="stylesheet">
-    <link href="${appPath}/css/nav.css" rel="stylesheet">
-    <link href="${appPath}/css/mypagemain.css" rel="stylesheet">
-    <link href="${appPath}/css/aetaList.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<title>오운완</title>
+<link href="${appPath}/css/main2.css" rel="stylesheet">
+<link href="${appPath}/css/header.css" rel="stylesheet">
+<link href="${appPath}/css/nav.css" rel="stylesheet">
+<link href="${appPath}/css/mypagemain.css" rel="stylesheet">
+<link href="${appPath}/css/aetaList.css" rel="stylesheet">
 </head>
 
 <body>
@@ -104,8 +105,6 @@
 						<div class="menu-container coupung">
 							<a href="javascript:orderList()">
 								<div class="coupung-menu order-list">주문내역 조회</div>
-							</a> <a href="#">
-								<div class="coupung-menu mileage">마일리지</div>
 							</a> <a href="javascript:reviewList()">
 								<div class="coupung-menu review">리뷰 관리</div>
 							</a>
@@ -146,16 +145,7 @@
 						</div>
 
 						<div class="preview menu">
-							<a href="#" class="preview-menu mileage">
-								<div>
-									<img class="preview-menu-image">
-									<div class="preview-menu-text">
-										<p>마일리지</p>
-										<span>127</span><span> 점</span>
-									</div>
-
-								</div>
-							</a> <a href="javascript:danggunWishList()"
+							<a href="javascript:danggunWishList()"
 								class="preview-menu wish-list">
 								<div>
 									<img class="preview-menu-image">
@@ -163,7 +153,6 @@
 										<p>관심 상품</p>
 										<span>${wishListCount}</span><span> 개</span>
 									</div>
-
 								</div>
 							</a> <a href="#" class="preview-menu cart">
 								<div>
@@ -183,7 +172,7 @@
 							<div class="recent-info order">
 								<div class="section-header">
 									<h2 class="section-title">최근 주문 정보</h2>
-									<a href=#>더보기 > </a>
+									<a href="javascript:orderList()">더보기 > </a>
 								</div>
 								<table>
 									<thead>
@@ -327,8 +316,8 @@
 				</div>
 			</div>
 		</div>
-		
-		<script src="./js/main.js" ></script>
+
+		<script src="./js/main.js"></script>
 		<script>
 			function orderList() {
 				$.ajax({
@@ -339,7 +328,7 @@
 					}
 				});
 			}
-		
+
 			function danggunSaleList() {
 				$.ajax({
 					type : "GET",
@@ -379,7 +368,7 @@
 					}
 				});
 			}
-			
+
 			function checkPassword() {
 				$.ajax({
 					type : "GET",
@@ -390,7 +379,6 @@
 				});
 			}
 		</script>
-		
 </body>
 
 </html>

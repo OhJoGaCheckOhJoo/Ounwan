@@ -33,8 +33,10 @@
 								value="${orderList.ORDER_NUMBER}" />
 							<tr>
 								<td class="order-detail order-info">
+<!-- 									<div class="order-detail-order-info-container"
+										onclick="openDeatilModal(this)"> -->
 									<div class="order-detail-order-info-container"
-										onclick="openDeatilModal(this)">
+										onclick="openDeatilModal('${orderList.ORDER_NUMBER}', '${orderList.ORDER_DATE}')">
 										<div class="order-detail-order-info date">
 											주문일자 <span class="send-order-date"><fmt:formatDate
 													value="${orderList.ORDER_DATE}" pattern="yyyy-MM-dd" /></span>
@@ -75,7 +77,7 @@
 												<div class="order-detail-state now">${orderList.TRADE_STEP}</div>
 												<div class="order-detail-state buttons">
 													<button class="disabled refund-button" disabled>환불접수</button>
-													<button class="active review-button">리뷰작성</button>
+													<button class="active review-button" onclick="openDeatilModal('${orderList.ORDER_NUMBER}', '${orderList.ORDER_DATE}')">리뷰작성</button>
 												</div>
 											</div>
 										</td>
@@ -105,6 +107,7 @@
 </div>
 <%@ include file="./refundModal.jsp"%>
 <%@ include file="./detailModal.jsp"%>
+<%@ include file="./reviewModal.jsp" %>
 <script src="${appPath}/js/refundModal.js"></script>
 <script src="${appPath}/js/detailModal.js"></script>
 
