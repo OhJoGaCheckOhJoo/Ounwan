@@ -147,7 +147,7 @@ public class MyPageService {
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
-		String newProfile = "." + IMAGEPATH + newFileName;
+		String newProfile = ".." + IMAGEPATH + newFileName;
 
 		ClientsDTO client = new ClientsDTO();
 
@@ -161,6 +161,17 @@ public class MyPageService {
 		return "success";
 	}
 
+	public int withdrawUserInfo(ClientsDTO client) {
+		client.setPrivacyTerms(client.getPrivacyTerms());
+		client.setActivationCheck(client.getActivationCheck());
+		
+		int result = myPageDAO.withdrawUserInfo(changeEntity(client));
+		if(result > 0) {
+			return 1;
+		} 
+		return 0;
+	}
+	
 	public List<Map<String, Object>> getchatList(String userId) {
 		List<DanggunChatRoomDTO> chatList = changeDTOList2(myPageDAO.getchatList(userId));
 
@@ -257,5 +268,4 @@ public class MyPageService {
 				.socialId(client.getSocialId()).build();
 	}
 
-	
 }

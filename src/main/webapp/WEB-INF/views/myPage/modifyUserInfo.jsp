@@ -43,7 +43,7 @@
 			<!-- 수정 버튼 클릭 시 모달창 띄우기 -->
 			<div class="profile-password">
 				<label class="attribute-name" for="">비밀번호</label>
-				<button id="openModal">수정</button>
+				<button id="modifyPwdBtn">수정</button>
 			</div>
 	
 			<!-- 모달창 -->
@@ -52,13 +52,13 @@
 					<span class="close">&times;</span>
 					<div class="profile-password">
 						<label class="modal-attribute-name" for="">비밀번호</label> <input
-							type="password" class="input-form" id="firstPass"
+							type="password" class="modal-input-form" id="firstPass"
 							placeholder="비밀번호를 입력하세요"> <span id="wrongForm-inform">잘못된
 							형식입니다.</span>
 					</div>
 					<div class="profile-password">
 						<label class="modal-attribute-name" for="">비밀번호 확인</label> <input
-							type="password" class="input-form" placeholder="비밀번호를 입력하세요"
+							type="password" class="modal-input-form" placeholder="비밀번호를 입력하세요"
 							id="secondPass" required /> <span id="notMatch-inform">비밀번호가
 							일치하지 않습니다.</span>
 					</div>
@@ -91,6 +91,26 @@
  <div class="withdrawl-btn-container">
  	<button id='withdrawlBtn' type='button'>탈퇴하기</button>
  </div>
+ <!-- 모달창 -->
+<div id="myModal2" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        	<div class="withdrawl-container">
+		        <div class="withdrawl-container-wrap">
+		            <label class="modal-attribute-name" for="storagePeriod">정보 저장 기간 선택</label>
+		            <select id="storagePeriod" class="modal-input-form">
+		                <option value="3">3개월</option>
+		                <option value="6">6개월</option>
+		                <option value="12">1년</option>
+		                <option value="0">즉시</option>
+		            </select>
+		        </div>
+		     	<div class="withdrawl-Completed-btn">
+       		 		<button id="withdrawlCompleted">완료</button>
+       		 	</div>
+     	 </div>
+	</div>
+</div>
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -176,21 +196,25 @@
 
 	// 수정 버튼 클릭 시 모달 열기
 	var modal = document.getElementById("myModal");
-	var btn = document.getElementById("openModal");
-	var span = document.getElementsByClassName("close")[0];
+	var btn = document.getElementById("modifyPwdBtn");
+	var closeBtn = document.querySelector("#myModal .close")
 
 	btn.onclick = function() {
 		modal.style.display = "block";
 	}
 
-	span.onclick = function() {
+	closeBtn.onclick = function() {
 		modal.style.display = "none";
 	}
 
-	$('#savePassword')
-			.on(
-					'click',
-					function() {
+	// 모달 콘텐츠 외부를 클릭했을 때 모달이 닫히도록 함
+	window.onclick = function(event) {
+	    if (event.target == modal) {
+	        modal.style.display = "none";
+	    }
+	}
+
+	$('#savePassword').on('click',function() {
 						var firstPass = $('#firstPass').val();
 						var secondPass = $('#secondPass').val();
 
@@ -227,9 +251,6 @@
 										+ "\n" + "error:" + error);
 							}
 						});
-
-						// 모달 닫기
-						modal.style.display = "none";
 					});
 
 	var formData = new FormData();
@@ -295,4 +316,48 @@
 			}
 		});
 	});
+	
+	// 수정 버튼 클릭 시 모달 열기
+	var modal2 = document.getElementById("myModal2");
+	var btn2 = document.getElementById("withdrawlBtn");
+	var closeBtn2 = document.querySelector("#myModal2 .close"); // '닫기' 버튼 선택 부분을 수정
+
+	btn2.onclick = function() {
+	    modal2.style.display = "block";
+	}
+
+	// '닫기' 버튼을 클릭했을 때 모달이 닫히도록 함
+	closeBtn2.onclick = function() {
+	    modal2.style.display = "none";
+	}
+
+	// 모달 콘텐츠 외부를 클릭했을 때 모달이 닫히도록 함
+	window.onclick = function(event) {
+	    if (event.target == modal2) {
+	        modal2.style.display = "none";
+	    }
+	}
+
+	$('#withdrawlCompleted').on('click',function() {
+							var privacyTerms = $('#storagePeriod').val();
+							var clientId = "${clientInfo.clientId}";
+							console.log(privacyTerms);
+						    var obj = {
+						        clientId: clientId,
+						        privacyTerms: privacyTerms
+						    };
+							$.ajax({
+								url : "${appPath}/myPage/withdrawal",
+								type : "post",
+								data : JSON.stringify(obj),
+								contentType : 'application/json',
+								success : function(res) {
+									if (res === 'success') {
+										alert("탈퇴가 완료되었습니다!");
+										location.href = "${appPath}/myPage";
+									}
+								}
+							});
+					});
+	
 </script>

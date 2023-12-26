@@ -41,10 +41,14 @@ input[type="file"] {
 	height: 100%;
 	overflow: auto;
 	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 120;
 }
 
-/* 모달 내 다른 특정 요소의 텍스트 색상 변경 */
 .profile-password label.modal-attribute-name {
+	color: black;
+}
+
+.withdrawl-container label.modal-attribute-name {
 	color: black;
 }
 
@@ -64,6 +68,28 @@ input[type="file"] {
 	font-size: 28px;
 	font-weight: bold;
 }
+
+.modal-input-form,
+    select {
+    	color: black ;
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0 15px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+}
+
+#withdrawlCompleted {
+	width: 100px;
+	padding: 10px;
+	background-color: #444;
+	border: 1px solid #ccc5b6;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
 
 /* 입력 필드 스타일 */
 input[type="password"] {
@@ -88,7 +114,6 @@ input[type="password"] {
     display: flex;
     align-items: center;
     border-bottom: 1px solid;
-}
 }
 
 :root { 
@@ -124,12 +149,12 @@ input[type="password"] {
 	width: 400px;
 	margin: auto;
 }
-/*
+
 .input-form {
 	display: inline-block;
 	margin-block: 10px;
 }
-*/
+
 .form-address {
 	font-size: 14px;
 	color: #eee7d8;
@@ -201,6 +226,7 @@ button:hover {
 
 #wrongForm-inform, #notMatch-inform {
 	visibility: hidden;
+	color: black;
 }
 .modify-button {
 	display: flex;
@@ -209,16 +235,23 @@ button:hover {
 
 .withdrawl-btn-container{
 	display: flex;
+	font-size: 13px;
 }
 
 #withdrawlBtn{
-    font-size: 13px;
 	border: none;
     background: none;
-    color: var(--main-color-1); /* 버튼 텍스트 색상 */
+    color: #999999; 
     text-decoration: none;
     padding: 0;
     font: inherit;
     cursor: pointer;
     transition: border-bottom 0.3s ease; /* 부드러운 전환 효과를 위한 애니메이션 지속 시간 및 전환 함수 */
 }
+
+#withdrawlCompleted:hover {
+    background-color: var(--main-color-2); /* 호버시 배경색 변경 */
+	color: var(--main-back); /* 호버시 텍스트 색상 변경 */
+	border-color: var(--main-color-2); /* 호버시 테두리 색상 변경 */
+}
+    

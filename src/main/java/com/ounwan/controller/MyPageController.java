@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.ClientsDTO;
+import com.ounwan.oauth.kakao.KakaoLoginBO;
 import com.ounwan.service.ClientsService;
 import com.ounwan.service.MyPageService;
 
@@ -32,6 +33,9 @@ public class MyPageController {
 
 	@Autowired
 	MyPageService myPageService;
+	
+	@Autowired
+	KakaoLoginBO kakaoLogin;
 
 	String id="jj1234";
 	
@@ -171,9 +175,8 @@ public class MyPageController {
 
 	@RequestMapping(value = "/modifyUserInfo/pwd", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody String modifyPwd(@RequestBody ClientsDTO clientsDTO, HttpSession session) throws Exception {
-		System.out.println("!!!!clientsDTO : " + clientsDTO.getPassword());
 		int result = myPageService.modifyPwd(clientsDTO);
-		System.out.println("!!result : " + result);
+		
 		if (result > 0) {
 			System.out.println("YESSSSSS");
 		} else {
@@ -191,32 +194,23 @@ public class MyPageController {
 	
 	@PostMapping(value="/updateImg")
 	public @ResponseBody String updateImage(@RequestParam("image") MultipartFile image,  @RequestParam("clientId") String clientId) {
-	    System.out.println("!!!!formdata : " + image );
-	    System.out.println("@@@@formdata : " + clientId );
-	    
 		String imgString = myPageService.updateImage(image, clientId);
 	    return imgString;
 	}
+	
+	@RequestMapping(value="/withdrawal", method = RequestMethod.POST, consumes = "application/json", produces = "text/plain;charset=UTF-8")
+	public @ResponseBody String withdrawUserInfo(@RequestBody ClientsDTO clientsDTO,  HttpSession session) {
+		myPageService.withdrawUserInfo(clientsDTO);
+		
+		String accessToken = (String) session.getAttribute("accessToken");
+		if (accessToken != null) {
+			kakaoLogin.logout(session);
+			session.invalidate();
+			return "success";
+		}
+		session.invalidate();
+		
+		return "success";
+	}
 
-	@GetMapping(value = "/chatList")
-	public String chatList(HttpSession session, Model model) {
-		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-//		String clientId = userInfo.getClientId();	
-		model.addAttribute("chatList", myPageService.getchatList(id));
-		return "myPage/chatList";
-	}
-	
-	
-	
-	@GetMapping(value = "/getChatInfo")
-	public String getChatInfo(HttpSession session, Model model,String roomId) {
-		System.out.println("!!!!!!roomId : " + roomId);
-		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-//		String clientId = userInfo.getClientId();	
-		List<Map<String,Object>> chatInfo = myPageService.getChatInfo(roomId);
-		model.addAttribute("chatInfo",chatInfo);
-//		model.addAttribute("chatInfo", myPageService.getchatList(id));
-		return "myPage/chatInfo";
-	}
-	
 }

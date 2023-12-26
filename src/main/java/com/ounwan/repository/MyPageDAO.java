@@ -90,26 +90,9 @@ public class MyPageDAO {
 	public int modifyProfileURL(Clients client) {
 		return sqlSession.update(NAMESPACE + "modifyProfileURL", client);
 	}
-
-	public List<DanggunChatRoom> getchatList(String userId) {
-		return sqlSession.selectList(NAMESPACE + "getchatList", userId);
-		
+	
+	public int withdrawUserInfo(Clients client) {
+		return sqlSession.update(NAMESPACE + "withdrawUserInfo", client);
 	}
-	
-	public Clients getPartnerInfo(String buyer) {
-		return sqlSession.selectOne(NAMESPACE + "getPartnerInfo", buyer);
-	}
-
-	public List<Map<String, Object>> getChatInfo(String roomId) {
-		return sqlSession.selectList(NAMESPACE + "getChatInfo", roomId);
-	}
-
-	
-
-	
-
-
-
-	
 
 }
