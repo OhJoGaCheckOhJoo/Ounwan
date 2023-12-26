@@ -1,10 +1,9 @@
 @charset "UTF-8";
 
-aeta-photo{
-	width:auto;
-	height: 100px;
+.aeta-photo{
+	width: 120px;
 }
 
-aeta-like-png{
-	height: 40px;
+.aeta-like-png{
+	height: 20px;
 }

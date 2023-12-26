@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,38 +45,28 @@ public class CommunityRestController {
 			String contents,
 			HttpSession session
 			) throws IllegalStateException, IOException {		
-		int result=0;
-		System.out.println(images);
-//		System.out.println(images[0]);
-//		System.out.println(images[1]);
-		System.out.println(imagesLength);
-		System.out.println(title);
-		System.out.println(contents);
-
-		ClientsDTO user=(ClientsDTO)session.getAttribute("userInfo");
-		String clientId=(user.getClientId());
-		result=communityService.aetaInsertPost(clientId,title,contents,images,imagesLength);
 		
-		return (result>0)? "success":"fail";
+		return (communityService.aetaInsertPost(
+				session,title,contents,images,imagesLength)>0)? "success":"fail";
 	}
-	
-	
 	//게시글 수정 기능
-//	@PutMapping(value="/aetaUpdatePost")
-//	public @ResponseBody String aetaUpdatePost(HttpSession session 
-//			) {
-//		int result =0;
-//
-//		
-//		ClientsDTO user=(ClientsDTO)session.getAttribute("userInfo");
-////		if(user.getClientId()==communityService.findClientId(aetaPost.getAetaNumber())) {
-////			result = communityService.aetaUpdatePost(aetaPost, aetaImages);
-////		}else {
-////			System.out.println("수정 컨트롤러 수정 오류");
-////		}
-//		
-//		return (result>0)?"success":"fail";
-//	}
+	@PostMapping(value="/aetaUpdating")
+	public @ResponseBody String aetaUpdatePost(
+			//@RequestParam(value="imagesLength",required=false) int oldImagesLength,
+			String aetaNumber,
+			String title,
+			String contents,
+			HttpSession session,
+			@RequestPart(value="newImages",required=false)MultipartFile[] newImages,
+			@RequestParam(value="newImagesLength") int newImagesLength
+			) throws IllegalStateException, IOException{
+		
+		return (communityService.aetaUpdatePost(
+				session,Integer.parseInt(aetaNumber),title, contents,
+				//oldImagesLength,
+				newImages,newImagesLength
+				)>0)?"success":"fail";
+	}
 	
 	//애타 게시글 삭제 기능
 	@DeleteMapping(value="/aetaDeletePost")

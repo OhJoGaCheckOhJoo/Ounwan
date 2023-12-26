@@ -10,6 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${appPath}/css/main.css" rel="stylesheet" />
 <link href="${appPath}/css/community.css" rel="stylesheet" />
+<link href="${appPath}/css/aeta.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>애타 게시판</title>

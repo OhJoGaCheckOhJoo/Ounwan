@@ -52,7 +52,7 @@ public class CommunityController {
 		System.out.println();
 		
 		model.addAttribute("aetaList", aetaList);
-		System.out.println(aetaList);
+//		System.out.println(aetaList);
 		model.addAttribute("paginating",paginating);
 		
 		model.addAttribute("inputValue",inputValue);
@@ -99,7 +99,7 @@ public class CommunityController {
 			model.addAttribute("aetaCountLikes",communityService.aetaCountLikes(Integer.parseInt(aetaNumber)));
 			//접속자 좋아요 체크 여부
 			model.addAttribute("aetaLikesCheck",communityService.aetaLikesCheck(Integer.parseInt(aetaNumber),logedInClient.getClientId()));
-			System.out.println(model);
+//			System.out.println(model);
 
 			return "community/aeta/aetaPost";
 		}
@@ -109,9 +109,11 @@ public class CommunityController {
 	public String aetaUpdatePage(
 			HttpSession session,
 			Model model,
+			//@RequestParam String aetaCountImages,
 			@RequestParam String aetaNumber
 			){
 			
+			//model.addAttribute("aetaCountImages", aetaCountImages);
 			model.addAttribute("aetaPost",communityService.aetaPostToBeUpdated(Integer.parseInt(aetaNumber)));
 		return "community/aeta/aetaUpdating";
 	}

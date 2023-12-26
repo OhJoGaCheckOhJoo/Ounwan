@@ -62,8 +62,8 @@ public class CommunityDAO {
 	public int aetaInsertPost(Aeta post) {
 		return sqlSession.insert(NAMESPACE+"AetaInsertPost",post);
 	}
-	public int aetaInsertImageURL(Map<String,String> url) {
-		return sqlSession.insert(NAMESPACE+"AetaInsertImageURL",url);
+	public int aetaInsertImageUrls(Map<String,Object> url) {
+		return sqlSession.insert(NAMESPACE+"AetaInsertImageUrls",url);
 	}
 	
 	//게시글 조회수 증가
@@ -88,9 +88,12 @@ public class CommunityDAO {
 		return sqlSession.update(NAMESPACE+"AetaUpdatePost", post);
 	}
 	//게시글 이미지url 수정 // imageUrl,boardNumber
-	public int aetaUpdatePostURL(AetaImages aetaImages) {
-		return sqlSession.update(NAMESPACE+"AetaUpdatePostURL",aetaImages);
+	public int aetaDeleteImageUrls(int aetaNumber) {
+		return sqlSession.delete(NAMESPACE+"AetaDeleteImageUrls",aetaNumber);
 	}
+//	public int aetaUpdateImageUrls(Map<String, Object> aetaUrlMap) {
+//		return sqlSession.update(NAMESPACE+"AetUpdateImageUrls");
+//	}
 	//게시글 삭제
 	public int aetaDeletePost(int boardNumber) {
 		return sqlSession.delete(NAMESPACE+"AetaDeletePost",boardNumber);
@@ -222,6 +225,10 @@ public class CommunityDAO {
 	public int updateInbody(Inbody inbody) {
 		return sqlSession.update(NAMESPACE + "updateInbody", inbody);
 	}
+
+
+
+	
 
 	
 }

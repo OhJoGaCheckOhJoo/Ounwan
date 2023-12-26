@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<link href="${appPath}/css/aeta.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>애타 게시글 수정</title>
@@ -21,14 +21,18 @@
 	<h1>애타편집</h1>
 	<hr>
 	<div>
-		<input type="hidden" id='boardNO' value="${aetaPost[0].BOARD_NUMBER}">
+		<input type="hidden" id='aetaNumber' value="${aetaPost[0].AETA_NUMBER}">
+		<input type="hidden" id="aetaCountImages" value="${aetaCountImages}"/>
+			
 		<div>
 			<label for="inputTitle"></label><input id="inputTitle"
 				value="${aetaPost[0].TITLE}">
 		</div>
 
 		<form id="selectedImg" enctype="multipart/form-data">
-			<label for="inputImg">이미지</label> <input type="file" id="inputImg" /><br>
+			<label for="inputImg">이미지</label>
+			<input type="file" multiple="multiple" id="inputImg" name="inputImg" onchange="readUrl(this)"/>
+			<br>
 			<c:forEach items="${aetaPost}" var="aeta">
 				<div>
 					<img class="aeta-photo" id="imgURL" src="${appPath}/images/aetaUploads/${aeta.URL}" />
@@ -42,7 +46,8 @@
 			<br>
 		</div>
 		<div class="">
-			<button type="button" id="updateConfirmBtn">수정</button>
+			<button type="button" id="updatePost">수정</button>
+			<button type="button" id="backToPostBtn">돌아가기</button>
 		</div>
 	</div>
 	<br>

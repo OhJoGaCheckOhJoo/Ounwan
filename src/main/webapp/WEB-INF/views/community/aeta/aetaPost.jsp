@@ -25,7 +25,6 @@
 		<div>
 			<div>
 				<div id="aetaTitle">${aetaPost[0].TITLE}</div>
-				<div>프로필사진경로: ${aetaPost[0].WRITER_PHOTO}</div>
 				<div id="aetaWriter">${aetaPost[0].CLIENT_ID}</div>
 				<div>작성일:${aetaPost[0].AETA_CREATED_DATE}</div>
 				<div>조회수:${aetaPost[0].VIEWS}</div>
@@ -38,6 +37,7 @@
 						<img class="aeta-photo" src="${appPath}/images/aetaUploads/${aeta.URL}"/>
 					</div>
 				</c:forEach>
+				<input type="hidden" id="aetaCountImages" value="<c:out value='${loopStatus.count}' />"/>
 				<div>${aetaPost[0].AETA_CONTENTS}</div>
 			</div>
 			<input type="hidden" value="${aetaPost[0].AETA_NUMBER}" id="aetaNumber"
