@@ -1,0 +1,189 @@
+.close-button {
+    position: relative;
+    float:right;
+    font-weight: bold;
+    color: #777;
+    font-size:25px;
+    cursor: pointer;
+    bottom: 15px;
+  }
+  
+
+.review-container-modal {
+    display: none; 
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 20px;
+	background-color: #333;
+	border: 1px solid #ccc;
+	z-index: 1000;
+	max-height: 80vh; /* 모달 창의 최대 높이를 화면 높이의 80%로 설정 */
+	overflow-y: auto; /* 필요할 때 스크롤을 추가 */
+	width: 60%; /* 모달 창의 너비를 화면 너비의 80%로 설정 */
+	max-width: 920px; /* 모달 창의 최대 너비를 600px로 설정 */
+    color: #eee7d8;
+}
+
+.review-modal-overlay {
+    display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 900;
+}
+
+.review.head {
+    padding: 30px 15px;
+    border-bottom: 1px solid #eee7d8;
+ 
+}
+
+.review-head {
+    display: inline-block;
+}
+
+.review-head.heading {
+    font-size: 30px;
+}
+
+.review-head.required {
+    color: #CBF83E;
+    padding-left: 20px;
+}
+
+.review-middle-container {
+    width: 700px;
+    margin: auto;
+}
+
+.review-content-container {
+    padding-bottom: 20px;
+}
+
+.review.product {
+    margin-top: 20px;
+}
+
+.review-content {
+    margin-bottom: 25px;
+}
+
+.review-product, .review-content-score, .review-content-text, .review-content-image {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.review-product {
+    margin: 20px 0px;
+}
+.review-product.image > img {
+    width: 80px;
+    height: 80px;
+    margin: 0px 20px 0px 10px;
+}
+
+.review-product-info {
+    margin-bottom: 5px;
+}
+
+.review.content {
+    padding: 20px 0px;
+}
+
+.entitle {
+    margin-left: 10px;
+    width: 100px;
+}
+
+.asterisk {
+    color: #CBF83E;
+    margin-left: 5px;
+}
+
+.score-setting {
+    width: 30px;
+    height: 30px;
+    border: 0;
+    background-color: rgba(0,0,0,0);
+    cursor: pointer;
+}
+
+.score-setting > img {
+    width: 30px;
+}
+
+.review-content-text.input {
+    position: relative;
+}
+
+.review-content-text.input > textarea {
+    width: 500px;
+    height: 60px;
+    padding: 10px;
+    resize: none;
+    background-color: #333;
+    color: #eee7d8;
+}
+
+.text-count {
+    font-size: 11px;
+    display: inline-block;
+    position: absolute;
+    right: 5px;
+    bottom: -15px;
+}
+
+.review-content-image.preview {
+    width: 100px;
+    height: 100px;
+    position: relative;
+}
+
+.review-content-image.preview > label {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 3;
+}
+
+.review-content-image.preview > label:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.review-content-image.preview > img {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.input-file {
+    display: none;
+}
+
+.button-container {
+    width: 100%;
+    text-align: right;
+}
+
+.review-submit-button {
+    width: 100px;
+    height: 40px;
+    margin-right: 60px;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #444;
+    color: #eee7d8;
+}
+
+.review-submit-button:hover {
+    color: #CBF83E;
+}

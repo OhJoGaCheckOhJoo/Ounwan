@@ -6,12 +6,14 @@ table {
 .order-detail.order-info {
     width: 23%;
     /* background-color: brown; */
-    text-align: left;
+ /*    text-align: left; */
 
 }
 
 .order-detail-order-info-container {
+	
     margin: 12px;
+    cursor: pointer;
 }
 
 
@@ -67,6 +69,8 @@ td.order-detail.product-info {
 }
 
 .order-detail-state.now {
+	width: 130px;
+	text-align:left;
     margin-right: 30px; 
     font-size: 26px;
 }
@@ -81,7 +85,10 @@ td.order-detail.product-info {
 }
 
 .active.refund-button, .active.review-button, .active.confirm-button {
-    border: 1px solid #EEE7D8;
+    /* border: 1px solid #EEE7D8; */
     cursor: pointer;
 }
 
+.disabled {
+	color: #999283;
+}

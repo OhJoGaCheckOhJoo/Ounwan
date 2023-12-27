@@ -4,6 +4,49 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.myPage">
 	<!-- main -->
+
+
+	<!-- refund -->
+	<insert id="refundOrder" parameterType="refund">
+		INSERT INTO REFUNDS
+		(ORDER_NUMBER, REASON , REGISTERED_DATE)
+		VALUES
+		(#{orderNumber},
+		#{reason} , now())
+	</insert>
+
+	<!-- change refund state -->
+	<update id="changeRefundState" parameterType="String">
+		UPDATE `ORDERS`
+		SET `TRADE_HISTORY_NUMBER` = 5
+		WHERE `ORDER_NUMBER` = #{orderNumber}
+	</update>
+	
+	<!-- change purchase confirm state -->
+	<update id="changeConfirmState" parameterType="String">
+		UPDATE `ORDERS`
+		SET `TRADE_HISTORY_NUMBER` = 4
+		WHERE `ORDER_NUMBER` = #{orderNumber}
+	</update>
+	
+	<!-- write Review -->
+	<insert id="writeReview" parameterType="review">
+		INSERT INTO REVIEWS
+		(ORDER_DETAIL_NUMBER, CONTENTS, SCORE, CREATED_DATE, IMAGE_URL)
+		VALUES
+		(#{orderDetailNumber}, #{contents}, #{score}, now(), 
+		<if test="imageUrl != null"> #{imageUrl} </if>
+		<if test="imageUrl == null"> null </if>
+		)
+	</insert>
+	
+	<!-- 리뷰 작성하면 review 버튼 비활성화 -->
+	<update id="disabledReviewButton">
+		UPDATE `ORDER_DETAILS`
+		SET `REVIEW_CHECK` = 1
+		WHERE `ORDER_DETAIL_NUMBER` = #{orderDetailNumber}
+	</update>
+
 	<!-- wish list count -->
 	<select id="wishListCount" parameterType="String"
 		resultType="int">
@@ -25,6 +68,7 @@
 		O.ORDER_DATE,
 		OD.PRICE,
 		OD.QUANTITY,
+		OD.ORDER_DETAIL_NUMBER,
 		C.COUPUNG_NUMBER,
 		C.NAME AS COUPUNG_NAME,
 		PI.URL AS PRODUCT_IMAGE_URL
@@ -96,6 +140,7 @@
 		OD.ORDER_DETAIL_NUMBER,
 		OD.PRICE,
 		OD.QUANTITY,
+		OD.REVIEW_CHECK,
 		TH.TRADE_STEP,
 		TH.TRADE_HISTORY_NUMBER,
 		PI.URL

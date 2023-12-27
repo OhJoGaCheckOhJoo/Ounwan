@@ -1,16 +1,21 @@
-
-.personal-score > div {
-    margin-left: 130px;
-    width: 0px;
-    height: 30px;
-    background-color: var(--main-color-2);
-}
-.personal-score img {
+.review-list-personal-score {
     position: relative;
     width: 150px;
     height: 30px;
-    bottom: 30px;
-    
+
+}
+
+.review-list-personal-score > div,
+.review-list-personal-score img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%;
+}
+
+.review-list-personal-score > div {
+    background-color: #CBF83E;d
 }
 
 .table-container {
@@ -18,8 +23,8 @@
 }
 
 .delete-button {
-	width:60px;
-	height:40px;
+	width: 60px;
+	height: 40px;
 	position: absolute;
 	bottom: -70px;
 	right: 10px;
@@ -29,4 +34,41 @@
 	padding: 5px;
 	background-color: #444;
 	border: 1px solid #ccc5b6;
+}
+
+.review-list-input {
+	width: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.review-list-info {
+	width: 200px;
+}
+
+.review-list-content {
+	width: 350px;
+	display: flex;
+	align-items: center;
+ 	padding: 20px 0px;
+}
+
+.review-list-content-image, .review-list-content-content {
+	display: inline-block
+}
+
+.review-list-content-image {
+	margin: 0px 20px;
+}
+
+.review-list-content-content {
+	text-align: left;
+	width: 230px;
+	padding-right: 20px;
+}
+
+.review-list-create-date {
+	width: 150px;
 }

@@ -1,5 +1,6 @@
 package com.ounwan.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,13 +16,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.oauth.kakao.KakaoLoginBO;
+import com.ounwan.dto.RefundsDTO;
 import com.ounwan.service.ClientsService;
 import com.ounwan.service.MyPageService;
+import com.ounwan.service.RefundsService;
+import com.ounwan.service.ReviewsService;
 
 @RequestMapping("/myPage")
 @Controller
@@ -36,6 +41,12 @@ public class MyPageController {
 	
 	@Autowired
 	KakaoLoginBO kakaoLogin;
+
+	@Autowired
+	RefundsService refundsService;
+	
+	@Autowired
+	ReviewsService reviewService;
 
 	String id="jj1234";
 	
@@ -54,7 +65,6 @@ public class MyPageController {
 		return "/myPage/myPage";
 	}
 
-	///###################여기 하는 중###############
 	@RequestMapping(value = "/coupungOrderList", method = RequestMethod.GET)
 	public String coupungOrderList(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
@@ -66,6 +76,21 @@ public class MyPageController {
 		model.addAttribute("coupungOrderList", lists);
 		
 		return "myPage/coupungOrderList";
+	}
+	
+	@RequestMapping(value = "/refund", method= RequestMethod.POST) 
+	public @ResponseBody String OrderRefund(@RequestBody RefundsDTO refund) {
+		return refundsService.orderRefund(refund)? "success" : "fail";
+	}
+	
+	@RequestMapping(value = "/confirmPurchase", method = RequestMethod.POST)
+	public @ResponseBody String PurchaseConfirm(String orderNumber) {			
+		return myPageService.changeConfirmState(orderNumber)? "success" : "fail";
+	}
+	
+	@RequestMapping(value="/writeReview", method = RequestMethod.POST)
+	public @ResponseBody String writeReview(@RequestPart(value = "reviewImage", required = false) MultipartFile reviewImage, int reviewDetailNumber,  Double reviewScore, String reviewContent) throws IllegalStateException, IOException {		
+		return reviewService.writeReview(reviewImage, reviewDetailNumber, reviewScore, reviewContent)? "success" :"fail";
 	}
 	
 	@RequestMapping(value = "/danggunSaleList", method = RequestMethod.GET)

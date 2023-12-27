@@ -15,5 +15,8 @@
 		<typeAlias type="com.ounwan.entity.Aeta" alias="aeta" />		
 		<typeAlias type="com.ounwan.entity.DanggunChatRoom" alias="danggunChatRoom" />
 		<typeAlias type="com.ounwan.entity.DanggunChatMessage" alias="danggunChatMessage" />
+		<typeAlias type="com.ounwan.entity.Refunds" alias="refund" />		
+		<typeAlias type="com.ounwan.entity.Reviews" alias="review" />		
+		
 	</typeAliases>
 </configuration>
