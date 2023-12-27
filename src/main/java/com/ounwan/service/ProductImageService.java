@@ -33,6 +33,16 @@ public class ProductImageService {
 		return result;
 	}
 	
+	public int updateProductImage(List<ProductImagesDTO> images, int coupungNumber) {
+		int result = 0;
+		
+		for (ProductImagesDTO image : images) {
+			image.setCoupungNumber(coupungNumber);
+			result = productImageDAO.updateImage(changeEntity(image));
+		}
+		return result;
+	}
+	
 	public List<ProductImagesDTO> changeDTOList(List<ProductImages> productImage) {
 		List<ProductImagesDTO> changedList = new ArrayList<ProductImagesDTO>();
 		for (ProductImages image : productImage) {

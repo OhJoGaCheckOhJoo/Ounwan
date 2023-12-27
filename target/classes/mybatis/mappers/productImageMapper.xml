@@ -11,7 +11,14 @@
     	SELECT * FROM PRODUCT_IMAGES WHERE COUPUNG_NUMBER = #{coupungNumber} AND TYPE = 2
     </select>
     
-    <insert id="insertCoupungImage" parameterType="coupung">
+    <insert id="insertCoupungImage" parameterType="productImages">
     	INSERT INTO PRODUCT_IMAGES(COUPUNG_NUMBER, URL, TYPE) VALUES (#{coupungNumber}, #{url}, #{type})
     </insert>
+    
+    <update id="updateImage" parameterType="productImages">
+    	UPDATE PRODUCT_IMAGES
+    	SET URL = #{url}, TYPE = #{type}
+    	WHERE COUPUNG_NUMBER = #{coupungNumber}
+    	AND PRODUCT_IMAGE_NUMBER = #{productImageNumber}
+    </update>
 </mapper>

@@ -1,6 +1,5 @@
 package com.ounwan.service;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,11 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.ounwan.dto.DanggunDTO;
 import com.ounwan.dto.ProductImagesDTO;
-import com.ounwan.dto.TradeHistoryDTO;
-import com.ounwan.dto.WishListsDTO;
 import com.ounwan.entity.Danggun;
+import com.ounwan.entity.ProductImages;
 import com.ounwan.entity.WishLists;
 import com.ounwan.repository.DanggunDAO;
 import com.ounwan.repository.ProductImagesDAO;
@@ -42,14 +42,11 @@ public class DanggunService {
 	
 	@Autowired
 	WishListsDAO wishListsDAO;
-
-	private final static String BUPLOADPATH = "C:/Users/diana/OneDrive/문서/GitHub/Back-end/src/main/webapp/resources";
-	private final static String DANGGUNIMAGEPATH = "/images/danggunUploads/";
 	
-	private final static String UPLOADPATH = "C:/shinhan/sts-workspace/ounwan/src/main/webapp/resources";
-	private final static String CURRENTPAGEURL = "http://localhost:9090/myapp/";
-	private final static int CURRENTPAGEURLLENGTH = CURRENTPAGEURL.length()-1;
-
+	@Autowired
+	AmazonS3 amazonS3;
+	
+	private static final String BUCKET = "ounwan";
 
 	public List<DanggunDTO> searchProduct(String name) {
 		List<DanggunDTO> searchList = new ArrayList<DanggunDTO>();
@@ -84,7 +81,6 @@ public class DanggunService {
 		String[] uploadFileName = new String[count];
 		int[] imageType = new int[count];
 		MultipartFile[] images = new MultipartFile[count];
-		File[] files = new File[count];
 		
 		images[0] = image;
 		imageType[0] = 0;
@@ -97,21 +93,25 @@ public class DanggunService {
 		}
 		
 		for (int i = 0; i < count; i++) {
-			uploadFileName[i] = clientId + "_" + System.currentTimeMillis() + "_" + i + "."
-					+ images[i].getContentType().split("/")[1];
-			files[i] = new File(UPLOADPATH + DANGGUNIMAGEPATH + uploadFileName[i]);
+			String newFileName = System.currentTimeMillis() + "." + images[i].getContentType().split("/")[1];
+			
+			ObjectMetadata metadata = new ObjectMetadata();
+			metadata.setContentLength(images[i].getSize());
+			metadata.setContentType(images[i].getContentType());
+			
+			amazonS3.putObject(BUCKET, newFileName, images[i].getInputStream(), metadata);
+			
+			uploadFileName[i] = amazonS3.getUrl(BUCKET, newFileName).toString();
 		}
 		int danggunNumber= danggunDAO.danggunInsert(danggun);
 
 		if (danggunNumber > 0) {
-			Map<String, Object> data = new HashMap<>();
-			data.put("danggunNumber", danggunNumber);
 			for (int i = 0; i < count; i++) {
-				images[i].transferTo(files[i]);
-				data.put("url", ".." + DANGGUNIMAGEPATH + uploadFileName[i]);
-				data.put("type", imageType[i]);
-				productImagesDAO.imageInsert(data);
-				result += 1;
+				result += productImagesDAO.imageInsert(ProductImages.builder()
+															.danggunNumber(danggunNumber)
+															.url(uploadFileName[i])
+															.type(imageType[i])
+															.build());
 			}
 		}
 		return result== count ? 1 : 0;
@@ -178,7 +178,7 @@ public class DanggunService {
 	public boolean deleteDanggun(DanggunDTO danggun) {
 		int result = danggunDAO.deleteDanggun(changeEntity(danggun));
 		return (result > 0) ? true : false;
-	}
+	} 
 
 	public boolean updateDanggun(MultipartFile[] imageFiles, int[] imageFilesNumber, String[] oldImageURL, MultipartFile[] newDetailImages,
 			String loginclientId, int danggunNumber, String clientId, String productName, int price, String detail,
@@ -191,32 +191,46 @@ public class DanggunService {
 		danggun.setTradeHistoryNumber(tradeHistoryNumber);
 		int result = 0;
 		int count = imagesLength + newImagesLength;
+		System.out.println("count : " + count);
 		String[] uploadFileName = new String[count];
-		File[] files = new File[count]; 
+		
 		for (int i = 0; i < imagesLength; i++) {
 			uploadFileName[i] = clientId + "_" + System.currentTimeMillis() + "_" + i + "." + imageFiles[i].getContentType().split("/")[1];
-			files[i] = new File(UPLOADPATH + DANGGUNIMAGEPATH + uploadFileName[i]);
 		}
 		for(int i = imagesLength; i < count; i++) {
-			uploadFileName[i] = clientId + "_" + System.currentTimeMillis() + "_" + i + "." + newDetailImages[i].getContentType().split("/")[1];
-			files[i] = new File(UPLOADPATH + DANGGUNIMAGEPATH + uploadFileName[i]);
+			uploadFileName[i] = clientId + "_" + System.currentTimeMillis() + "_" + i + "." + newDetailImages[i - imagesLength].getContentType().split("/")[1];
 		}
+		
 		if (danggunDAO.updateDanggun(danggun) > 0) {
-			Map<String, Object> data = new HashMap<>();
 			for (int i = 0; i < imagesLength; i++) {
-				imageFiles[i].transferTo(files[i]);
-				data.put("url", ".." + DANGGUNIMAGEPATH + uploadFileName[i]);
-				data.put("danggunImageNumber", imageFilesNumber[i]);
-				new File(UPLOADPATH + oldImageURL[i].substring(CURRENTPAGEURLLENGTH)).delete();
-				productImagesDAO.updateDanggunImages(data);
+				ObjectMetadata metadata = new ObjectMetadata();
+				metadata.setContentLength(imageFiles[i].getSize());
+				metadata.setContentType(imageFiles[i].getContentType());
+				
+				amazonS3.putObject(BUCKET, uploadFileName[i], imageFiles[i].getInputStream(), metadata);
+				uploadFileName[i] = amazonS3.getUrl(BUCKET, uploadFileName[i]).toString();
+				System.out.println("update : " + uploadFileName[i]);
+				
+				amazonS3.deleteObject(BUCKET, oldImageURL[i]);
+				productImagesDAO.updateDanggunImages(ProductImages.builder()
+																	.productImageNumber(imageFilesNumber[i])
+																	.url(uploadFileName[i])
+																	.build());
 				result += 1;
 			}
-			Map<String, Object> newData = new HashMap<>();
-			newData.put("danggunNumber", danggunNumber);
 			for(int i = imagesLength; i < count; i++) {
-				newDetailImages[i].transferTo(files[i]);
-				newData.put("url", ".." + DANGGUNIMAGEPATH + uploadFileName[i]);
-				productImagesDAO.insertNewDetailImages(newData);
+				ObjectMetadata metadata = new ObjectMetadata();
+				metadata.setContentLength(newDetailImages[i - imagesLength].getSize());
+				metadata.setContentType(newDetailImages[i - imagesLength].getContentType());
+				
+				amazonS3.putObject(BUCKET, uploadFileName[i], newDetailImages[i - imagesLength].getInputStream(), metadata);
+				
+				String url = amazonS3.getUrl(BUCKET, uploadFileName[i]).toString();
+				System.out.println("new : " + url);
+				productImagesDAO.insertNewDetailImages(ProductImages.builder()
+																	.danggunNumber(danggunNumber)
+																	.url(url)
+																	.build());
 				result += 1;
 			}
 		}

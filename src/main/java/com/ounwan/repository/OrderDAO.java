@@ -6,20 +6,29 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ounwan.dto.OrdersDTO;
 import com.ounwan.entity.Orders;
 
 @Repository
 public class OrderDAO {
 	
 	@Autowired
-	SqlSession session;
+	SqlSession sqlSession;
 	private static final String NAMESPACE = "net.ounwan.order.";
 	
 	public List<Orders> getOrderList(String clientId) {
-		return session.selectList(NAMESPACE + "selectList", clientId);
+		return sqlSession.selectList(NAMESPACE + "selectList", clientId);
 	}
 
 	public int setOrder(Orders order) {
-		return session.insert(NAMESPACE + "setOrder", order);
+		return sqlSession.insert(NAMESPACE + "setOrder", order);
+	}
+
+	public List<Orders> getAdminOrderList() {
+		return sqlSession.selectList(NAMESPACE + "selectAdminList");
+	}
+
+	public int updateTradeStatus(OrdersDTO order) {
+		return sqlSession.update(NAMESPACE + "updateTradeStatus", order);
 	}
 }

@@ -1,18 +1,13 @@
 package com.ounwan.oauth.google;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -22,15 +17,6 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
-
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.service.ClientsService;
 
@@ -40,10 +26,10 @@ public class GoogleLoginBO {
 	@Autowired
 	ClientsService clientsService;
 	
-	private static final String CLIENT_ID = "594474085257-0pg7jm97n051b5ovuarfajot45ltge77.apps.googleusercontent.com";
-	private static final String REDIRECT_URI = "http://localhost:9090/myapp/oauth/google";
-	private static final String GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
-	private static final String CLIENT_SECRET = "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";
+	private static final String CLIENT_ID = "000";
+	private static final String REDIRECT_URI = "000";
+	private static final String GOOGLE_TOKEN_URL = "000";
+	private static final String CLIENT_SECRET = "000";
 	
 	
 	public String getURL() {

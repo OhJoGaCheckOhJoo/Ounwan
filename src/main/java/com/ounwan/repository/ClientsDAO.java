@@ -27,7 +27,7 @@ public class ClientsDAO {
 		return sqlSession.selectOne(NAMESPACE + "selectForFindId", client);
 	}
 	
-	public int findPassword(Clients client) {
+	public Clients findPassword(Clients client) {
 		return sqlSession.selectOne(NAMESPACE + "selectForFindPassword", client);
 	}
 

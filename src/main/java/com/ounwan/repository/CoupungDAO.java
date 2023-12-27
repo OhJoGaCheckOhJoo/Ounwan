@@ -40,4 +40,12 @@ public class CoupungDAO {
 	public int insertProduct(Coupung product) {
 		return sqlSession.insert(NAMESPACE + "insertProduct",product);
 	}
+
+	public int updateProduct(Coupung product) {
+		return sqlSession.update(NAMESPACE + "updateProduct", product);
+	}
+
+	public int deleteProduct(int coupungNumber) {
+		return sqlSession.update(NAMESPACE + "deleteProduct", coupungNumber);
+	}
 }

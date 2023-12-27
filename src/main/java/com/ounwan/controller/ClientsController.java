@@ -2,9 +2,8 @@ package com.ounwan.controller;
 	
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +57,8 @@ public class ClientsController {
         if (loginUser != null) {
         	if (!loginUser.getEmailCheck())
         		return "unAuthorized";
+        	if (!loginUser.getActivationCheck())
+        		return "withdraw";
             session.setAttribute("userInfo", loginUser);
             if(cartList != null) {
             	for (CartsDTO cart : cartList) {
@@ -79,8 +80,8 @@ public class ClientsController {
 	
 	@SuppressWarnings("static-access")
 	@RequestMapping("/findPassword")
-	public String findPassword(@RequestParam("id") String id, @RequestParam("email") String email) {
-		return clientService.findPassword(new ClientsDTO().builder().clientId(id).email(email).build());
+	public String findPassword(@RequestParam("id") String id, @RequestParam("email") String email) throws MessagingException {
+		return clientService.findPassword(id, email);
 	}
 	
 	@SuppressWarnings("static-access")
@@ -122,7 +123,7 @@ public class ClientsController {
 	}
 
 	@PostMapping(value = "/signUp", consumes= "application/json", produces="text/plain;charset=utf-8")
-	public @ResponseBody String createAccount(@RequestBody ClientsDTO client) {
+	public @ResponseBody String createAccount(@RequestBody ClientsDTO client) throws MessagingException {
 		boolean result = clientService.createAccount(client);
 		return (result) ? "success" : "fail";
 	} 
@@ -156,6 +157,7 @@ public class ClientsController {
 	@PostMapping(value="/setImage")
 	public @ResponseBody String setImage(@RequestParam("image") MultipartFile image) throws IllegalStateException, IOException {
 		String imgString = clientService.setImage(image);
+		System.out.println("이미지다아아!!!!! : " + imgString);
 		return imgString;
 	}
 }

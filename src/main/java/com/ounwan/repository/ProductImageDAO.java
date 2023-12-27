@@ -26,4 +26,8 @@ public class ProductImageDAO {
 	public int insertImage(ProductImages image) {
 		return sqlSession.insert(NAMESPACE + "insertCoupungImage", image);
 	}
+
+	public int updateImage(ProductImages image) {
+		return sqlSession.update(NAMESPACE + "updateImage", image);
+	}
 }

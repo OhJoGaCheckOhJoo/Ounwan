@@ -27,10 +27,23 @@ public class CoupungOptionsService {
 
 	public int insertOption(List<CoupungOptionsDTO> options, int coupungNumber) {
 		int result = 0;
+		
 		for (CoupungOptionsDTO option : options) {
 			option.setCoupungNumber(coupungNumber);
 			result = coupungOptionsDAO.insertOption(changeEntity(option));
 		}
+		
+		return result;
+	}
+
+	public int updateOption(List<CoupungOptionsDTO> options, Integer coupungNumber) {
+		int result = 0;
+		coupungOptionsDAO.deleteOption(coupungNumber);
+		for (CoupungOptionsDTO option : options) {
+			option.setCoupungNumber(coupungNumber);
+			result = coupungOptionsDAO.insertOption(changeEntity(option));
+		}
+		
 		return result;
 	}
 	

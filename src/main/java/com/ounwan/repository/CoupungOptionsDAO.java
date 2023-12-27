@@ -27,4 +27,12 @@ public class CoupungOptionsDAO {
 	public int insertOption(CoupungOptions option) {
 		return sqlSession.insert(NAMESPACE + "insertOption", option);
 	}
+
+	public int updateOption(CoupungOptions option) {
+		return sqlSession.update(NAMESPACE + "updateOption", option);
+	}
+
+	public int deleteOption(int coupungNumber) {
+		return sqlSession.delete(NAMESPACE + "deleteOption", coupungNumber);
+	}
 }

@@ -39,6 +39,12 @@ public class CoupungController {
 		return "coupung/products";
 	}
 	
+	// 메인 페이지에 보여줄 인기상품 5개
+	@GetMapping("/product/top-five")
+	public @ResponseBody List<CoupungDTO> getTopFive() {
+		return coupungService.getTopFive();
+	}
+	
 	@GetMapping("/product/category")
 	public @ResponseBody ResponseEntity<?> getProductsByCategory(@RequestParam String categoryNum) {
 		List<CoupungDTO> productList = coupungService.getProductList(Integer.parseInt(categoryNum));

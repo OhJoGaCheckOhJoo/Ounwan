@@ -14,10 +14,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDetails {
-	private int orderDetailNumber;
+	private Integer orderDetailNumber;
 	private String orderNumber;
-	private String coupungNumber;
-	private int price;
-	private int quantity;
-	private String option;
+	private Integer coupungNumber;
+	private Integer optionNumber;
+	private Integer price;
+	private Integer quantity;
 }

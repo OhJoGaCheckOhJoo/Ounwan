@@ -71,7 +71,7 @@ var router = new Map([
 
 $(function() {
     loadBanner(array_banner);
-    $("#populars").html(populars(array_popular));
+  //  $("#populars").html(populars(array_popular));
     $("#secondhands").html(secondhands(array_secondhand));
 
     $("#findAccount").click(function() {
