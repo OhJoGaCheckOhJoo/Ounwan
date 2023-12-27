@@ -28,19 +28,17 @@
 
 		<div class="danggun-container">
 			<button id="upButton" class="up-button">위로</button>
-			<div>
+			<div class="search">
 				<div class="search-container">
 					<input id="searchInput" class="search-input"
 						placeholder="원하시는 상품을 입력해 주세요.">
-					<button id="searchButton" class="search-btn" name="searchName">검색</button>
-					<br>
+					<button id="searchButton" class="search-button" name="searchName">검색</button>
+				
 				</div>
 
 				<div class="register-container">
-					<%-- <a href="${appPath}/danggun/insert"></a> --%>
-					<button id="registerButton" class="register-btn"
+					<button id="registerButton" class="register-button"
 						onclick="registerPage()">제품등록</button>
-
 				</div>
 
 				<div id="danggunProductList" class="danggun-product-list">
@@ -50,10 +48,10 @@
 							href="${appPath}/danggun/detail?danggunNumber=${list.danggunNumber}">
 							<div class="danggun-pointer">
 								<img class="danggun-img-loc" src="${list.url}">
-								<div>
+								<div class="danggun-name">
 									<c:out value="${list.productName}" />
 								</div>
-								<div>
+								<div class="danggun-price">
 									<c:out value="${list.price}" />
 								</div>
 							</div>
@@ -113,10 +111,10 @@
 									for ( var i in responseData) {
 										output += "<div class='danggun-pointer'>";
 										output += "<img class='danggun-img-loc' src="+ responseData[i].url+">";
-										output += "<div>"
+										output += "<div class='danggun-name'>"
 												+ responseData[i].productName
 												+ "</div>";
-										output += "<div>"
+										output += "<div class='danggun-price'>"
 												+ responseData[i].price
 												+ "</div>";
 										output += "</div>";

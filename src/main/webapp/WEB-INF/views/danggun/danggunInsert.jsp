@@ -116,7 +116,7 @@
 					</div>					
                 </div>	
             </div>
-            <button id="submitButton" class="submit-btn">등록</button> 
+            <button id="submitButton" class="submit-button">등록</button> 
         </div>      
     </div>
 <hr>
