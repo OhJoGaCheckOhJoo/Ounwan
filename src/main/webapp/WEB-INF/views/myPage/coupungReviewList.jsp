@@ -35,14 +35,11 @@
 								<input type="checkbox" value="${list.REVIEW_NUMBER }" />
 							</div>
 						</td>
-
-
 						<td>
 							<div class="review-list-info">
 								<div>${list.COUPUNG_NAME}</div>
 								<div>[옵션] ${list.COUPUNG_OPTION_NAME}</div>
 							</div>
-
 						</td>
 						<td>
 							<div class="review-list-content">
@@ -55,10 +52,7 @@
 								</c:if>
 								<div class="review-list-content-content ">${list.CONTENTS}</div>
 							</div>
-
 						</td>
-
-
 						<td>
 							<div class="review-list-personal-score">
 								<div style="width: calc(${list.SCORE} * 30px);"></div>

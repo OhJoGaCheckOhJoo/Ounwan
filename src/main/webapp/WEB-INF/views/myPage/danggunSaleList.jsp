@@ -37,7 +37,6 @@
 									<span>${saleInfo.PRODUCT_NAME}</span>
 								</div>
 							</div>
-
 					</a></td>
 					<td class="danggun-sale price">${saleInfo.PRICE}</td>
 					<td class="danggun-sale upload-date"><fmt:formatDate

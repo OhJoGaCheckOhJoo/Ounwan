@@ -69,7 +69,6 @@ public class MyPageDAO {
 	public int deleteReviewList(int reviewNumber) {
 		return sqlSession.delete(NAMESPACE + "deleteReview", reviewNumber);
 	}
-
 	
 	public String getPwdById(String clientId) {
 	    return sqlSession.selectOne(NAMESPACE + "getPwdById", clientId);
@@ -77,14 +76,12 @@ public class MyPageDAO {
 
 	public Clients getUserInfo(String clientId) {
 		return sqlSession.selectOne(NAMESPACE + "getUserInfo", clientId);
-	}
-	
+	}	
 
 	public int modifyPwd(Clients client) {
 		return sqlSession.update(NAMESPACE + "modifyPwd", client);
 	}
-	
-	
+		
 	public int modifyUserInfo(Clients client) {
 		return sqlSession.update(NAMESPACE + "modifyUserInfo", client);
 	}
@@ -92,9 +89,4 @@ public class MyPageDAO {
 	public int modifyProfileURL(Clients client) {
 		return sqlSession.update(NAMESPACE + "modifyProfileURL", client);
 	}
-
-
-
-	
-
 }

@@ -94,7 +94,6 @@
 			</div>
 		</nav>
 
-		<!--mypage content-->
 		<div class="mypage-container">
 			<div class="mypage-content">
 				<div class="side-bar-container">
@@ -131,7 +130,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="content-container">
 					<div class="preview-container">
 						<div class="preview user">
@@ -143,7 +141,6 @@
 								</p>
 							</div>
 						</div>
-
 						<div class="preview menu">
 							<a href="javascript:danggunWishList()"
 								class="preview-menu wish-list">
@@ -211,13 +208,11 @@
 									</tbody>
 								</table>
 							</div>
-
 							<div class="recent-info aeta">
 								<div class="section-header">
-									<h2 class="section-title">최근 등록 게시글_aeta</h2>
+									<h2 class="section-title">최근 등록 게시글</h2>
 									<a href="javascript:aetaList()">더보기 > </a>
 								</div>
-
 								<table>
 									<thead>
 										<tr class="head-tr">
@@ -249,9 +244,7 @@
 										</c:if>
 									</tbody>
 								</table>
-
 							</div>
-
 							<div class="recent-info cart">
 								<div class="section-header">
 									<h2 class="section-title">장바구니</h2>
@@ -380,5 +373,4 @@
 			}
 		</script>
 </body>
-
 </html>

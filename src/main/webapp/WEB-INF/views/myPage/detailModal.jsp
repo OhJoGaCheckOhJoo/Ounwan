@@ -5,8 +5,6 @@
 	value="${pageContext.request.contextPath}" />
 <link href="${appPath}/css/detailModal.css" rel="stylesheet">
 
-
-
 <%-- 모달 --%>
 <div id="detailModal" class="detail-modal">
 	<div id="modalContent">
@@ -25,12 +23,8 @@
 				<hr>
 
 				<c:forEach var="orderList" items="${coupungOrderList}">
-
-					<!-- 주문 번호와 일치하는 경우에만 아래의 주문 상세 정보를 표시 -->
 					<div class="order-detail product-info modal"
 						order-number="${orderList.ORDER_NUMBER}">
-
-
 						<a href="#" class="order-detail-product-info-wrap">
 							<div class="order-detail-product-info-container">
 								<div class="order-detail-product-info image">
@@ -68,8 +62,6 @@
 								</c:otherwise>
 							</c:choose>
 						</div>
-
-
 					</div>
 				</c:forEach>
 			</div>
@@ -77,7 +69,6 @@
 	</div>
 </div>
 
-<!-- 배경 회색 불투명도 -->
 <div id="detailModalOverlay" class="detail-modal-overlay"
 	onclick="closeDetailModal()"></div>
 <script src="${appPath}/js/detailModal.js"></script>

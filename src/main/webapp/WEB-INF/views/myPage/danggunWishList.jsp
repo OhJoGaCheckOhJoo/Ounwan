@@ -30,14 +30,12 @@
 					varStatus="loop">
 					<c:if test="${wishInfo.TRADE_HISTORY_NUMBER eq 6}">
 						<tr>
-							<td class="td-wish_list check">
+							<td class="td-wish-list check">
 								<div class="wish-list-checkbox">
 									<input class="checkbox" type="checkbox"
 										value="${wishInfo.WISH_LIST_NUMBER }">
 								</div>
 							</td>
-
-
 							<td class="td-wish-list info">
 								<div class="wish-list-info-container">
 									<a href="#">
@@ -58,16 +56,14 @@
 							</td>
 						</tr>
 					</c:if>
-
 					<c:if test="${wishInfo.TRADE_HISTORY_NUMBER eq 7}">
 						<tr>
-							<td>
-
+							<td class="td-wish-list check">
 								<div class="wish-list-checkbox">
 									<input type="checkbox" value="${wishInfo.WISH_LIST_NUMBER }">
 								</div>
 							</td>
-							<td class="wish-list info">
+							<td class="td-wish-list info">
 								<div class="wish-list-info-container">
 									<a href="#">
 										<div class="wish-list-info img">
@@ -79,24 +75,22 @@
 									</a>
 								</div>
 							</td>
-							<td class="wish-list price">${wishInfo.PRICE}</td>
-							<td class="wish-list upload-date"><fmt:formatDate
+							<td class="td-wish-list price">${wishInfo.PRICE}</td>
+							<td class="td-wish-list upload-date"><fmt:formatDate
 									value="${wishInfo.UPLOAD_DATE}" pattern="yyy-MM-dd" /></td>
-							<td class="wish-list state">
+							<td class="td-wish-list state">
 								<div>거래중</div>
 							</td>
 						</tr>
 					</c:if>
-
 					<c:if test="${wishInfo.TRADE_HISTORY_NUMBER eq 8}">
 						<tr>
-							<td>
-								<div class="wish-list-checkbox">
+							<td class="td-wish-list check">
+								<div class="td-wish-list-checkbox">
 									<input type="checkbox" value="${wishInfo.WISH_LIST_NUMBER }">
 								</div>
 							</td>
-							<td class="wish-list info">
-								
+							<td class="td-wish-list info">
 									<a href="#">
 									<div class="wish-list-info-container">
 										<div class="wish-list-info img completed">
@@ -106,21 +100,18 @@
 											<span>${wishInfo.PRODUCT_NAME}</span>
 										</div>
 										</div>
-									</a>
-								
+									</a>								
 							</td>
-							<td class="wish-list price completed">${wishInfo.PRICE}</td>
-							<td class="wish-list upload-date completed"><fmt:formatDate
+							<td class="td-wish-list price completed">${wishInfo.PRICE}</td>
+							<td class="td-wish-list upload-date completed"><fmt:formatDate
 									value="${wishInfo.UPLOAD_DATE}" pattern="yyy-MM-dd" /></td>
-							<td class="wish-list state completed">
+							<td class="td-wish-list state completed">
 								<div>거래완료</div>
 							</td>
 						</tr>
 					</c:if>
-
 				</c:forEach>
 			</c:if>
-
 		</tbody>
 	</table>
 

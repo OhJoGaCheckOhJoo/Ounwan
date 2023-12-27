@@ -8,7 +8,6 @@
     padding-top: 80px;
 }
 
-
 table {
 	width: 100%;
     border-collapse: collapse;
@@ -20,7 +19,6 @@ th {
     background-color: #444;
     font-size: 18px;
 }
-
 
 td {
     border-bottom: 1px solid gray;
@@ -50,8 +48,7 @@ td {
     width: 300px;
     height: 650px;
     box-sizing: border-box;
-    font-size: 21px;
-   
+    font-size: 21px;  
 }
 
 .side-bar {
@@ -67,6 +64,7 @@ td {
 .side-bar.menu {
     padding-right: 80px;
 }
+
 .menu-container {
     border-bottom: 1px white solid;
     padding: 25px 0px;
