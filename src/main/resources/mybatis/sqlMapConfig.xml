@@ -14,5 +14,6 @@
 		<typeAlias type="com.ounwan.entity.ProductImages" alias="productImages" />
 		<typeAlias type="com.ounwan.entity.Aeta" alias="aeta" />		
 		<typeAlias type="com.ounwan.entity.DanggunChatRoom" alias="danggunChatRoom" />
+		<typeAlias type="com.ounwan.entity.DanggunChatMessage" alias="danggunChatMessage" />
 	</typeAliases>
 </configuration>

@@ -207,7 +207,6 @@ public class MyPageService {
 	}
 
 
-
 	public List<DanggunChatRoomDTO> changeDTOList2(List<DanggunChatRoom> danggunChatRoom) {
 		List<DanggunChatRoomDTO> changeList = new ArrayList<>();
 		for (DanggunChatRoom data : danggunChatRoom) {
@@ -268,4 +267,39 @@ public class MyPageService {
 				.socialId(client.getSocialId()).build();
 	}
 
+	public List<AetaDTO> changeDTOList(List<Aeta> aeta) {
+		List<AetaDTO> changeList = new ArrayList<>();
+		for (Aeta data : aeta) {
+			changeList.add(changeDTO(data));
+		}
+		return changeList;
+	}
+
+	public AetaDTO changeDTO(Aeta aeta) {
+		return AetaDTO.builder().aetaNumber(aeta.getAetaNumber()).title(aeta.getTitle()).contents(aeta.getContents())
+				.clientId(aeta.getClientId()).createdDate(aeta.getCreatedDate()).updatedDate(aeta.getCreatedDate())
+				.views(aeta.getViews()).build();
+	}
+
+	public Clients changeEntity(ClientsDTO client) {
+		return Clients.builder().clientId(client.getClientId()).name(client.getName()).password(client.getPassword())
+				.email(client.getEmail()).birthday(client.getBirthday()).phone(client.getPhone())
+				.address(client.getAddress()).addressDetail(client.getAddressDetail()).zipCode(client.getZipCode())
+				.privacyTerms(client.getPrivacyTerms()).emailCheck(client.getEmailCheck())
+				.activationCheck(client.getActivationCheck()).qualifiedCheck(client.getQualifiedCheck())
+				.profileUrl(client.getProfileUrl()).emailAuth(client.getEmailAuth()).socialType(client.getSocialType())
+				.socialId(client.getSocialId()).build();
+	}
+
+	public ClientsDTO changeDTO(Clients client) {
+		return ClientsDTO.builder().clientId(client.getClientId()).name(client.getName()).password(client.getPassword())
+				.email(client.getEmail()).birthday(client.getBirthday()).phone(client.getPhone())
+				.address(client.getAddress()).addressDetail(client.getAddressDetail()).zipCode(client.getZipCode())
+				.privacyTerms(client.getPrivacyTerms()).emailCheck(client.getEmailCheck())
+				.activationCheck(client.getActivationCheck()).qualifiedCheck(client.getQualifiedCheck())
+				.profileUrl(client.getProfileUrl()).emailAuth(client.getEmailAuth()).socialType(client.getSocialType())
+				.socialId(client.getSocialId()).build();
+	}
+
+	
 }

@@ -5,6 +5,12 @@
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
 <link href="${appPath}/css/chatList.css" rel="stylesheet">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 
 <div class="chat-history-container">
 	<div class="user-info-container">
@@ -44,10 +50,11 @@
 </div>
 
 <script>
+
 function getChatRoom(roomId) {
 	$.ajax({
 		type : "GET",
-		url : "${appPath}/myPage/getChatInfo",
+		url : "${appPath}/myPage/getChatRoom",
 		data: { roomId: roomId },
 		success : function(res) {
 			$("#chatRoomView").html(res);

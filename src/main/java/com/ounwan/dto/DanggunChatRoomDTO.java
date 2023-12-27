@@ -19,4 +19,3 @@ public class DanggunChatRoomDTO {
 	private String seller;
 	private String buyer;
 }
-

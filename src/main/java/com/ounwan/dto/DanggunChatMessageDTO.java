@@ -1,6 +1,8 @@
 package com.ounwan.dto;
 
-import java.sql.Date;
+import java.sql.Timestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +22,6 @@ public class DanggunChatMessageDTO {
 	private String roomId;
 	private String sender;
 	private String message;
-	private Date regdate;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="Asia/Seoul")
+	private Timestamp regdate;
 }
-

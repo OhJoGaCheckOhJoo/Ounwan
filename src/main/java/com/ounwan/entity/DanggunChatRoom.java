@@ -10,13 +10,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @Builder
-@ToString
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class DanggunChatRoom {
 	private String roomId;
 	private Integer danggunNumber;
 	private String seller;
 	private String buyer;
 }
-

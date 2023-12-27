@@ -141,7 +141,6 @@ public class MyPageController {
 
 	@GetMapping(value = "/checkPwd")
 	public String checkPwd(HttpSession session) {
-		
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
 //		String clientId = userInfo.getClientId();	
 		
