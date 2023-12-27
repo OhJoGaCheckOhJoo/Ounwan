@@ -24,6 +24,9 @@ public class CoupungService {
 	ProductImageService productImageService;
 	
 	@Autowired
+	OrderDetailService orderDetailService; 
+	
+	@Autowired
 	OrderService orderService;
 
 	public List<CoupungDTO> getProductList(int categoryId) {
@@ -46,6 +49,20 @@ public class CoupungService {
 	}
 	
 
+	public List<CoupungDTO> getAdminProductList() {
+		List<CoupungDTO> result = new ArrayList<>();
+		
+		result = changeDTOList(coupungDAO.getProductList());
+		
+		for (CoupungDTO product : result) {
+			product.setSalesRate(orderDetailService.getSalesRate(product.getCoupungNumber()));
+			product.setImage(productImageService.getProductImageByCoupungId(product.getCoupungNumber()));
+			product.setOptions(coupungOptionsService.selectOptions(product.getCoupungNumber()));
+		}
+		
+		return result;
+	}
+
 	public List<CoupungDTO> findByProductName(String text) {
 		List<CoupungDTO> result = changeDTOList(coupungDAO.findByName(text));
 		for (CoupungDTO product : result) {
@@ -66,6 +83,45 @@ public class CoupungService {
 			coupung.setQuantity(quantity);
 		}
 		return coupung;
+	}
+
+	public List<CoupungDTO> getTopFive() {
+		List<CoupungDTO> result = new ArrayList<>();
+		
+		List<Integer> coupungNumbers = orderDetailService.getTopFiveCoupungNumber();
+		for (int coupungNumber : coupungNumbers) {
+			result.add(getProductDetail(coupungNumber, 0, 0));
+		}
+		
+		return result;
+	}
+
+	public int insertProduct(CoupungDTO product) {
+		Coupung coupung = changeEntity(product);
+		int result = coupungDAO.insertProduct(coupung);
+		if (result > 0) {
+			int coupungNumber = coupung.getCoupungNumber();
+			result = coupungOptionsService.insertOption(product.getOptions(), coupungNumber);
+			result = productImageService.insertImage(product.getImage(), coupungNumber);
+		}
+		return result;
+	}
+
+	public boolean updateProduct(CoupungDTO product) {
+		int result = 0;
+		
+		result = coupungDAO.updateProduct(changeEntity(product));
+		if (product.getImage() != null) 
+			result = productImageService.updateProductImage(product.getImage(), product.getCoupungNumber());
+		if (product.getOptions() != null)
+			result = coupungOptionsService.updateOption(product.getOptions(), product.getCoupungNumber());
+		
+		return (result > 0);
+	}
+
+	public boolean deleteProduct(int coupungNumber) {
+		int result = coupungDAO.deleteProduct(coupungNumber);
+		return (result > 0);
 	}
 	
 	public boolean checkOrderHistory(String clientId) {
@@ -99,5 +155,16 @@ public class CoupungService {
 				.availableStock(coupung.getAvailableStock())
 				.availableCheck(coupung.getAvailableCheck())
 				.build();
+	}
+	
+	public Coupung changeEntity(CoupungDTO coupungDTO) {
+		return Coupung.builder()
+						.coupungNumber(coupungDTO.getCoupungNumber())
+						.coupungCategoryNumber(coupungDTO.getCoupungCategoryNumber())
+						.name(coupungDTO.getName())
+						.price(coupungDTO.getPrice())
+						.availableStock(coupungDTO.getAvailableStock())
+						.availableCheck(coupungDTO.getAvailableCheck())
+						.build();
 	}
 }

@@ -8,4 +8,20 @@
     	ORDER_DETAILS (ORDER_NUMBER, COUPUNG_NUMBER, PRICE, QUANTITY, OPTION)
     	VALUES (#{orderNumber}, #{coupungNumber}, #{price}, #{quantity}, #{option})
     </insert>
+    
+    <select id="getSalesRate" parameterType="int" resultType="int">
+    	SELECT SUM(QUANTITY) FROM ORDER_DETAILS WHERE COUPUNG_NUMBER = #{coupungNumber}
+    </select>
+    
+    <select id="getTopFive" resultType="int">
+    	SELECT COUPUNG_NUMBER 
+    	FROM ORDER_DETAILS 
+    	GROUP BY COUPUNG_NUMBER 
+    	ORDER BY SUM(QUANTITY) DESC
+    	LIMIT 5
+    </select>
+    
+    <select id="getOrderDetails" parameterType="String" resultType="orderDetails">
+    	SELECT * FROM ORDER_DETAILS WHERE ORDER_NUMBER = #{orderNumber}
+    </select>
 </mapper>

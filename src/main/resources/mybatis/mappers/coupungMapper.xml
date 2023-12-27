@@ -22,4 +22,26 @@
     <select id="findByName" parameterType="String" resultType="coupung">
     	SELECT * FROM COUPUNG WHERE NAME LIKE CONCAT('%', #{text}, '%')
     </select>
+    
+    <insert id="insertProduct" parameterType="coupung" useGeneratedKeys="true" keyProperty="coupungNumber">
+    	INSERT 
+    	INTO COUPUNG (COUPUNG_CATEGORY_NUMBER, NAME, PRICE, AVAILABLE_STOCK, AVAILABLE_CHECK)
+    	VALUES (#{coupungCategoryNumber}, #{name}, #{price}, #{availableStock}, TRUE)
+    </insert>
+    
+    <update id="updateProduct" parameterType="coupung">
+    	UPDATE COUPUNG
+    	SET COUPUNG_CATEGORY_NUMBER = #{coupungCategoryNumber}
+    		, NAME = #{name}
+    		, PRICE = #{price}
+    		, AVAILABLE_STOCK = #{availableStock}
+    		, AVAILABLE_CHECK = #{availableCheck}
+    	WHERE COUPUNG_NUMBER = #{coupungNumber}
+    </update>
+    
+    <update id="deleteProduct" parameterType="int">
+    	UPDATE COUPUNG
+    	SET AVAILABLE_CHECK = FALSE
+    	WHERE COUPUNG_NUMBER = #{coupungId}
+    </update>
 </mapper>

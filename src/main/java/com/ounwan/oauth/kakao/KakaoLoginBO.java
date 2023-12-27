@@ -29,8 +29,8 @@ public class KakaoLoginBO {
 	
 	private String accessToken = "";
 	private String refreshToken = "";
-	private String RESTAPI_KEY = "b82d99b3ea0f111a9b78d4cc413fbfdd";
-	private String redirectURI = "http://localhost:9090/myapp/oauth/kakao";
+	private String RESTAPI_KEY = "000";
+	private String redirectURI = "000";
 
 	public String getURL() {
 		StringBuffer bf = new StringBuffer();

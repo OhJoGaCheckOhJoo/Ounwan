@@ -10,14 +10,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDetails {
-	private Integer orderDetailNumber;
-	private String orderNumber;
-	private Integer coupungNumber;
-	private Integer optionNumber;
-	private Integer price;
-	private Integer quantity;
+@ToString
+public class Admin {
+	private String adminId;
+	private String name;
+	private String password;
 }

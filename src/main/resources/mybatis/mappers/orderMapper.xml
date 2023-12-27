@@ -7,11 +7,19 @@
 		INSERT INTO
 		ORDERS(ORDER_NUMBER, CLIENT_ID, GUEST_NUMBER, TRADE_HISTORY_NUMBER, TOTAL_PRICE, ORDER_DATE
 		, SHIPPING_ADDRESS, RECEIVER_NAME, RECEIVER_PHONE, PAYMENT_METHOD, TOTAL_QUANTITY)
-		VALUES (#{orderNumber}, #{clientId}, #{guestNumber}, #{tradeHistoryNumber}, #{totalPrice}, NOW()
+		VALUES (#{orderNumber}, #{clientId}, #{guestNumber}, 1, #{totalPrice}, NOW()
 		, #{shippingAddress}, #{receiverName}, #{receiverPhone}, #{paymentMethod}, #{totalQuantity})
 	</insert>
+	
     <select id="selectList" parameterType="String" resultType="orders">
     	SELECT * FROM ORDERS WHERE CLIENT_ID = #{clientId}
-    	
     </select>
+    
+    <select id="selectAdminList" resultType="orders">
+    	SELECT * FROM ORDERS
+    </select>
+    
+    <update id="updateTradeHistory" parameterType="orders" >
+    	UPDATE ORDERS SET TRADE_HISTORY_NUMBER = #{tradeHistoryNumber} WHERE ORDER_NUMBER = #{orderNumber}
+    </update>
 </mapper>

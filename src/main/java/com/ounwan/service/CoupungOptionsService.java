@@ -24,6 +24,28 @@ public class CoupungOptionsService {
 	public List<CoupungOptionsDTO> getOptionByOptionId(int optionNumber) {
 		return changeListDTO(coupungOptionsDAO.getOptionByOptionId(optionNumber));
 	}
+
+	public int insertOption(List<CoupungOptionsDTO> options, int coupungNumber) {
+		int result = 0;
+		
+		for (CoupungOptionsDTO option : options) {
+			option.setCoupungNumber(coupungNumber);
+			result = coupungOptionsDAO.insertOption(changeEntity(option));
+		}
+		
+		return result;
+	}
+
+	public int updateOption(List<CoupungOptionsDTO> options, Integer coupungNumber) {
+		int result = 0;
+		coupungOptionsDAO.deleteOption(coupungNumber);
+		for (CoupungOptionsDTO option : options) {
+			option.setCoupungNumber(coupungNumber);
+			result = coupungOptionsDAO.insertOption(changeEntity(option));
+		}
+		
+		return result;
+	}
 	
 	public List<CoupungOptionsDTO> changeListDTO(List<CoupungOptions> optionList) {
 		List<CoupungOptionsDTO> options = new ArrayList<CoupungOptionsDTO>();
@@ -39,5 +61,13 @@ public class CoupungOptionsService {
 								.coupungNumber(option.getCoupungNumber())
 								.name(option.getName())
 								.build();
+	}
+	
+	public CoupungOptions changeEntity (CoupungOptionsDTO option) {
+		return CoupungOptions.builder()
+							.coupungOptionNumber(option.getCoupungOptionNumber())
+							.coupungNumber(option.getCoupungNumber())
+							.name(option.getName())
+							.build();
 	}
 }

@@ -24,6 +24,38 @@ prefix="c" %>
     <title>오운완</title>
 </head>
 <body>
+	<script>
+		$(function() {
+			$.ajax({
+				url : "${appPath}/coupung/product/top-five",
+				type : "GET",
+				success : function(res) {
+					var tag = '';
+					
+					res.forEach(function(product) {
+		                let price = numberComma(product.price);
+		                var div = $("<div></div>").addClass("pointer");
+		                div.append($("<img>").addClass("img-2 img-border").attr("src", product.image[0].url));
+		                div.append($("<div></div>").text(product.name));
+		                div.append($("<div></div>").text(price));
+
+		                div.on("click", function() {
+		                    window.location.href = '${appPath}/coupung/product/detail?coupungId=' + product.coupungNumber;
+		                });
+
+		                $("#populars").append(div);
+		            });
+				},
+				error : function(request, status, error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+		});
+		
+		function numberComma(n) {
+		    return n.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+		}
+	</script>
     <%@ include file="./common/header.jsp" %>
 
     <div class="container">

@@ -24,6 +24,25 @@ public class ProductImageService {
 		return changeDTOList(productImageDAO.getDetailImageByCoupungId(coupungNumber));
 	}
 	
+	public int insertImage(List<ProductImagesDTO> images, int coupungNumber) {
+		int result = 0;
+		for (ProductImagesDTO image : images) {
+			image.setCoupungNumber(coupungNumber);
+			result = productImageDAO.insertImage(changeEntity(image));
+		}
+		return result;
+	}
+	
+	public int updateProductImage(List<ProductImagesDTO> images, int coupungNumber) {
+		int result = 0;
+		
+		for (ProductImagesDTO image : images) {
+			image.setCoupungNumber(coupungNumber);
+			result = productImageDAO.updateImage(changeEntity(image));
+		}
+		return result;
+	}
+	
 	public List<ProductImagesDTO> changeDTOList(List<ProductImages> productImage) {
 		List<ProductImagesDTO> changedList = new ArrayList<ProductImagesDTO>();
 		for (ProductImages image : productImage) {
@@ -40,5 +59,15 @@ public class ProductImageService {
 								.type(image.getType())
 								.url(image.getUrl())
 								.build();
+	}
+	
+	public ProductImages changeEntity(ProductImagesDTO image) {
+		return ProductImages.builder()
+							.productImageNumber(image.getProductImageNumber())
+							.coupungNumber(image.getCoupungNumber())
+							.danggunNumber(image.getDanggunNumber())
+							.type(image.getType())
+							.url(image.getUrl())
+							.build();
 	}
 }

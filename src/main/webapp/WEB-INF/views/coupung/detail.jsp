@@ -7,8 +7,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
- 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Document</title>
     <link href="${appPath }/css/main.css" rel="stylesheet">
@@ -16,11 +14,11 @@
     <link href="${appPath }/css/header.css" rel="stylesheet">
     <link href="${appPath }/css/nav.css" rel="stylesheet">
     <link href="${appPath }/css/coupung/coupung.css" rel="stylesheet">
+    <link href="${appPath }/css/coupung/modal.css" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
 	<%@ include file="../common/header.jsp" %>
-
     <div class="container">
         <%@ include file="../common/nav.jsp" %>
 
@@ -130,30 +128,16 @@
             </div>
         </div>
     </div>
-    
-    <!-- 전체 화면 모달 -->
-	<div class="modal fade" id="fullScreenModal" tabindex="-1" aria-labelledby="fullScreenModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-fullscreen">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="fullScreenModalLabel">전체 화면 모달</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        <!-- 모달 내용 -->
-	       	이메일 : <input type="text" id="guestEmail" />
-	        핸드폰 번호 : <input type="text" id="guestPhone"/>
-	        <button type="button" id="guestSubmitBtn">입력</button>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="button" class="btn btn-primary">저장</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	
-    <script src="../js/main.js"></script>
+    <div id="modalContainer" class="hidden">
+    	<div id="modalContent">
+    		이메일 : <input type="text" id="guestEmail" />
+    		<br>
+    		핸드폰 번호 : <input type="text" id="guestPhone" />
+    		<br>
+    		<button type="button" id="guestSubmitBtn">입력</button>
+    	</div>
+    </div>	
+<script src="../js/main.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script>
@@ -271,7 +255,7 @@ const unitPrice = $("#unitPrice").html().replaceAll(",",""); // jsp에서는 DB�
 			alert('수량을 선택해 주세요');
 		}  else if('${userInfo}' === '') {
 			if(!confirm('로그인 하시겠습니까?')) {
-				$('#fullScreenModal').modal('show'); // 모달을 띄우는 부분
+				$('#modalContainer').removeClass('hidden'); // 모달을 띄우는 부분
 			} else {
 				location.href="${appPath}/clients/login";
 			}
@@ -320,8 +304,8 @@ const unitPrice = $("#unitPrice").html().replaceAll(",",""); // jsp에서는 DB�
 					if (res === 'success') {
 						alert("성공하셨습니다.");
 						var productList = [${detail.coupungNumber}];
-						var optionList = [$('#optionBox option:selected').val()];
-						var quantityList = [$('#quantityVal').text()];
+						var optionList = [$('#productOption option:selected').val()];
+						var quantityList = [$('#quantity').val()];
 						console.log(productList);
 						console.log(optionList);
 						location.href = '${appPath}/coupung/order?productList=' + productList + '&optionList=' + optionList +'&quantityList=' + quantityList;

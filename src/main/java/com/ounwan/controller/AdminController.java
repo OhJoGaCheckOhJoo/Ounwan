@@ -1,6 +1,6 @@
 package com.ounwan.controller;
 
-import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,8 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.AdminDTO;
 import com.ounwan.dto.CoupungDTO;
+import com.ounwan.dto.OrdersDTO;
 import com.ounwan.service.AdminService;
 import com.ounwan.service.CoupungService;
+import com.ounwan.service.OrderService;
 
 @Controller
 @RequestMapping("/admin")
@@ -29,6 +31,9 @@ public class AdminController {
 	
 	@Autowired
 	CoupungService coupungService;
+	
+	@Autowired
+	OrderService orderService;
 	
 	@GetMapping("/main.do")
 	public String getMainPage(HttpSession session) {
@@ -58,11 +63,6 @@ public class AdminController {
 		return "admin/product";
 	}
 	
-	@GetMapping("/coupung/insert.do")
-	public String getProductDetailPage() {
-		return "admin/productDetail";
-	}
-	
 	@PostMapping("/coupung/addProduct")
 	public String addProduct(@RequestPart MultipartFile mainImage, 
 						@RequestPart(required=false) MultipartFile[] subImage,
@@ -89,10 +89,38 @@ public class AdminController {
 		return "admin/product";
 	}
 	
+}
 	@PostMapping("/coupung/insert.do")
 	public @ResponseBody String insertProduct(@RequestBody CoupungDTO product) {
-		// int result = coupungService.insertProduct(product);
-		// return (result > 0) ? "success" : "fail";
-		return "";
+		int result = coupungService.insertProduct(product);
+		return (result > 0) ? "success" : "fail";
+	}
+	
+	@PostMapping("/coupung/update.do")
+	public @ResponseBody String updateProduct(@RequestBody CoupungDTO product) {
+		boolean result = coupungService.updateProduct(product);
+		return (result) ? "success" : "fail";
+	}
+	
+	@PostMapping("/coupung/delete.do")
+	public @ResponseBody String deleteProduct(@RequestBody int coupungNumber) {
+		boolean result = coupungService.deleteProduct(coupungNumber);
+		return (result) ? "success" : "fail";
+ 	}
+	
+	@GetMapping("/coupung/products.do")
+	public @ResponseBody List<CoupungDTO> getProductList() {
+		return coupungService.getAdminProductList();
+	}
+	
+	@GetMapping("/order/orderList.do")
+	public @ResponseBody List<OrdersDTO> getOrderList() {
+		return orderService.getAdminOrderList();
+	}
+	
+	@PostMapping("/order/tradeStep.do")
+	public @ResponseBody String updateTradeStatus(@RequestBody OrdersDTO order) {
+		boolean result = orderService.updateTradeStatus(order);
+		return (result) ? "success" : "fail";
 	}
 }

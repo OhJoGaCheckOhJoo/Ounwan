@@ -113,6 +113,9 @@
                     } else if (responseData === "unAuthorized") {
                     	alert('이메일 인증을 완료해 주세요!');
                     	location.href = "${appPath}";
+                    }else if (responseData === "withdraw") {
+                    	alert("탈퇴한 회원입니다!");
+                    	location.href = "${appPath}";
                     } else {
                         alert("로그인 실패");
                         console.log(responseData);
