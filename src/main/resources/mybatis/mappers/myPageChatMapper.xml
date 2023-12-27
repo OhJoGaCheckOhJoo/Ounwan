@@ -57,5 +57,24 @@
 		from DANGGUN_CHAT_MESSAGE where ROOM_ID = #{roomId}
 	</select>
 
+	<select id="selectDanggunNumber" parameterType="String" resultType="int">
+		SELECT DANGGUN_NUMBER
+		FROM DANGGUN_CHAT_ROOM 
+		WHERE ROOM_ID = #{roomId}
+	</select>
+	
+	<select id="selectDanggunInfo" parameterType="int" resultType="danggun">
+		SELECT * FROM DANGGUN
+		WHERE DANGGUN_NUMBER = #{danggunNumber}
+	</select>
+	
+	<select id="selectMainImage" parameterType="int" resultType="danggun">
+		SELECT URL FROM PRODUCT_IMAGES
+		WHERE DANGGUN_NUMBER = #{danggunNumber} AND TYPE = 0
+	</select>
+	
+	<select id="selectTradeStep">
+		SELECT TRADE_STEP FROM TRADE_HISTORY WHERE TRADE_HISTORY_NUMBER = #{tradeHistoryNumber}
+	</select>
 
 </mapper>
