@@ -69,11 +69,6 @@ public class AdminController {
 						@RequestPart(required=false) MultipartFile[] explanationImg,
 						String name,
 						int price) {
-		System.out.println(mainImage);
-		System.out.println(Arrays.toString(subImage));
-		System.out.println(Arrays.toString(explanationImg));
-		System.out.println(name);
-		System.out.println(price);
 		return null;
 	}
 	
@@ -89,7 +84,6 @@ public class AdminController {
 		return "admin/product";
 	}
 	
-}
 	@PostMapping("/coupung/insert.do")
 	public @ResponseBody String insertProduct(@RequestBody CoupungDTO product) {
 		int result = coupungService.insertProduct(product);

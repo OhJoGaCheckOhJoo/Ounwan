@@ -13,9 +13,10 @@ import com.ounwan.entity.ProductImages;
 public class ProductImagesDAO {
 	@Autowired
 	SqlSession sqlSession;
+	
 	private static final String NAMESPACE = "net.ounwan.danggun.";
 		
-	private static final String NAMESPACE = "net.ounwan.myPage.";
+	// private static final String NAMESPACE = "net.ounwan.myPage.";
 
 	public ProductImages selectAllImages(int danggunNumber) {
 		return sqlSession.selectOne(NAMESPACE + "selectAllImage", danggunNumber);

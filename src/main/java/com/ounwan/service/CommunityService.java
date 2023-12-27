@@ -682,7 +682,7 @@ public class CommunityService {
 	private Aeta changeEntity(AetaDTO aeta) {
 		return Aeta.builder().aetaNumber(aeta.getAetaNumber()).title(aeta.getTitle()).contents(aeta.getContents())
 				.clientId(aeta.getClientId()).createdDate(aeta.getCreatedDate()).updatedDate(aeta.getCreatedDate())
-				.views(aeta.getViews()).likes(aeta.getLikes()).build();
+				.views(aeta.getViews()).build();
 	}
 
 	private AetaImages changeEntity(AetaImagesDTO images) {
@@ -708,7 +708,7 @@ public class CommunityService {
 	private AetaDTO changeDTO(Aeta aeta) {
 		return AetaDTO.builder().aetaNumber(aeta.getAetaNumber()).title(aeta.getTitle()).contents(aeta.getContents())
 				.clientId(aeta.getClientId()).createdDate(aeta.getCreatedDate()).updatedDate(aeta.getCreatedDate())
-				.views(aeta.getViews()).likes(aeta.getLikes()).build();
+				.views(aeta.getViews()).build();
 	}
 
 	private AetaLikes changeEntity(AetaLikesDTO aetaLikesDTO) {
