@@ -176,41 +176,6 @@ public class MyPageService {
 		} 
 		return 0;
 	}
-	
-	public List<Map<String, Object>> getchatList(String userId) {
-		List<DanggunChatRoomDTO> chatList = changeDTOList2(myPageDAO.getchatList(userId));
-
-		List<Map<String, Object>> partners = new ArrayList<>();
-
-		for (DanggunChatRoomDTO chatRoom : chatList) {
-			Map<String, Object> chatInfo = new HashMap<>();
-
-			String seller = chatRoom.getSeller();
-			String buyer = chatRoom.getBuyer();
-
-			// 채팅방 정보를 Map에 추가
-			chatInfo.put("chatRoom", chatRoom);
-
-			if (seller.equals(userId)) {
-				// 판매자일 경우
-				Clients partnerInfo = myPageDAO.getPartnerInfo(buyer);
-				chatInfo.put("partnerInfo", partnerInfo);
-			} else if (buyer.equals(userId)) {
-				// 구매자일 경우
-				Clients partnerInfo = myPageDAO.getPartnerInfo(seller);
-				chatInfo.put("partnerInfo", partnerInfo);
-			}
-			// partners 리스트에 해당 Map 추가
-			partners.add(chatInfo);
-		}
-
-		return partners;
-	}
-	
-	public List<Map<String, Object>> getChatInfo(String roomId) {
-		return myPageDAO.getChatInfo(roomId);
-	}
-
 
 	public List<DanggunChatRoomDTO> changeDTOList2(List<DanggunChatRoom> danggunChatRoom) {
 		List<DanggunChatRoomDTO> changeList = new ArrayList<>();
@@ -272,37 +237,4 @@ public class MyPageService {
 				.socialId(client.getSocialId()).build();
 	}
 
-	public List<AetaDTO> changeDTOList(List<Aeta> aeta) {
-		List<AetaDTO> changeList = new ArrayList<>();
-		for (Aeta data : aeta) {
-			changeList.add(changeDTO(data));
-		}
-		return changeList;
-	}
-
-	public AetaDTO changeDTO(Aeta aeta) {
-		return AetaDTO.builder().aetaNumber(aeta.getAetaNumber()).title(aeta.getTitle()).contents(aeta.getContents())
-				.clientId(aeta.getClientId()).createdDate(aeta.getCreatedDate()).updatedDate(aeta.getCreatedDate())
-				.views(aeta.getViews()).build();
-	}
-
-	public Clients changeEntity(ClientsDTO client) {
-		return Clients.builder().clientId(client.getClientId()).name(client.getName()).password(client.getPassword())
-				.email(client.getEmail()).birthday(client.getBirthday()).phone(client.getPhone())
-				.address(client.getAddress()).addressDetail(client.getAddressDetail()).zipCode(client.getZipCode())
-				.privacyTerms(client.getPrivacyTerms()).emailCheck(client.getEmailCheck())
-				.activationCheck(client.getActivationCheck()).qualifiedCheck(client.getQualifiedCheck())
-				.profileUrl(client.getProfileUrl()).emailAuth(client.getEmailAuth()).socialType(client.getSocialType())
-				.socialId(client.getSocialId()).build();
-	}
-
-	public ClientsDTO changeDTO(Clients client) {
-		return ClientsDTO.builder().clientId(client.getClientId()).name(client.getName()).password(client.getPassword())
-				.email(client.getEmail()).birthday(client.getBirthday()).phone(client.getPhone())
-				.address(client.getAddress()).addressDetail(client.getAddressDetail()).zipCode(client.getZipCode())
-				.privacyTerms(client.getPrivacyTerms()).emailCheck(client.getEmailCheck())
-				.activationCheck(client.getActivationCheck()).qualifiedCheck(client.getQualifiedCheck())
-				.profileUrl(client.getProfileUrl()).emailAuth(client.getEmailAuth()).socialType(client.getSocialType())
-				.socialId(client.getSocialId()).build();
-	}	
 }
