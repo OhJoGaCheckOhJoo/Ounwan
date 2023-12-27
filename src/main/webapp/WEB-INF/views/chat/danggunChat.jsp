@@ -27,7 +27,7 @@
 				<div>
 					<c:forEach var="images" items="${post.productImagesList}">
 						<c:if test="${images.type eq 0}">
-							<img class="main-img" src="../${images.url}" />
+							<img class="main-img" src="${images.url}" />
 						</c:if>
 					</c:forEach>
 				</div>

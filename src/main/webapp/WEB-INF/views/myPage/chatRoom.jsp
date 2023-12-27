@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
-	<link href="${appPath}/css/myPageChat.css" rel="stylesheet">
+<link href="${appPath}/css/myPageChat.css" rel="stylesheet">
 <style>
 .chat-info-container {
 	width: 550px;
@@ -17,15 +17,19 @@
 			<h3>채팅방</h3>
 		</div>
 		<div class="product-bar">
-				<div>
-					<img class="main-img" src="../${images.url}" />
-				</div>
-				<div class="product-info">
-					<div>${post.tradeStep}</div>
-					<div>${post.productName}</div>
-					<div>${post.price}</div>
-				</div>
+			<div>
+				<c:forEach var="images" items="${post.productImagesList}">
+					<c:if test="${images.type eq 0}">
+						<img class="main-img" src="${images.url}" />
+					</c:if>
+				</c:forEach>
 			</div>
+			<div class="product-info">
+				<div>${post.tradeStep}</div>
+				<div>${post.productName}</div>
+				<div>${post.price}</div>
+			</div>
+		</div>
 		<hr>
 	</div>
 
@@ -62,8 +66,9 @@
 			}
 		});
 		Handlebars.registerHelper("printNone", function(sender) {
-             if (clientId != sender) return "none";             
-        });
+			if (clientId != sender)
+				return "none";
+		});
 	</script>
 	<div class="message-input">
 		<textarea id="txtMessage" class="txtMessage" cols="30" rows="10"
@@ -75,30 +80,36 @@
 <script>
 	getList();
 	var clientId = "${userInfo.clientId}";
-	var sock = new SockJS("http://localhost:9090/myapp/myPageEcho");
+	var sock = new SockJS("http://localhost:9090/myapp/danggunEcho");
 	sock.onmessage = onMessage;
 	function getList() {
 		var roomId = "${roomId}";
 		$.ajax({
 			type : 'get',
 			url : '${appPath}/myPage/danggun/chat/list',
-			data : {roomId : roomId},
+			data : {
+				roomId : roomId
+			},
 			success : function(responseData) {
 				var temp = Handlebars.compile($("#temp").html());
 				$("#chat").html(temp(responseData));
 			}
 		});
 	}
-	
-	$("#chat").on("click", ".message a", function(e){
+
+	$("#chat").on("click", ".message a", function(e) {
 		e.preventDefault();
 		var messageId = $(this).attr("href");
-		if(!confirm(messageId + "을(를) 삭제하실래요?")) return;
+		if (!confirm(messageId + "을(를) 삭제하실래요?"))
+			return;
 		$.ajax({
-			type: "post",
+			type : "post",
 			url : "${appPath}/myPage/danggun/chat/delete",
-			data : {"sender" : clientId ,"messageId" : messageId},
-			success : function(){
+			data : {
+				"sender" : clientId,
+				"messageId" : messageId
+			},
+			success : function() {
 				sock.send("delete");
 			}
 		})
@@ -128,7 +139,7 @@
 				},
 				success : function(messageId) {
 					e.preventDefault();
-					sock.send(clientId + "|" + message + "|" + messageId); 
+					sock.send(clientId + "|" + message + "|" + messageId);
 				}
 			});
 		}
@@ -139,10 +150,10 @@
 	function onMessage(msg) {
 		var items = msg.data.split("|");
 		var sender = items[0];
-		if(sender == "delete"){
-	    	  getList();
-	    	  return;
-	      }
+		if (sender == "delete") {
+			getList();
+			return;
+		}
 		var message = items[1];
 		var messageId = items[2];
 		var date = items[3];
