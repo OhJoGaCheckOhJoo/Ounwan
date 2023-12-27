@@ -10,6 +10,8 @@
 <link href="${appPath}/css/main.css" rel="stylesheet" />
 <link href="${appPath}/css/community.css" rel="stylesheet" />
 <link href="${appPath}/css/aeta.css" rel="stylesheet" />
+
+<link href="${appPath}/css/aetaReportModal.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>애타 게시글</title>
@@ -28,6 +30,8 @@
 				<div id="aetaWriter">${aetaPost[0].CLIENT_ID}</div>
 				<div>작성일:${aetaPost[0].AETA_CREATED_DATE}</div>
 				<div>조회수:${aetaPost[0].VIEWS}</div>
+				<button class="modal-button" onclick="openReportModal()">신고</button>
+	
 				<hr>
 			</div>
 
@@ -74,13 +78,14 @@
 					<div>
 						<input type="hidden" class="commentId"
 							value="${aeta.COMMENT_NUMBER}">
-						<div>댓글작성자:${aeta.COMMENTER_ID}</div>
-						<div class="commentContent">댓글:${aeta.AETA_COMMENT}</div>
-						<span>${aeta.AETA_CREATED_DATE }</span> <span id=""> <c:if
-								test="${aeta.COMMENTER_ID == clientId}">
+						<span>댓글작성자: ${aeta.COMMENTER_ID}</span>
+						<span>${aeta.AETA_CREATED_DATE }</span> 
+						<span id=""> 
+						<c:if test="${aeta.COMMENTER_ID == clientId}">
 								<button type="button" id="deleteCommentBtn">삭제</button>
-							</c:if>
+						</c:if>
 						</span>
+						<div class="commentContent">댓글:${aeta.AETA_COMMENT}</div>
 					</div>
 				</c:if>
 			</c:forEach>
@@ -93,6 +98,7 @@
 	<br>
 	<br>
 	<%@include file="../../common/footer.jsp"%>
+	<%@ include file="./aetaReportModal.jsp"%>
 	<script src="../js/aeta.js"></script>
 	<script>
 		var appPath = "${appPath}";
