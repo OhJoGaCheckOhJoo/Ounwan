@@ -40,5 +40,9 @@ public class DanggunDAO {
 	public int updateDanggun(Danggun danggun) {
 		return sqlSession.update(NAMESPACE + "updateDanggun", danggun);
 	}
+
+	public int updateReport(int danggunNumber) {
+		return sqlSession.update(NAMESPACE + "updateReport", danggunNumber);
+	}
 	
 }

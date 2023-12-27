@@ -23,8 +23,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.dto.DanggunDTO;
 import com.ounwan.dto.ProductImagesDTO;
+import com.ounwan.dto.StoreReportsDTO;
 import com.ounwan.service.DanggunService;
 import com.ounwan.service.ProductImagesService;
+import com.ounwan.service.StoreReportsService;
 import com.ounwan.service.TradeHistoryService;
 import com.ounwan.service.WishListsService;
 
@@ -43,13 +45,16 @@ public class DanggunController {
 	@Autowired
 	WishListsService wishListsService;
 	
+	@Autowired
+	StoreReportsService storeReportsService;
+	
 	// 채팅 방으로 seller 데리고 이동
 	@GetMapping("/bixSiri/chat")
 	public String chat(@RequestParam(name = "danggunNumber") Integer danggunNumber, @RequestParam(name = "seller") String seller, Model model) {
 		DanggunDTO danggun = danggunService.selectDanggun(seller, danggunNumber);
 		System.out.println("step = " + danggun.getTradeStep());
 		model.addAttribute("post", danggun);
-		return "/bixSiri/danggunChat";
+		return "/chat/danggunChat";
 	}
 
 //	당군 메인 페이지로 이동
@@ -91,7 +96,9 @@ public class DanggunController {
 	}
 
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public @ResponseBody String insertPost(@RequestParam(value = "detailImagesLength", required=false) int detailImagesLength,@RequestPart(value="detailImages", required = false) MultipartFile[] detailImages, MultipartFile image,
+	public @ResponseBody String insertPost(
+			@RequestParam(value = "detailImagesLength", required=false) int detailImagesLength,
+			@RequestPart(value="detailImages", required = false) MultipartFile[] detailImages, MultipartFile image,
 			String clientId, String productName, int price, String detail) throws IllegalStateException, IOException {
 		return danggunService.danggunInsert(detailImagesLength, detailImages, image, clientId, productName, price, detail)>0 ? "sucess" : "fail";
 	}
@@ -151,7 +158,15 @@ public class DanggunController {
 		} else { // 다를 때
 			result = false;
 		}
-		return (result == true) ? "삭제 성공" : "삭제 실패";
+		return (result) ? "success" : "fail";
+	}
+	
+	@PostMapping("/report")
+	public @ResponseBody String reportPost(@RequestBody StoreReportsDTO storeReports, HttpSession session) {
+		ClientsDTO clients = (ClientsDTO) session.getAttribute("userInfo");
+		storeReports.setClientId(clients.getClientId());
+		boolean result = storeReportsService.insertReport(storeReports);
+		return (result) ? "success" : "fail";
 	}
 	
 }

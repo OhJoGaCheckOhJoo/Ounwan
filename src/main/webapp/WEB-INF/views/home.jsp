@@ -48,9 +48,14 @@ prefix="c" %>
     <%@ include file="./common/footer.jsp" %>
     <script src="${appPath}/js/main.js"></script>
     <script>
-    	$("#chat").on("click",function(e){
+    	$("#adminChat").on("click",function(e){
     		e.preventDefault();
-    		window.open("${appPath}/bixSiri/chat","/bixSiri/chat","width=500, height=800, top=200, left=200");
+    		if("${userInfo.clientId}"){
+    			window.open("${appPath}/somsomi/chat","/chat/somsomiChat","width=500, height=800, top=200, left=200");
+    		}else{
+    			alert("로그인을 해주세요!");
+    			window.location.href = "${appPath}/clients/login";
+    		}
     	});
     </script>
   </body>

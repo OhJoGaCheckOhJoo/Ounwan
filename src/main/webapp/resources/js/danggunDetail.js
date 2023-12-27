@@ -60,5 +60,5 @@ $("#chatting").on("click",function(e){
     var danggunNumber = encodeURIComponent(document.getElementById('danggunModal').getAttribute('danggunNumber'));
 	var url = appPath + "/danggun/bixSiri/chat?seller="+seller+"&danggunNumber="+danggunNumber;
 	
-	window.open(url, "/bixSiri/danggunChat", "width=500, height=800, top=200, left=200");
+	window.open(url, "/chat/danggunChat", "width=500, height=800, top=200, left=200");
 });

@@ -16,7 +16,6 @@ function openModal(tradeHistoryNumber) {
 	
 }
 
-
 // 모달 닫기
 function closeModal() {
 	document.getElementById("myModal").style.display = "none";

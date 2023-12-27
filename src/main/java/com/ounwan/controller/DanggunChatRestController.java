@@ -28,7 +28,6 @@ public class DanggunChatRestController {
 	public int insertMessage(DanggunChatMessageDTO danggunChatMessageDTO) {
 		boolean result = danggunChatService.insertMessage(danggunChatMessageDTO);
 		int lastMessageId = danggunChatService.lastMessageId(danggunChatMessageDTO.getRoomId());
-		System.out.println(lastMessageId);
 		return lastMessageId;
 	}
 	

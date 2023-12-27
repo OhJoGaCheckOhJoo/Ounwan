@@ -271,40 +271,40 @@ var detailImageCount =0;
 	})
 	
 	function setDetailImages(event) {
-    var f = event.target.files[0];
+    	var f = event.target.files[0];
 
-    inputDetail = document.getElementById("detailInput");
-    imgDetail = document.getElementsByClassName("detail-preview");
+    	inputDetail = document.getElementById("detailInput");
+    	imgDetail = document.getElementsByClassName("detail-preview");
 
-    if (f == undefined) {
-        $('#detailInput').replaceWith(detailImgaes);
-        $("#detailInput").on("change", setDetailImages);
+   		 if (f == undefined) {
+       		 $('#detailInput').replaceWith(detailImgaes);
+        	$("#detailInput").on("change", setDetailImages);
 
-        for (var i = 0; i < imgDetail.length; i++) {
-            imgDetail[i].src = imgDetail[i].src;
-        }
-        return;
-    } else {
-        var max = 3;
-        var files = $("#detailInput")[0].files;
+        	for (var i = 0; i < imgDetail.length; i++) {
+            	imgDetail[i].src = imgDetail[i].src;
+        	}
+        	return;
+    	} else {
+        	var max = 3;
+        	var files = $("#detailInput")[0].files;
 
-        if (files.length > max) {
-            alert("최대 " + max + "개 선택 가능합니다");
-            $("#detailInput").val(""); 
-            $("#detailInput").on("change", setDetailImages);
+        	if (files.length > max) {
+            	alert("최대 " + max + "개 선택 가능합니다");
+            	$("#detailInput").val(""); 
+            	$("#detailInput").on("change", setDetailImages);
 
-            for (var i = 0; i < imgDetail.length; i++) {
-                imgDetail[i].src = "../images/danggunInsertDefault.png";
-            }            
-            return;
-        } else {
-            detailImageCount++;
+            	for (var i = 0; i < imgDetail.length; i++) {
+                	imgDetail[i].src = "../images/danggunInsertDefault.png";
+            	}            
+            	return;
+        	} else {
+            	detailImageCount++;
 
-            for (var i = 0; i < imgDetail.length; i++) {
-                imgDetail[i].src = "../images/danggunInsertDefault.png";
-            }
+            	for (var i = 0; i < imgDetail.length; i++) {
+                	imgDetail[i].src = "../images/danggunInsertDefault.png";
+            	}
 
-            detailImgaes = $(event.target).clone(true);
+            	detailImgaes = $(event.target).clone(true);
             console.log("cloneImage: " + detailImgaes);
 
             for (var i = 0; i < Math.min(inputDetail.files.length, imgDetail.length); i++) {

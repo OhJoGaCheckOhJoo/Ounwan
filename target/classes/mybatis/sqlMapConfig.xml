@@ -13,9 +13,10 @@
 		<typeAlias type="com.ounwan.entity.Danggun" alias="danggun" />
 		<typeAlias type="com.ounwan.entity.ProductImages" alias="productImages" />
 		<typeAlias type="com.ounwan.entity.WishLists" alias="wishlists" />
-		<typeAlias type="com.ounwan.entity.Chat" alias="chat" />
 		<typeAlias type="com.ounwan.entity.DanggunChatRoom" alias="danggunChatRoom" />
 		<typeAlias type="com.ounwan.entity.DanggunChatMessage" alias="danggunChatMessage" />
+		<typeAlias type="com.ounwan.entity.SomsomiChatRoom" alias="somsomiChatRoom" />
+		<typeAlias type="com.ounwan.entity.SomsomiChatMessage" alias="somsomiChatMessage" />
 		<typeAlias type="com.ounwan.entity.Coupung" alias="coupung" />
 		<typeAlias type="com.ounwan.entity.Orders" alias="orders" />
 		<typeAlias type="com.ounwan.entity.OrderDetails" alias="orderDetails" />

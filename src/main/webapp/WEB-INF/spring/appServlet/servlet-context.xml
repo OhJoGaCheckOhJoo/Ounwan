@@ -54,7 +54,7 @@
 		base-package="com.ounwan" />
 
 	<!-- websocket handler -->
-	<beans:bean id="echoHandler" class="com.ounwan.websocket.handler.ChatHandler"></beans:bean>
+	<beans:bean id="echoHandler" class="com.ounwan.websocket.handler.SomsomiChatHandler"></beans:bean>
 	<websocket:handlers>
 		<websocket:mapping handler="echoHandler" path="/echo"/>
 		<websocket:sockjs />

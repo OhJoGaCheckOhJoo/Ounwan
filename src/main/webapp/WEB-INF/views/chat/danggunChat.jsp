@@ -74,7 +74,7 @@
 			});
 			Handlebars.registerHelper("printNone", function(sender) {
 	             if (clientId != sender) return "none";             
-	         });
+	        });
 		</script>
 		<div class="message-input">
 			<textarea id="txtMessage" class="txtMessage" cols="30" rows="10"
@@ -86,23 +86,8 @@
 <script>
 	getList();
 	var clientId = "${userInfo.clientId}";
-	//웹소캣 생성
 	var sock = new SockJS("http://localhost:9090/myapp/danggunEcho");
 	sock.onmessage = onMessage;
-	
-	$("#chat").on("click", ".message a", function(e){
-		e.preventDefault();
-		var messageId = $(this).attr("href");
-		if(!confirm(messageId + "을(를) 삭제하실래요?")) return;
-		$.ajax({
-			type: "post",
-			url : "${appPath}/danggun/bixSiri/chat/delete",
-			data : {"sender" : clientId ,"messageId" : messageId},
-			success : function(){
-				sock.send("delete");
-			}
-		})
-	})
 	
 	function getList() {
 		var obj = {
@@ -121,6 +106,20 @@
 			}
 		})
 	}
+	
+	$("#chat").on("click", ".message a", function(e){
+		e.preventDefault();
+		var messageId = $(this).attr("href");
+		if(!confirm(messageId + "을(를) 삭제하실래요?")) return;
+		$.ajax({
+			type: "post",
+			url : "${appPath}/danggun/bixSiri/chat/delete",
+			data : {"sender" : clientId ,"messageId" : messageId},
+			success : function(){
+				sock.send("delete");
+			}
+		})
+	})
 
 	var danggunNumber = "${post.danggunNumber}";
 	var roomId = "${post.clientId}" + clientId + danggunNumber;
@@ -163,7 +162,6 @@
 	      }
 		var message = items[1];
 		var messageId = items[2];
-		console.log(messageId);
 		var date = items[3];
 		var data = {
 			"message" : message,
