@@ -9,6 +9,9 @@
 <meta charset="UTF-8">
 <link href="${appPath}/css/main.css" rel="stylesheet" />
 <link href="${appPath}/css/community.css" rel="stylesheet" />
+<link href="${appPath}/css/aeta.css" rel="stylesheet" />
+
+<link href="${appPath}/css/aetaReportModal.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>애타 게시글</title>
@@ -18,29 +21,31 @@
 	<%@include file="../../common/nav.jsp"%>
 	<br>
 	<br>
-	
+
 
 	<div id="aetaPostDetail">
 		<div>
 			<div>
 				<div id="aetaTitle">${aetaPost[0].TITLE}</div>
-				<div>프로필사진경로: ${aetaPost[0].WRITER_PHOTO}</div>
 				<div id="aetaWriter">${aetaPost[0].CLIENT_ID}</div>
 				<div>작성일:${aetaPost[0].AETA_CREATED_DATE}</div>
 				<div>조회수:${aetaPost[0].VIEWS}</div>
+				<button class="modal-button" onclick="openReportModal()">신고</button>
+	
 				<hr>
 			</div>
-			
+
 			<div id="aetaContent">
-				<div>
-				<!--  
-				<img src="${appPath}/images/${inputImage}"
-				-->
-				</div>
+				<c:forEach items="${aetaPost}" var="aeta">
+					<div>
+						<img class="aeta-photo" src="${appPath}/images/aetaUploads/${aeta.URL}"/>
+					</div>
+				</c:forEach>
+				<input type="hidden" id="aetaCountImages" value="<c:out value='${loopStatus.count}' />"/>
 				<div>${aetaPost[0].AETA_CONTENTS}</div>
 			</div>
-			<input type="hidden" value="${aetaPost[0].BOARD_NUMBER}" id="boardNO"
-				name="boardNO" />
+			<input type="hidden" value="${aetaPost[0].AETA_NUMBER}" id="aetaNumber"
+				name="aetaNumber"/>
 
 			<c:if test="${aetaPost[0].CLIENT_ID==clientId}">
 				<button type="button" id="AetaUpdateBtn">수정</button>
@@ -49,16 +54,17 @@
 		</div>
 		<hr>
 
-		<a id= "like-button"class="aeta-like">
+		<a id="like-button" class="aeta-like"> 
 			<c:choose>
 				<c:when test="${aetaLikesCheck==1}">
-					<img id="aeta-like-png" class="aeta-like-png" src="${appPath}/images/like.png">
+					<img id="aeta-like-png" class="aeta-like-png"
+						src="${appPath}/images/likeImages/like.png">
 				</c:when>
 				<c:otherwise>
-					<img id="aeta-like-png" class="aeta-like-png" src="${appPath}/images/dislike.png">
+					<img id="aeta-like-png" class="aeta-like-png"
+						src="${appPath}/images/likeImages/dislike.png">
 				</c:otherwise>
-			</c:choose>
-			<span>좋아요:<span id="count-likes">${aetaCountLikes}</span></span>
+			</c:choose> <span>좋아요:<span id="count-likes">${aetaCountLikes}</span></span>
 		</a>
 		<div>댓글:${aetaPost[0].AETA_TOTAL_COMMENTS}</div>
 		​
@@ -70,30 +76,30 @@
 			<c:forEach items="${aetaPost}" var="aeta">
 				<c:if test="${aeta.COMMENTER_ID ne null}">
 					<div>
-						<input type="hidden" class="commentId" value="${aeta.COMMENT_NUMBER}">
-						<div>댓글작성자:${aeta.COMMENTER_ID}</div>
-						<div class="commentContent">댓글:${aeta.AETA_COMMENT}</div>
-						<span>${aeta.AETA_CREATED_DATE }</span>
+						<input type="hidden" class="commentId"
+							value="${aeta.COMMENT_NUMBER}">
+						<span>댓글작성자: ${aeta.COMMENTER_ID}</span>
+						<span>${aeta.AETA_CREATED_DATE }</span> 
 						<span id=""> 
-							<c:if test="${aeta.COMMENTER_ID == clientId}">
+						<c:if test="${aeta.COMMENTER_ID == clientId}">
 								<button type="button" id="deleteCommentBtn">삭제</button>
-							</c:if>
+						</c:if>
 						</span>
+						<div class="commentContent">댓글:${aeta.AETA_COMMENT}</div>
 					</div>
 				</c:if>
 			</c:forEach>
 		</div>
 		<div>
-			<textarea id="inputComment" rows="" cols="">
-				
-			</textarea>
+			<textarea id="inputComment" rows="" cols="" placeholder="댓글 입력"></textarea>
 			<button type="button" id="insertCommentBtn">등록</button>
 		</div>
 	</div>
 	<br>
 	<br>
 	<%@include file="../../common/footer.jsp"%>
-	<script src="../js/community.js"></script>
+	<%@ include file="./aetaReportModal.jsp"%>
+	<script src="../js/aeta.js"></script>
 	<script>
 		var appPath = "${appPath}";
 	</script>

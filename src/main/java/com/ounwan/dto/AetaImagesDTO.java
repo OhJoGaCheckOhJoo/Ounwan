@@ -20,8 +20,8 @@ import lombok.ToString;
 public class AetaImagesDTO {
 
 
-	private Integer boardNumber;
-	private Integer boardImageNumber;
-	private String imageUrl;
+	private Integer aetaNumber;
+	private Integer aetaImageNumber;
+	private String url;
 	private List<String> urlLists;
 }

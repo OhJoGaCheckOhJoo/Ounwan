@@ -17,7 +17,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class AetaImages {
 
-	private Integer boardNumber;
-	private Integer boardImageNumber;
-	private String imageUrl;
+	private Integer aetaNumber;
+	private Integer aetaImageNumber;
+	private String url;
 }

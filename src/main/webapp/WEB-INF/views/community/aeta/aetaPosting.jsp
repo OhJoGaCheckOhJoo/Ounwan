@@ -8,7 +8,9 @@
 <link href="${appPath}/css/main2.css" rel="stylesheet">
 <link href="${appPath}/css/header.css" rel="stylesheet">
 <link href="${appPath}/css/community.css" rel="stylesheet" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<link href="${appPath}/css/aeta.css" rel="stylesheet" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>애타 게시글 작성</title>
 </head>
 <body>
@@ -37,6 +39,7 @@
 			</div>
 	</div>
 	<script src="../js/community.js"></script>
+	<script src="../js/aeta.js"></script>
 	<script>
 		var appPath = "${appPath}";
 	</script>

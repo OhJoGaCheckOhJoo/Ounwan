@@ -52,6 +52,7 @@ public class CommunityController {
 		System.out.println();
 		
 		model.addAttribute("aetaList", aetaList);
+//		System.out.println(aetaList);
 		model.addAttribute("paginating",paginating);
 		
 		model.addAttribute("inputValue",inputValue);
@@ -72,46 +73,48 @@ public class CommunityController {
 	
 	//애타 게시글 조회
 	@GetMapping("/aetaPost")
-	public String aetaReadPost(@RequestParam String boardNumber,
+	public String aetaReadPost(@RequestParam String aetaNumber,
 			Model model, 
 			HttpSession session) {
 		
 		if(session.getAttribute("userInfo")==null) {
 			System.out.println("off to loginPage");
 			model.addAttribute("loginRequired", true);
-			//모달?
-			return "common/loginModal";
+			//모달 만들어주기
+			return "login";
+			
 		}else {
 			
 			ClientsDTO logedInClient = (ClientsDTO) session.getAttribute("userInfo");
 			//세션에 client id 저장
 			session.setAttribute("clientId", logedInClient.getClientId());
-			boolean updateView=communityService.aetaUpdateViews(Integer.parseInt(boardNumber)); //조회수 +1
+			boolean updateView=communityService.aetaUpdateViews(Integer.parseInt(aetaNumber)); //조회수 +1
 			if (!updateView) {
 				System.out.println("failed to update views");
 			}
 			
 			//게시글 데이터 전송
-			model.addAttribute("aetaPost", communityService.aetaReadPost(Integer.parseInt(boardNumber)));
+			model.addAttribute("aetaPost", communityService.aetaReadPost(Integer.parseInt(aetaNumber)));
 			//좋아요 갯수
-			model.addAttribute("aetaCountLikes",communityService.aetaCountLikes(Integer.parseInt(boardNumber)));
+			model.addAttribute("aetaCountLikes",communityService.aetaCountLikes(Integer.parseInt(aetaNumber)));
 			//접속자 좋아요 체크 여부
-			model.addAttribute("aetaLikesCheck",communityService.aetaLikesCheck(Integer.parseInt(boardNumber),logedInClient.getClientId()));
-			
+			model.addAttribute("aetaLikesCheck",communityService.aetaLikesCheck(Integer.parseInt(aetaNumber),logedInClient.getClientId()));
+//			System.out.println(model);
 
 			return "community/aeta/aetaPost";
 		}
 	}
-	
-	//게시글 수정 페이지 조회 (모달로 해주기)
+	//애타 게시글 수정 페이지
 	@GetMapping("/aetaUpdating")
 	public String aetaUpdatePage(
 			HttpSession session,
 			Model model,
-			@RequestParam String boardNumber
+			//@RequestParam String aetaCountImages,
+			@RequestParam String aetaNumber
 			){
 			
-			model.addAttribute("aetaPost",communityService.aetaPostToBeUpdated(Integer.parseInt(boardNumber)));
+			//model.addAttribute("aetaCountImages", aetaCountImages);
+			model.addAttribute("aetaPost",communityService.aetaPostToBeUpdated(Integer.parseInt(aetaNumber)));
 		return "community/aeta/aetaUpdating";
 	}
 	

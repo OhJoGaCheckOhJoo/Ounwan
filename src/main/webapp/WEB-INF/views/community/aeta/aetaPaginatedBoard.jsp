@@ -13,6 +13,7 @@
 <link href="${appPath}/css/header.css" rel="stylesheet">
 <link href="${appPath}/css/nav.css" rel="stylesheet">
 <link href="${appPath}/css/community.css" rel="stylesheet" />
+<link href="${appPath}/css/aeta.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
@@ -54,7 +55,7 @@
 
 	<%@ include file="../../common/footer.jsp"%>
 
-	<script src="../js/community.js"></script>
+<script src="../js/aeta.js"></script>
 	<script>
 		var appPath = "${appPath}";
 		

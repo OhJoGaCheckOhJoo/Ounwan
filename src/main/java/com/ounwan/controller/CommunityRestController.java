@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,48 +36,39 @@ public class CommunityRestController {
 	@Autowired
 	CommunityService communityService;
 	
-	//게시글 등록(사진제외)
+	//애타 게시글 등록(사진제외)
 	@PostMapping(value="/aetaPosting")
-	public	String aetaInsertPost(
-			//@RequestParam("title")String title,
+	public	@ResponseBody String aetaInsertPost(
+			@RequestPart(value="images",required=false) MultipartFile[] images,
+			@RequestParam(value="imagesLength",required=false) int imagesLength,
 			String title,
 			String contents,
-			@RequestParam(required=false)String imageUrl1,
-			@RequestParam(required=false)String imageUrl2,
-			@RequestParam(required=false)String imageUrl3,
 			HttpSession session
-			) {		
-		System.out.println(imageUrl1);
-		System.out.println(imageUrl2);
-		System.out.println(imageUrl3);
-		int result=0;
-
-		ClientsDTO user=(ClientsDTO)session.getAttribute("userInfo");
-		String clientId=(user.getClientId());
-		result=communityService.aetaInsertPost(clientId,title,contents,imageUrl1,imageUrl2,imageUrl3);
+			) throws IllegalStateException, IOException {		
 		
-		return (result>0)? "success":"fail";
+		return (communityService.aetaInsertPost(
+				session,title,contents,images,imagesLength)>0)? "success":"fail";
+	}
+	//게시글 수정 기능
+	@PostMapping(value="/aetaUpdating")
+	public @ResponseBody String aetaUpdatePost(
+			//@RequestParam(value="imagesLength",required=false) int oldImagesLength,
+			String aetaNumber,
+			String title,
+			String contents,
+			HttpSession session,
+			@RequestPart(value="newImages",required=false)MultipartFile[] newImages,
+			@RequestParam(value="newImagesLength") int newImagesLength
+			) throws IllegalStateException, IOException{
+		
+		return (communityService.aetaUpdatePost(
+				session,Integer.parseInt(aetaNumber),title, contents,
+				//oldImagesLength,
+				newImages,newImagesLength
+				)>0)?"success":"fail";
 	}
 	
-	
-	//게시글 수정 기능
-//	@PutMapping(value="/aetaUpdatePost")
-//	public @ResponseBody String aetaUpdatePost(HttpSession session 
-//			) {
-//		int result =0;
-//
-//		
-//		ClientsDTO user=(ClientsDTO)session.getAttribute("userInfo");
-////		if(user.getClientId()==communityService.findClientId(aetaPost.getBoardNumber())) {
-////			result = communityService.aetaUpdatePost(aetaPost, aetaImages);
-////		}else {
-////			System.out.println("수정 컨트롤러 수정 오류");
-////		}
-//		
-//		return (result>0)?"success":"fail";
-//	}
-	
-	//게시글 삭제 기능
+	//애타 게시글 삭제 기능
 	@DeleteMapping(value="/aetaDeletePost")
 	public @ResponseBody String aeteDeletePost(HttpSession session, 
 			@RequestBody AetaDTO post
@@ -88,33 +81,35 @@ public class CommunityRestController {
 			return (result>0)?"success":"fail";
 	}
 
-	//좋아요 버튼 기능
+	//애타 게시글 좋아요 버튼 기능
 		@PostMapping(value="/likeButton")
-		public @ResponseBody AetaLikesDTO aetaLike(String boardNumber,
+		public @ResponseBody AetaLikesDTO aetaLike(@RequestParam String aetaNumber,
 				HttpSession session) {
 			System.out.println("likebuttoncontroller");
 			ClientsDTO user=(ClientsDTO)session.getAttribute("userInfo");
-
-			return communityService.aetaLikesButton(Integer.parseInt(boardNumber),user);
+			
+			System.out.println(aetaNumber);
+			System.out.println(user);
+			return communityService.aetaLikesButton(Integer.parseInt(aetaNumber),user);
 		}
-	// 게시글 댓글 등록
+	//애타 게시글 댓글 등록
 	@PostMapping(value = "/aetaInsertComment", consumes = "application/json")
 	public @ResponseBody String aetaInsertComment(@RequestBody AetaCommentsDTO comment, HttpSession session) {
 		System.out.println(session.getAttribute("userInfo"));
 		ClientsDTO c = (ClientsDTO) session.getAttribute("userInfo");
 		String id = c.getClientId();
-		comment.setClient_id(id);
+		comment.setClientId(id);
 
 		boolean result = communityService.aetaInsertComment(comment);
 		System.out.println("입력완료");
 		return (result) ? "success" : "fail";
 	}
 
-	// 댓글 삭제 기능
+	//애타 댓글 삭제 기능
 	@DeleteMapping(value = "/aetaDeleteComment", consumes = "application/json")
 	public @ResponseBody String aetaDeleteComment(@RequestBody AetaCommentsDTO comment, HttpSession session) {
 		ClientsDTO c = (ClientsDTO) session.getAttribute("userInfo");
-		comment.setClient_id(c.getClientId());
+		comment.setClientId(c.getClientId());
 		System.out.println(comment);
 		boolean result = communityService.aetaDeleteComment(comment);
 		return (result) ? "success" : "fail";

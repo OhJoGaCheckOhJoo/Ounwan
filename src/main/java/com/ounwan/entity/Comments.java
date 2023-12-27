@@ -18,10 +18,10 @@ import lombok.ToString;
 public class Comments {
 	private Integer commentNumber;
 	private String clientId;
-	private Integer boardNumber;
+	private Integer aetaNumber;
 	private String contents;
 	private Timestamp createdDate;
-	private Timestamp updatedDate;
-	private Integer likes;
+	private Timestamp updatedDate;//빼야댐
+	private Integer likes;//빼야댐
 
 }

@@ -57,7 +57,7 @@
             </div>
             <div>
                 <a class="ounwangram" href="${appPath}/community/ounwangram">오운완 커뮤니티</a>
-                <a href="${appPath}/community/aetaBoards">고민 게시판</a>
+                <a href="${appPath}/community/aetaBoard">고민 게시판</a>
             </div>
             <div>
                 <a href="${appPath}/faq">FAQ</a>

@@ -75,6 +75,8 @@
 			<a href="javascript:search(${paginating.maxPageNumber})">[>>]</a>
 		</c:otherwise>
 	</c:choose>
+
 </div>
 
 <script src="../js/community.js"></script>
+<script src="../js/aeta.js"></script>
