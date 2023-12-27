@@ -289,7 +289,7 @@
 		value(#{clientId},#{title},#{contents},now())
 	</insert>
 	
-	<insert id="AetaInsertImageURL" parameterType="map">
+	<insert id="AetaInsertImageUrls" parameterType="map">
 		INSERT INTO AETA_IMAGES 
 		(AETA_NUMBER,URL)
 		values(
@@ -311,10 +311,14 @@
 		FROM AETA cb
 		left outer join AETA_IMAGES cbi
 		on cb.AETA_NUMBER =cbi.AETA_NUMBER
-		where cb.AETA_NUMBER
-		=#{aetaNumber}
+		where cb.AETA_NUMBER =#{aetaNumber};
 	</select>
 
+	<delete id="AetaDeleteImageUrls">
+		DELETE from AETA_IMAGES 
+		WHERE AETA_NUMBER =#{aetaNumber};
+	</delete>
+	
 	<update id="AetaUpdatePost" parameterType="aeta">
 		UPDATE AETA
 		SET
@@ -325,10 +329,10 @@
 		AETA_NUMBER =#{aetaNumber};
 	</update>
 	
-	<update id="AetaUpdatePostURL" parameterType="aetaImages">
+	<update id="AetUpdateImageUrls" parameterType="aetaImages">
 		UPDATE AETA_IMAGES 
 		SET 
-		URL= #{imageUrl}	
+		URL= #{url}	
 		where AETA_NUMBER =#{aetaNumber};
 
 	</update>
