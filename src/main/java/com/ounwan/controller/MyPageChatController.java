@@ -19,24 +19,17 @@ public class MyPageChatController {
 	@Autowired
 	MyPageChatService myPageChatService;
 	
-	String clientId="jj1234";
-	
 	@GetMapping(value = "/chatList")
 	public String chatList(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-//		String clientId = userInfo.getClientId();	
+		String clientId = userInfo.getClientId();	
 		model.addAttribute("chatList", myPageChatService.getchatList(clientId));
 		return "/myPage/chatList";
 	}
 	
 	@GetMapping(value = "/getChatRoom")
-	public String getChatRoom(HttpSession session, Model model,@RequestParam("roomId") String roomId) {
-		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-//		String clientId = userInfo.getClientId();	
-		System.out.println(roomId);
-		
+	public String getChatRoom(Model model,@RequestParam("roomId") String roomId) {
 		model.addAttribute("roomId", roomId);
-//		model.addAttribute("chatInfo", myPageService.getchatList(clientId));
 		return "/myPage/chatRoom";
 	}
 	

@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.ClientsDTO;
-import com.ounwan.oauth.kakao.KakaoLoginBO;
 import com.ounwan.dto.RefundsDTO;
+import com.ounwan.oauth.kakao.KakaoLoginBO;
 import com.ounwan.service.ClientsService;
 import com.ounwan.service.MyPageService;
 import com.ounwan.service.RefundsService;
@@ -31,7 +31,6 @@ import com.ounwan.service.ReviewsService;
 @RequestMapping("/myPage")
 @Controller
 public class MyPageController {
-	
 
 	@Autowired
 	ClientsService clientService;
@@ -47,20 +46,18 @@ public class MyPageController {
 	
 	@Autowired
 	ReviewsService reviewService;
-
-	String id="jj1234";
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String myPage(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-//		String clientId = userInfo.getClientId();
+		String clientId = userInfo.getClientId();
 		
-		model.addAttribute("wishListCount", myPageService.getWishListCount(id));
-		model.addAttribute("cartListCount", myPageService.getCartListCount(id));
+		model.addAttribute("wishListCount", myPageService.getWishListCount(clientId));
+		model.addAttribute("cartListCount", myPageService.getCartListCount(clientId));
 		
-		model.addAttribute("orderList", myPageService.orderListPreview(id));
-		model.addAttribute("aetaList", myPageService.aetaListPreview(id));
-		model.addAttribute("cartList", myPageService.cartListPreview(id));
+		model.addAttribute("orderList", myPageService.orderListPreview(clientId));
+		model.addAttribute("aetaList", myPageService.aetaListPreview(clientId));
+		model.addAttribute("cartList", myPageService.cartListPreview(clientId));
 		
 		return "/myPage/myPage";
 	}
@@ -68,10 +65,9 @@ public class MyPageController {
 	@RequestMapping(value = "/coupungOrderList", method = RequestMethod.GET)
 	public String coupungOrderList(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-//		String clientId = userInfo.getClientId();	
+		String clientId = userInfo.getClientId();	
 		
-		List<Map<String, Object>> lists = myPageService.getCoupungOrderList(id);
-		System.out.println("lists: " + lists);
+		List<Map<String, Object>> lists = myPageService.getCoupungOrderList(clientId);
 		
 		model.addAttribute("coupungOrderList", lists);
 		
@@ -96,9 +92,9 @@ public class MyPageController {
 	@RequestMapping(value = "/danggunSaleList", method = RequestMethod.GET)
 	public String DanggunSaleList(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-//		String clientId = userInfo.getClientId();	
+		String clientId = userInfo.getClientId();	
 		
-		model.addAttribute("danggunSaleList", myPageService.getDanggunSaleList(id));			
+		model.addAttribute("danggunSaleList", myPageService.getDanggunSaleList(clientId));			
 
 		return "myPage/danggunSaleList";
 	}
@@ -106,9 +102,9 @@ public class MyPageController {
 	@RequestMapping(value = "/danggunWishList", method = RequestMethod.GET)
 	public String DanggunWishList(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-//		String clientId = userInfo.getClientId();		
+		String clientId = userInfo.getClientId();		
 		
-		model.addAttribute("danggunWishList", myPageService.getDanggunWishList(id));
+		model.addAttribute("danggunWishList", myPageService.getDanggunWishList(clientId));
 		
 		return "myPage/danggunWishList";
 	}
@@ -116,13 +112,13 @@ public class MyPageController {
 	@RequestMapping(value ="/deleteDanggunWishList", method = RequestMethod.POST)
 	public String deleteWishList(@RequestBody Map<String, List<String>> payload, HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");		
-//		String clientId = userInfo.getClientId();
+		String clientId = userInfo.getClientId();
 		
 		List<String> selectedWishLists = payload.get("selectedWishLists");
 
 		myPageService.deleteWishList(selectedWishLists);
 		
-		List<Map<String, Object>> updateWishLists = myPageService.getDanggunWishList(id);
+		List<Map<String, Object>> updateWishLists = myPageService.getDanggunWishList(clientId);
 		model.addAttribute("danggunWishList", updateWishLists);
 		
 		return "myPage/danggunWishList";
@@ -131,9 +127,9 @@ public class MyPageController {
 	@RequestMapping(value = "/aetaList", method = RequestMethod.GET)
 	public String AetaList(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-//		String clientId = userInfo.getClientId();		
+		String clientId = userInfo.getClientId();		
 		
-		model.addAttribute("aetaList", myPageService.getAetaList(id));
+		model.addAttribute("aetaList", myPageService.getAetaList(clientId));
 		
 		return "myPage/aetaList";
 	}
@@ -141,9 +137,9 @@ public class MyPageController {
 	@RequestMapping(value ="/coupungReviewList", method = RequestMethod.GET)
 	public String reviewList(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");		
-//		String clientId = userInfo.getClientId();
+		String clientId = userInfo.getClientId();
 		
-		model.addAttribute("coupungReviewList", myPageService.getReviewList(id));
+		model.addAttribute("coupungReviewList", myPageService.getReviewList(clientId));
 		
 		return "myPage/coupungReviewList";
 	}
@@ -151,13 +147,13 @@ public class MyPageController {
 	@RequestMapping(value ="/deleteCoupungReviewList", method = RequestMethod.POST)
 	public String deleteReviewList(@RequestBody Map<String, List<String>> payload, HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");		
-//		String clientId = userInfo.getClientId();
+		String clientId = userInfo.getClientId();
 		
 		List<String> selectedReviews = payload.get("selectedReviews");
 
 		myPageService.deleteReviewList(selectedReviews);
 		
-		List<Map<String, Object>> updateReview = myPageService.getReviewList(id);
+		List<Map<String, Object>> updateReview = myPageService.getReviewList(clientId);
 		model.addAttribute("coupungReviewList", updateReview);
 		
 		return "myPage/coupungReviewList";
@@ -167,7 +163,7 @@ public class MyPageController {
 	@GetMapping(value = "/checkPwd")
 	public String checkPwd(HttpSession session) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-//		String clientId = userInfo.getClientId();	
+		String clientId = userInfo.getClientId();	
 		
 		return "myPage/checkPwd";
 	}
@@ -176,8 +172,8 @@ public class MyPageController {
 	public @ResponseBody String checkPwd(String enteredPassword, HttpSession session) {
 		
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-//		String clientId = userInfo.getClientId();	
-		String storedPassword = myPageService.getPwdById(id); 
+		String clientId = userInfo.getClientId();	
+		String storedPassword = myPageService.getPwdById(clientId); 
 
 		if (storedPassword != null && BCrypt.checkpw(enteredPassword, storedPassword)) {
 			return "success";
@@ -189,11 +185,11 @@ public class MyPageController {
 	public String showUserInfo(HttpSession session, Model model) {
 		
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-//		String clientId = userInfo.getClientId();	
+		String clientId = userInfo.getClientId();	
 		
-		ClientsDTO clientInfo = myPageService.getUserInfo(id);
+		ClientsDTO clientInfo = myPageService.getUserInfo(clientId);
 		model.addAttribute("clientInfo", clientInfo);
-		return "myPage/modifyUserInfo"; // 회원정보 수정 페이지의 뷰 이름
+		return "myPage/modifyUserInfo";
 	}
 
 

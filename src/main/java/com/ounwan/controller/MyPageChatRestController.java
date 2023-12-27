@@ -18,8 +18,6 @@ public class MyPageChatRestController {
 	@Autowired
 	MyPageChatService myPageChatService;
 	
-	String id="jj1234";
-	
 	@RequestMapping("/danggun/chat/list")
 	public List<DanggunChatMessageDTO> selectDanggunChatList(@RequestParam(name = "roomId") String roomId) {
 		List<DanggunChatMessageDTO> result = myPageChatService.selectDanggunChatList(roomId);
