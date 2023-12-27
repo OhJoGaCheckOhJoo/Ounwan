@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <title>Document</title>
+    <title>FAQ</title>
     <link href="./css/main2.css" rel="stylesheet">
     <link href="./css/header.css" rel="stylesheet">
     <link href="./css/nav.css" rel="stylesheet">
@@ -53,9 +53,9 @@
     <%@ include file="../danggun/danggunProhibitedListModal.jsp"%>
     
     <script src="./js/main.js"></script>
-    <script>
-    	var offset = 0;
-    	var category = 0;
+    <script>    	
+    	var faqOffset = 0;
+    	var faqCategory = 0;
     	
         $(window).on("load", function() {
         	faqAjax();
@@ -71,18 +71,18 @@
         });
         
         $('.faq-category button').on("click", function() {
-        	category = $(this).val();
-        	$('.faq-page-btn').eq(offset / 10).removeClass("selected");
+        	faqCategory = $(this).val();
+        	$('.faq-page-btn').eq(faqOffset / 10).removeClass("selected");
         	$('.faq-page-btn').eq(0).addClass("selected");
-        	offset = 0;
+        	faqOffset = 0;
         	faqAjax();
         	faqPages();
         });
         
         $('.faq-page').on("click", '.faq-page-btn', function() {
-        	$('.faq-page-btn').eq(offset / 10).removeClass("selected");
+        	$('.faq-page-btn').eq(faqOffset / 10).removeClass("selected");
         	$(this).addClass("selected");
-        	offset = ($(this).val() - 1) * 10;
+        	faqOffset = ($(this).val() - 1) * 10;
         	faqAjax();
         });
         
@@ -97,11 +97,12 @@
         }
         
         const faqAjax = function() {
+        	console.log(faqCategory);
         	$.ajax({
         		url:"/myapp/getFAQList",
         		data: {
-        			'offset': offset,
-        			'category': category
+        			'offset': faqOffset,
+        			'category': faqCategory
         		},
         		success: function(res) {
         			$("#faqList").html(res);
@@ -113,7 +114,7 @@
         	$.ajax({
         		url:"/myapp/getFAQPages",
         		data: {
-        			'category': category
+        			'category': faqCategory
         		},
         		success: function(res) {
         			$(".faq-page").html(res);

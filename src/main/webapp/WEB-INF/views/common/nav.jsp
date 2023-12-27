@@ -38,9 +38,8 @@
         <div>
             <a href="${appPath}/faq">고객센터</a>
             <div id="navSubmenu" class="nav-submenu">
-                <a href="#">배송문의</a>
-                <a href="#">중고거래</a>
-                <a href="#">커뮤니티</a>
+                <a href="${appPath}/faq">FAQ</a>
+                <a href="#">채팅문의</a>
             </div>
         </div>
     </div>
@@ -61,9 +60,8 @@
                 <a href="${appPath}/community/aetaBoards">고민 게시판</a>
             </div>
             <div>
-                <a href="#">배송문의</a>
-                <a href="#">중고거래</a>
-                <a href="#">커뮤니티</a>
+                <a href="${appPath}/faq">FAQ</a>
+                <a href="#">채팅문의</a>
             </div>
         </div>
     </div>
