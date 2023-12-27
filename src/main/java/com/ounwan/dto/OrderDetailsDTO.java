@@ -16,10 +16,10 @@ import lombok.ToString;
 public class OrderDetailsDTO {
 	private Integer orderDetailNumber;
 	private String orderNumber;
-	private String coupungNumber;
+	private Integer optionNumber;
+	private Integer coupungNumber;
 	private Integer price;
 	private Integer quantity;
-	private String option;
 	// 주문 페이지에 필요한 정보들 추가
 	private CoupungDTO coupungDTO;
 }

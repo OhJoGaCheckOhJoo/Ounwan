@@ -10,4 +10,13 @@
     <select id="getOptionByOptionId" parameterType="int" resultType="coupungOptions">
     	SELECT * FROM COUPUNG_OPTIONS WHERE COUPUNG_OPTION_NUMBER = #{coupungOptionNumber}
     </select>
+    
+    <insert id="insertOption" parameterType="coupungOptions">
+    	INSERT INTO COUPUNG_OPTIONS(COUPUNG_NUMBER, NAME) VALUES (#{coupungNumber}, #{name})
+    </insert>
+    
+    <delete id="deleteOption" parameterType="coupungOptions">
+    	DELETE FROM COUPUNG_OPTIONS
+    	WHERE COUPUNG_OPTION_NUMBER = #{coupungOptionNumber}
+    </delete>
 </mapper>

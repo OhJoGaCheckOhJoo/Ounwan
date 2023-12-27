@@ -22,9 +22,8 @@
 	</select>
 
 	<select id="selectForFindPassword" parameterType="clients"
-		resultType="int">
-		SELECT COUNT(*) FROM CLIENTS WHERE CLIENT_ID = #{clientId} AND EMAIL =
-		#{email}
+		resultType="clients">
+		SELECT * FROM CLIENTS WHERE CLIENT_ID = #{clientId} AND EMAIL = #{email}
 	</select>
 
 	<update id="updatePassword" parameterType="clients">

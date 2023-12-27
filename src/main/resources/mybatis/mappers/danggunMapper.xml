@@ -37,7 +37,7 @@
 	</insert>
 	
 	<!-- 당군 상품 - 이미지 추가 -->
-	<insert id="imageInsert" parameterType="map">
+	<insert id="imageInsert" parameterType="productImages">
 		insert into PRODUCT_IMAGES (`DANGGUN_NUMBER`, `URL`, `TYPE`)
 		VALUES (#{danggunNumber}, #{url}, #{type})
 	</insert>
@@ -75,8 +75,14 @@
 	<update id="updateDanggunImages" parameterType="productImages">
 		UPDATE PRODUCT_IMAGES
 		SET URL = #{url}
-		WHERE PRODUCT_IMAGE_NUMBER = #{danggunImageNumber}
+		WHERE PRODUCT_IMAGE_NUMBER = #{productImageNumber}
 	</update>
+	<!-- 
+	<update id="updateDanggunImages" parameterType="map">
+		UPDATE PRODUCT_IMAGES
+		SET URL = #{url}
+		WHERE PRODUCT_IMAGE_NUMBER = #{productImageNumber}
+	</update> -->
 	
 	<!-- 거래 수정시 사진 삽입 -->
 	<insert id="insertNewDetailImages" parameterType="productImages">
@@ -84,6 +90,12 @@
 		PRODUCT_IMAGES (DANGGUN_NUMBER, URL, TYPE)
 		VALUES (#{danggunNumber}, #{url}, 1)
 	</insert>
+	
+	<!-- <insert id="insertNewDetailImages" parameterType="map">
+		INSERT INTO
+		PRODUCT_IMAGES (DANGGUN_NUMBER, URL, TYPE)
+		VALUES (#{danggunNumber}, #{url}, 1)
+	</insert> -->
 
 	<!-- 찜 개수 -->
 	<select id="selectCountZzim" parameterType="int"

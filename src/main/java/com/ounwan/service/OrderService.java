@@ -48,6 +48,19 @@ public class OrderService {
 		
 		return (result > 0) ? true : false;
 	}
+
+	public List<OrdersDTO> getAdminOrderList() {
+		List<OrdersDTO> orderList = changeDTOList(orderDAO.getAdminOrderList());
+		for (OrdersDTO order : orderList) {
+			order.setOrderDetails(orderDetailService.getOrderDetails(order.getOrderNumber()));
+		}
+		return orderList;
+	}
+	
+	public boolean updateTradeStatus(OrdersDTO order) {
+		int result = orderDAO.updateTradeStatus(order);
+		return result > 0;
+	}
 	
 	public List<OrdersDTO> changeDTOList(List<Orders> orderList) {
 		List<OrdersDTO> changedList = new ArrayList<OrdersDTO>();

@@ -27,4 +27,5 @@ public class CoupungDTO {
 	private List<ProductImagesDTO> detailImages;
 	private List<CoupungOptionsDTO> options;
 	private Integer quantity;
+	private Integer salesRate;
 }

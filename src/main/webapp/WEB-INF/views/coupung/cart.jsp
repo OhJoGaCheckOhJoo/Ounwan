@@ -17,15 +17,13 @@
 <link href="${appPath }/css/nav.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="${appPath }/css/cart.css" />
 <link rel="stylesheet" type="text/css" href="${appPath }/css/styleguide.css" />
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<link href="${appPath }/css/coupung/modal.css" rel="stylesheet">
 </head>
 <body>
 
-	 <%@ include file="../common/header.jsp" %>
-
+	<%@ include file="../common/header.jsp" %>
     <div class="container">
-        <%@ include file="../common/nav.jsp" %>
-	
+    <%@ include file="../common/nav.jsp" %>
 		<div class="contents">
 
 			<div class="cartList" id="cartList">
@@ -97,9 +95,9 @@
 
 						<div class="checkbox">
 							<input type="checkbox" name="checkbox" class="selectCheckbox">
-							<input type="hidden" value="${cart.coupungNumber}" class="productNum" />
-							<input type="hidden" value="${cart.coupungOptionNumber}" class="optionNum" />
-							<input type="hidden" value="${cart.quantity}" class="productQuantity" />
+							<input type="hidden" value="${cart.COUPUNG_NUMBER}" class="productNum" />
+							<input type="hidden" value="${cart.COUPUNG_OPTION_NUMBER}" class="optionNum" />
+							<input type="hidden" value="${cart.QUANTITY}" class="productQuantity" />
 						</div>
 
 
@@ -123,23 +121,21 @@
 								<div class="minus">
 									<input type='hidden' value='${cart.COUPUNG_NUMBER}'
 										class='coupung-num' /> <input type='hidden'
-										value='${cart.price}' class='coupung-price' /> <input
-										type='hidden' value='${status.count}' class='index-num' /> -
+										value='${cart.price}' class='coupung-price' /> 
+									<input type='hidden' value='${status.count}' class='index-num' /> -
 								</div>
 								<span id="result${status.count}">${cart.QUANTITY}</span>
 								<div class="plus">
-									<input type='hidden' value='${cart.COUPUNG_NUMBER}'
-										class='coupung-num' /> <input type='hidden'
-										value='${cart.price}' class='coupung-price' /> <input
-										type='hidden' value='${status.count}' class='index-num' /> +
+									<input type='hidden' value='${cart.COUPUNG_NUMBER}' class='coupung-num' /> 
+									<input type='hidden' value='${cart.price}' class='coupung-price' /> 
+									<input type='hidden' value='${status.count}' class='index-num' /> +
 								</div>
 
 							</div>
 						</div>
 						<div class="text-1 valign-text-middle inter-normal-black-16px">
 							<div>가격</div>
-
-							<span id="resultPrice${status.count}">금액:${cart.price*cart.QUANTITY}</span>원
+ 							금액:<span id="resultPrice${status.count}">${cart.price*cart.QUANTITY}</span>원
 						</div>
 						<button class="delete-button"
 							data-coupung-num="${cart.COUPUNG_NUMBER}" data-option-num="${cart.COUPUNG_OPTION_NUMBER}">X</button>
@@ -168,29 +164,29 @@
 			</div>
 		</div>
 	</div>
-	<!-- 전체 화면 모달 -->
-<div class="modal fade" id="fullScreenModal" tabindex="-1" aria-labelledby="fullScreenModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="fullScreenModalLabel">전체 화면 모달</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- 모달 내용 -->
-       	이메일 : <input type="text" id="guestEmail" />
-        핸드폰 번호 : <input type="text" id="guestPhone"/>
-        <button type="button" id="guestSubmitBtn">입력</button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary">저장</button>
-      </div>
+	 <div id="modalContainer" class="hidden">
+    	<div id="modalContent">
+    		이메일 : <input type="text" id="guestEmail" />
+    		<br>
+    		핸드폰 번호 : <input type="text" id="guestPhone" />
+    		<br>
+    		<button type="button" id="guestSubmitBtn">입력</button>
+    	</div>
     </div>
-  </div>
-</div>
 	
 	<script>
+	
+	$('.selectCheckbox').on('change', function() {
+		  let totalPrice = 0;
+		  $('.selectCheckbox:checked').each(function() {
+		    var index = $(this).parent().parent().find(".index-num").val();
+		    var resultPriceText = $('#resultPrice' + index).text();
+		    var price = parseInt(resultPriceText.replace(/\D/g,''), 10);
+		    totalPrice += price;
+		  });
+		  $('#totalAmount').text(totalPrice);
+	});
+	
 	$(".delete-button").on("click",function(){
 		 var coupungNum = $(this).data("coupung-num");
 		 var optionNum = $(this).data('option-num');
@@ -272,13 +268,14 @@
 				quantityList.push(quantity);
 		    });
 		    
-			if('${userInfo}' === '') {
+			if('${userInfo.clientId}' === '') {
 				if(!confirm('로그인 하시겠습니까?')) {
-					$('#fullScreenModal').modal('show'); // 모달을 띄우는 부분
+					$('#modalContainer').removeClass('hidden'); // 모달을 띄우는 부분
 				} else {
 					location.href="${appPath}/clients/login";
 				}
 			} else {
+				
 				location.href = '${appPath}/coupung/order?productList=' + productList + '&optionList=' + optionList +'&quantityList=' + quantityList;
 			}
 		});
