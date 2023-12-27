@@ -46,7 +46,6 @@ prefix="c" %>
     <hr>
     
     <%@ include file="./common/footer.jsp" %>
-    <script src="${appPath}/js/main.js"></script>
     <script>
     	$("#adminChat").on("click",function(e){
     		e.preventDefault();
@@ -58,5 +57,6 @@ prefix="c" %>
     		}
     	});
     </script>
+    <script src="${appPath}/js/main.js"></script>
   </body>
 </html>

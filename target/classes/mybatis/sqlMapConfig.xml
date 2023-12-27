@@ -33,5 +33,7 @@
 		<typeAlias type="com.ounwan.entity.Inbody" alias="inbody" />
 		<typeAlias type="com.ounwan.entity.Refunds" alias="refund" />		
 		<typeAlias type="com.ounwan.entity.Reviews" alias="review" />	
+		<typeAlias type="com.ounwan.entity.Admin" alias="admin" />
+		<typeAlias type="com.ounwan.entity.FAQ" alias="faq" />
 	</typeAliases>
 </configuration>

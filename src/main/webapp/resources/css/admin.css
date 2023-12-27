@@ -1,0 +1,351 @@
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+* {
+    font-family: 'Dongle', sans-serif;
+    font-size: 36px;
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+header {
+    padding: 10px 20px 10px 20px;
+    background-color: rgb(57, 46, 179);
+    height: 45px;
+}
+header > span {
+    color: #fff;
+    margin-left: 20px;
+    letter-spacing: 1.2px;
+    font-weight: bold;
+    cursor: pointer;
+}
+nav {
+    display: inline-block;
+    width: 180px;
+    height: 100%;
+    background-color: rgb(57, 46, 179);
+    border: 1px solid #fff;
+}
+li {
+    list-style: none;
+}
+input:focus {
+    outline: none;
+}
+a {
+    text-decoration: none;
+    color: #000;
+}
+.container {
+    height: calc(100% - 67px);
+}
+.menu {
+    overflow: hidden;
+}
+
+.menu > li {
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+    padding: 10px 0px 10px 0px;
+}
+
+.menu a {
+    color: #fff;
+    font-size: 28px;
+    text-decoration: none;
+}
+
+.submenu > li {
+    line-height: 50px;
+    font-size: 24px;
+    background-color: rgba(255,255,255,0.1);
+    color: #fff;
+}
+
+.submenu {
+    height: 0;
+    overflow: hidden;
+}
+
+.menu > li:hover {
+    transition-duration: 0.5s;
+}
+
+.menu > li:hover .submenu {
+    height: auto;
+    transition-duration: 1s;
+}
+.admin-wrap {
+    display: inline-block;
+    width: calc(100% - 200px);
+    height: 100%;
+    vertical-align: top;
+    margin-top: 5px;
+    background-color: #ddd;
+}
+.chatting-wrap {
+    background-color: #fff;
+    padding: 50px;
+    width: 1000px;
+    height: 600px;
+    margin: 150px auto 0px auto;
+    border-radius: 50px;
+}
+.admin-chat-sub {
+    display: inline-block;
+    width: 320px;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 10px;
+}
+.admin-chat-sub > input {
+    text-align: center;
+    width: 300px;
+}
+.user-profile {
+    width: 300px;
+    height: 50px;
+    border: 0;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    margin-top: 5px;
+}
+.user-profile:hover {
+    background-color: #eee;
+}
+.user-profile img {
+    height: 40px;
+    width: 40px;
+}
+.user-profile span {
+    position: relative;
+    bottom: 12px;
+}
+.admin-chatting {
+    display: inline-block;
+    width: 620px;
+    height: 100%;
+    padding: 10px 10px 10px 20px;
+    margin-left: 10px;
+    border-left: 1px solid #ddd;
+    vertical-align: top;
+}
+.chatting-user {
+    height: 50px;
+    text-align: center;
+}
+.chatting-user img {
+    width: 40px;
+    height: 40px;
+}
+.chatting {
+    height: 420px;
+    background-color: #eee;
+    border-radius: 10px;
+    margin: 5px 0px 5px 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.admin-chatting form textarea {
+    width: 500px;
+    height: 90px;
+    font-size: 18px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    font-family: 'GmarketSansMedium';
+}
+.admin-chatting form textarea:focus {
+    outline: none;
+}
+.admin-chatting form button {
+    width: 100px;
+    height: 100px;
+    vertical-align: top;
+    border: 0;
+    border-radius: 10px;
+    background-color: rgb(57, 46, 179);
+    color: #fff;
+}
+.admin-chatting form button:hover {
+    background-color: rgb(49, 39, 156);
+}
+.product-wrap {
+    height: 100%;
+    background-color: #fff;
+}
+.product-wrap * {
+    font-size: 22px;
+}
+.product-menu, .product-info {
+    width: 1500px;
+    margin: auto;
+    padding-left: 50px;
+}
+.product-menu input, .product-info input {
+    margin-right: 10px;
+}
+.product-info:hover {
+    background-color: #ddd;
+}
+.product-info span, .product-info select, .product-info button, .product-menu span {
+    display: inline-block;
+    width: 200px;
+}
+.product-info button {
+    border: 0;
+    height: 32px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.product-info button:hover {
+    background-color: #ddd;
+}
+.product-info div {
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    padding-top: 20px;
+    background-color: #fff;
+    border: 1px solid #000;
+    text-align: center;
+    top: calc(50% - 150px);
+    left: calc(50% - 200px);
+    display: none;
+    z-index: 1;
+}
+.product-info div img {
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin: auto;
+}
+.selected {
+    font-weight: bold;
+}
+.product-detail-wrap {
+    height: 100%;
+    padding-top: 30px;
+    text-align: center;
+}
+#productInput {
+    width: 300px;
+    height: 800px;
+    padding: 50px;
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 50px;
+}
+#productInput #mainImage, #productInput #subImage, #productInput #explanationImg {
+    width:0;
+    height:0;
+    visibility: hidden;
+}
+#productInput button {
+	width: 200px;
+	border: 0;
+	border-radius: 10px;
+}
+#productInput button:hover {
+	background-color: #ccc;
+}
+.product-detail-wrap label {
+    cursor: pointer;
+    display: inline-block;
+    width: 300px;
+}
+#explanationLabel {
+	margin: 50px 0px 50px 0px;
+}
+#productPreview {
+    text-align: center;
+    width: 800px;
+    height: 800px;
+    overflow-y: auto;
+    display: inline-block;
+    padding: 50px;
+    vertical-align: top;
+    background-color: #fff;
+    border-radius: 50px;
+}
+#mainPreview {
+    width: 500px;
+    height: 500px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+}
+#subPreview img {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+#explanationPreview img {
+    width: 500px;
+}
+#option {
+    text-align: center;
+}
+#adminProductSearch {
+    text-align: right;
+    padding: 10px 30px 10px 50px;
+    border-bottom: 1px solid #ddd;
+}
+#adminProductSearch div {
+    display: inline-block;
+}
+#adminProductSearch div input, #adminProductSearch div select {
+    width: 210px;
+}
+#adminProductSearch select {
+    width: 110px;
+}
+#adminProductSearch input {
+    width: 200px;
+}
+#adminProductSearch button {
+    width: 80px;
+}
+#sortingOption, #productOption {
+    display: inline-block;
+    width: 40%;
+}
+#productOption {
+    text-align: left;
+}
+#sortingOption {
+    padding: 10px 30px 10px 50px;
+    text-align: right;
+}
+#sortingOption button{
+    cursor: pointer;
+    background-color: #fff;
+    padding: 5px;
+    margin: 0px 5px 0px 5px;
+    border: 0;
+}
+#productOption button {
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0px 5px 0px 5px;
+    border: 0;
+}
+#productOption button:hover {
+    background-color: #ccc;
+}
+#productPages {
+    margin-top: 10px;
+    text-align: center;
+}
