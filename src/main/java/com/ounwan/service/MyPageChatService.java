@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ounwan.dto.DanggunChatMessageDTO;
 import com.ounwan.dto.DanggunChatRoomDTO;
+import com.ounwan.dto.DanggunDTO;
 import com.ounwan.entity.Clients;
 import com.ounwan.entity.DanggunChatMessage;
 import com.ounwan.entity.DanggunChatRoom;
@@ -55,6 +56,8 @@ public class MyPageChatService {
 	}
 	
 	public List<DanggunChatMessageDTO> selectDanggunChatList(String roomId){
+		int danggunNumber = myPageChatDAO.selectDanggunNumber(roomId);
+		
 		return changeDTOlist(myPageChatDAO.selectDanggunChatList(roomId));
 	}
 	

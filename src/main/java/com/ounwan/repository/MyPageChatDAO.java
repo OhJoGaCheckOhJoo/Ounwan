@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ounwan.dto.DanggunDTO;
 import com.ounwan.entity.Clients;
 import com.ounwan.entity.DanggunChatMessage;
 import com.ounwan.entity.DanggunChatRoom;
@@ -52,6 +53,10 @@ public class MyPageChatDAO {
 	
 	public int lastMessageId(String roomId) {
 		return sqlSession.selectOne(NAMESPACE + "lastMessageId", roomId);
+	}
+
+	public int selectDanggunNumber(String roomId) {
+		return sqlSession.selectOne(NAMESPACE + "selectDanggunNumber", roomId);
 	}
 	
 }
