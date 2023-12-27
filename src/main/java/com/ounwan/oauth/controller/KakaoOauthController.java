@@ -51,4 +51,10 @@ public class KakaoOauthController {
 
 		return "redirect:/" + sb.toString();
 	}
+
+	public ClientsDTO convertResult(Map<String, Object> result) {
+		return ClientsDTO.builder().name((String) result.get("name")).clientId((String) result.get("clientId"))
+				.profileUrl((String) result.get("profileURL")).socialId((String) result.get("token"))
+				.socialType("KAKAO").build();
+	}
 }

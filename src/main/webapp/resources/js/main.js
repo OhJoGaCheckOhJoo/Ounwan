@@ -74,6 +74,14 @@ $(function() {
     $("#populars").html(populars(array_popular));
     $("#secondhands").html(secondhands(array_secondhand));
 
+    $("#profileImage").on("click", function() {
+        if($(".header-sub-menu").css("visibility") == 'hidden'){
+            $(".header-sub-menu").css("visibility", 'visible');
+        } else {
+            $(".header-sub-menu").css("visibility", 'hidden');
+        }
+    })
+
     $("#findAccount").click(function() {
         $("#findAccount").addClass("login-menu-selected");
         $("#loginAccount").removeClass("login-menu-selected");

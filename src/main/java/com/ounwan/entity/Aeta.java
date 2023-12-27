@@ -16,12 +16,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Aeta {
-	private Integer boardNumber;
+	private Integer aetaNumber;
 	private String title;
 	private String contents;
 	private String clientId;
 	private Timestamp createdDate;
 	private Timestamp updatedDate;
 	private Integer views;
-	private Integer likes;
 }

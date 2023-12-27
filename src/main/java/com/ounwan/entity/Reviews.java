@@ -1,25 +1,25 @@
 package com.ounwan.entity;
 
+import java.sql.Timestamp;
+
 import lombok.AllArgsConstructor;
-
-import java.sql.Date;
-
 import lombok.Builder;
-import lombok.NoArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class Reviews {
-	private int reviewNumber;
-	private int orderDetailNumber;
+	private Integer reviewNumber;
+	private Integer orderDetailNumber;
 	private String contents;
-	private double score;
-	private Date createdDate;
-	private String imageURL;
-	private int likes;
+	private Double score;
+	private Timestamp createdDate;
+	private String ImageUrl;
 }

@@ -14,6 +14,8 @@ public class ProductImagesDAO {
 	@Autowired
 	SqlSession sqlSession;
 	private static final String NAMESPACE = "net.ounwan.danggun.";
+		
+	private static final String NAMESPACE = "net.ounwan.myPage.";
 
 	public ProductImages selectAllImages(int danggunNumber) {
 		return sqlSession.selectOne(NAMESPACE + "selectAllImage", danggunNumber);
@@ -35,5 +37,10 @@ public class ProductImagesDAO {
 		return sqlSession.insert(NAMESPACE + "insertNewDetailImages", newData);
 	}
 	
+
+
+	public ProductImages getSaleImage(int danggunNumber) {
+		return sqlSession.selectOne(NAMESPACE + "imageSaleList", danggunNumber);
+	}	
 	
 }

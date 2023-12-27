@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-  
-  <filter>
-    <filter-name>encodingFilter</filter-name>
-    <filter-class>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>
 			org.springframework.web.filter.CharacterEncodingFilter
 		</filter-class>
 		<init-param>
@@ -16,31 +18,43 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-   
+	<multipart-config>
+		<max-file-size>5242880</max-file-size>
+		<max-request-size>20971520</max-request-size>
+		<file-size-threshold>0</file-size-threshold>
+	</multipart-config>
+
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-		/WEB-INF/spring/root-context.xml
+			/WEB-INF/spring/root-context.xml
 		</param-value>
 	</context-param>
 
 	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+		<listener-class>org.springframework.web.context.ContextLoaderListener
+		</listener-class>
 	</listener>
 
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
-			/WEB-INF/spring/appServlet/servlet-context.xml
-			/WEB-INF/spring/appServlet/dbinfo-context.xml
+				/WEB-INF/spring/appServlet/servlet-context.xml
+				/WEB-INF/spring/appServlet/dbinfo-context.xml
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
+	<multipart-config>
+		<max-file-size>31457280</max-file-size>   <!-- 30mb -->
+		<max-request-size>1004857600</max-request-size>  <!-- 100mb -->
+	</multipart-config>
 
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>

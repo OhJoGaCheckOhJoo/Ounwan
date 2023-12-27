@@ -14,9 +14,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class DanggunChatMessageDTO {
 	private Integer messageId;
 	private String roomId;

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.ounwan.myPageChat">
+	<!-- chat list -->
+	<select id="getchatList" parameterType="String"
+		resultType="danggunChatRoom">
+		WITH RankedRows AS (
+		SELECT
+		DCR.ROOM_ID,
+		DCR.SELLER,
+		DCR.BUYER,
+		DCM.REGDATE,
+		ROW_NUMBER() OVER (PARTITION BY DCR.ROOM_ID
+		ORDER BY DCM.REGDATE DESC) AS RowRank
+		FROM
+		DANGGUN_CHAT_ROOM DCR
+		JOIN
+		DANGGUN_CHAT_MESSAGE DCM ON DCR.ROOM_ID = DCM.ROOM_ID
+		WHERE DCR.SELLER = #{clientId} OR DCR.BUYER = #{clientId}
+		)
+		SELECT ROOM_ID, SELLER, BUYER, REGDATE
+		FROM
+		RankedRows
+		WHERE RowRank = 1
+		ORDER BY REGDATE DESC
+	</select>
+
+	<select id="getPartnerInfo" parameterType="String"
+		resultType="clients">
+		select *
+		from CLIENTS
+		where CLIENT_ID = #{clientId}
+	</select>
+
+	<!-- 해당 채팅 내역 가져오기 -->
+	<select id="selectDanggunChatList"
+		resultType="danggunChatMessage">
+		SELECT * FROM DANGGUN_CHAT_MESSAGE WHERE ROOM_ID =
+		#{roomId}
+	</select>
+
+	<insert id="insertMessage">
+		insert into DANGGUN_CHAT_MESSAGE (ROOM_ID, SENDER,
+		MESSAGE)
+		VALUES (#{roomId}, #{sender}, #{message})
+	</insert>
+
+	<delete id="deleteMessage">
+		DELETE FROM DANGGUN_CHAT_MESSAGE WHERE MESSAGE_ID =
+		#{messageId}
+	</delete>
+
+	<select id="lastMessageId" resultType="int">
+		select max(message_id)
+		from DANGGUN_CHAT_MESSAGE where ROOM_ID = #{roomId}
+	</select>
+
+	<select id="selectDanggunNumber" parameterType="String" resultType="int">
+		SELECT DANGGUN_NUMBER
+		FROM DANGGUN_CHAT_ROOM 
+		WHERE ROOM_ID = #{roomId}
+	</select>
+	
+	<select id="selectDanggunInfo" parameterType="int" resultType="danggun">
+		SELECT * FROM DANGGUN
+		WHERE DANGGUN_NUMBER = #{danggunNumber}
+	</select>
+	
+	<select id="selectMainImage" parameterType="int" resultType="danggun">
+		SELECT URL FROM PRODUCT_IMAGES
+		WHERE DANGGUN_NUMBER = #{danggunNumber} AND TYPE = 0
+	</select>
+	
+	<select id="selectTradeStep">
+		SELECT TRADE_STEP FROM TRADE_HISTORY WHERE TRADE_HISTORY_NUMBER = #{tradeHistoryNumber}
+	</select>
+
+</mapper>

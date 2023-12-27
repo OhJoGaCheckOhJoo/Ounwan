@@ -10,9 +10,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class DanggunChatRoomDTO {
 	private String roomId;
 	private Integer danggunNumber;

@@ -16,7 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Refunds {
-	private int refundNumber;
+	private Integer refundNumber;
 	private String orderNumber;
 	private String reason;
 	private Date registeredDate;

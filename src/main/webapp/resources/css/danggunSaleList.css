@@ -1,0 +1,46 @@
+.danggun-sale-info.img > img{
+	width: 60px;
+	height: 60px;
+}
+
+.danggun-sale.num {
+	width: 60px;
+}
+
+.danggun-sale.info {
+	width: 350px;
+}
+
+.danggun-sale.price {
+	width: 100px;
+}
+
+.danggun-sale.upload-date {
+	width: 120px;
+}
+
+.danggun-sale.state {
+	width: 65px;
+	padding: 0px 10px;
+}
+
+.danggun-sale-info-container {
+	display: flex;
+	align-items: center;
+}
+
+.danggun-sale-info.img > img {
+	padding: 20px;
+}
+
+.danggun-sale-info.name {
+	width: 100%; 
+	text-align: left;
+	margin-right: 10px;
+}	
+	
+.none-content > td {
+	text-align: center;
+	padding: 80px;
+}
+	

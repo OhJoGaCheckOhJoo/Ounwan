@@ -1,25 +1,26 @@
 package com.ounwan.dto;
 
-import lombok.AllArgsConstructor;
-
 import java.sql.Date;
+import java.sql.Timestamp;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class ReviewsDTO {
 	private Integer reviewNumber;
 	private Integer orderDetailNumber;
 	private String contents;
 	private Double score;
-	private Date createdDate;
-	private String imageURL;
-	private Integer likes;
+	private Timestamp createdDate;
+	private String ImageUrl;
 }
