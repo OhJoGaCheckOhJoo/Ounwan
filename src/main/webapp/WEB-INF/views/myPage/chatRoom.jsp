@@ -16,6 +16,16 @@
 		<div class="chat-title">
 			<h3>채팅방</h3>
 		</div>
+		<div class="product-bar">
+				<div>
+					<img class="main-img" src="../${images.url}" />
+				</div>
+				<div class="product-info">
+					<div>${post.tradeStep}</div>
+					<div>${post.productName}</div>
+					<div>${post.price}</div>
+				</div>
+			</div>
 		<hr>
 	</div>
 
@@ -43,7 +53,7 @@
        </div>
        </script>
 	<script>
-		var clientId = "jj1234";
+		var clientId = "${userInfo.clientId}";
 		Handlebars.registerHelper("printLeftRight", function(sender) {
 			if (clientId != sender) {
 				return "left";
@@ -64,7 +74,7 @@
 
 <script>
 	getList();
-	var clientId = "jj1234";
+	var clientId = "${userInfo.clientId}";
 	var sock = new SockJS("http://localhost:9090/myapp/myPageEcho");
 	sock.onmessage = onMessage;
 	function getList() {
@@ -94,9 +104,10 @@
 		})
 	})
 
-	$("#txtMessage").on("keydown", function(e) {
+	$("#txtMessage").off("keydown").on("keydown", function(e) {
 		if (e.keyCode == 13 && !e.shiftKey) {
 			e.preventDefault();
+
 			var message = $("#txtMessage").val();
 			if (message == "") {
 				alert("메시지를 입력하세요.");
@@ -106,7 +117,7 @@
 
 			$("#txtMessage").val("");
 			var roomId = "${roomId}";
-			// db로 보내기
+
 			$.ajax({
 				type : 'post',
 				url : '${appPath}/myPage/danggun/chat/insertMessage',

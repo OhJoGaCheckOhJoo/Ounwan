@@ -14,15 +14,6 @@
 
 <div class="chat-history-container">
 	<div class="user-info-container">
-	
-		<div class="user-info-title">
-            <button class="dropbtn">전체 채팅</button>
-            <div class="dropdown-content">
-                <a href="javascript:filterChats('all')">전체 채팅</a>
-                <a href="javascript:filterChats('buy')">구매 채팅</a>
-                <a href="javascript:filterChats('sell')">판매 채팅</a>
-            </div>
-        </div>
 		<c:if test="${empty chatList}">
 			<div>채팅 내역이 없습니다.</div>
 		</c:if>
@@ -50,15 +41,22 @@
 </div>
 
 <script>
+var sock; 
 
 function getChatRoom(roomId) {
-	$.ajax({
-		type : "GET",
-		url : "${appPath}/myPage/getChatRoom",
-		data: { roomId: roomId },
-		success : function(res) {
-			$("#chatRoomView").html(res);
-		}
-	});
+    if (sock) {
+        sock.close();
+    }
+
+    sock = new SockJS("http://localhost:9090/myapp/myPageEcho");
+    
+    $.ajax({
+        type : "GET",
+        url : "${appPath}/myPage/getChatRoom",
+        data: { roomId: roomId },
+        success : function(res) {
+            $("#chatRoomView").html(res);
+        }
+    });
 }
 </script>
