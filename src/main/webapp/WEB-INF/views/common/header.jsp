@@ -23,6 +23,10 @@
                 <span>${userInfo.name}님 환영합니다</span>
                 <button id="cart"></button>
                 <div id="cartNotice"></div>
+                <div id="userAction">
+                	<a href="#">마이페이지</a>
+                	<a href="#">로그아웃</a>
+                </div>
             </div>
 	    </c:if>
     </div>

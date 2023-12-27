@@ -15,6 +15,8 @@
         <input id="productPrice" type="number" placeholder="가격을 입력해주세요">
         <label id="explanationLabel" for="explanationImg">👉 설명이미지 👈</label>
         <input id="explanationImg" name="explanationImg" type="file" accept="image/*" multiple>
+        <div>재고 수량</div>
+        <input id="availableStock" type="number" placeholder="재고 수량을 입력해주세요.">
         <c:if test="${product eq null}">
         	<button>등록</button>
         </c:if>
@@ -104,10 +106,12 @@
     $("#productInput button").on("click", function() {
     	if($("#productName").val().length == 0) {
     		alert("상품명을 입력해주세요.");
-    	} else if($("#productPrice").val().length == 0) {
+    	} else if($("#productPrice").val() <= 0) {
     		alert("상품가격을 입력해주세요.");
     	} else if(mainImage.length == 0) {
     		alert("상품 메인이미지를 등록해주세요.");
+    	} else if($("#availableStock").val() <= 0) {
+    		alert("재고 수량을 입력해주세요.");
     	} else {
     		var formData = new FormData();
             
@@ -120,6 +124,7 @@
             }
             formData.set("name", $("#productName").val());
             formData.set("price", $("#productPrice").val());
+            formData.set("availableStock", $("#availableStock").val());
             
             $.ajax({
             	url: "${appPath}/admin/coupung/addProduct",

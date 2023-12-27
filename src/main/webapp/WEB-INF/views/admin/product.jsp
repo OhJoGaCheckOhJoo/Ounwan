@@ -37,8 +37,8 @@
                 <span>가격</span>
                 <span>카테고리</span>
                 <span>재고</span>
-                <span>일주일 판매량</span>
-                <span>총 판매량</span>
+                <span>옵션</span>
+                <span>판매량</span>
                 <span>판매여부</span>
             </div>
             <c:forEach var="product" items="${productList}">
@@ -48,7 +48,12 @@
                 <span>${product.price}</span>
                 <span>${product.category}</span>
                 <span>${product.availableStock}</span>
-                <span>${product.weekSales}</span>
+               	<select>
+            		<option hidden>옵션</option>
+               		<c:forEach var="option" items="${product.options}">
+                		<option>${option}</option>
+               		</c:forEach>
+               	</select>
                 <span>${product.totalSales}</span>
                 <button value="${product.productNumber}">${product.availableCheck}</button>
                 <div>

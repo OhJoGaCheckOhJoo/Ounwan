@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="appPath" scope="application"
+	value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -14,107 +16,10 @@
     <link href="./css/faq.css" rel="stylesheet">
 </head>
 <body>
-    <!--
-    <header>
-        <div class="header">
-            <a class="logo" href="/ounwan"></a>
-            <div class="float-right">
-                <a id="signUp" href="./html/signup.html"></a>
-                <a id="loginSelect" href="#"></a>
-                <button id="cart"></button>
-                <div id="cartNotice"></div>
-            </div>
-        </div>
-    </header>
-    -->
-    <header>
-        <div class="header">
-            <a class="logo" href="/ounwan"></a>
-            <div class="float-right">
-                <a id="profileImage" href="#">
-                    <img src="./images/google.png">
-                </a>
-                <span>0000님 환영합니다</span>
-                <button id="cart"></button>
-                <div id="cartNotice"></div>
-            </div>
-        </div>
-        <div class="header-sub-menu">
-            <div>
-                <a href="#">마이페이지</a>
-                <a href="#">로그아웃</a>
-            </div>
-        </div>
-    </header>
+    <%@ include file="../common/header.jsp" %>
 
     <div class="container">
-        <nav>
-            <div class="nav-main">
-                <div class="pointer">
-                    <a id="hamberger-btn" class="menu-trigger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </a>
-                </div>
-                <div>
-                    <a href="#">쇼핑몰</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a href="#">전체 보기</a>
-                        <a href="#">운동 기구</a>
-                        <a href="#">건강 보조 식품</a>
-                        <a href="#">헬스 이용권</a>
-                        <a href="#">의류</a>
-                    </div>
-                </div>
-                <div>
-                    <a href="#">중고거래</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a href="#">전체 보기</a>
-                        <a href="#">관심 상품</a>
-                    </div>
-                </div>
-                <div>
-                    <a href="#">커뮤니티</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a class="ounwangram" href="ounwangram">오운완 커뮤니티</a>
-                        <a href="#">고민 게시판</a>
-                    </div>
-                </div>
-                <div>
-                    <a href="#">고객센터</a>
-                    <div id="navSubmenu" class="nav-submenu">
-                        <a href="#">배송문의</a>
-                        <a href="#">중고거래</a>
-                        <a href="#">커뮤니티</a>
-                    </div>
-                </div>
-            </div>
-            <div id="navMenu" class="nav-menu">
-                <div>
-                    <div>
-                        <a href="#">전체 보기</a>
-                        <a href="#">운동 기구</a>
-                        <a href="#">건강 보조 식품</a>
-                        <a href="#">헬스 이용권</a>
-                        <a href="#">의류</a>
-                    </div>
-                    <div>
-                        <a href="#">전체 보기</a>
-                        <a href="#">관심 상품</a>
-                    </div>
-                    <div>
-                        <a class="ounwangram" href="ounwangram">오운완 커뮤니티</a>
-                        <a href="#">고민 게시판</a>
-                    </div>
-                    <div>
-                        <a href="#">배송문의</a>
-                        <a href="#">중고거래</a>
-                        <a href="#">커뮤니티</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <%@ include file="../common/nav.jsp"%>
 
         <div class="faq-wrap">
             <div class="faq-title">
@@ -140,13 +45,7 @@
 					</div>
 					<div id="faqList"></div>
 				</div>
-				<div class="faq-page">
-					<c:forEach var="page" begin="1" end="${pages}">
-						<button value="${page}" class="faq-page-btn<c:if test="${page eq 1}"> selected</c:if>">
-							[${page}]
-						</button>
-					</c:forEach>
-				</div>
+				<div class="faq-page"></div>
             </div>
         </div>
     </div>
@@ -160,6 +59,7 @@
     	
         $(window).on("load", function() {
         	faqAjax();
+        	faqPages();
         });
 
         $('.faq-body').on("click", ".faq-content a", function() {
@@ -176,6 +76,7 @@
         	$('.faq-page-btn').eq(0).addClass("selected");
         	offset = 0;
         	faqAjax();
+        	faqPages();
         });
         
         $('.faq-page').on("click", '.faq-page-btn', function() {
@@ -197,7 +98,7 @@
         
         const faqAjax = function() {
         	$.ajax({
-        		url:"/ounwan/getFAQList",
+        		url:"/myapp/getFAQList",
         		data: {
         			'offset': offset,
         			'category': category
@@ -208,11 +109,17 @@
         	});
         }
         
-        /*
-        for(var i = 0; i < 10; i++) {
-            $('.faq-num').eq(i).css("bottom", ((($('.faq-content a div').eq(i).css("height")).replace("px", "") - ($('.faq-num').eq(i).css("height")).replace("px", "")) / 2 + "px"));
+        const faqPages = function() {
+        	$.ajax({
+        		url:"/myapp/getFAQPages",
+        		data: {
+        			'category': category
+        		},
+        		success: function(res) {
+        			$(".faq-page").html(res);
+        		}
+        	});
         }
-    	*/
     </script>
 </body>
 </html>

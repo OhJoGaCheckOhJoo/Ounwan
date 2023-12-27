@@ -32,5 +32,6 @@ input:focus {
 }
 .container {
     width: 1250px;
+    min-height: calc(100% - 320px);
     margin: auto;
 }

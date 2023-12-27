@@ -198,7 +198,7 @@ a {
 .product-info:hover {
     background-color: #ddd;
 }
-.product-info span, .product-info button, .product-menu span {
+.product-info span, .product-info select, .product-info button, .product-menu span {
     display: inline-block;
     width: 200px;
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.ounwan.faq">
+
+	<select id="getFAQList" parameterType="map" resultType="faq">
+		SELECT * FROM FAQ 
+		<if test="category > 0">
+			WHERE CATEGORY = #{category} 
+		</if>
+		LIMIT 10 OFFSET #{offset}
+	</select>
+	
+	<select id="countFAQList" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM FAQ
+		<if test="category > 0">
+			WHERE CATEGORY = #{category} 
+		</if>
+	</select>
+	
+</mapper>

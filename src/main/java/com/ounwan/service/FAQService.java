@@ -20,8 +20,8 @@ public class FAQService {
 	
 	final static String[] CATEGORY = {"배송", "중고", "커뮤니티"};
 	
-	public int countFAQList() {
-		int numOfFaq = faqDAO.countFAQList();
+	public int countFAQList(int category) {
+		int numOfFaq = faqDAO.countFAQList(category);
 		return numOfFaq / 10 + (numOfFaq % 10 > 0 ? 1 : 0);
 	}
 	

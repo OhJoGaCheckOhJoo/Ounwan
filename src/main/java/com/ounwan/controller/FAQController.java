@@ -15,8 +15,7 @@ public class FAQController {
 	FAQService faqService;
 	
 	@RequestMapping("/faq")
-	public String getFAQPage(Model model) {
-		model.addAttribute("pages", faqService.countFAQList());
+	public String getFAQview(Model model) {
 		return "faq/faq";
 	}
 	
@@ -24,5 +23,11 @@ public class FAQController {
 	public String getFAQList(@RequestParam int category, @RequestParam int offset, Model model) {
 		model.addAttribute("faqList", faqService.getFAQList(category, offset));
 		return "faq/faqList";
+	}
+	
+	@RequestMapping("/getFAQPages")
+	public String getFAQPage(@RequestParam int category, Model model) {
+		model.addAttribute("pages", faqService.countFAQList(category));
+		return "faq/faqPages";
 	}
 }

@@ -102,3 +102,25 @@ header .float-right a:hover {
     border-radius: 17.5px;
     top: 5px;
 }
+#profileImage:hover ~ #userAction, #userAction:hover {
+	transform: scaleY(1);
+}
+#userAction {
+	position: relative;
+	top: 5px;
+	right: 29px;
+	width: 100px;
+	padding: 10px 10px 0px 10px;
+	text-align: center;
+	background-color: var(--main-back);
+	transform: scaleY(0);
+	transform-origin: top;
+	transition: all linear 0.2s;
+	box-shadow: 3px 3px 3px rgba(0,0,0,0.1);
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+#userAction a {
+	display: block;
+	padding-bottom: 10px;
+}
