@@ -5,9 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <link href="${appPath}/css/main.css" rel="stylesheet" />
-<link href="${appPath}/css/main2.css" rel="stylesheet">
-<link href="${appPath}/css/header.css" rel="stylesheet">
-<link href="${appPath}/css/community.css" rel="stylesheet" />
+<link href="${appPath}/css/main2.css" rel="stylesheet" />
+<link href="${appPath}/css/header.css" rel="stylesheet" />
+<link href="${appPath}/css/nav.css" rel="stylesheet" />
 <link href="${appPath}/css/aeta.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -17,27 +17,33 @@
 	<%@ include file="../../common/header.jsp"%>
 	
 	<div class="container">
+		<%@ include file="../../common/nav.jsp" %>
+		
 		<h1 id='aetaPost'>애타 글쓰기</h1>
+		
+		<div class='aeta-post-wrap'>
 			<div>
-				<div>
-					<label for="inputTitle">제목</label><input id="inputTitle">
-				</div>
-	
-				<form enctype="multipart/form-data" action="${appPath}/community/aetaPosting" method="post">
-					<label for="inputImg">이미지</label> 
-					<input type="file" multiple="multiple" id="inputImg" name="inputImg" onchange="readURL(this);"/> <br>
-					<img id="imgPreview" src="#" width=200 height=150 alt="선택된 이미지가 없습니다">
-				</form>
-	
-				<div>
-					<label for="inputContent">내용</label>
-					<textarea id="inputContent" placeholder=""></textarea>
-				</div>
-				<div class="">
-					<button type="button" id="PostingBtn">등록</button>
-				</div>
+				<label for="inputTitle">제목</label><input id="inputTitle">
 			</div>
+
+			<form id="aetaPostImage" enctype="multipart/form-data" action="${appPath}/community/aetaPosting" method="post">
+				<label for="inputImg"><img src="${appPath}/images/add_image.png"></label> 
+				<input type="file" multiple="multiple" id="inputImg" name="inputImg"/>
+				<div id="imagePreviewExp">이미지 미리보기 (이미지를 삭제하려면 해당 이미지를 클릭하면 됩니다.)</div>
+				<div id="imagePreview"></div>
+			</form>
+
+			<div id="aetaInputContentWrap">
+				<label for="inputContent">내용</label>
+				<textarea id="inputContent"></textarea>
+			</div>
+			<div>
+				<button type="button" id="PostingBtn">등록</button>
+			</div>
+		</div>
+		
 	</div>
+	<script src="../js/main.js"></script>
 	<script src="../js/community.js"></script>
 	<script src="../js/aeta.js"></script>
 	<script>

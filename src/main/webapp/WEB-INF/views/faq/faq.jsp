@@ -29,26 +29,32 @@
                 <div class="faq-search">
 					<form>
 						<span>질문을 입력하세요</span> <input type="text">
-						<button type="button">검색</button>
+						<button id="faqSearch" type="button">검색</button>
 					</form>
 				</div>
 				<div class="faq-category">
-					<button value=0>전체보기</button>
+					<button class="faqSelected" value=0>전체보기</button>
 					<button value=1>배송문의</button>
 					<button value=2>중고거래</button>
 					<button value=3>커뮤니티</button>
 				</div>
-				<div class="faq-main">
-					<div class="faq-header">
-						<span>NO.</span>
-						<div>제목</div>
+				<div class="faq-main-wrap">
+					<div class="faq-main">
+						<div class="faq-header">
+							<span>NO.</span>
+							<div>제목</div>
+						</div>
+						<div id="faqList"></div>
 					</div>
-					<div id="faqList"></div>
+					<div class="faq-page"></div>
 				</div>
-				<div class="faq-page"></div>
             </div>
         </div>
     </div>
+    
+    <a id="help" href="#">
+    	<img src="${appPath}/images/help.png">
+    </a>
     
     <%@ include file="../danggun/danggunProhibitedListModal.jsp"%>
     
@@ -71,9 +77,9 @@
         });
         
         $('.faq-category button').on("click", function() {
+        	$('.faq-category button').eq(faqCategory).removeClass('faqSelected');
+        	$(this).addClass('faqSelected');
         	faqCategory = $(this).val();
-        	$('.faq-page-btn').eq(faqOffset / 10).removeClass("selected");
-        	$('.faq-page-btn').eq(0).addClass("selected");
         	faqOffset = 0;
         	faqAjax();
         	faqPages();
@@ -84,6 +90,18 @@
         	$(this).addClass("selected");
         	faqOffset = ($(this).val() - 1) * 10;
         	faqAjax();
+        });
+        
+        $("#faqSearch").on("click", function() {
+        	$.ajax({
+        		url:"${appPath}/searchFAQ",
+        		data: {
+        			keyword: $(this).parent().find('input').val()
+        		},
+        		success: function(res) {
+        			console.log(res);
+        		}
+        	});
         });
         
         function openProhibitedListModal() {
@@ -97,9 +115,8 @@
         }
         
         const faqAjax = function() {
-        	console.log(faqCategory);
         	$.ajax({
-        		url:"/myapp/getFAQList",
+        		url:"${appPath}/getFAQList",
         		data: {
         			'offset': faqOffset,
         			'category': faqCategory
@@ -112,7 +129,7 @@
         
         const faqPages = function() {
         	$.ajax({
-        		url:"/myapp/getFAQPages",
+        		url:"${appPath}/getFAQPages",
         		data: {
         			'category': faqCategory
         		},

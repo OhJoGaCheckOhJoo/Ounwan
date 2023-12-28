@@ -52,9 +52,15 @@
     margin: 0px 1px 0px 1px;
     padding: 10px 15px 10px 15px;
     border: 1px solid #555;
+    background-color: #282828;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     cursor: pointer;
+    transform: translateY(35px);
+    transition: 0.2s linear all;
+}
+.faq-category button:hover {
+	transform: translateY(0);
 }
 .faq-main {
     width: 1100px;
@@ -167,6 +173,30 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 900;
 }
+.faq-main-wrap {
+	background-color: var(--main-back);
+	position: relative;
+	z-index: 2;
+}
+.faqSelected {
+	transform: translateY(0) !important;
+}
 #closeBtn {
 	cursor: pointer;
+}
+#help{
+	position: fixed;
+	bottom: 100px;
+	right: 100px;
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	border: 1px solid var(--main-color-1);
+	border-radius: 25px;
+	z-index: 10;
+}
+#help img {
+	width: 30px;
+	height: 30px;
+	margin: 10px;
 }
