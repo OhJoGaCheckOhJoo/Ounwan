@@ -1,27 +1,10 @@
 @charset "UTF-8";
 
-/* @font-face {
-    font-family: 'VitroCore';
-    font-weight: normal;
-    font-style: normal;
-    src: url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroCore.eot');
-    src: url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroCore.eot?#iefix') format('embedded-opentype'),
-        url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroCore.woff2') format('woff2'),
-        url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroCore.woff') format('woff'),
-        url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroCore.ttf') format("truetype");
-    font-display: swap;
-} */
-
 @font-face {
-    font-family: 'VitroPride';
-    font-weight: normal;
+    font-family: 'OAGothic-ExtraBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/OAGothic-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
     font-style: normal;
-    src: url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroPride.eot');
-    src: url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroPride.eot?#iefix') format('embedded-opentype'),
-        url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroPride.woff2') format('woff2'),
-        url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroPride.woff') format('woff'),
-        url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroPride.ttf') format("truetype");
-    font-display: swap;
 }
 
 :root {
@@ -34,7 +17,7 @@
     margin: 0;
     padding: 0;
     color: var(--main-color-1);
-    font-family: 'VitroPride';
+    font-family: 'OAGothic-ExtraBold';
 }
 html, body {
     background-color: var(--main-back);
