@@ -28,7 +28,7 @@
 			<c:forEach var="saleInfo" items="${danggunSaleList}" varStatus="loop">
 				<tr class="content-tr">
 					<td class="danggun-sale num">${danggunSaleList.size() - loop.index}</td>
-					<td class="danggun-sale info"><a href="#">
+					<td class="danggun-sale info"><a href="${appPath}/danggun/detail?danggunNumber=${saleInfo.DANGGUN_NUMBER}">
 							<div class="danggun-sale-info-container">
 								<div class="danggun-sale-info img">
 									<img src="${saleInfo.URL}">

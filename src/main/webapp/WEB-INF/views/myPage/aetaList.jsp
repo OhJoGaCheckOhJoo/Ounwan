@@ -26,7 +26,7 @@
 			<c:forEach var="list" items="${aetaList}" varStatus="loop">
 				<tr class="content-tr">
 					<td class="aeta-list num">${aetaList.size() - loop.index }</td>
-					<td class="aeta-list title"><a href="#">${list.title}</a></td>
+					<td class="aeta-list title"><a href="${appPath}/community/aetaPost?aetaNumber=${list.aetaNumber}">${list.title}</a></td>
 					<td class="aeta-list upload-date">
 						<fmt:formatDate value="${list.createdDate}" pattern="yyyy-MM-dd" />
 					</td>

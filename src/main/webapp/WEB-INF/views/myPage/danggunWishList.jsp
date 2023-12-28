@@ -38,7 +38,7 @@
 							</td>
 							<td class="td-wish-list info">
 								<div class="wish-list-info-container">
-									<a href="#">
+									<a href="${appPath}/danggun/detail?danggunNumber=${wishInfo.DANGGUN_NUMBER}">
 										<div class="wish-list-info img">
 											<img src="${wishInfo.URL}">
 										</div>
@@ -65,7 +65,7 @@
 							</td>
 							<td class="td-wish-list info">
 								<div class="wish-list-info-container">
-									<a href="#">
+									<a href="${appPath}/danggun/detail?danggunNumber=${wishInfo.DANGGUN_NUMBER}">
 										<div class="wish-list-info img">
 											<img src="${wishInfo.URL}">
 										</div>
@@ -91,7 +91,7 @@
 								</div>
 							</td>
 							<td class="td-wish-list info">
-									<a href="#">
+									<a href="${appPath}/danggun/detail?danggunNumber=${wishInfo.DANGGUN_NUMBER}">
 									<div class="wish-list-info-container">
 										<div class="wish-list-info img completed">
 											<img src="${wishInfo.URL}">

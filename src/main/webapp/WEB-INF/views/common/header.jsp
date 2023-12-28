@@ -24,7 +24,7 @@
                 <button id="cart" onClick="location.href='${appPath}/coupung/cart'"></button>
                 <div id="cartNotice"></div>
                 <div id="userAction">
-                	<a href="#">마이페이지</a>
+                	<a href="${appPath}/myPage">마이페이지</a>
                 	<a href="#">로그아웃</a>
                 </div>
             </div>
