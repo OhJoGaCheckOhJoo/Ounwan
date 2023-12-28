@@ -7,8 +7,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href="${appPath}/css/main.css" rel="stylesheet">
-<link href="${appPath}/css/main2.css" rel="stylesheet">
+<link href="${appPath}/css/main.css" rel="stylesheet" />
+<link href="${appPath}/css/main2.css" rel="stylesheet" />
+<link href="${appPath}/css/header.css" rel="stylesheet" />
 <link href="${appPath}/css/signUp.css" rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -49,9 +50,11 @@ $(document).ready(function() {
 <title>회원정보입력</title>
 </head>
 <body>
-	<div class="container">
-	</div>
+	
+	<%@ include file="./common/header.jsp" %>
 	<br><br><br>
+    <div class="container">
+    
 	<div class="title">회원정보입력</div>
 	<br>
 
@@ -166,6 +169,7 @@ $(document).ready(function() {
 		<div class="sign-up-button">
 			<button id='submitBtn' type='button'>회원가입</button>
 		</div>
+	</div>
 	<br><br><br>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
