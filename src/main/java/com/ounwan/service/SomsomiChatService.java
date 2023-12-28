@@ -25,8 +25,8 @@ public class SomsomiChatService {
 		makeChatRoom.setRoomId(roomId);
 		makeChatRoom.setClientId(clientId);
 		makeChatRoom.setAdminId("admin");
-		
-		if(somsomiChatRoom.contains(makeChatRoom)) {
+		System.out.println(somsomiChatRoom);
+		if(!somsomiChatRoom.contains(makeChatRoom)) {
 			chatDAO.makeRoom(makeChatRoom);
 		}
 		

@@ -66,13 +66,6 @@
 		<websocket:mapping handler="echoHandler2" path="/danggunEcho"/>
 		<websocket:sockjs />
 	</websocket:handlers>
-	
-	<!-- websocket handler -->
-	<beans:bean id="echoHandler3" class="com.ounwan.websocket.handler.MyPageChatHandler"></beans:bean>
-	<websocket:handlers>
-		<websocket:mapping handler="echoHandler3" path="/myPageEcho"/>
-		<websocket:sockjs />
-	</websocket:handlers>
 
 	
 </beans:beans>

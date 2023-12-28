@@ -11,7 +11,18 @@
         url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroCore.ttf') format("truetype");
     font-display: swap;
 } */
-
+@font-face {
+    font-family: 'OAGothic-Medium.woff2';
+    src: url('https://cdn.jsdelivr.net/gh/fontbee/font@main/Oa/OAGothic-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'MBC1961GulimM';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/MBC1961GulimM.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 @font-face {
     font-family: 'VitroPride';
     font-weight: normal;
@@ -34,7 +45,7 @@
     margin: 0;
     padding: 0;
     color: var(--main-color-1);
-    font-family: 'VitroPride';
+    font-family: 'OAGothic-Medium.woff2';
 }
 html, body {
     background-color: var(--main-back);

@@ -16,7 +16,7 @@
 	</select>
 	
 	<insert id="makeRoom" parameterType="somsomiChatRoom">
-		insert into SOMSOMI_CHAT_ROOM (ROOM_ID, ADMIN_ID)
+		insert into SOMSOMI_CHAT_ROOM (ROOM_ID, ADMIN_ID, CLIENT_ID)
 		value(#{roomId}, #{adminId}, #{clientId})
 	</insert>
 	

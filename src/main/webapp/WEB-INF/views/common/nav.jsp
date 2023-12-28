@@ -13,7 +13,7 @@
             </a>
         </div>
         <div>
-            <a href="${appPath}/coupung/products">쇼핑몰</a>
+            <a href="${appPath}/coupung/products">오늘의 쿠펑</a>
             <div id="navSubmenu" class="nav-submenu">
                 <a href="#">운동 기구</a>
                 <a href="#">건강 보조 식품</a>
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div>
-            <a href="${appPath}/danggun/main">중고거래</a>
+            <a href="${appPath}/danggun/main">오늘의 당군</a>
             <div id="navSubmenu" class="nav-submenu">
                 <a href="${appPath}/danggun/main">전체 보기</a>
                 <a href="#">관심 상품</a>
@@ -31,15 +31,15 @@
         <div>
             <a href="#">커뮤니티</a>
             <div id="navSubmenu" class="nav-submenu">
-                <a class="ounwangram" href="${appPath}/community/ounwangram">오운완 커뮤니티</a>
-                <a href="${appPath}/community/aetaBoard">고민 게시판</a>
+                <a class="ounwangram" href="${appPath}/community/ounwangram">운동했다그램</a>
+                <a href="${appPath}/community/aetaBoard">애타</a>
             </div>
         </div>
         <div>
             <a href="${appPath}/faq">고객센터</a>
             <div id="navSubmenu" class="nav-submenu">
                 <a href="${appPath}/faq">FAQ</a>
-                <a href="#">채팅문의</a>
+                <a href="#" id="adminChat">솜솜이</a>
             </div>
         </div>
     </div>
