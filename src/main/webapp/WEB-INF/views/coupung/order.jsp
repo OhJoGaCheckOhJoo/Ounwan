@@ -15,7 +15,8 @@
 <link href="${appPath }/css/header.css" rel="stylesheet">
 <link href="${appPath }/css/nav.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="${appPath }/css/order.css" />
-<link rel="stylesheet" type="text/css" href="${appPath }/css/styleguide.css" />
+<link rel="stylesheet" type="text/css"
+	href="${appPath }/css/styleguide.css" />
 
 </head>
 <body>
@@ -63,10 +64,10 @@
 		    $('#phone-txt').attr('readOnly', true);
 		});
 	</script>
-	<%@ include file="../common/header.jsp" %>
+	<%@ include file="../common/header.jsp"%>
 
-    <div class="container">
-    <%@ include file="../common/nav.jsp" %>
+	<div class="container">
+		<%@ include file="../common/nav.jsp"%>
 		<div class="contents">
 			<div class="flex-col-1 flex-col-3">
 				<div class="view-container">
@@ -97,11 +98,11 @@
 											src="../images/order/line-19.svg" alt="Line 19" />
 									</div>
 									<div>
-										<c:forEach var="product" items="${products}" varStatus="status">
+										<c:forEach var="product" items="${products}"
+											varStatus="status">
 											<div class="x01">
 												<div class="x01-1">
-													<img class="x50-2" src="${product.image[0].url }"
-														alt="50" />
+													<img class="x50-2" src="${product.image[0].url }" alt="50" />
 													<div class="text-container">
 														<p class="jtext-10 valign-text-middle">-[옵션] :
 															${product.options[0].name}</p>
@@ -220,7 +221,8 @@
 						<div class="jtext-29 valign-text-middle inter-normal-black-12px">주소</div>
 						<div class="flex-col-2 flex-col-3">
 							<div class="contents-2 contents-3">
-								<input class="box" id="zipcode-txt" type="text" readOnly required />
+								<input class="box" id="zipcode-txt" type="text" readOnly
+									required />
 								<div class="overlap-group-3">
 									<button id="findAddr" type="button">우편번호 검색</button>
 								</div>
@@ -273,7 +275,8 @@
 				<div class="overlap-group7">
 					<div class="option">
 						<div class="payment-button">
-							<button class="text-38 valign-text-middle">결제하기</button>
+							<button id=""
+							 class="text-38 valign-text-middle">결제하기</button>
 						</div>
 					</div>
 					<div class="view-23">
@@ -282,26 +285,31 @@
 							alt="Line 28" />
 						<div class="payment-box">
 							<div>
-								총 상품 금액 
+								총 상품 금액
 								<div class="inter-normal-black-16px" id="totalPrice">
-									978000
-								</div>
+									978000</div>
 							</div>
 							<div class="total-payment-amount">
 								총 결제 금액
 								<div class="total-payment-amount-1" id="totalOrderPrice">
-									978000
-								</div>
+									978000</div>
 							</div>
 						</div>
-						<img class="line-29" src="../images/order/line-28.svg" alt="Line 29"/> 
+						<img class="line-29" src="../images/order/line-28.svg"
+							alt="Line 29" />
 					</div>
 				</div>
 			</div>
+			<button id="payment">
+			결제
+			</button>
 		</div>
 	</div>
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+	<script>
 		$(document).ready(function() {
 			let isVisible = false;
 			const $detailsContent = $('#order-details .view-3');
@@ -386,7 +394,37 @@
 		        }
 		    }).open();
 		});
-	</script>
+	
+		
+		$("#payment").on('click',function(){
+			 IMP.init("imp43370630");
+	            // IMP.request_pay(param, callback) 결제창 호출
+
+	            IMP.request_pay({ // param
+	                pg: 'kcp',
+	                merchant_uid: "사과",
+	                amount: "123456",
+	                name: "nametest",
+	                buyer_email: "buyerEmailtest",
+	                buyer_name: "buyerNameTest",
+	                buyer_tel: "01011112222",
+	                buyer_addr: "123",
+	                buyer_postcode: "123",
+	                m_redirect_url: "${appPath}}"
+
+	            }, function (rsp) { // callback
+	                if(rsp.success){
+	                	alert("s");
+	            
+	                } else {
+	                    alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+	                }
+	            });
+			
+		});
+		
+		
+		</script>
 
 	<!-- <script>
 		$(document).ready(function() {

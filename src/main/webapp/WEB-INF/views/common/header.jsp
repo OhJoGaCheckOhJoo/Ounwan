@@ -9,7 +9,7 @@
 	    	<div class="float-right">
                 <a id="signUp" href="${appPath}/clients/signUp"></a>
                 <a id="loginSelect" href="${appPath}/clients/login"></a>
-                <button id="cart" onClick="location.href='${appPath}/coupung/cart'"></button>
+                <button id="cart"></button>
                 <c:if test="${cartList ne null}">
                 	<div id="cartNotice"></div>
                 </c:if>
@@ -21,7 +21,7 @@
                     <img src="${appPath}/${userInfo.profileUrl }">
                 </a>
                 <span>${userInfo.name}님 환영합니다</span>
-                <button id="cart" onClick="location.href='${appPath}/coupung/cart'"></button>
+                <button id="cart"></button>
                 <div id="cartNotice"></div>
                 <div id="userAction">
                 	<a href="#">마이페이지</a>
