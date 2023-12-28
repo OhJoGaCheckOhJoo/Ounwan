@@ -8,14 +8,14 @@
             <div>${board.clientId}</div>
         </a>
         <div class="ounwangram-threedot-div">
-            <button id='threeDotBtn' class="ounwangram-threedot"><img class="ounwangram-threedot" src="./images/three_dot.png"></button>
+            <button id='threeDotBtn' class="ounwangram-threedot"><img class="ounwangram-threedot" src="../images/three_dot.png"></button>
         </div>
         <div class="gramBoardOption">
-        	<c:if test="${clientInfo.clientId eq board.clientId}">
+        	<c:if test="${userInfo.clientId eq board.clientId}">
 	    		<button id='updateGramBoard' value="${board.communityNumber}">수정하기</button>
 	            <button id='deleteGramBoard' value="${board.communityNumber}">삭제하기</button>
 	    	</c:if>
-	    	<c:if test="${clientInfo.clientId ne board.clientId}">
+	    	<c:if test="${userInfo.clientId ne board.clientId}">
 	    		<button id='reportGramBoard' value="${board.communityNumber}@${board.clientId}">신고하기</button>
 	    	</c:if>
         </div>
@@ -24,7 +24,7 @@
         </div>
         <div class="ounwan-like">
         	<button id="ounwanLikeBtn" value="${board.communityNumber}">
-        		<img src="./images/ounwan_like_${board.likesCheck}.png">
+        		<img src="../images/ounwan_like_${board.likesCheck}.png">
         	</button>
         	<span>${board.likes}</span><span>Likes</span>
         </div>

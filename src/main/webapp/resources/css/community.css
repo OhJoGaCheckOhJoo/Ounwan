@@ -53,7 +53,7 @@ nav .ounwangram {
 }
 
 .ounwangram_selected {
-	border-bottom: 2px solid var(--main-color);
+	border-bottom: 2px solid var(--main-color-2);
 }
 
 .ounwangram-main {
@@ -192,6 +192,7 @@ nav .ounwangram {
 }
 
 .writeGramContents input {
+	background-color: var(--main-back);
 	width: 960px;
 	padding: 10px 20px 10px 20px;
 	border: 0;
@@ -247,18 +248,17 @@ nav .ounwangram {
 	float: right;
 	top: 27.5px;
 	margin-right: 10px;
-	background-color: #eee;
 	visibility: hidden;
 }
 
 .gramBoardOption > button {
 	padding: 10px 10px 10px 10px;
 	cursor: pointer;
-	background-color: #eee;
+	background-color: #282828;
 }
 
 .gramBoardOption > button:hover {
-	background-color: #ddd;
+	background-color: #444;
 }
 
 .hashDiv span {
@@ -320,9 +320,10 @@ nav .ounwangram {
 }
 .inbodyInput input {
 	width: 300px;
-	border: 1px solid #fff;
 	text-align: center;
 	font-size: 24px;
+	background-color: var(--main-back);
+	border: 0;
 }
 .inbodyInput input:focus {
 	border: 1px solid #ccc;
@@ -334,15 +335,15 @@ nav .ounwangram {
 	width: 300px;
 	height: 45px;
 	margin: auto;
-	background-color: var(--main-color);
-	color: #fff;
+	background-color: var(--main-color-1);
+	color: #000;
 	font-size: 18px;
 	font-weight: bold;
 	border-radius: 20px;
 	cursor: pointer;
 }
 .inbodyInput button:hover {
-	background-color: #1E275B;
+	background-color: #E4DCCA;
 }
 .inbodyInfo {
 	width: 1100px;
@@ -351,10 +352,10 @@ nav .ounwangram {
 	padding: 5px 0px 5px 5px;
 }
 .inbodyInfo:hover {
-	background-color: #eee;
+	background-color: #444;
 }
 .inbodyInfo:hover input {
-	background-color: #eee;
+	background-color: #444;
 }
 .inbodyInfo form {
 	width: 1100px;
@@ -363,18 +364,19 @@ nav .ounwangram {
 .inbodyInfo input {
 	width: 120px;
 	border: 0;
+	background-color: var(--main-back);
 }
 .inbodyInfo button {
 	padding: 3px 5px 3px 5px;
-	background-color: #fff;
-	color: var(--main-color);
-	border: 3px solid var(--main-color);
+	background-color: var(--main-color-1);
+	color: #000;
+	border: 3px solid #fff;
 	border-radius: 5px;
 	cursor: pointer;
 }
 .inbodyInfo button:hover {
-	background-color: var(--main-color);
-	color: #fff;
+	background-color: var(--main-back);
+	color: var(--main-color-1);
 }
 .inbodyTableHead {
 	padding: 5px;
@@ -471,19 +473,18 @@ nav .ounwangram {
 	text-align: center;
 	width: 35px;
 	height: 35px;
-	background-color: var(--main-color);
+	background-color: var(--main-color-1);
 	border-radius: 10px;
-	font-size: 20px;
-	color: #fff;
+	font-size: 24px;
+	color: #000;
 	cursor: pointer;
-	bottom: 3px;
+	top: 3px;
 }
 
 #followButton, #myInbodyButton {
 	width: 120px;
 	height: 35px;
-	background-color: #eee;
-	border: 0;
+	border: 1px solid var(--main-color-1);
 	border-radius: 10px;
 	cursor: pointer;
 }
@@ -538,7 +539,7 @@ nav .ounwangram {
 }
 
 #gramSearchResult a:hover {
-	background-color: #eee;
+	background-color: #666;
 }
 
 #gramSearchResult a img {
@@ -629,8 +630,9 @@ nav .ounwangram {
 	width: 150px;
 	height: 75px;
 	font-size: 24px;
-	color: #fff;
-	background-color: var(--main-color);
+	font-weight: bold;
+	color: #000;
+	background-color: var(--main-color-1);
 	border-radius: 30px;
 	float: right;
 	cursor: pointer;
@@ -644,9 +646,8 @@ nav .ounwangram {
 	right: 50px;
 	border: 0;
 	border-radius: 25px;
-	background-color: rgba(0,0,0,0.05);
+	background-color: rgba(255,255,255,0.05);
 	font-size : 24px;
-	color: #aaa;
 	cursor: pointer;
 }
 
@@ -673,17 +674,19 @@ nav .ounwangram {
 	height: 45px;
 	width: 150px;
 	border-radius: 10px;
+	border: 1px solid var(--main-color-1);
 }
 
 #writeGramBoard {
 	display: inline-block;
 	position: relative;
-	font-size: 28px;
-	color: #fff;
-	background-color: var(--main-color);
+	font-size: 34px;
+	color: #000;
+	background-color: var(--main-color-1);
 	height: 45px;
 	width: 45px;
 	border-radius: 10px;
+	top: 4px;
 }
 
 #addedHashTag {
@@ -694,22 +697,21 @@ nav .ounwangram {
 	width: auto;
 	padding: 5px 10px 5px 10px;
 	transform: scaleX(1);
-	border: 1px solid #fff;
-	border-radius: 0;
+	border: 1px solid #444;
+	border-radius: 5px;
+	margin-right: 20px;
 }
 
 #addedHashTag span:hover {
-	color: var(--main-color);
-	border: 1px solid #eee;
+	border: 1px solid var(--main-color-1);
 }
 
 #addedHashTag span button {
-	margin-left: 5px;
-	background-color: #fff;
-	border: 1px solid #eee;
-	padding: 0px 1px 1px 1px;
+	position: relative;
+	margin-left: 10px;
 	color: red;
 	cursor: pointer;
+	bottom: 4px;
 }
 
 #hashTagAlert {
@@ -760,7 +762,7 @@ nav .ounwangram {
   padding: 30px 30px;
   margin: 0 auto;
   border: 1px solid #777;
-  background-color: #fff;
+  background-color: var(--main-back);
 }
 
 #inbodyModalBody > h1 {
@@ -768,11 +770,13 @@ nav .ounwangram {
 }
 
 #inbodyModalBody > a {
-	background-color: var(--main-color);
-	color: #fff;
+	position: relative;
+	background-color: var(--main-color-1);
+	color: #000;
 	border-radius: 3px;
 	padding: 0px 5px 3px 5px;
-	margin-right: 100px;
+	margin-right: 10px;
+	bottom: 5px;
 }
 
 #followModalBody {
@@ -792,7 +796,7 @@ nav .ounwangram {
   margin: 0 auto;
   border: 1px solid #777;
   border-radius: 50px;
-  background-color: #fff;
+  background-color: var(--main-back);
   overflow-y: auto; 
 }
 

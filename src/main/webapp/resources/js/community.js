@@ -134,7 +134,7 @@ $(window).on("load", function() {
                 data: { "communityNumber" : $(this).val() },
                 success : function(res) {
                     if(res.likesCheck < 2) {
-                        img.attr("src", "./images/ounwan_like_" + res.likesCheck + ".png");
+                        img.attr("src", "../images/ounwan_like_" + res.likesCheck + ".png");
                         span.html(res.likes);
                     } else {
                         alert("좋아요를 실패하였습니다.");
@@ -153,7 +153,7 @@ $(window).on("load", function() {
         });
 
         $("#ounwangramBoard").on("click", "#updateGramBoard", function() {
-            location.href= gramPath + "updateGramBoard?communityNumber=" + $(this).val();
+            location.href= gramPath + "/updateGramBoard?communityNumber=" + $(this).val();
         })
 
         $("#ounwangramBoard").on("click", "#deleteGramBoard", function() {
@@ -296,6 +296,7 @@ $(window).on("load", function() {
         $("#uploadImageInput").on("change", function() {
             var imgTag = $("#ounwanUploadImage");
             if(fileTag.files.length > 0) {
+            	$("#ounwanUploadImage").attr('hidden', false);
                 var reader = new FileReader();
                 formData = new FormData();
                 formData.append('image', $("input[name='uploadImageInput']")[0].files[0]);
@@ -446,7 +447,7 @@ $(window).on("load", function() {
         });
 
  		$("#boardDetail").on("click", "#updateGramBoard", function() {
-            location.href = gramPath + "updateGramBoard?communityNumber=" + $(this).val();
+            location.href = gramPath + "/updateGramBoard?communityNumber=" + $(this).val();
         });
 
         $("#boardDetail").on("click", "#deleteGramBoard", function() {

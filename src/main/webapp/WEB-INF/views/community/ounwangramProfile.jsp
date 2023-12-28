@@ -28,11 +28,11 @@
 	            <div id="myProfileImage"><img src="${userProfileInfo.PROFILE_URL}"></div>
 	            <div id="myProfileUserId">${userProfileInfo.CLIENT_ID}</div>
 	            <div id="myProfileOption">
-	            	<c:if test="${userProfileInfo.CLIENT_ID eq clientInfo.clientId}">
+	            	<c:if test="${userProfileInfo.CLIENT_ID eq userInfo.clientId}">
 	            		<button id="myInbodyButton">인바디</button>
 	                	<a id="myProfileWrite" href="writeGramBoard">+</a>
 	            	</c:if>
-	            	<c:if test="${userProfileInfo.CLIENT_ID ne clientInfo.clientId}">
+	            	<c:if test="${userProfileInfo.CLIENT_ID ne userInfo.clientId}">
 	            		<button id="followButton">
 		            		<c:if test="${userProfileInfo.check}">
 		            			following ✔
@@ -65,8 +65,8 @@
     <div id="modalWrap">
 	  <div id="inbodyModal">
 	    <div id="inbodyModalBody">
-	      <a href="/ounwan/inbodyInsert">+</a>
-	      <h1>${clientInfo.name}님의 인바디입니다.</h1>
+	      <a href="${appPath}/community/inbodyInsert">+</a>
+	      <h1>${userInfo.name}님의 인바디입니다.</h1>
 	      <span id="closeBtn">&times;</span>
 	      <div id="inbodyGraph"></div>
 	    </div>

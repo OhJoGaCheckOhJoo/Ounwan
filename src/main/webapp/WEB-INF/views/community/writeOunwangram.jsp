@@ -25,7 +25,7 @@
                 <div id="darkBorder"></div>
                 <label for="uploadImageInput">+</label>
                 <input type="file" name="uploadImageInput" id="uploadImageInput" accept="image/*">
-                <img id="ounwanUploadImage" src="./images/white.jpg">
+                <img id="ounwanUploadImage" hidden>
             </form>
 
             <div class="writeGramContents">
