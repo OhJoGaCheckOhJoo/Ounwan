@@ -34,7 +34,7 @@
 					<textarea id="inputContent" placeholder=""></textarea>
 				</div>
 				<div class="">
-					<button type="button" id="PostingBtn">등록</button>
+					<button type="button" id="PostingBtn" onclick="validateForm()">등록</button>
 				</div>
 			</div>
 	</div>
@@ -42,6 +42,11 @@
 	<script src="../js/aeta.js"></script>
 	<script>
 		var appPath = "${appPath}";
+		document.addEventListener("DOMContentLoaded", function () {
+	        document.getElementById("PostingBtn").addEventListener("click", function () {
+	            validateForm();
+	        });
+	    });
 	</script>
 </body>
 </html>

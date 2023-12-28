@@ -7,14 +7,25 @@
 	<!-- <select id="AetaList" resultType="aeta"> select * from AETA 
 		order by BOARD_NUMBER DESC </select> -->
 	<select id="AetaList" parameterType="map" resultType="aeta">
-		select *
+		select
+		AETA_NUMBER ,
+		CLIENT_ID ,
+		TITLE ,	
+		TO_CHAR(CREATED_DATE, 'YYYY-MM-DD') AS createdDate,
+		VIEWS 
 		from AETA
 		order by AETA_NUMBER DESC
 		limit #{start},#{limit}
 	</select>
 
 	<select id="AetaSearchAll" parameterType="map" resultType="aeta">
-		select * from AETA
+		select 
+		AETA_NUMBER ,
+		CLIENT_ID ,
+		TITLE ,	
+		TO_CHAR(CREATED_DATE, 'YYYY-MM-DD') AS createdDate,
+		VIEWS
+		from AETA
 		where
 		title like
 		CONCAT('%',#{inputValue},'%')
@@ -28,7 +39,13 @@
 
 	<select id="AetaSearchTitle" parameterType="map"
 		resultType="aeta">
-		select * from AETA
+		select 
+		AETA_NUMBER ,
+		CLIENT_ID ,
+		TITLE ,	
+		TO_CHAR(CREATED_DATE, 'YYYY-MM-DD') AS createdDate,
+		VIEWS
+		from AETA
 		where
 		TITLE like CONCAT('%',#{inputValue},'%')
 		order by AETA_NUMBER DESC
@@ -37,7 +54,12 @@
 	</select>
 	<select id="AetaSearchId" parameterType="map" resultType="aeta">
 		select
-		* from AETA
+		AETA_NUMBER ,
+		CLIENT_ID ,
+		TITLE ,	
+		TO_CHAR(CREATED_DATE, 'YYYY-MM-DD') AS createdDate,
+		VIEWS
+		from AETA
 		where
 		CLIENT_ID like CONCAT('%',#{inputValue},'%')
 		order by AETA_NUMBER DESC
@@ -349,7 +371,7 @@
 
 		SELECT a.AETA_NUMBER, a.CLIENT_ID,
 		a.TITLE, a.CONTENTS as AETA_CONTENTS,
-		a.CREATED_DATE as AETA_CREATED_DATE,
+		TO_CHAR(a.CREATED_DATE, 'YYYY-MM-DD') AS AETA_CREATED_DATE, 
 		a.UPDATED_DATE as AETA_UPDATED_DATE,
 		a.VIEWS,
 		COUNT(al.LIKE_NUMBER) as AETA_LIKES,
@@ -357,7 +379,7 @@
 		ac.COMMENT_NUMBER,
 		ac.CLIENT_ID as COMMENTS_WRITER,
 		ac.AETA_NUMBER,
-		ac.CREATED_DATE as COM_CREATED,
+		TO_CHAR(ac.CREATED_DATE, 'YYYY-MM-DD HH24:MI') AS COM_CREATED,
 		ac.CONTENTS as AETA_COMMENT,
 		COUNT(ac.CONTENTS) as COUNT_COMMENTS,
 		SUM(COUNT(ac.COMMENT_NUMBER)) OVER (PARTITION BY a.AETA_NUMBER) AS AETA_TOTAL_COMMENTS,
@@ -370,8 +392,7 @@
 		left outer join AETA_IMAGES ai
 		on a.AETA_NUMBER =ai.AETA_NUMBER
 		left outer join COMMENTS ac
-		on
-		ac.AETA_NUMBER =a.AETA_NUMBER
+		on ac.AETA_NUMBER =a.AETA_NUMBER
 		LEFT OUTER JOIN CLIENTS c_writer
 		on c_writer.CLIENT_ID =a.CLIENT_ID
 		Left OUTER JOIN CLIENTS c_commenter

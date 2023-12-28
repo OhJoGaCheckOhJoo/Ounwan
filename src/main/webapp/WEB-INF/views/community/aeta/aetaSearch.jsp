@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
 <div id="aetaboardList">
@@ -18,9 +19,9 @@
 			<c:forEach var="aeta" items="${aetaList}">
 				<tr class="content" onclick="location.href='${appPath}/community/aetaPost?aetaNumber=${aeta.aetaNumber}'">
 					<td class="num">${aeta.aetaNumber}</td>
-					<td class="title">${aeta.title}</td>
+					<td class="title">${aeta.title} <span>[ </span> <span>] </span></td>
 					<td class="writer">${aeta.clientId}</td>
-					<td class="date">${aeta.createdDate}</td>
+					<td class="date"><fmt:formatDate value="${aeta.createdDate}" pattern="yyyy-MM-dd" /></td>
 					<td class="count">${aeta.views}</td>
 				</tr>
 			</c:forEach>

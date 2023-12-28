@@ -78,6 +78,8 @@
 					<div>
 						<input type="hidden" class="commentId"
 							value="${aeta.COMMENT_NUMBER}">
+						<span>
+							<img class="aeta-photo" src="${appPath}/${aeta.COMMENTER_PHOTO}"/></span>
 						<span>댓글작성자: ${aeta.COMMENTER_ID}</span>
 						<span>${aeta.AETA_CREATED_DATE }</span> 
 						<span id=""> 

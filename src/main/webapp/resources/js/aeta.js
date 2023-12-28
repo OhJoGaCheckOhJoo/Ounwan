@@ -95,48 +95,56 @@ $("#inputImg").on("change",function(){
 	console.log(input);
 });
 */
+
+
  
 /*등록 데이터 전송 */
 $('#PostingBtn').on('click',function(){
 	
 	var title=$('#inputTitle').val();
 	var content=$('#inputContent').val();
-	
-	var images=$('#inputImg')[0].files;
-	var imagesLength=$('#inputImg')[0].files.length;
-	console.log("이미지"+images);
-	console.log("이미지갯수"+imagesLength);
-	
-	var formData= new FormData();
+
+	if (title.trim() === "" || content.trim() === "") {
+		/*제목 또는 내용 입력 안하면 데이터 못 넘기게 해주기 */
+        alert("제목과 내용을 입력해주세요.");
+    } else {
+                // 폼이 유효하면 제출하거나 추가 작업을 수행하세요.
+		var images=$('#inputImg')[0].files;
+		var imagesLength=$('#inputImg')[0].files.length;
+		console.log("이미지"+images);
+		console.log("이미지갯수"+imagesLength);
 		
-	if(imagesLength===0){
-		formData.append('imagesLength',0);
-		formData.append('images',null);
-	}else{
-		formData.append('imagesLength',imagesLength);
-		for(var i=0; i<imagesLength; i++){
-			formData.append('images',images[i]);
-		}
-	}
-	formData.append('title',title);
-	formData.append('contents',content);
-	
-	
-	$.ajax({
-	type : "POST",
-	url : appPath+"/community/aetaPosting",
-	data : formData,
-	processData: false,
-	contentType : false,
-	success : function(response) {
-		if(response=="success"){
-			alert("게시물등록완료");
-			location.href=appPath+"/community/aetaBoard";
+		var formData= new FormData();
+			
+		if(imagesLength===0){
+			formData.append('imagesLength',0);
+			formData.append('images',null);
 		}else{
-			alert("failed");
+			formData.append('imagesLength',imagesLength);
+			for(var i=0; i<imagesLength; i++){
+				formData.append('images',images[i]);
+			}
 		}
+		formData.append('title',title);
+		formData.append('contents',content);
+		
+		
+		$.ajax({
+		type : "POST",
+		url : appPath+"/community/aetaPosting",
+		data : formData,
+		processData: false,
+		contentType : false,
+		success : function(response) {
+			if(response=="success"){
+				alert("게시물등록완료");
+				location.href=appPath+"/community/aetaBoard";
+			}else{
+				alert("failed");
+			}
+		}
+		});
 	}
-	})
 });
 
 
@@ -302,7 +310,7 @@ function submitReport() {
   }
 
   // '신고하기' 버튼에 이벤트 리스너 추가
-  document.getElementById('reportSubmit').addEventListener('click', submitReport);
+  //document.getElementById('reportSubmit').addEventListener('click', submitReport);
 
 
 /*	
