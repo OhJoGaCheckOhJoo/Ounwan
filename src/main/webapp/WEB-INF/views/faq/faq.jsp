@@ -77,12 +77,14 @@
         });
         
         $('.faq-category button').on("click", function() {
+        	$('.faq-category button').attr('disabled', true);
         	$('.faq-category button').eq(faqCategory).removeClass('faqSelected');
         	$(this).addClass('faqSelected');
         	faqCategory = $(this).val();
         	faqOffset = 0;
         	faqAjax();
         	faqPages();
+        	$('.faq-category button').attr('disabled', false);
         });
         
         $('.faq-page').on("click", '.faq-page-btn', function() {

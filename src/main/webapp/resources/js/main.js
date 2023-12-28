@@ -1,38 +1,4 @@
-// 더미 데이터
-
 var array_banner = ["./images/v616_37.png", "./images/v616_38.png", "./images/v616_39.png", "./images/v616_40.png"];
-
-var popular1 = {
-    "name" : "닭가슴살 100g",
-    "price" : 1900,
-    "img" : "./images/v606_26.png"
-}
-
-var popular2 = {
-    "name" : "나이키 츄리닝 팬츠",
-    "price" : 63000,
-    "img" : "./images/v606_27.png"
-}
-
-var popular3 = {
-    "name" : "단백질 쉐이크 초코맛 2kg",
-    "price" : 68000,
-    "img" : "./images/v606_28.png"
-}
-
-var popular4 = {
-    "name" : "리스펙짐 헬스 이용권 (1개월)",
-    "price" : 55000,
-    "img" : "./images/v606_29.png"
-}
-
-var popular5 = {
-    "name" : "접이식 런닝머신",
-    "price" : 319900,
-    "img" : "./images/v606_30.png"
-}
-
-var array_popular = [popular1, popular2, popular3, popular4, popular5];
 
 var secondhand1 = {
     "name" : "이고진 마에스트로 런닝머신",
@@ -60,8 +26,6 @@ var secondhand5 = {
 }
 
 var array_secondhand = [secondhand1, secondhand2, secondhand3, secondhand4, secondhand5];
-
-// -----------
 
 var host = window.location.host + '/';
 var appPath = '/myapp';
@@ -140,16 +104,10 @@ $(function() {
         };
         $.ajax({
             url : appPath + '/clients/findId',
-            type : 'GET',
             data : obj,
-            contentType : "text/plain;charset=utf-8",
-            dataType : "text",
             success : function(res) {
-            	if(res != "") {
-            		var openWindow = window.open(appPath + "/findId?" + res,'','width=700px,height=500px,location=no,status=no');
-            	} else {
-            		alert("일치하는 회원 정보가 없습니다.");
-            	}	
+            	$("#findIdModalBody").html(res);
+            	$("#findIdModalWrap").css("display", "block");
             },
             error : function(request,status,error) {
             	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -271,4 +229,8 @@ burger.each(function(index){
 $(".faq-delivery").on("click", function() {
 	faqCategory = 1;
 	location.href = "/myapp/faq";
+});
+
+$('#findIdModalBody').on('click', '#findIdClose', function() {
+	$('#findIdModalWrap').css('display', 'none');
 });

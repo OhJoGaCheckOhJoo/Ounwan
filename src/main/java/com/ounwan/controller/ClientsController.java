@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -74,10 +75,10 @@ public class ClientsController {
     }
 
 
-	@SuppressWarnings("static-access")
-	@GetMapping(value = "/findId", consumes = "text/plain;charset=UTF-8", produces = "application/json")
-	public String findId(@RequestParam("name") String name, @RequestParam("email") String email) {
-		return clientService.findClientId(new ClientsDTO().builder().name(name).email(email).build());
+	@GetMapping("/findId")
+	public String findId(@RequestParam String name, @RequestParam String email, Model model) {
+		model.addAttribute("userInfo", clientService.findClientId(ClientsDTO.builder().name(name).email(email).build()));
+		return "findId";
 	}
 	
 	@SuppressWarnings("static-access")
