@@ -55,7 +55,6 @@ public class CommunityService {
 		data.put("clientId", clientId);
 		OunwanGramDTO ounwangram = changeOunwanGram(communityDAO.selectOunwangramBoardDetail(data));
 		ounwangram.setHashTags(communityDAO.hashTagsByNumber(ounwangram.getCommunityNumber()));
-		System.out.println(ounwangram.toString());
 		return ounwangram;
 	}
 

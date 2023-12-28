@@ -54,7 +54,7 @@ nav {
     transform: scaleY(0);
     transform-origin: top;
     transition: transform 0.25s ease;
-    top: 10px;
+    top: 5px;
   }
   
   .nav-submenu a {
