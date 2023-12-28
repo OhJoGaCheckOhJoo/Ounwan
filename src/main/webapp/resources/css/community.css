@@ -8,81 +8,6 @@ footer {
 nav .ounwangram {
 	padding-top: 0px !important;
 }
-#aetaboardList {
-	margin: auto;
-	height: 350px;
-}
-tr {
-	height: 30px;
-	vertical-align: top;
-}
-tbody tr {
-	cursor: pointer;
-}
-tbody tr:hover {
-	background-color: #444;
-}
-tr th {
-	width: 280px;
-}
-tr td {
-	text-align: center;
-}
-.search {
-	text-align: center;
-	padding: 30px;
-}
-.search select, .search input {
-	background-color: var(--main-back);
-}
-.search form {
-	display: inline-block;
-	width: 500px;
-}
-.num, .count {
-	width: 60px;
-}
-.title {
-	padding-left: 20px;
-	width: 400px;
-	text-align: left;
-}
-.aeta-title > button {
-	position: relative;
-	border: 1px solid #fff;
-	padding: 10px 20px 10px 20px;
-	border-radius: 5px;
-	cursor: pointer;
-	bottom: 50px;
-	left: 1050px;
-}
-.aeta-title > button:hover {
-	background-color: #222;
-}
-.aeta-title {
-	width: 1150px;
-	height: 60px;
-	border-bottom: 1px solid #666;
-	margin: 0px auto 10px auto;
-	padding: 30px 50px 10px 50px;
-}
-.aeta-title strong {
-	font-size: 32px;
-}
-.aeta-title p {
-	color: #666;
-}
-.aeta-pagination {
-	text-align: center;
-	margin: 10px auto 10px auto;
-	width: 1150px;
-	padding: 10px;
-	border-top: 1px solid #999;
-	border-bottom: 1px solid #999;
-}
-.aeta-pagination span {
-	cursor: pointer;
-}
 .ounwangram {
 	padding-top: 30px;
 }
@@ -951,31 +876,4 @@ tr td {
 }
 .selectedFollow {
 	border-bottom: 1px solid var(--main-color);
-}
-.selected {
-	font-weight: bold;
-	text-decoration: underline;
-}
-.search #inputValue {
-	width: 410px;
-	padding: 5px 10px 5px 10px;
-}
-.search #inputValue:focus {
-	border-bottom: 1px solid var(--main-color-2);
-}
-.search #searchBtn {
-	width: 50px;
-	border: 1px solid var(--main-color-1);
-	border-radius: 5px;
-	padding: 5px 10px 5px 10px;
-	cursor: pointer;
-}
-.search select {
-	padding: 5px 0px 5px 0px;
-}
-#aetaPost {
-	text-align: center;
-	padding: 30px;
-	border-bottom: 1px solid #fff;
-	margin-bottom: 30px;
 }

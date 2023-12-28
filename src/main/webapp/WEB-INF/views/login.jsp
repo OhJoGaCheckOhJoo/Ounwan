@@ -91,6 +91,23 @@
             <div class="find-guide">* 회원가입 시 사용하신 이메일 주소를 통해 아이디/비밀번호를 찾으실 수 있습니다.</div>
         </div>
     </div>
+    
+    <div id="findIdModalWrap">
+	  <div id="findIdModal">
+	    <div id="findIdModalBody">
+		
+	    </div>
+	  </div>
+	</div>
+	
+	<div id="findPWModalWrap">
+	  <div id="findPWModal">
+	    <div id="findPWModalBody">
+		
+	    </div>
+	  </div>
+	</div>
+    
     <script src="${appPath}/js/main.js"></script>
     <script>
     $(function(){

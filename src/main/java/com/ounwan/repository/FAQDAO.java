@@ -20,8 +20,8 @@ public class FAQDAO {
 		return sqlSession.selectList(NAMESPACE + "getFAQList", data);
 	}
 	
-	public int countFAQList(int category) {
-		return sqlSession.selectOne(NAMESPACE + "countFAQList", category);
+	public int countFAQList(Map<String, Object> data) {
+		return sqlSession.selectOne(NAMESPACE + "countFAQList", data);
 	}
 
 }

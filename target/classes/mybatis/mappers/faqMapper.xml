@@ -5,17 +5,17 @@
 <mapper namespace="net.ounwan.faq">
 
 	<select id="getFAQList" parameterType="map" resultType="faq">
-		SELECT * FROM FAQ 
+		SELECT * FROM FAQ WHERE QUESTION LIKE CONCAT('%', #{keyword}, '%')
 		<if test="category > 0">
-			WHERE CATEGORY = #{category} 
+			AND CATEGORY = #{category} 
 		</if>
 		LIMIT 10 OFFSET #{offset}
 	</select>
 	
-	<select id="countFAQList" parameterType="int" resultType="int">
-		SELECT COUNT(*) FROM FAQ
+	<select id="countFAQList" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM FAQ WHERE QUESTION LIKE CONCAT('%', #{keyword}, '%')
 		<if test="category > 0">
-			WHERE CATEGORY = #{category} 
+			AND CATEGORY = #{category} 
 		</if>
 	</select>
 	

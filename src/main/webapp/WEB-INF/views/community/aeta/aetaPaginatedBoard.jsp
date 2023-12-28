@@ -12,7 +12,6 @@
 <link href="${appPath}/css/main2.css" rel="stylesheet">
 <link href="${appPath}/css/header.css" rel="stylesheet">
 <link href="${appPath}/css/nav.css" rel="stylesheet">
-<link href="${appPath}/css/community.css" rel="stylesheet" />
 <link href="${appPath}/css/aeta.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

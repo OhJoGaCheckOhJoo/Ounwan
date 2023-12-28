@@ -102,12 +102,12 @@ public class ClientsService {
 		return (client != null) ? changeDTO(client) : null;
 	}
 	
-	public String findClientId(ClientsDTO clientDTO) {
+	public ClientsDTO findClientId(ClientsDTO clientDTO) {
 		Clients client = clientsDAO.findClientId(changeEntity(clientDTO));
 		if(client == null) {
 			return null;
 		} else {
-			return client.getClientId();
+			return changeDTO(client);
 		}
 	}
 	

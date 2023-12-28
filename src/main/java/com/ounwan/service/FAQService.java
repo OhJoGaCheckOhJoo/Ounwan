@@ -20,14 +20,18 @@ public class FAQService {
 	
 	final static String[] CATEGORY = {"배송", "중고", "커뮤니티"};
 	
-	public int countFAQList(int category) {
-		int numOfFaq = faqDAO.countFAQList(category);
+	public int countFAQList(String keyword, int category) {
+		Map<String, Object> data = new HashMap<>();
+		data.put("keyword", keyword);
+		data.put("category", category);
+		int numOfFaq = faqDAO.countFAQList(data);
 		return numOfFaq / 10 + (numOfFaq % 10 > 0 ? 1 : 0);
 	}
 	
-	public List<FAQDTO> getFAQList(int category, int offset) {
+	public List<FAQDTO> getFAQList(String keyword, int category, int offset) {
 		Map<String, Object> data = new HashMap<>();
 		List<FAQDTO> result = new ArrayList<>();
+		data.put("keyword", keyword);
 		data.put("category", category);
 		data.put("offset", offset);
 		for(FAQ faq : faqDAO.getFAQList(data)) {
@@ -44,4 +48,5 @@ public class FAQService {
 				.category(CATEGORY[faq.getCategory() - 1])
 				.build();
 	}
+
 }
