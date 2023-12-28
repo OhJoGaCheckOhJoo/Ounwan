@@ -1,41 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="appPath" scope="application"
-	value="${pageContext.request.contextPath}" />
-<link href="${appPath}/css/myPageChat.css" rel="stylesheet">
-<style>
-.chat-info-container {
-	width: 550px;
-	padding-top: 60px;
-}
-</style>
-
-<div class="chat-wrap">
-	<div class="chat-header">
-		<div class="chat-title">
-			<h3>채팅방</h3>
-		</div>
-		<div class="product-bar">
-			<div>
-				<c:forEach var="images" items="${post.productImagesList}">
-					<c:if test="${images.type eq 0}">
-						<img class="main-img" src="${images.url}" />
-					</c:if>
-				</c:forEach>
-			</div>
-			<div class="product-info">
-				<div>${post.tradeStep}</div>
-				<div>${post.productName}</div>
-				<div>${post.price}</div>
-			</div>
-		</div>
-		<hr>
-	</div>
-
-	<div id="chat" class="chat"></div>
-	<!-- 채팅저장출력 -->
-	<script id="temp" type="text/x-handlebars-template">
+<link rel="stylesheet" href="${appPath}/css/bixSiri/adminChat.css" />
+<div class="chatting-user">채팅방</div>
+<div class="chatting">
+	<div id="chat" class="chat">
+		<!-- 채팅저장출력 -->
+		<script id="temp" type="text/x-handlebars-template">
 		{{#each .}}
        <div class="{{printLeftRight sender}}">
           <div class="sender">{{sender}}</div>
@@ -46,8 +16,8 @@
        </div>
 		{{/each}}
        </script>
-	<!-- 새로운채팅출력 -->
-	<script id="temp1" type="text/x-handlebars-template">
+		<!-- 새로운채팅출력 -->
+		<script id="temp1" type="text/x-handlebars-template">
        <div class="{{printLeftRight sender}}">
           <div class="sender">{{sender}}</div>
           <div class="message">{{message}}
@@ -56,23 +26,24 @@
           <div class="date">{{date}}</div>
        </div>
        </script>
-	<script>
-		var clientId = "${userInfo.clientId}";
-		Handlebars.registerHelper("printLeftRight", function(sender) {
-			if (clientId != sender) {
-				return "left";
-			} else {
-				return "right";
-			}
-		});
-		Handlebars.registerHelper("printNone", function(sender) {
-			if (clientId != sender)
-				return "none";
-		});
-	</script>
-	<div class="message-input">
-		<textarea id="txtMessage" class="txtMessage" cols="30" rows="10"
-			placeholder="메세지를 입력한 후에 엔터키를 누르세요."></textarea>
+		<script>
+			var clientId = "${userInfo.clientId}";
+			Handlebars.registerHelper("printLeftRight", function(sender) {
+				if (clientId != sender) {
+					return "left";
+				} else {
+					return "right";
+				}
+			});
+			Handlebars.registerHelper("printNone", function(sender) {
+				if (clientId != sender)
+					return "none";
+			});
+		</script>
+		<div class="message-input">
+			<textarea id="txtMessage" class="txtMessage" cols="30" rows="10"
+				placeholder="메세지를 입력한 후에 엔터키를 누르세요."></textarea>
+		</div>
 	</div>
 </div>
 
@@ -80,15 +51,16 @@
 <script>
 	getList();
 	var clientId = "${userInfo.clientId}";
-	var sock = new SockJS("http://localhost:9090/myapp/danggunEcho");
+	var sock = new SockJS("http://localhost:9090/myapp/echo");
 	sock.onmessage = onMessage;
 	function getList() {
 		var roomId = "${roomId}";
 		$.ajax({
 			type : 'get',
-			url : '${appPath}/myPage/danggun/chat/list',
+			url : '${appPath}/admin/chat/list',
 			data : {
-				roomId : roomId
+				roomId : roomId,
+				clientId : clientId
 			},
 			success : function(responseData) {
 				var temp = Handlebars.compile($("#temp").html());
@@ -104,7 +76,7 @@
 			return;
 		$.ajax({
 			type : "post",
-			url : "${appPath}/myPage/danggun/chat/delete",
+			url : "${appPath}/admin/chat/delete",
 			data : {
 				"sender" : clientId,
 				"messageId" : messageId
@@ -131,7 +103,7 @@
 
 			$.ajax({
 				type : 'post',
-				url : '${appPath}/myPage/danggun/chat/insertMessage',
+				url : '${appPath}/admin/chat/insertMessage',
 				data : {
 					"roomId" : roomId,
 					"sender" : clientId,

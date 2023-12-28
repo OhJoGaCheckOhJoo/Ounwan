@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.ounwan.adminChat">
+	<select id="getSomsomiRoomList" resultType="somsomiChatRoom">
+		WITH RankedRows AS (
+		SELECT
+		SCR.ROOM_ID,
+		SCR.ADMIN_ID,
+		SCR.CLIENT_ID,
+		SCR.RESOLVED_STATUS,
+		SCM.REGDATE,
+		ROW_NUMBER() OVER (PARTITION BY SCR.ROOM_ID
+		ORDER BY SCM.REGDATE DESC) AS RowRank
+		FROM
+		SOMSOMI_CHAT_ROOM SCR
+		JOIN
+		SOMSOMI_CHAT_MESSAGE SCM ON SCR.ROOM_ID = SCM.ROOM_ID
+		)
+		SELECT ROOM_ID, ADMIN_ID, CLIENT_ID, RESOLVED_STATUS, REGDATE
+		FROM
+		RankedRows
+		WHERE RowRank = 1
+		ORDER BY REGDATE DESC, RESOLVED_STATUS DESC
+	</select>	
+
+
+</mapper>

@@ -1,8 +1,10 @@
 package com.ounwan.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,8 +21,10 @@ public class MyPageChatRestController {
 	MyPageChatService myPageChatService;
 	
 	@RequestMapping("/danggun/chat/list")
-	public List<DanggunChatMessageDTO> selectDanggunChatList(@RequestParam(name = "roomId") String roomId) {
+	public List<DanggunChatMessageDTO> selectDanggunChatList(@RequestParam(name = "roomId") String roomId, Model model) {
 		List<DanggunChatMessageDTO> result = myPageChatService.selectDanggunChatList(roomId);
+		
+		
 		return result;
 	}
 

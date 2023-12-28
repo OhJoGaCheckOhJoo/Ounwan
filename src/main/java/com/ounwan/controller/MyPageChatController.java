@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ounwan.dto.ClientsDTO;
+import com.ounwan.dto.DanggunDTO;
 import com.ounwan.service.MyPageChatService;
 
 @RequestMapping("/myPage")
@@ -30,6 +31,8 @@ public class MyPageChatController {
 	@GetMapping(value = "/getChatRoom")
 	public String getChatRoom(Model model,@RequestParam("roomId") String roomId) {
 		model.addAttribute("roomId", roomId);
+		DanggunDTO danggun = myPageChatService.selectDanggun(roomId);
+		model.addAttribute("post", danggun);
 		return "/myPage/chatRoom";
 	}
 	

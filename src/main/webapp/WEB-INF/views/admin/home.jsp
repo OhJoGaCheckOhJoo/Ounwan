@@ -60,7 +60,7 @@
                 <li>
                     <a href="#">고객센터</a>
                     <ul class="submenu">
-                        <li><a href="#">문의 채팅</a></li>
+                        <li><a id="ounwanChat" href="#">문의 채팅</a></li>
                         <li><a href="#">FAQ</a></li>
                     </ul>
                 </li>
@@ -131,7 +131,7 @@
 
                     </div>
                     <form>
-                        <textarea disabled>가나다라마바사아자차카타파하</textarea>
+                        <textarea>가나다라마바사아자차카타파하</textarea>
                         <button disabled type="button">보내기</button>
                     </form>
                 </div>
@@ -169,6 +169,16 @@
         	$.ajax({
         		url: "${appPath}/admin/coupung/insert.do",
        			success: function(res) {
+       				$(".admin-wrap").html(res);
+       			}
+        	});
+        });
+        
+        $("#ounwanChat").on("click", function() {
+        	$.ajax({
+        		url: "${appPath}/admin/clients/chat.do",
+       			success: function(res) {
+       				console.log("도착");
        				$(".admin-wrap").html(res);
        			}
         	});
