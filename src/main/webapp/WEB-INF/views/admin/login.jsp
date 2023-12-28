@@ -94,7 +94,7 @@
                     <input type="password" id="adminPass" placeholder="비밀번호를 입력해주세요.">
                 </div>
                 <div class="button">
-                    <button id="loginBtn">로그인</button>
+                    <button id="loginBtn" type="button">로그인</button>
                 </div>
         	</form>
         </div>
