@@ -36,10 +36,12 @@
 							</div>
 						</td>
 						<td>
+							<a href="${appPath}/coupung/product/detail?coupungId=${list.COUPUNG_NUMBER}">
 							<div class="review-list-info">
 								<div>${list.COUPUNG_NAME}</div>
 								<div>[옵션] ${list.COUPUNG_OPTION_NAME}</div>
 							</div>
+							</a>
 						</td>
 						<td>
 							<div class="review-list-content">

@@ -18,6 +18,13 @@
     <title>Document</title>
 </head>
 <body>
+<script>
+	$(function() {
+		if (!${detail.availableCheck}) {
+			location.href="${appPath}/unsellableProduct";
+		}
+	});
+</script>
 	<%@ include file="../common/header.jsp" %>
     <div class="container">
         <%@ include file="../common/nav.jsp" %>

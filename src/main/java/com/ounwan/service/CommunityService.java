@@ -1,11 +1,8 @@
 package com.ounwan.service;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.io.IOException;
-import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,18 +13,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.ounwan.dto.AetaCommentsDTO;
 import com.ounwan.dto.AetaDTO;
 import com.ounwan.dto.AetaImagesDTO;
 import com.ounwan.dto.AetaLikesDTO;
 import com.ounwan.dto.ClientsDTO;
+import com.ounwan.dto.InbodyDTO;
+import com.ounwan.dto.OunwanGramDTO;
 import com.ounwan.dto.PaginatingDTO;
 import com.ounwan.entity.Aeta;
 import com.ounwan.entity.AetaImages;
 import com.ounwan.entity.AetaLikes;
 import com.ounwan.entity.Comments;
-import com.ounwan.dto.InbodyDTO;
-import com.ounwan.dto.OunwanGramDTO;
 import com.ounwan.entity.Inbody;
 import com.ounwan.entity.OunwanGram;
 import com.ounwan.entity.OunwanGramLikes;
@@ -38,7 +37,12 @@ public class CommunityService {
 
 	@Autowired
 	CommunityDAO communityDAO;
+	
+	@Autowired
+	AmazonS3 amazonS3;
 
+	
+	private static final String BUCKET = "ounwan";
 	// 이미지 저장 경로 지정
 	private final static String UPLOADPATH = "C:/shinhan/sts-workspace/ounwan/src/main/webapp/resources";
 	private final static String IMAGEPATH = "/images/uploads/";
@@ -263,11 +267,22 @@ public class CommunityService {
 	public String gramWriteBoard(String clientId, MultipartFile image, String content, String[] hashTag)
 			throws IllegalStateException, IOException {
 		String newFileName = clientId + "_" + System.currentTimeMillis() + "." + image.getContentType().split("/")[1]; // image/jpg
-		File file = new File(UPLOADPATH + IMAGEPATH + newFileName);
-		OunwanGram board = OunwanGram.builder().clientId(clientId).contents(content.length() > 0 ? content : null)
-				.imageUrl("." + IMAGEPATH + newFileName).build();
+		
+		ObjectMetadata metadata = new ObjectMetadata();
+		metadata.setContentLength(image.getSize());
+		metadata.setContentType(image.getContentType());
+		
+		amazonS3.putObject(BUCKET, newFileName, image.getInputStream(), metadata);
+		
+		String imageUrl = amazonS3.getUrl(BUCKET, newFileName).toString();
+		
+		OunwanGram board = OunwanGram.builder()
+										.clientId(clientId)
+										.contents(content.length() > 0 ? content : null)
+										.imageUrl(imageUrl)
+										.build();
+		
 		if (communityDAO.writeGramBoard(board) > 0) {
-			image.transferTo(file);
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("communityNumber", board.getCommunityNumber());
 			for (String name : hashTag) {
@@ -313,20 +328,23 @@ public class CommunityService {
 		// 이미지 수정
 		if (image != null) {
 			File removeFile = new File(UPLOADPATH + ounwanBoard.getImageUrl().substring(1));
-			if (removeFile.delete()) {
-				String newFileName = clientId + "_" + System.currentTimeMillis() + "."
-						+ image.getContentType().split("/")[1]; // image/jpg
-				File file = new File(UPLOADPATH + IMAGEPATH + newFileName);
-				ounwanBoard.setImageUrl("." + IMAGEPATH + newFileName);
-				image.transferTo(file);
-			} else {
-				return "fail";
-			}
+			amazonS3.deleteObject(BUCKET, ounwanBoard.getImageUrl());
+			
+			String newFileName = clientId + "_" + System.currentTimeMillis() + "." + image.getContentType().split("/")[1]; // image/jpg
+			
+			ObjectMetadata metadata = new ObjectMetadata();
+			metadata.setContentLength(image.getSize());
+			metadata.setContentType(image.getContentType());
+			
+			amazonS3.putObject(BUCKET, newFileName, image.getInputStream(), metadata);
+			
+			String imageUrl = amazonS3.getUrl(BUCKET, newFileName).toString();
+			
+			ounwanBoard.setImageUrl(imageUrl);
 		}
 
 		// 태그 업데이트
 		tagUpdate(communityNumber, hashTag);
-
 		// DB 반영
 		if (communityDAO.updateGramBoard(ounwanBoard) > 0) {
 			return "success";

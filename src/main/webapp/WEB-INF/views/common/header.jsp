@@ -18,14 +18,14 @@
 	    <c:if test="${userInfo.clientId ne null}">
 	    	<div class="float-right">
                 <a id="profileImage" href="#">
-                    <img src="${appPath}/${userInfo.profileUrl }">
+                    <img src="${userInfo.profileUrl }">
                 </a>
                 <span>${userInfo.name}님 환영합니다</span>
                 <button id="cart" onClick="location.href='${appPath}/coupung/cart'"></button>
                 <div id="cartNotice"></div>
                 <div id="userAction">
-                	<a href="#">마이페이지</a>
-                	<a href="#">로그아웃</a>
+                	<a href="${appPath }/myPage">마이페이지</a>
+                	<a href="#" id="logoutBtn">로그아웃</a>
                 </div>
             </div>
 	    </c:if>

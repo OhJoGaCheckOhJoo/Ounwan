@@ -52,7 +52,7 @@ public class CoupungService {
 	public List<CoupungDTO> getAdminProductList() {
 		List<CoupungDTO> result = new ArrayList<>();
 		
-		result = changeDTOList(coupungDAO.getProductList());
+		result = changeDTOList(coupungDAO.getAdminProductList());
 		
 		for (CoupungDTO product : result) {
 			product.setSalesRate(orderDetailService.getSalesRate(product.getCoupungNumber()));

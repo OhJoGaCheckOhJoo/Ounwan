@@ -21,78 +21,9 @@
 </head>
 
 <body>
-	<header>
-		<div class="header">
-			<a class="logo" href="/ounwan"></a>
-			<div class="float-right">
-				<a id="profileImage" href="#"> <img src="./images/google.png">
-				</a> <span>${userInfo.name} </span><span> 님 환영합니다</span>
-				<button id="cart"></button>
-				<div id="cartNotice"></div>
-			</div>
-		</div>
-		<div class="header-sub-menu">
-			<div>
-				<a href="#">마이페이지</a> <a href="#">로그아웃</a>
-			</div>
-		</div>
-	</header>
+	<%@ include file="../common/header.jsp" %>
 	<div class="container">
-		<nav>
-			<div class="nav-main">
-				<div class="pointer">
-					<a id="hamberger-btn" class="menu-trigger"> <span></span> <span></span>
-						<span></span>
-					</a>
-				</div>
-				<div>
-					<a href="#">쇼핑몰</a>
-					<div id="navSubmenu" class="nav-submenu">
-						<a href="#">전체 보기</a> <a href="#">운동 기구</a> <a href="#">건강 보조
-							식품</a> <a href="#">헬스 이용권</a> <a href="#">의류</a>
-					</div>
-				</div>
-				<div>
-					<a href="#">중고거래</a>
-					<div id="navSubmenu" class="nav-submenu">
-						<a href="#">전체 보기</a> <a href="#">관심 상품</a>
-					</div>
-				</div>
-				<div>
-					<a href="#">커뮤니티</a>
-					<div id="navSubmenu" class="nav-submenu">
-						<a class="ounwangram" href="ounwangram">오운완 커뮤니티</a> <a href="#">고민
-							게시판</a>
-					</div>
-				</div>
-				<div>
-					<a href="#">고객센터</a>
-					<div id="navSubmenu" class="nav-submenu">
-						<a href="#">상품문의</a> <a href="#">배송문의</a> <a href="#">중고거래</a> <a
-							href="#">커뮤니티</a>
-					</div>
-				</div>
-			</div>
-			<div id="navMenu" class="nav-menu">
-				<div>
-					<div>
-						<a href="#">전체 보기</a> <a href="#">운동 기구</a> <a href="#">건강 보조
-							식품</a> <a href="#">헬스 이용권</a> <a href="#">의류</a>
-					</div>
-					<div>
-						<a href="#">전체 보기</a> <a href="#">관심 상품</a>
-					</div>
-					<div>
-						<a class="ounwangram" href="ounwangram">오운완 커뮤니티</a> <a href="#">고민
-							게시판</a>
-					</div>
-					<div>
-						<a href="#">상품문의</a> <a href="#">배송문의</a> <a href="#">중고거래</a> <a
-							href="#">커뮤니티</a>
-					</div>
-				</div>
-			</div>
-		</nav>
+		<%@ include file="../common/nav.jsp" %>
 
 		<div class="mypage-container">
 			<div class="mypage-content">
@@ -151,7 +82,7 @@
 										<span>${wishListCount}</span><span> 개</span>
 									</div>
 								</div>
-							</a> <a href="#" class="preview-menu cart">
+							</a> <a href="${appPath}/coupung/cart" class="preview-menu cart">
 								<div>
 									<img class="preview-menu-image">
 									<div class="preview-menu-text">
@@ -191,7 +122,7 @@
 												<tr>
 													<td><fmt:formatDate value="${oList.ORDER_DATE}"
 															pattern="yyyy-MM-dd" /></td>
-													<td><a href="#">
+													<td><a href="${appPath}/coupung/product/detail?coupungId=${oList.COUPUNG_NUMBER}">
 															<div>
 																<img src="${oList.PRODUCT_IMAGE_URL}"
 																	style="width: 60px; height: 60px;">
@@ -233,7 +164,7 @@
 											<c:forEach var="list" items="${aetaList}" varStatus="loop">
 												<tr class="content-tr">
 													<td class="aeta-list num">${aetaList.size() - loop.index }</td>
-													<td class="aeta-list title"><a href="#">${list.title}</a>
+													<td class="aeta-list title"><a href="${appPath}/community/aetaPost?aetaNumber=${list.aetaNumber}">${list.title}</a>
 													</td>
 													<td class="aeta-list upload-date"><fmt:formatDate
 															value="${list.createdDate}" pattern="yyyy-MM-dd" /></td>
@@ -248,7 +179,7 @@
 							<div class="recent-info cart">
 								<div class="section-header">
 									<h2 class="section-title">장바구니</h2>
-									<a href=#>더보기 > </a>
+									<a href="${appPath}/coupung/cart">더보기 > </a>
 								</div>
 								<table>
 									<thead>
@@ -285,7 +216,7 @@
 														<td>품절</td>
 													</c:if>
 													<c:if test="${cList.AVAILABLE_STOCK > 10 }">
-														<td><a href="#">
+														<td><a href="${appPath}/coupung/product/detail?coupungId=${cList.COUPUNG_NUMBER}">
 																<div>
 																	<img src="${cList.URL}"
 																		style="width: 60px; height: 60px;">

@@ -21,6 +21,10 @@ public class CoupungDAO {
 		return sqlSession.selectList(NAMESPACE + "selectAll");
 	}
 
+	public List<Coupung> getAdminProductList() {
+		return sqlSession.selectList(NAMESPACE + "selectAdminAll");
+	}
+	
 	public List<Coupung> getProductListById(int categoryId) {
 		return sqlSession.selectList(NAMESPACE + "selectById", categoryId);
 	}

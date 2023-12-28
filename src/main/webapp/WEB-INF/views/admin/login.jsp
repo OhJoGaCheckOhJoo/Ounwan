@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
     <title>Admin Login</title>
     <style>
         * {
@@ -85,7 +85,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="./초록우산.jpg">
+        <img src="#">
         <div><span>Ounwan</span> LogIn</div>
         <div>
 			<form>
@@ -94,7 +94,7 @@
                     <input type="password" id="adminPass" placeholder="비밀번호를 입력해주세요.">
                 </div>
                 <div class="button">
-                    <button id="loginBtn">로그인</button>
+                    <button id="loginBtn" type="button">로그인</button>
                 </div>
         	</form>
         </div>
@@ -105,6 +105,8 @@
     				"adminId" : $('#adminId').val(),
     				"password" : $('#adminPass').val()
     		}
+    		
+    		console.log(obj);
     		$.ajax({
     			url : '${appPath}/admin/login.do',
     			type : 'post',

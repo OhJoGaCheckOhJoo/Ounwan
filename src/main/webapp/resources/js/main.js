@@ -1,5 +1,5 @@
 // 더미 데이터
-
+var appPath = '/myapp';
 var array_banner = ["./images/v616_37.png", "./images/v616_38.png", "./images/v616_39.png", "./images/v616_40.png"];
 
 var popular1 = {
@@ -272,3 +272,16 @@ $(".faq-delivery").on("click", function() {
 	faqCategory = 1;
 	location.href = "/myapp/faq";
 });
+
+$('#logoutBtn').on('click', function() {
+		$.ajax({
+			url : appPath + "/clients/logout",
+			type : "post",
+			success : function (res) {
+				if (res === 'success') {
+					alert('어서가소');
+					location.href = appPath;
+				}
+			}
+		});
+	});

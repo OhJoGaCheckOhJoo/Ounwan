@@ -1,104 +1,116 @@
-@font-face {
-    font-family: 'OAGothic-ExtraBold-main';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/OAGothic-ExtraBold.woff2') format('woff2');
-    font-weight: 800;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'OAGothic-ExtraBold-sub';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/OAGothic-ExtraBold.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
-}
-
-*{
-	font-family: 'OAGothic-ExtraBold-sub';
-}
-
 .danggun-container {
-  margin: 30px 0px 30px 0px;
+	margin: 30px 0px 30px 0px;
 }
 
-.danggun-main-banner {
-    width: 1200px;
-    height: 450px;
-    margin: auto;
-    border-top: 5px solid black;
-    border-bottom: 5px solid black;
-  }
+.search-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 90px;
+}
 
-  .search-container {
-    margin: auto;
-    margin-top: 50px;
-    width: 620px;
-  }
+.search-input {
+	width: 700px;
+	height: 30px;
+	text-align: center;
+	font-size: 20px;
+	padding: 10px 0px 10px 0px;
+	background-color: #333333;
+}
 
-  .search-input {
-    width: 500px;
-    height: 40px; 
-  }
+.search-input:focus {
+  outline: none; /* 클릭 시 브라우저 기본 아웃라인 제거 */
+  border-bottom: 1px solid var(--main-color-1); /* 클릭 시 테두리 추가 */
+}
 
-  .search-btn {
-    width: 100px;
-    height: 40px;
-  }
 
-  .register-container {
-    height: 40px;
-    padding: 20px 0px;
-    position: relative;
-  }
+.search-button {
+	width: 80px;
+	height: 40px;
+	cursor: pointer;
+	position: relative;
+	top: 5px;
+	background-color: rgba(0, 0, 0, 0.2);
+	font-size: 20px;
+	border-radius: 10px;
+	margin-left: 10px;
+}
 
- .register-btn { 
-    width: 100px;
-    height: 40px;
-    position: absolute;
-    right: 20px;
-  }
+.search-button:hover {
+	border: 1px solid var(--main-color-2);
+}
 
-  .danggun-main-banner > img {
-    width: 1100px;
-    height: 350px;
-    margin: 50px;
-  }
+.register-container {
+	height: 40px;
+	padding: 20px 0px;
+	position: relative;
+}
 
-  .danggun-line {
-    width: 1260px;
-    margin: auto;
-  }
+.register-button {
+	font-size: 20px;
+	width: 100px;
+	height: 40px;
+	position: absolute;
+	right: 20px;
+	cursor: pointer;
+}
 
-  .danggun-pointer {
-    width: 220px;
-    margin: 10px; 
-    border: 1px solid black;
-    display: inline-block;
-    text-align: center;
-  }
+.register-button:hover {
+	color: var(--main-color-2);
+}
 
-  .danggun-img-loc {
-    width: 220px;
-    height: 220px;  
-  }
 
+.danggun-pointer {
+	width: 180px;
+ 	margin: 10px 20px 50px 20px;
+	display: inline-block;
+	text-align: center;	
+	padding: 10px;
+	border: 1px solid #333;
+	border-radius: 20px;
+}
+
+.danggun-pointer:hover {
+	border: 1px solid var(--main-color-2);
+} 
+
+.danggun-img-loc {
+	width: 180px;
+	height: 180px;
+	border-radius: 20px;
+}
+
+.danggun-name, .danggun-price {
+	margin-top: 5px;
+}
+
+.danggun-name {
+	width: 180px;
+	height: 21.8px;
+}
+
+.danggun-price {
+	
+}
 input {
 	padding-left: 10px;
 }
 
-  .none-search-list {
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-    text-align: center;
-  }
-  
-  .up-button {
-    width: 50px;
-    height: 50px;
-    font-size: 15px;
-    border-style: none;
-    position: fixed;
-    right: 100px;
-    bottom: 100px;
-  }
+.none-search-list {
+	height: 300px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 30px;
+	text-align: center;
+}
+
+.up-button {
+	width: 50px;
+	height: 50px;
+	font-size: 15px;
+	border-style: none;
+	position: fixed;
+	right: 100px;
+	bottom: 100px;
+}

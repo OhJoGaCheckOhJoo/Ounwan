@@ -17,7 +17,6 @@ public class AdminService {
 	public AdminDTO checkAuthorization(AdminDTO adminDTO) {
 		Admin admin = adminDAO.checkAuthorization(adminDTO.getAdminId());
 		if (admin != null) {
-			System.out.println("notnulllll");
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			if (encoder.matches(adminDTO.getPassword(), admin.getPassword())) {
 				return changeDTO(admin);

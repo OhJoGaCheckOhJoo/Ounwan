@@ -1,9 +1,7 @@
 package com.ounwan.service;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.ounwan.dto.AetaDTO;
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.dto.DanggunChatRoomDTO;
@@ -31,11 +31,11 @@ public class MyPageService {
 
 	@Autowired
 	ClientsDAO clientsDAO;
-
-	private final static String UPLOADPATH = "D:\\github_desktop\\Back-end\\src\\main\\webapp\\resources";
-	// private final static String UPLOADPATH =
-	// "C:/Users/diana/OneDrive/문서/GitHub/Back-end/src/main/webapp/resources";
-	private final static String IMAGEPATH = "/images/uploads/";
+	
+	@Autowired
+	AmazonS3 amazonS3;
+	
+	private static final String BUCKET = "ounwan";
 	
 	public boolean changeConfirmState(String orderNumber) {
 		int stateChange = myPageDAO.changeConfirmState(orderNumber);
@@ -141,29 +141,30 @@ public class MyPageService {
 		return 0;
 	}
 
-	public String updateImage(MultipartFile multipartFile, String clientId) {
-		System.out.println("SSSSSmultipartFile : " + multipartFile);
-		System.out.println("SSSSSclientId : " + clientId);
-
+	public ClientsDTO updateImage(MultipartFile multipartFile, ClientsDTO client) throws IllegalStateException, IOException {
 		String newFileName = System.currentTimeMillis() + "." + multipartFile.getContentType().split("/")[1]; // image/jpg
-		File file = new File(UPLOADPATH + IMAGEPATH + newFileName);
-		try {
-			multipartFile.transferTo(file);
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-		}
-		String newProfile = ".." + IMAGEPATH + newFileName;
+		
+		ObjectMetadata metadata = new ObjectMetadata();
+		metadata.setContentLength(multipartFile.getSize());
+		metadata.setContentType(multipartFile.getContentType());
+		
+		// 기존에 저장되어 있던 사진 삭제
+		amazonS3.deleteObject(BUCKET, client.getProfileUrl());
+		
+		amazonS3.putObject(BUCKET, newFileName, multipartFile.getInputStream(), metadata);
+		
+		String newProfile = amazonS3.getUrl(BUCKET, newFileName).toString();
 
-		ClientsDTO client = new ClientsDTO();
-
-		client.setClientId(clientId);
-		client.setProfileUrl(newProfile);
-
-		int result = myPageDAO.modifyProfileURL(changeEntity(client));
-		if (result > 0) {
-			return "success";
-		}
-		return "success";
+		int result = myPageDAO.modifyProfileURL(Clients.builder()
+														.clientId(client.getClientId())
+														.profileUrl(newProfile)
+														.build());
+		if (result > 0) 
+			client.setProfileUrl(newProfile);
+		else 
+			client.setProfileUrl(null);
+		
+		return client;
 	}
 
 	public int withdrawUserInfo(ClientsDTO client) {

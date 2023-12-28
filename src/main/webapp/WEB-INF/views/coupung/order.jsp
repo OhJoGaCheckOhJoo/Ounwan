@@ -299,8 +299,12 @@
 				</div>
 			</div>
 		</div>
+		<button  id="payment">
+	 		결제
+		</button>
 	</div>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script>
 		$(document).ready(function() {
 			let isVisible = false;
@@ -385,6 +389,31 @@
 		            $('#address-detail-txt').focus();
 		        }
 		    }).open();
+		});
+		
+		$('#payment').on('click', function() {
+			 IMP.init("imp43370630");
+             // IMP.request_pay(param, callback) 결제창 호출
+
+             IMP.request_pay({ // param
+                 pg: "kcp",
+                 merchant_uid: "사과", // 상품 번호 
+                 amount: "1234", // 상품 비용
+                 name: "123", // 상품명
+                 buyer_email: "123", // 주문자 이메일
+                 buyer_name: "123", // 주문자 명
+                 buyer_tel: "123", // 주문자 번호
+                 buyer_addr: "123", // 주문자 주소
+                 buyer_postcode: "123", // 우편번호
+                 m_redirect_url: "${appPath}" //
+
+             }, function (rsp) { // callback
+                 if (rsp.success) {
+               		alert("success");
+                 } else {
+                     alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+                 }
+             });
 		});
 	</script>
 

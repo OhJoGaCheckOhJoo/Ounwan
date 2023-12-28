@@ -25,7 +25,7 @@
 				<c:forEach var="orderList" items="${coupungOrderList}">
 					<div class="order-detail product-info modal"
 						order-number="${orderList.ORDER_NUMBER}">
-						<a href="#" class="order-detail-product-info-wrap">
+						<a href="${appPath}/coupung/product/detail?coupungId=${orderList.COUPUNG_NUMBER}" class="order-detail-product-info-wrap">
 							<div class="order-detail-product-info-container">
 								<div class="order-detail-product-info image">
 									<img src="${orderList.URL}">

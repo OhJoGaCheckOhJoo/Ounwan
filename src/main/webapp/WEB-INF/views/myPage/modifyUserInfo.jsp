@@ -264,7 +264,6 @@
 				var reader = new FileReader();
 				formData = new FormData();
 				formData.append('image', $("#uploadImageInput")[0].files[0]);
-				formData.append('clientId', clientId);
 				reader.onload = function(data) {
 					imgTag.attr("src", data.target.result);
 				}

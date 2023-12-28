@@ -31,7 +31,7 @@
                 <div id="gramSearchResult"></div>
             </div>
         	<div id="ounwangramProfile">
-        		<img src="../${userInfo.profileUrl}">
+        		<img src="${userInfo.profileUrl}">
         		<div>
         			<div id="clientId">${userInfo.clientId}</div>
         			<div>

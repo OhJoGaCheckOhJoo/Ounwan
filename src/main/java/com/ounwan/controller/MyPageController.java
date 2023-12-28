@@ -208,14 +208,19 @@ public class MyPageController {
 	@RequestMapping(value = "/modifyUserInfo", method = RequestMethod.POST, consumes = "application/json", produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String modifyUserInfo(@RequestBody ClientsDTO clientsDTO) {
 		myPageService.modifyUserInfo(clientsDTO);
+		// session 수정된 정보로 update
 		return "success";
 
 	}
 	
 	@PostMapping(value="/updateImg")
-	public @ResponseBody String updateImage(@RequestParam("image") MultipartFile image,  @RequestParam("clientId") String clientId) {
-		String imgString = myPageService.updateImage(image, clientId);
-	    return imgString;
+	public @ResponseBody String updateImage(@RequestParam("image") MultipartFile image, HttpSession session) throws IllegalStateException, IOException {
+		ClientsDTO client = (ClientsDTO) (session.getAttribute("userInfo"));
+		ClientsDTO updateInfo = myPageService.updateImage(image, client);
+		if(updateInfo.getProfileUrl() == null)
+			return "fail";
+		session.setAttribute("userInfo", updateInfo);
+	    return "success";
 	}
 	
 	@RequestMapping(value="/withdrawal", method = RequestMethod.POST, consumes = "application/json", produces = "text/plain;charset=UTF-8")
