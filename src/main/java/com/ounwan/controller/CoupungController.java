@@ -2,6 +2,7 @@ package com.ounwan.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -64,6 +65,13 @@ public class CoupungController {
 		CoupungDTO coupung = coupungService.getProductDetail(Integer.parseInt(coupungId), 0, 0);
 		model.addAttribute("detail", coupung);
 		
+		List<Map<String, Object>> reviewList = coupungService.getReviewList(Integer.parseInt(coupungId));
+		List<Integer> scoreList = coupungService.getScoreList(Integer.parseInt(coupungId));
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("scoreList", scoreList);	
+		
+		System.out.println("C_reviewList:" + reviewList);
+		System.out.println("C_socreList:" + scoreList);
 		return "/coupung/detail";
 	}
 	

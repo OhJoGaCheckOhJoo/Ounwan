@@ -1,13 +1,16 @@
 package com.ounwan.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ounwan.dto.CoupungDTO;
 import com.ounwan.dto.OrdersDTO;
+import com.ounwan.dto.ReviewsDTO;
 import com.ounwan.entity.Coupung;
 import com.ounwan.repository.CoupungDAO;
 
@@ -146,6 +149,31 @@ public class CoupungService {
 		return changedList;
 	}
 	
+	public List<Map<String, Object>> getReviewList(int coupungNumber) {
+		List<Map<String, Object>> reviewList = new ArrayList<Map<String,Object>>();
+		
+		for(Map<String, Object> data : coupungDAO.getReviewList(coupungNumber)) {
+			reviewList.add(data);
+		}		
+		System.out.println("Service_review: " + reviewList);
+		return reviewList;
+	}
+
+	public List<Integer> getScoreList(int coupungNumber) {
+		Map<String, Object> scoreInfo = new HashMap<>();
+		scoreInfo.put("coupungNumber", coupungNumber);
+		List<Integer> scoreList = new ArrayList<>(); 
+		
+		for(int i=1; i<6; i++) {
+			scoreInfo.put("score", i);
+			scoreList.add(coupungDAO.getScoreList(scoreInfo));
+		}
+		
+		System.out.println("Service_scoreList: " + scoreList);
+		
+		return scoreList;
+	}
+	
 	public CoupungDTO changeDTO(Coupung coupung) {
 		return CoupungDTO.builder()
 				.coupungNumber(coupung.getCoupungNumber())
@@ -167,4 +195,5 @@ public class CoupungService {
 						.availableCheck(coupungDTO.getAvailableCheck())
 						.build();
 	}
+
 }
