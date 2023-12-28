@@ -37,14 +37,21 @@
 
 			<div class="search">
 				<select name="option">
-					<option selected hidden>선택</option>
+					
 					<option value="aetaSearchAll" ${selectedOption eq 'aetaSearchAll' ? 'selected' : ''} >전체(제목+작성자)</option>
 					<option value="aetaSearchTitle" ${selectedOption eq 'aetaSearchTitle' ? 'selected' : ''}>제목</option>
 					<option value="aetaSearchId" ${selectedOption eq 'aetaSearchId' ? 'selected' : ''}>작성자</option>
 				</select>
 				<form>
 					<input id="inputValue" placeholder="검색어 입력" >
-					<input type=button id="searchBtn" value="검색">
+					<c:choose>
+						<c:when test="${selectedOption eq 'choose'}">
+							<input type=button id="searchBtn" value="검색" disabled="disabled">
+						</c:when>
+						<c:otherwise>
+							<input type=button id="searchBtn" value="검색">
+						</c:otherwise>
+					</c:choose>
 				</form>
 			</div>
 			<hr>

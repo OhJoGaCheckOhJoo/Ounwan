@@ -30,7 +30,10 @@
 </div>	
 
 <div id="aeta-pagination" class="aeta-pagination">
+	
+
 	<c:choose>
+		<c:when test="${paginating.maxPageNumber==0}"></c:when>
 		<c:when test="${paginating.pageNumber<=1}">
 			<span class="prev">[<<]</span>
 		</c:when>
@@ -40,6 +43,7 @@
 	</c:choose>
 
 	<c:choose>
+		<c:when test="${paginating.maxPageNumber==0}"></c:when>
 		<c:when test="${paginating.pageNumber<=1}">
 			<span class="prev">[<]</span>
 		</c:when>
@@ -60,6 +64,7 @@
 	</c:forEach>
 
 	<c:choose>
+		<c:when test="${paginating.maxPageNumber==0}"></c:when>
 		<c:when test="${paginating.pageNumber==paginating.maxPageNumber}">
 			<span class="next">[>]</span>
 		</c:when>
@@ -69,6 +74,7 @@
 	</c:choose>
 
 	<c:choose>
+		<c:when test="${paginating.maxPageNumber==0}"></c:when>
 		<c:when test="${paginating.pageNumber==paginating.maxPageNumber}">
 			<span class="next">[>>]</span>
 		</c:when>
@@ -78,6 +84,3 @@
 	</c:choose>
 
 </div>
-
-<script src="../js/community.js"></script>
-<script src="../js/aeta.js"></script>

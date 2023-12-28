@@ -456,6 +456,7 @@ public class CommunityService {
 		int countPosts = 0;
 		// 출력할 게시글 갯수
 		switch (selectedOption) {
+		
 		case "aetaSearchAll":
 			countPosts = communityDAO.CountSearchAll(inputValue);
 			break;
