@@ -27,10 +27,9 @@
             </div>
             <div class="faq-body">
                 <div class="faq-search">
-					<form>
-						<span>질문을 입력하세요</span> <input type="text">
-						<button id="faqSearch" type="button">검색</button>
-					</form>
+					<span>질문을 입력하세요</span>
+					<input type="text">
+					<button id="faqSearch" type="button">검색</button>
 				</div>
 				<div class="faq-category">
 					<button class="faqSelected" value=0>전체보기</button>
@@ -62,6 +61,7 @@
     <script>    	
     	var faqOffset = 0;
     	var faqCategory = 0;
+    	var keyword = '';
     	
         $(window).on("load", function() {
         	faqAjax();
@@ -93,15 +93,10 @@
         });
         
         $("#faqSearch").on("click", function() {
-        	$.ajax({
-        		url:"${appPath}/searchFAQ",
-        		data: {
-        			keyword: $(this).parent().find('input').val()
-        		},
-        		success: function(res) {
-        			console.log(res);
-        		}
-        	});
+        	faqOffset = 0;
+        	keyword = $(this).parent().find('input').val();
+        	faqAjax();
+        	faqPages();
         });
         
         function openProhibitedListModal() {
@@ -118,6 +113,7 @@
         	$.ajax({
         		url:"${appPath}/getFAQList",
         		data: {
+        			'keyword': keyword,
         			'offset': faqOffset,
         			'category': faqCategory
         		},
@@ -131,6 +127,7 @@
         	$.ajax({
         		url:"${appPath}/getFAQPages",
         		data: {
+        			'keyword': keyword,
         			'category': faqCategory
         		},
         		success: function(res) {

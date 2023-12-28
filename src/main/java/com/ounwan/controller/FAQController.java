@@ -20,14 +20,15 @@ public class FAQController {
 	}
 	
 	@RequestMapping("/getFAQList")
-	public String getFAQList(@RequestParam int category, @RequestParam int offset, Model model) {
-		model.addAttribute("faqList", faqService.getFAQList(category, offset));
+	public String getFAQList(@RequestParam String keyword, @RequestParam int category, @RequestParam int offset, Model model) {
+		model.addAttribute("faqList", faqService.getFAQList(keyword, category, offset));
 		return "faq/faqList";
 	}
 	
 	@RequestMapping("/getFAQPages")
-	public String getFAQPage(@RequestParam int category, Model model) {
-		model.addAttribute("pages", faqService.countFAQList(category));
+	public String getFAQPage(@RequestParam String keyword, @RequestParam int category, Model model) {
+		model.addAttribute("pages", faqService.countFAQList(keyword, category));
 		return "faq/faqPages";
 	}
+	
 }
