@@ -51,6 +51,11 @@ public class SomsomiChatService {
 		int result = chatDAO.deleteMessage(messageId);
 		return (result > 0) ? true : false;
 	}
+	
+	public Boolean quitChatting(String roomId) {
+		int result = chatDAO.quitChatting(roomId);
+		return null;
+	}
 
 	public List<SomsomiChatMessageDTO> changeDTOlist(List<SomsomiChatMessage> chat){
 		List<SomsomiChatMessageDTO> changeList = new ArrayList<>();

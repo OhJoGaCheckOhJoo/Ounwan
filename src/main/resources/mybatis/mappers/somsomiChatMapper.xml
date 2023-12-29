@@ -40,5 +40,9 @@
 	<update id="updateResolvedStatus">
 		UPDATE SOMSOMI_CHAT_ROOM SET RESOLVED_STATUS = 0 WHERE ROOM_ID = #{roomId}
 	</update>
+	
+	<update id="quitChatting">
+		UPDATE SOMSOMI_CHAT_ROOM SET RESOLVED_STATUS = 1 WHERE ROOM_ID = #{roomId}
+	</update>
 
 </mapper>

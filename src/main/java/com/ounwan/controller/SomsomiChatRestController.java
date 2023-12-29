@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +38,11 @@ public class SomsomiChatRestController {
 	@PostMapping("/chat/delete")
 	public Boolean deleteMessage(Integer messageId) {
 		return chatService.deleteMessage(messageId);
+	}
+	
+	@GetMapping("/chat/quit")
+	public Boolean quitChattting(String roomId) {
+		return chatService.quitChatting(roomId);
 	}
 	
 }

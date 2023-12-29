@@ -49,4 +49,8 @@ public class SomsomiChatDAO {
 		return sqlSession.update(NAMESPACE + "updateResolvedStatus", roomId);
 	}
 
+	public int quitChatting(String roomId) {
+		return sqlSession.update(NAMESPACE + "quitChatting", roomId);
+	}
+
 }
