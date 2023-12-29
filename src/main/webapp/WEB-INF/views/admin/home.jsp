@@ -14,6 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
     <link href="${appPath}/css/admin.css" rel="stylesheet">
+    <link rel="stylesheet" href="${appPath}/css/bixSiri/adminChat.css" />
     <title>Ounwan Admin</title>
     <script>
     	$(document).ready(function() {
@@ -77,65 +78,7 @@
         </nav>
 
         <div class="admin-wrap">
-            <div class="chatting-wrap">
-                <div class="admin-chat-sub">
-                    <input type="text">
-                    <button class="user-profile">
-                        <img src="./full_star.png">
-                        <span>jj1234</span>
-                    </button>
-                    <button class="user-profile">
-                        <img src="./half_star.png">
-                        <span>test</span>
-                    </button>
-                    <button class="user-profile">
-                        <img src="./right_1.png">
-                        <span>test2</span>
-                    </button>
-                    <button class="user-profile">
-                        <img src="./ticket.png">
-                        <span>test3</span>
-                    </button>
-                    <button class="user-profile">
-                        <img src="./ticket.png">
-                        <span>aaaa</span>
-                    </button>
-                    <button class="user-profile">
-                        <img src="./ticket.png">
-                        <span>abcabc</span>
-                    </button>
-                    <button class="user-profile">
-                        <img src="./ticket.png">
-                        <span>jj12345</span>
-                    </button>
-                    <button class="user-profile">
-                        <img src="./ticket.png">
-                        <span>bbbbb</span>
-                    </button>
-                    <button class="user-profile">
-                        <img src="./ticket.png">
-                        <span>ccccc</span>
-                    </button>
-                    <button class="user-profile">
-                        <img src="./ticket.png">
-                        <span>vxsdsdg</span>
-                    </button>
-                    <button class="user-profile">
-                        <img src="./ticket.png">
-                        <span>jjjjjjj</span>
-                    </button>
-                </div>
-                <div class="admin-chatting">
-                    <div class="chatting-user">유저를 선택해주세요!</div>
-                    <div class="chatting">
-
-                    </div>
-                    <form>
-                        <textarea>가나다라마바사아자차카타파하</textarea>
-                        <button disabled type="button">보내기</button>
-                    </form>
-                </div>
-            </div>
+            메인 추가합시다.
         </div>
     </div>
 
