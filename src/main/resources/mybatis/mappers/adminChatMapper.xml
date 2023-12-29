@@ -22,8 +22,7 @@
 		FROM
 		RankedRows
 		WHERE RowRank = 1
-		ORDER BY REGDATE DESC, RESOLVED_STATUS DESC
-	</select>	
-
+		ORDER BY RESOLVED_STATUS, REGDATE DESC
+	</select>
 
 </mapper>
