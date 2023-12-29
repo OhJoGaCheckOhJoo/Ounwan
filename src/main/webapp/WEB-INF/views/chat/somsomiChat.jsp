@@ -23,6 +23,7 @@
 			<h3>채팅방</h3>
 		</div>
 		<div id="chat" class="chat"></div>
+		<div id="quitMessage" class="quit-message"></div>
 		<!-- 채팅저장출력 -->
 		<script id="temp" type="text/x-handlebars-template">
 		{{#each .}}
@@ -55,10 +56,12 @@
 				}
 			});
 			Handlebars.registerHelper("printNone", function(sender) {
-	             if (clientId != sender) return "none";             
-	        });
+				if (clientId != sender)
+					return "none";
+			});
 		</script>
 		<div class="message-input">
+			<button id="chatComplete" class="chat-complete">채팅 종료</button>
 			<textarea id="txtMessage" class="txtMessage" cols="30" rows="10"
 				placeholder="메세지를 입력한 후에 엔터키를 누르세요."></textarea>
 		</div>
@@ -70,7 +73,7 @@
 	var clientId = "${userInfo.clientId}";
 	var sock = new SockJS("http://localhost:9090/myapp/echo");
 	sock.onmessage = onMessage;
-	
+
 	function getList() {
 		$.ajax({
 			type : 'get',
@@ -83,20 +86,24 @@
 		})
 	}
 
-	$("#chat").on("click", ".message a", function(e){
+	$("#chat").on("click", ".message a", function(e) {
 		e.preventDefault();
 		var messageId = $(this).attr("href");
-		if(!confirm(messageId + "을(를) 삭제하실래요?")) return;
+		if (!confirm(messageId + "을(를) 삭제하실래요?"))
+			return;
 		$.ajax({
-			type: "post",
+			type : "post",
 			url : "${appPath}/somsomi/chat/delete",
-			data : {"sender" : clientId ,"messageId" : messageId},
-			success : function(){
+			data : {
+				"sender" : clientId,
+				"messageId" : messageId
+			},
+			success : function() {
 				sock.send("delete");
 			}
 		})
 	})
-	
+
 	var roomId = clientId + clientId;
 	$("#txtMessage").on("keypress", function(e) {
 		if (e.keyCode == 13 && !e.shiftKey) {
@@ -119,21 +126,38 @@
 					"message" : message
 				},
 				success : function(messageId) {
-					sock.send(clientId + "|" + message + "|" + messageId); 
+					sock.send(clientId + "|" + message + "|" + messageId);
 				}
 			});
 		}
 
 	});
 
-	// 서버로부터 메세지 받기
+	$("#chatComplete").on("click", function() {
+		if (!confirm("대화를 종료하시겠습니까?"))
+			return;
+		$.ajax({
+			type : 'get',
+			url : '${appPath}/somsomi/chat/quit',
+			data : {
+				"roomId" : roomId
+			},
+			success : function(messageId) {
+				$("#quitMessage").append("관리자와의 채팅이 종료되었습니다.");
+				//sock.send("quit");
+			}
+		});
+
+	});
+
 	function onMessage(msg) {
 		var items = msg.data.split("|");
 		var sender = items[0];
-		if(sender == "delete"){
-	    	  getList();
-	    	  return;
-	      }
+		if (sender == "delete") {
+			getList();
+			return;
+		}
+		
 		var message = items[1];
 		var messageId = items[2];
 		var date = items[3];
