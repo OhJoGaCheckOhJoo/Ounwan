@@ -1,7 +1,6 @@
 
-.danggun-user-info:active {
-  background-color: #444; /* 클릭 시 배경색을 노란색으로 변경 (원하는 색상으로 수정 가능) */
-  /* 다른 시각적인 스타일 변경도 가능합니다 */
+.partner-info-container:active {
+  background-color: #444;
 }
 
 .chat-history-container {
@@ -9,22 +8,19 @@
 	justify-content: space-around;
 	margin: auto;
 	height: 700px;
+	background-color: #282828
 }
 
 .user-info-container {
-	border-right: 1px solid;
-	/* 필요한 높이만큼 스크롤 가능한 영역으로 설정 */
-	height: 700px;
-	/* 스크롤바 스타일 지정 */
-	overflow-y: auto; /* 수직 스크롤바 표시 */
-	overflow-x: hidden; /* 수평 스크롤바 숨김 */
-	/* 필요에 따라 다른 스타일도 추가할 수 있습니다 */
+    height: 700px;
+    overflow-y: scroll; /* 항상 수직 스크롤바 표시 */
+    overflow-x: hidden; /* 수평 스크롤바 숨김 */
 }
 
 .chat-history-container>div {
 	display: flex;
 	flex-direction: column;
-	width: 500px;
+    width: 540px;
 }
 
 .chat-history-container .chat-room-view {
@@ -44,7 +40,7 @@
 .chat-list-header{
 	position: sticky;
 	top: 0;
-	background-color: var(--main-back);
+	background-color: #444;
 }
 
 .user-info-title {
@@ -62,6 +58,7 @@
 .danggun-user-info {
 	display: flex;
 	align-items: center;
+	margin-top: 5px
 }
 
 .danggun-user-info img {

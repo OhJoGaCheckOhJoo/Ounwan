@@ -23,9 +23,7 @@
 					<div>${post.price}</div>
 				</div>
 			</div>
-		<hr>
 	</div>
-
 	<div id="chat" class="chat"></div>
 	<!-- 채팅저장출력 -->
 	<script id="temp" type="text/x-handlebars-template">

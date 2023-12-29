@@ -24,16 +24,18 @@
 		</c:if>
 		<c:if test="${not empty chatList}">
 			<c:forEach var="roomInfo" items="${chatList}" varStatus="loop">
-				<a href="javascript:getChatRoom('${roomInfo.chatRoom.roomId}')">
-					<div class="danggun-user-info">
-						<div class="danggun-user-info img">
-							<img src="${roomInfo.partnerInfo.profileUrl}">
-						</div>
-						 <div class="danggun-user-info name">
-							<span>${roomInfo.partnerInfo.clientId}</span>
+				<div class="partner-info-container">
+					<a href="javascript:getChatRoom('${roomInfo.chatRoom.roomId}')">
+						<div class="danggun-user-info">
+							<div class="danggun-user-info img">
+								<img src="${roomInfo.partnerInfo.profileUrl}">
+							</div>
+							 <div class="danggun-user-info name">
+								<span>${roomInfo.partnerInfo.clientId}</span>
+							 </div>
 						 </div>
-					 </div>
-				</a>
+					</a>
+				</div>
 			</c:forEach>
 		</c:if>
 	</div>
@@ -46,25 +48,6 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const links = document.querySelectorAll('.danggun-user-info');
-    
-    links.forEach(function(link) {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            if (!link.classList.contains('clicked')) {
-                link.classList.add('clicked');
-            } else {
-                link.classList.remove('clicked');
-            }
-            
-            getChatRoom(link.dataset.roomId);
-        });
-    });
-});
-
-
 var sock; 
 
 function getChatRoom(roomId) {
