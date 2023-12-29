@@ -98,7 +98,7 @@ a {
     padding: 50px;
     width: 1000px;
     height: 600px;
-    margin: 80px auto 0px auto;
+    margin: 200px auto 0px auto;
     border-radius: 50px;
 }
 .admin-chat-sub {
@@ -120,6 +120,9 @@ a {
     background-color: #fff;
     border-bottom: 1px solid #ddd;
     margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 .user-profile:hover {
     background-color: #eee;
@@ -132,7 +135,7 @@ a {
     position: relative;
     bottom: 12px;
 }
-.admin-chatting {
+.admin-chatting, .admin-chat{
     display: inline-block;
     width: 620px;
     height: 100%;
@@ -165,6 +168,16 @@ a {
     border: 1px solid #ccc;
     font-family: 'GmarketSansMedium';
 }
+
+.admin-chat textarea {
+	width: 500px;
+    height: 90px;
+    font-size: 18px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    font-family: 'GmarketSansMedium';
+}
+
 .admin-chatting form textarea:focus {
     outline: none;
 }

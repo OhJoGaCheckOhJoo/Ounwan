@@ -17,14 +17,17 @@
 			<div>문의한 회원이 없습니다.</div>
 		</c:if>
 		<c:forEach var="roomInfo" items="${chatRoom}" varStatus="loop">
-		<a href="javascript:getChatRoom('${roomInfo.chatRoom.roomId}')">
-			<div class="user-profile">
-				<img src="${roomInfo.client.profileUrl}"> <span>${roomInfo.client.clientId}</span>
-			</div>
-		</a>
+			<a href="javascript:getChatRoom('${roomInfo.chatRoom.roomId}')">
+				<div class="user-profile">
+					<div>
+						<img src="${roomInfo.client.profileUrl}"> <span>${roomInfo.client.clientId}</span>
+					</div>
+					<div class="resolved-status">${roomInfo.chatRoom.resolvedStatus ? '해결 완료' : ''}</div>
+				</div>
+			</a>
 		</c:forEach>
 	</div>
-	<div id="adminChatting" class="admin-chatting"></div>
+	<div id="adminChat" class="admin-chatting"></div>
 </div>
 
 
@@ -47,7 +50,7 @@
 			sock.close();
 		}
 
-		var sock = new SockJS("http://localhost:9090/myapp/echo");
+		sock = new SockJS("http://localhost:9090/myapp/echo");
 
 		$.ajax({
 			type : "GET",
@@ -56,7 +59,7 @@
 				roomId : roomId
 			},
 			success : function(res) {
-				$("#adminChatting").html(res);
+				$("#adminChat").html(res);
 			}
 		});
 	}
