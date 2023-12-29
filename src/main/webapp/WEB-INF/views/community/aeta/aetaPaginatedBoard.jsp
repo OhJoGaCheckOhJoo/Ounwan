@@ -33,7 +33,7 @@
 				<button type="button" id="postBtn">글쓰기</button>
 			</div>	
 			
-			<div class="aeta-list" id="aeta-list"></div>
+			<div class="aeta-list" id="aeta-list">조회 오류</div>
 
 			<div class="search">
 				<select name="option">

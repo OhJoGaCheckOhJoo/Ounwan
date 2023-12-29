@@ -40,14 +40,13 @@ public class CommunityRestController {
 	@PostMapping(value="/aetaPosting")
 	public	@ResponseBody String aetaInsertPost(
 			@RequestPart(value="images",required=false) MultipartFile[] images,
-			@RequestParam(value="imagesLength",required=false)int imagesLength,
+			@RequestParam(value="imagesLength",required=false, defaultValue = "0")int imagesLength,
 			String title,
 			String contents,
 			HttpSession session
 			) throws IllegalStateException, IOException {		
 		
-		return (communityService.aetaInsertPost(
-				session,title,contents,images,imagesLength)>0)? "success":"fail";
+		return (communityService.aetaInsertPost(session,title,contents,images,imagesLength)>0)? "success":"fail";
 	}
 	//게시글 수정 기능
 	@PostMapping(value="/aetaUpdating")

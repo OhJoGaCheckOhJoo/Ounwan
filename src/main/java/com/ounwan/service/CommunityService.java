@@ -634,6 +634,14 @@ public class CommunityService {
 	public List<Map<String, Object>> aetaReadPost(int aetaNumber) {
 		return communityDAO.aetaReadPost(aetaNumber);
 	}
+	// 게시글 댓글 조회
+	public List<Map<String,Object>> aetaReadComments(int aetaNumber){
+		return communityDAO.aetaReadComments(aetaNumber);
+	}
+	// 댓글 갯수 
+	public int aetaCountComments(int aetaNumber) {
+		return communityDAO.aetaCountComments(aetaNumber);
+	}
 
 	// 게시글 조회수 증가 기능
 	public boolean aetaUpdateViews(int aetaNumber) {
@@ -644,7 +652,7 @@ public class CommunityService {
 	public int aetaCountLikes(int aetaNumber) {
 		return communityDAO.aetaCountLikes(aetaNumber);
 	}
-
+	// 좋아요 갯수
 	public int aetaLikesCheck(int aetaNumber, String clientId) {
 		return communityDAO
 				.aetaLikesCheck(changeEntity(AetaLikesDTO.builder().aetaNumber(aetaNumber).clientId(clientId).build()));
@@ -734,5 +742,6 @@ public class CommunityService {
 		return AetaLikes.builder().likeNumber(aetaLikesDTO.getLikeNumber()).aetaNumber(aetaLikesDTO.getAetaNumber())
 				.clientId(aetaLikesDTO.getClientId()).build();
 	}
+
 
 }
