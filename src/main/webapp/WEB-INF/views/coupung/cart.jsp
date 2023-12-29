@@ -341,6 +341,22 @@
 		document.querySelector('#backBtn').addEventListener('click', function() {
 			  window.location.href = '${appPath}';
 			});
+		
+		$(document).ready(function() {
+		    // 모든 selectCheckbox 클래스의 체크박스를 선택됨으로 설정합니다.
+		    $('.selectCheckbox').prop('checked', true);
+
+		    // 페이지 로드 시 총 금액을 계산합니다.
+		    let totalPrice = 0;
+		    $('.selectCheckbox:checked').each(function() {
+		        const index = $(this).parent().parent().parent().find(".index-num").val();
+		        const resultPriceText = $('#resultPrice' + index).text();
+		        const price = parseInt(resultPriceText.replace(/\D/g,''), 10);
+		        totalPrice += price;
+		    });
+		    $('#totalAmount').text(totalPrice);
+		});
+
 		</script>
 </body>
 </html>

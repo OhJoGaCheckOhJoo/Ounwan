@@ -97,7 +97,7 @@ img {
 	padding: 10px;
 	background-color: #444;
 	border: 1px solid #ccc5b6;
-	border-radius: 5px;
+	border-radius: 15px;
 	cursor: pointer;
 }
 
@@ -139,7 +139,7 @@ img {
 	padding: 10px;
 	background-color: #444;
 	border: 1px solid #ccc5b6;
-	border-radius: 5px;
+	border-radius: 15px;
 	cursor: pointer;
 	width: 500px;
 }
