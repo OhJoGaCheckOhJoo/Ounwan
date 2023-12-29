@@ -66,3 +66,6 @@ input:focus {
     min-height: calc(100% - 320px);
     margin: auto;
 }
+input[type="date"]::-webkit-calendar-picker-indicator {
+   color: var(--main-color-1);
+}

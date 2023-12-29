@@ -60,6 +60,8 @@ header .float-right a:hover {
     background-image: url("../images/cart_0.png");
     background-size: contain;
     background-repeat: no-repeat;
+    background-color: rgba(0,0,0,0) !important;
+    border: 0 !important;
 }
 #cart:hover {
     background-image: url(../images/cart_1.png);

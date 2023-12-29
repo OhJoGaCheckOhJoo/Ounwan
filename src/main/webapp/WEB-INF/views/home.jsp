@@ -12,7 +12,7 @@ prefix="c" %>
 <html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
+<title>오운완</title>
 
 <head>
 	<c:set var="appPath" scope="application"  value="${pageContext.request.contextPath}" />
@@ -37,7 +37,7 @@ prefix="c" %>
 		                var div = $("<div></div>").addClass("pointer");
 		                div.append($("<img>").addClass("img-2 img-border").attr("src", product.image[0].url));
 		                div.append($("<div></div>").text(product.name));
-		                div.append($("<div></div>").text(price));
+		                div.append($("<div></div>").text(price + ' 원'));
 
 		                div.on("click", function() {
 		                    window.location.href = '${appPath}/coupung/product/detail?coupungId=' + product.coupungNumber;
@@ -65,15 +65,32 @@ prefix="c" %>
             <img src = './images/v616_37.png'>
         </div>
         <div>
-            <div class="text-1">인기상품</div>
+            <div class="text-1">
+            	<span>인기상품</span>
+            	<a href='${appPath}/coupung/products'>전체보기</a>
+            </div>
             <div id="populars" class="main-product"></div>
         </div>
         <br>
         <div>
-            <div class="text-1">중고거래</div>
+            <div class="text-1">
+            	<span>중고상품</span>
+            	<a href='${appPath}/danggun/main'>전체보기</a>
+            </div>
             <div id="secondhands" class="main-product"></div>
         </div>
         <br>
+        <div class="main-community-wrap">
+        	<div class='text-1'>오운완 커뮤니티 함께하기</div>
+        	<a class='main-community' href="${appPath}/community/ounwangram">
+        		<img src="https://src.hidoc.co.kr/image/lib/2023/10/10/1696929851545_0.jpg">
+        		<span>운동했다그램 ❯</span>
+        	</a>
+        	<a class='main-community' href="${appPath}/community/aetaBoard">
+        		<img src="https://img.freepik.com/premium-photo/senior-athlete-man-thinking-feeling-doubtful-and-confused-with-different-options-wondering-which-decision-to-make_1194-265930.jpg">
+        		<span>애타 ❯</span>
+        	</a>
+        </div>
     </div>
     <hr>
     
