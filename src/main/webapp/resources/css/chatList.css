@@ -1,46 +1,7 @@
-/* Dropdown button */
-.dropbtn {
-	background-color: #444;
-	color: var(- -main-color-1);
-	padding: 12px;
-	font-size: 16px;
-	border: none;
-	cursor: pointer;
-}
 
-/* Dropdown content (hidden by default) */
-.dropdown-content {
-	display: none;
-	position: absolute;
-	background-color: #f9f9f9;
-	min-width: 160px;
-	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-	z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-	color: #333;
-	padding: 12px 16px;
-	text-decoration: none;
-	display: block;
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
-	background-color: #f1f1f1;
-}
-
-/* Show the dropdown menu on hover */
-.user-info-title:hover .dropdown-content {
-	display: block;
-	
-}
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.user-info-title:hover .dropbtn {
-	background-color: var(--main-color-2);
-	color: #333;
+.danggun-user-info:active {
+  background-color: #444; /* 클릭 시 배경색을 노란색으로 변경 (원하는 색상으로 수정 가능) */
+  /* 다른 시각적인 스타일 변경도 가능합니다 */
 }
 
 .chat-history-container {
@@ -67,7 +28,6 @@
 }
 
 .chat-history-container .chat-room-view {
-	margin-left: 30px;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -81,6 +41,11 @@
 	flex-direction: column;
 	align-items: center;
 }
+.chat-list-header{
+	position: sticky;
+	top: 0;
+	background-color: var(--main-back);
+}
 
 .user-info-title {
 	font-size: 20px;
@@ -90,8 +55,8 @@
 }
 
 .image {
-	width: 297px;
-	height: 271px;
+	width: 275px;
+    height: 250px;
 }
 
 .danggun-user-info {
@@ -99,8 +64,9 @@
 	align-items: center;
 }
 
-.danggun-user-info.img img {
+.danggun-user-info img {
 	width: 60px;
 	height: 60px;
 	padding: 5px 20px;
+    border-radius: 50%;
 }

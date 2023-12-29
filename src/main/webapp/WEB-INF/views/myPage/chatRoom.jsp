@@ -13,9 +13,6 @@
 
 <div class="chat-wrap">
 	<div class="chat-header">
-		<div class="chat-title">
-			<h3>채팅방</h3>
-		</div>
 		<div class="product-bar">
 				<div>
 					<img class="main-img" src="../${images.url}" />

@@ -14,6 +14,11 @@
 
 <div class="chat-history-container">
 	<div class="user-info-container">
+		<div class="chat-list-header">
+			<div class="user-info-title">
+				<div>전체 대화</div>
+			</div>
+		</div>
 		<c:if test="${empty chatList}">
 			<div>채팅 내역이 없습니다.</div>
 		</c:if>
@@ -41,6 +46,25 @@
 </div>
 
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const links = document.querySelectorAll('.danggun-user-info');
+    
+    links.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            if (!link.classList.contains('clicked')) {
+                link.classList.add('clicked');
+            } else {
+                link.classList.remove('clicked');
+            }
+            
+            getChatRoom(link.dataset.roomId);
+        });
+    });
+});
+
+
 var sock; 
 
 function getChatRoom(roomId) {
