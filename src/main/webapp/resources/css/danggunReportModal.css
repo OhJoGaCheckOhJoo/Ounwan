@@ -7,7 +7,7 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	padding: 20px;
-	background-color: #fff;
+	background-color: var(--main-back);
 	border: 1px solid #ccc;
 	z-index: 1000;
 	max-height: 80vh; /* 모달 창의 최대 높이를 화면 높이의 80%로 설정 */
