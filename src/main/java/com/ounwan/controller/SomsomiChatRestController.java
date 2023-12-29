@@ -22,7 +22,6 @@ public class SomsomiChatRestController {
 	
 	@RequestMapping("/chat/list")
 	public List<SomsomiChatMessageDTO> selectSomsomiChatList(HttpSession session){
-		
 		ClientsDTO clients = (ClientsDTO) session.getAttribute("userInfo");
 		List<SomsomiChatMessageDTO> result = chatService.selectSomsomiChatList(clients.getClientId());
 		return result;

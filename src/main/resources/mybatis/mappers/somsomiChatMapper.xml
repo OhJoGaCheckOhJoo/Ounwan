@@ -32,5 +32,13 @@
  	<delete id="deleteMessage">
 		DELETE FROM SOMSOMI_CHAT_MESSAGE WHERE MESSAGE_ID = #{messageId}
 	</delete>
+	
+	<select id="selectResolvedStatus" parameterType="String" resultType="int">
+		SELECT RESOLVED_STATUS FROM SOMSOMI_CHAT_ROOM WHERE ROOM_ID = #{roomId}
+	</select>
+	
+	<update id="updateResolvedStatus">
+		UPDATE SOMSOMI_CHAT_ROOM SET RESOLVED_STATUS = 0 WHERE ROOM_ID = #{roomId}
+	</update>
 
 </mapper>
