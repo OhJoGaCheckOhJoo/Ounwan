@@ -399,13 +399,13 @@ $(document).ready(function() {
         	var obj = {};
         	var email = $('#clientEmail').val();
         	if ('${kakaoClient}' != '') {
-        		if (imgUrl === '') imgUrl = "${kakaoClient.profileURL}";
+        		if (imgUrl === '') imgUrl = "${kakaoClient.profileUrl}";
         		obj = setKakao(email, imgUrl);
         	} else if ('${naverClient}' != '') {
-        		if (imgUrl === '') imgUrl = "${naverClient.profileURL}";
+        		if (imgUrl === '') imgUrl = "${naverClient.profileUrl}";
         		obj = setNaver(email, imgUrl);
         	} else if ('${googleClient}' != '') {
-        		if (imgUrl === '') imgUrl = "${googleClient.profileURL}";
+        		if (imgUrl === '') imgUrl = "${googleClient.profileUrl}";
         		obj = setGoogle(email, imgUrl);
         	} else {
         		if (imgUrl === '') imgUrl = $('#profileImage').attr('src');

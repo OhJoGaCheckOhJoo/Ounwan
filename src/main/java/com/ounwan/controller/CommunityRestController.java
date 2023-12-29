@@ -40,7 +40,7 @@ public class CommunityRestController {
 	@PostMapping(value="/aetaPosting")
 	public	@ResponseBody String aetaInsertPost(
 			@RequestPart(value="images",required=false) MultipartFile[] images,
-			@RequestParam(value="imagesLength",required=false)int imagesLength,
+			@RequestParam(value="imagesLength",required=false)Integer imagesLength,
 			String title,
 			String contents,
 			HttpSession session

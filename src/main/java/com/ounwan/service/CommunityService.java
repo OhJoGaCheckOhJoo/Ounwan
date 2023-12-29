@@ -486,10 +486,10 @@ public class CommunityService {
 
 	// 게시글 등록
 	public int aetaInsertPost(HttpSession session, String title, String contents, MultipartFile[] images,
-			int imagesLength) throws IllegalStateException, IOException {
+			Integer imagesLength) throws IllegalStateException, IOException {
 		ClientsDTO user = (ClientsDTO) session.getAttribute("userInfo");
 		String clientId = (user.getClientId());
-		int count = imagesLength;
+		Integer count = imagesLength;
 
 		int result = 0;
 
@@ -504,8 +504,8 @@ public class CommunityService {
 		if (imagesLength > 0) {
 			// 파일 갯수만큼 이름 만들어기
 			String[] aetaFileNames = aetaMakeFileName(clientId, images, imagesLength, count);
-			// 이미지 갯수 만큼 업로드
-			aetaUploadFiles(images, imagesLength, aetaFileNames, count);
+			// 이미지 갯수 만큼 업로드 (이름 변경된걸로 업데이트
+			aetaFileNames = aetaUploadFiles(images, imagesLength, aetaFileNames, count);
 			// 이미지 url DB에 insert& insert된 갯수 반환
 			result = aetaInsertImageUrls(imagesLength, aetaFileNames, count);
 		}
@@ -522,14 +522,18 @@ public class CommunityService {
 		String clientId = (user.getClientId());
 		System.out.println(clientId);
 		int result = 0;
-
+		
 		// 파일의 갯수 = 기존 업로드한 파일 수+ 업로드 할 파일 수
 		// int count = oldImagesLength+newImagesLength;
 		int count = newImagesLength;
 
 		// 업데이트 -> 애타번호로 제목&글 update
-		communityDAO.aetaUpdatePost(changeEntity(
-				AetaDTO.builder().clientId(clientId).aetaNumber(aetaNumber).title(title).contents(contents).build()));
+		communityDAO.aetaUpdatePost(changeEntity(AetaDTO.builder()
+														.clientId(clientId)
+														.aetaNumber(aetaNumber)
+														.title(title)
+														.contents(contents)
+														.build()));
 
 		// 이미지가 없을 시 이미지 길이 0
 		if (newImages == null) {
@@ -538,9 +542,7 @@ public class CommunityService {
 			// 수정할 파일 이름 만들기 (성공)
 			String[] aetaFileNames = aetaMakeFileName(clientId, newImages, newImagesLength, count);
 			// 수정한 이미지 갯수 만큼 업로드 (성공)
-			aetaUploadFiles(newImages, newImagesLength, aetaFileNames, count);
-			
-			
+			aetaFileNames = aetaUploadFiles(newImages, newImagesLength, aetaFileNames, count);
 			result = aetaUpdateImageUrls(aetaNumber, newImagesLength, aetaFileNames, count);
 
 			// 이미지 url DB에 기존 사진 delete& 수정한 사진 insert
@@ -596,21 +598,31 @@ public class CommunityService {
 	}
 
 	// 이미지 업로드 메소드
-	public void aetaUploadFiles(MultipartFile[] images, int imagesLength, String[] aetaFileNames, int count) {
+	public String[] aetaUploadFiles(MultipartFile[] images, int imagesLength, String[] aetaFileNames, int count) 
+			throws IllegalStateException, IOException {
 		// 저장할 파일 이름과 파일저장 배열 선언
 		File[] aetaUploadFiles = new File[imagesLength];
 
 		for (int i = (count - imagesLength); i < count; i++) {
-			aetaUploadFiles[i] = new File(AETA_UPLOADPATH + AETAIMAGEPATH + aetaFileNames[i]);
-
-			try {
-				// 업로드
-				images[i].transferTo(aetaUploadFiles[i]);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			ObjectMetadata metadata = new ObjectMetadata();
+			metadata.setContentLength(images[i].getSize());
+			metadata.setContentType(images[i].getContentType());
+			
+			amazonS3.putObject(BUCKET, aetaFileNames[i], images[i].getInputStream(), metadata);
+			
+			aetaFileNames[i] = amazonS3.getUrl(BUCKET, aetaFileNames[i]).toString();
+//			aetaUploadFiles[i] = new File(AETA_UPLOADPATH + AETAIMAGEPATH + aetaFileNames[i]);
+//			
+//
+//			try {
+//				// 업로드 m
+//				images[i].transferTo(aetaUploadFiles[i]);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
 		}
-		System.out.println("업로드 파일 ~ :"+aetaUploadFiles);
+//		System.out.println("업로드 파일 ~ :"+aetaUploadFiles);
+		return aetaFileNames;
 	}
 
 	// DB에 이미지 url 저장

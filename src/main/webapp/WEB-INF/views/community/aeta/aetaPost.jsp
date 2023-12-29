@@ -37,7 +37,7 @@
 			<div id="aetaContent">
 				<c:forEach items="${aetaPost}" var="aeta">
 					<div>
-						<img class="aeta-photo" src="${appPath}/images/aetaUploads/${aeta.URL}"/>
+						<img class="aeta-photo" src="${aeta.URL}"/>
 					</div>
 				</c:forEach>
 				<input type="hidden" id="aetaCountImages" value="<c:out value='${loopStatus.count}' />"/>

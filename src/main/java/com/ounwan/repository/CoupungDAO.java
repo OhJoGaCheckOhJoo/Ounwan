@@ -52,4 +52,8 @@ public class CoupungDAO {
 	public int deleteProduct(int coupungNumber) {
 		return sqlSession.update(NAMESPACE + "deleteProduct", coupungNumber);
 	}
+
+	public int getPrice(int coupungNumber) {
+		return sqlSession.selectOne(NAMESPACE + "getPrice", coupungNumber);
+	}
 }
