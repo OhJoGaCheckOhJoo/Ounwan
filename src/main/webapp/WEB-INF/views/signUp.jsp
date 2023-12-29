@@ -47,21 +47,20 @@ $(document).ready(function() {
 	}
 });
 </script>
-<title>회원정보입력</title>
+<title>오운완 회원가입</title>
 </head>
 <body>
-	
 	<%@ include file="./common/header.jsp" %>
 	<br><br><br>
     <div class="container">
     
-	<div class="title">회원정보입력</div>
+	<div class="title">회원가입</div>
 	<br>
 
 		<div class="profile-photo">
-			<input type="file" name="uploadImageInput" id="uploadImageInput" accept="image/*"/>
 			<img class="profile-photo-file" src="img/default_profile.png" id="profileImage">
-			<button>사진등록</button>
+			<label for="uploadImageInput">사진등록</label>
+			<input type="file" name="uploadImageInput" id="uploadImageInput" accept="image/*"/>
 			<br>
 			<br>
 		</div>
@@ -94,16 +93,16 @@ $(document).ready(function() {
 			<div class="profile-password">
 				<label class="attribute-name" >비밀번호<span
 					class="red-star">*</span></label> <input type="password" class="input-form" id="firstPass" placeholder="비밀번호를 입력하세요">
-					<span id="wrongForm-inform">잘못된 형식입니다.</span>
+					<div id="wrongForm-inform">잘못된 형식입니다.</div>
 			</div>
 			<div class="profile-password">
 				<label class="attribute-name" >비밀번호 확인
 				<span class="red-star">*</span>
 				</label> <input type="password" class="input-form" placeholder="비밀번호를 입력하세요"  id="secondPass" required/>
-					<span id="notMatch-inform">비밀번호가 일치하지 않습니다.</span>
+					<div id="notMatch-inform">비밀번호가 일치하지 않습니다.</div>
 			</div>
 			<div class="profile-birthday">
-				<div class="info-title">생년월일</div>
+				<label class="info-title attribute-name">생년월일</label>
                 <input class="input-form" type="date" id="clientBirthday" max="2077-12-31" min="1900-01-01" required/>
 			</div>
 			<div class="profile-address">
@@ -127,50 +126,43 @@ $(document).ready(function() {
 			<h5 class="agreement-text">이용약관</h5>
 		</div>
 		<div class="agreement">
-			<label for="agree1"> <input type="checkbox" id="agree1" required>
+			<label for="agree1">
+				<input type="checkbox" id="agree1" required>
 				<i class="circle"></i> [필수] 개인정보 수집 및 이용 동의
 			</label>
 		</div>
 		<br>
 		<div class="agreement">
-			<label for="agree2"> <input type="checkbox" id="agree2" required>
-				<i class="circle"></i> [필수] 쇼핑몰 이용동의
+			<label for="agree2">
+				<input type="checkbox" id="agree2" required>
+				<i class="circle"></i> [필수] 오운완 이용 약관 동의
 			</label>
 		</div>
 		<br>
 		<div class="agreement">
-			<label for="agree3"> <input type="checkbox" id="agree3" required>
-				<i class="circle"></i> [필수] 중고거래 이용 동의
-			</label>
-		</div>
-		<br>
-		<div class="agreement">
-			<label for="agree4"> <input type="checkbox" id="agree4" required>
-				<i class="circle"></i> [필수] 오운완 이용 동의
-			</label>
-		</div>
-		<br>
-		<div class="agreement">
-			<label for="agree5"> <input type="checkbox" id="agree5" required>
-				<i class="circle"></i> [필수] 탈퇴 시 일시적 정보 보유동의
-			</label>
-		</div>
-		<br>
-		<div class="agreement">
-			<label for="agree6"> <input type="checkbox" id="agree6">
+			<label for="agree3">
+				<input type="checkbox" id="agree3">
 				<i class="circle"></i> [선택] 마케팅 수신 동의
 			</label>
 		</div>
 		<br>
-
 		<hr>
-
-
 		<div class="sign-up-button">
 			<button id='submitBtn' type='button'>회원가입</button>
 		</div>
 	</div>
 	<br><br><br>
+	<div id="agreementPersonalData">
+		<h3>개인정보 수집 및 이용 동의</h3>
+		<%@ include file="./common/agreementPersonalData.jsp" %>
+		<button>확인</button>
+	</div>
+	
+	<div id="agreementAccessTerms">
+		<h3>오운완 이용 약관 동의</h3>
+		<%@ include file="./common/agreementAccessTerms.jsp" %>
+		<button>확인</button>
+	</div>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     var phone = "";
@@ -266,13 +258,13 @@ $(document).ready(function() {
 	$('#firstPass').on('input', function() {
 		var password = $('#firstPass').val();
 		var passwordFormat =  /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
-		
-		if (!passwordFormat.test(password)) {
+		/*
+		if (!passwordFormat.test(password) && password.length > 0) {
 			$('#wrongForm-inform').css('visibility', 'visible');
 		} else {
 			$('#wrongForm-inform').css('visibility', 'hidden');
 		}
-		
+		*/
 	});
 	
 	$('#secondPass').on('input', function() {
@@ -328,6 +320,45 @@ $(document).ready(function() {
 	var changeImage = false;
 	var formData = new FormData();
 	var imgUrl = '';
+	var readAgreement1 = false;
+	var readAgreement2 = false;
+	
+	$("#agree1").on('change', function() {
+		if($(this).prop('checked') && !readAgreement1 && $("#agreementPersonalData").css('display') == 'none') {
+			$("#agree1").attr('disabled', true);
+			$("#agree2").attr('disabled', true);
+			$("#agree3").attr('disabled', true);
+			$("#agreementPersonalData").css('display', 'block');
+		}
+	});
+	
+	$("#agreementPersonalData button").on("click", function() {
+		readAgreement1 = true;
+		$("#agree1").attr('disabled', true);
+		if(!readAgreement2) {
+			$("#agree2").attr('disabled', false);
+		}
+		$("#agree3").attr('disabled', false);
+		$("#agreementPersonalData").css('display', 'none');
+	});
+	
+	$("#agree2").on('change', function() {
+		if($(this).prop('checked') && !readAgreement2 && $("#agreementAccessTerms").css('display') == 'none') {
+			$("#agree1").attr('disabled', true);
+			$("#agree2").attr('disabled', true);
+			$("#agree3").attr('disabled', true);
+			$("#agreementAccessTerms").css('display', 'block');
+		}
+	});
+	
+	$("#agreementAccessTerms button").on("click", function() {
+		readAgreement2 = true;
+		if(!readAgreement1) {
+			$("#agree1").attr('disabled', false);
+		}
+		$("#agree3").attr('disabled', false);
+		$("#agreementAccessTerms").css('display', 'none');
+	});
 	
 	$("#uploadImageInput").on("change", function() {
 	    var imgTag = $("#profileImage");
@@ -386,15 +417,6 @@ $(document).ready(function() {
 		} else if (!$('#agree2').is(':checked')) {
 			alert('필수 등록 사항들을 체크해 주세요!');
 			$('#agree2').focus();
-		} else if (!$('#agree3').is(':checked')) {
-			alert('필수 등록 사항들을 체크해 주세요!');
-			$('#agree3').focus();
-		} else if (!$('#agree4').is(':checked')) {
-			alert('필수 등록 사항들을 체크해 주세요!');
-			$('#agree4').focus();
-		} else if (!$('#agree5').is(':checked')) {
-			alert('필수 등록 사항들을 체크해 주세요!');
-			$('#agree5').focus();
 		} else {
         	var obj = {};
         	var email = $('#clientEmail').val();

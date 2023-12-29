@@ -1,11 +1,11 @@
 @charset "UTF-8";
 
 .title {
-	font-size: large;
+	font-size: 40px;
 	font-weight: bold;
 	text-align: center;
 	align-items: center;
-	color: #2E3C8A;
+	color: var(--main-color-1);
 }
 
 .form-group {
@@ -18,7 +18,7 @@
 }
 
 .profile-photo img {
-	border: 3px solid var(--main-color); /* 테두리 색상 설정 */
+	border: 3px solid var(--main-color-1); /* 테두리 색상 설정 */
 	border-radius: 50%; /* 원형 테두리를 위한 모서리 둥글게 설정 */
 	padding: 1px; /* 테두리와 이미지 사이 여백 설정 */
 }
@@ -65,24 +65,35 @@ hr {
 	margin: auto; /* 가운데 정렬 및 위아래 여백 설정 */
 }
 
-button {
+button, .profile-photo > label {
 	padding: 3px 3px;
 	font-size: 14px;
 	font-weight: bold;
 	text-decoration: none;
-	border: 2px solid var(--main-color); /* 테두리 색상 */
+	border: 2px solid var(--main-color-1); /* 테두리 색상 */
 	border-radius: 5px; /* 테두리 모서리 둥글게 */
 	color: var(--main-color); /* 텍스트 색상 */
 	background-color: #666; /* 배경색 */
 	cursor: pointer;
 	transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
+.profile-photo > label {
+	margin-top: 10px;
+}
+.profile-photo > input {
+	display: none;
+	width: 0;
+	height: 0;
+}
 
 /* 호버 효과 */
-button:hover {
-	background-color: #2E3C8A; /* 호버시 배경색 변경 */
-	color: #fff; /* 호버시 텍스트 색상 변경 */
-	border-color: #fff; /* 호버시 테두리 색상 변경 */
+button:hover, .profile-photo > label:hover {
+	background-color: var(--main-back); /* 호버시 배경색 변경 */
+	border: 2px solid var(--main-color-2);
+}
+
+.input-form:focus {
+	border: 2px solid var(--main-color-2);
 }
 
 .input-form {
@@ -92,15 +103,17 @@ button:hover {
 	text-decoration: none;
 	border: 2px solid var(--main-color-1); /* 테두리 색상 */
 	border-radius: 5px; /* 테두리 모서리 둥글게 */
-	color: var(- -main-color); /* 텍스트 색상 */
+	color: var(--main-color-1); /* 텍스트 색상 */
 	background-color: var(--main-back);
 	cursor: pointer;
 	transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
 .agreement-title{
-	padding-left: 35%;
-
+	margin-top: 20px;
+	padding: 0% 35% 0% 35%;
+	text-align: center;
+	color: var(--main-color-1);
 }
 .agreement {
 	padding-left: 35%;
@@ -139,18 +152,15 @@ button:hover {
 	box-sizing: border-box;
 	border-radius: 50%;
 	cursor: pointer;
-	background-color: #fff;
+	background-color: var(--main-color-1);
 }
 
-.agreement input[type="checkbox"]:checked+.circle {
-	background-color: var(--figma-color);
-	border-color: var(--figma-color);
-	background-image:
-		url(https://blog.kakaocdn.net/dn/t7a2D/btrhtVgLYmG/dUxzAkBy9hIZ4gHmyllQrk/img.png);
-}
-
-.agreement-text {
-	color: #2E3C8A
+.agreement input[type="checkbox"]:checked + .circle {
+	border-color: var(--main-color-1);
+	background-color: var(--main-back);
+	background-image: url(https://blog.kakaocdn.net/dn/t7a2D/btrhtVgLYmG/dUxzAkBy9hIZ4gHmyllQrk/img.png);
+	background-size: contain;
+    background-repeat: no-repeat;
 }
 /* 우편번호 검색, 회원가입 버튼 스타일 */
 .form-address button, .sign-up-button button {
@@ -167,6 +177,37 @@ button:hover {
 	margin-top: 10px;
 }
 
-#wrongForm-inform, #notMatch-inform {
-	visibility: hidden;
+
+.profile-info > div > div {
+	width: 315px;
+	color: red;
+	text-align: right;
+}
+#agreementPersonalData, #agreementAccessTerms {
+	position: absolute;
+	top: 300px;
+	left: calc(50% - 500px);
+	z-index: 150;
+	width: 1000px;
+	height: 800px;
+	padding: 20px;
+	border: 2px solid var(--main-color-1);
+	border-radius: 20px;
+	text-align: center;
+	background-color: var(--main-back);
+	display: none;
+}
+#agreementPersonalData > div, #agreementAccessTerms > div {
+	text-align: left;
+	height: 700px;
+	overflow-Y: auto;
+}
+#agreementPersonalData > h3, #agreementAccessTerms > h3 {
+	text-align: center;
+	margin-bottom: 20px;
+}
+#agreementPersonalData > button, #agreementAccessTerms > button {
+	width: 100px;
+	padding: 10px;
+	margin-top: 20px;
 }
