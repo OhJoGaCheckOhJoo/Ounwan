@@ -9,6 +9,36 @@ footer div {
   width: 610px;
   margin-top: 4px;
 }
+.main-community-wrap {
+	text-align: center;
+}
+.main-community-wrap > div {
+	text-align: left;
+}
+.main-community {
+	display: inline-block;
+	width: 550px;
+	height: 340px;
+	margin: 10px 30px 30px 30px;
+}
+.main-community > img {
+	width: 550px;
+	height: 340px;
+	border-radius: 30px;
+}
+.main-community > span {
+	position: relative;
+	display: inline-block;
+	width: 120px;
+	padding: 10px 20px 10px 20px;
+	bottom: 190px;
+	border-radius: 30px;
+	background-color: rgba(0,0,0,0.5);
+	transition: 0.1s linear all;
+}
+.main-community:hover span {
+	transform: scaleX(1.1);
+}
 .float-right {
   float: right;
 }
@@ -17,6 +47,16 @@ footer div {
 }
 .text-1 {
   font-size: 24px;
+}
+.text-1 > a {
+	display: inline-block;
+	font-size: 12px;
+	color: #888;
+	float: right;
+	padding-top: 12px;
+}
+.text-1 > a:hover {
+	color: var(--main-color-1);
 }
 .img-1 {
   width: 30px;
