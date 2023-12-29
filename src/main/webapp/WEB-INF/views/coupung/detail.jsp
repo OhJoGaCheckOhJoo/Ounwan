@@ -104,10 +104,10 @@
 				<div class="product-additional-view">
 					<div class="product-explain">
 						<c:forEach var="image" items="${detail.detailImages }">
-							<img class="detail-img" src="${image.url }">
+							<img class="detail-img" src="${image.url}">
 						</c:forEach>
 					</div>
-					<div class="product-comment">
+					<div class="product-comment" hidden>
 						<div class="comment-info">
 							<span>리뷰&nbsp;</span> <span class=".reviewTotalCount"></span>
 						</div>
@@ -122,7 +122,7 @@
 							<div class="total-detail">
 								<c:forEach var="score" items="${scoreList}"
 									varStatus="loopStatus">
-									<c:if test="${score eq null}">
+									<c:if test="${score ne 0}">
 										<div>
 											<div class="detail-score">${loopStatus.index+1}점</div>
 											<div class="detail-bar exist">
@@ -131,7 +131,7 @@
 											</div>
 										</div>
 									</c:if>
-									<c:if test="${score ne null}">
+									<c:if test="${score eq 0}">
 										<div>
 											<div class="detail-score">${loopStatus.index+1}점</div>
 											<div class="detail-bar non">
@@ -145,7 +145,6 @@
 							</div>
 						</div>
 						<div>
-							<!-- <%-- 리뷰 하나 div = forEach --%> -->
 							<c:forEach var="reviewList" items="${reviewList}">
 								<c:if test="${reviewList eq null }">
 									<div class="personal-comment">
@@ -153,8 +152,9 @@
 											<div class="comment-user-info">
 												<img src="${reviewList.PROFILE_URL}">
 												<div>
-													<div>${reviewList.CLIENT_ID}</div>
-													<div class="comment-option">${reviewList.COUPUNG_OPTION_NAME}</div>
+													<div class="comment-user-id">${reviewList.CLIENT_ID}</div>
+													<div class="comment-option">[옵선명]
+														${reviewList.COUPUNG_OPTION_NAME}</div>
 												</div>
 											</div>
 											<div class="personal-score">
@@ -178,8 +178,9 @@
 											<div class="comment-user-info">
 												<img src="${reviewList.PROFILE_URL}">
 												<div>
-													<div>${reviewList.CLIENT_ID}</div>
-													<div class="comment-option">${reviewList.COUPUNG_OPTION_NAME}</div>
+													<div class="comment-user-id">${reviewList.CLIENT_ID}</div>
+													<div class="comment-option">[옵션명]
+														${reviewList.COUPUNG_OPTION_NAME}</div>
 												</div>
 											</div>
 											<div class="personal-score">
@@ -199,7 +200,6 @@
 								</c:if>
 
 							</c:forEach>
-							<!-- <%-- ==================== --%> -->
 						</div>
 					</div>
 				</div>
@@ -222,34 +222,30 @@
 	<script>
 const unitPrice = $("#unitPrice").html().replaceAll(",",""); // jsp에서는 DB에서 가져온 가격으로 설정
 
+
 const scoreList = [
     <c:forEach var="score" items="${scoreList}" varStatus="loopStatus">
         ${score}<c:if test="${!loopStatus.last}">, </c:if>
     </c:forEach>
 ];
 
-
-// 이제 scoreList를 JavaScript 변수로 사용할 수 있습니다
-console.log(scoreList);
-
-
-const scoreNum = scoreList.reduce((acc, cur) => {return acc + cur}, 0); // 총 리뷰 개수
-const productScore = (scoreList[0]*1 + scoreList[1]*2 + scoreList[2]*3 + scoreList[3]*4 + scoreList[4]*5) /scoreNum;  // 평균 별점
-console.log(productScore);
-console.log("scoreNum:"+scoreNum);
-$(".reviewTotalCount").text(scoreNum);
+	const scoreNum = scoreList.reduce((acc, cur) => {return acc + cur}, 0); // 총 리뷰 개수
+	const productScore = (scoreList[0]*1 + scoreList[1]*2 + scoreList[2]*3 + scoreList[3]*4 + scoreList[4]*5) /scoreNum;  // 평균 별점
+	console.log("scoreNum:"+scoreNum);
+	$(".reviewTotalCount").text(scoreNum);
 
 if(scoreNum != 0) {
 	$(".total").text((productScore).toFixed(1));
+	$("#mainScore").css('width', productScore * 60 + 'px');
 }
 else {
 	$(".total").text((0.0).toFixed(1));
+	$("#mainScore").css('width', 0 + 'px');
 }
 
 
 // 막대, 별모양 평점 그래프 출력
 $("#miniScore").css('width', productScore * 30 + 'px');
-$("#mainScore").css('width', productScore * 60 + 'px');
 for(var i = 0; i < 5; i++) {
     $("#score" + (i + 1)).css('width', (scoreList[i] / scoreNum) * 300 + 'px');
 }
@@ -375,8 +371,6 @@ for(var i = 0; i < 5; i++) {
 			var productList = [${detail.coupungNumber}];
 			var optionList = [$('#productOption option:selected').val()];
 			var quantityList = [$('#quantity').val()];
-			console.log(productList);
-			console.log(optionList);
 			location.href = '${appPath}/coupung/order?productList=' + productList + '&optionList=' + optionList +'&quantityList=' + quantityList;
 		}
 	});
@@ -418,8 +412,6 @@ for(var i = 0; i < 5; i++) {
 						var productList = [${detail.coupungNumber}];
 						var optionList = [$('#productOption option:selected').val()];
 						var quantityList = [$('#quantity').val()];
-						console.log(productList);
-						console.log(optionList);
 						location.href = '${appPath}/coupung/order?productList=' + productList + '&optionList=' + optionList +'&quantityList=' + quantityList;
 					}
 				},
