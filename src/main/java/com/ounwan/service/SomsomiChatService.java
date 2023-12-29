@@ -26,8 +26,12 @@ public class SomsomiChatService {
 		makeChatRoom.setClientId(clientId);
 		makeChatRoom.setAdminId("admin");
 		System.out.println(somsomiChatRoom);
-		if(!somsomiChatRoom.contains(makeChatRoom)) {
+		int resolvedStatus = chatDAO.selectResolvedStatus(roomId);
+		if(!somsomiChatRoom.contains(roomId)) {
 			chatDAO.makeRoom(makeChatRoom);
+		}
+		if(resolvedStatus == 1) {
+			chatDAO.updateResolvedStatus(roomId);
 		}
 		
 		List<SomsomiChatMessageDTO> result = changeDTOlist(chatDAO.selectSomsomiChatList(roomId));
@@ -46,6 +50,11 @@ public class SomsomiChatService {
 	public Boolean deleteMessage(Integer messageId) {
 		int result = chatDAO.deleteMessage(messageId);
 		return (result > 0) ? true : false;
+	}
+	
+	public Boolean quitChatting(String roomId) {
+		int result = chatDAO.quitChatting(roomId);
+		return null;
 	}
 
 	public List<SomsomiChatMessageDTO> changeDTOlist(List<SomsomiChatMessage> chat){

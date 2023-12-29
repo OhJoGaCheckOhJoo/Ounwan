@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="${appPath}/css/bixSiri/adminChat.css" />
-<div class="chatting-user">채팅방</div>
-<div class="chatting">
-	<div id="chat" class="chat">
+
+<div class="chat-container" id="chatContainer">
+	<div id="chat" class="chat"></div>
 		<!-- 채팅저장출력 -->
 		<script id="temp" type="text/x-handlebars-template">
 		{{#each .}}
@@ -29,23 +28,23 @@
 		<script>
 			var clientId = "${userInfo.clientId}";
 			Handlebars.registerHelper("printLeftRight", function(sender) {
-				if (clientId != sender) {
+				if ("admin" != sender) {
 					return "left";
 				} else {
 					return "right";
 				}
 			});
 			Handlebars.registerHelper("printNone", function(sender) {
-				if (clientId != sender)
+				if ("admin" != sender)
 					return "none";
 			});
 		</script>
+		</div>
 		<div class="message-input">
 			<textarea id="txtMessage" class="txtMessage" cols="30" rows="10"
 				placeholder="메세지를 입력한 후에 엔터키를 누르세요."></textarea>
 		</div>
-	</div>
-</div>
+	
 
 
 <script>
@@ -59,8 +58,7 @@
 			type : 'get',
 			url : '${appPath}/admin/chat/list',
 			data : {
-				roomId : roomId,
-				clientId : clientId
+				roomId : roomId
 			},
 			success : function(responseData) {
 				var temp = Handlebars.compile($("#temp").html());
@@ -78,7 +76,7 @@
 			type : "post",
 			url : "${appPath}/admin/chat/delete",
 			data : {
-				"sender" : clientId,
+				"sender" : "admin",
 				"messageId" : messageId
 			},
 			success : function() {
@@ -88,9 +86,10 @@
 	})
 
 	$("#txtMessage").off("keydown").on("keydown", function(e) {
+		
 		if (e.keyCode == 13 && !e.shiftKey) {
 			e.preventDefault();
-
+			var sender = "admin";
 			var message = $("#txtMessage").val();
 			if (message == "") {
 				alert("메시지를 입력하세요.");
@@ -106,12 +105,12 @@
 				url : '${appPath}/admin/chat/insertMessage',
 				data : {
 					"roomId" : roomId,
-					"sender" : clientId,
+					"sender" : sender,
 					"message" : message
 				},
 				success : function(messageId) {
 					e.preventDefault();
-					sock.send(clientId + "|" + message + "|" + messageId);
+					sock.send(sender + "|" + message + "|" + messageId);
 				}
 			});
 		}
@@ -138,5 +137,5 @@
 		var temp = Handlebars.compile($("#temp1").html());
 		$("#chat").append(temp(data));
 		window.scrollTo(0, $("#chat").prop("scrollHeight"))
-	}
+	} 
 </script>

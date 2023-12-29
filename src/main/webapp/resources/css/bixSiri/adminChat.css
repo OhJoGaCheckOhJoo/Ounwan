@@ -35,10 +35,17 @@
 
 .chat {
 	font-size: 12px;
+	height: 420px;
+    background-color: #eee;
+    border-radius: 10px;
+    margin: 5px 0px 5px 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .chat .sender {
 	margin: 10px 25px 0px 10px;
+	font-size : 25px;
 	font-weight: bold;
 }
 
@@ -47,23 +54,26 @@
 	margin: 5px 20px 0px 10px;
 	max-width: 75%;
 	border: 1px solid gray;
-	font-size: 18px;
+	font-size: 28px;
 	padding: 5px;
 	border-radius: 5px;
 	background-color: #FCFCFC;
 	text-align: left;
 }
 
+.chat .message a{
+	font-size: 28px;
+}
+
 .chat .date {
 	margin: 5px 20px 10px 10px;
-	font-size: 10px;
+	font-size: 18px;
 }
 
 .message-input {
-	position: fixed;
 	bottom: 0px;
 	height: 90px;
-	width: 650px;
+	width: 620px;
 	background-color: #FFF;
 	text-align: center;
 	border-top: 1px solid rgb(57, 46, 179);
@@ -74,7 +84,7 @@
 	height: 90px;
 	border: none;
 	padding: 5px;
-	font-size : 18px;
+	font-size : 28px;
 }
 
 /* 내가 추가 */
@@ -85,3 +95,9 @@ hr {
 	border : 1px solid var(--main-mint-color);
 }
 
+.resolved-status {
+	height : 30px;
+	font-size: 25px;
+    margin: 5px 5px 10px 0px;
+    color: #ccc;
+}

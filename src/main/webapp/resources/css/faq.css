@@ -184,7 +184,7 @@
 #closeBtn {
 	cursor: pointer;
 }
-#help{
+.help{
 	position: fixed;
 	bottom: 100px;
 	right: 100px;
@@ -195,7 +195,7 @@
 	border-radius: 25px;
 	z-index: 10;
 }
-#help img {
+.help img {
 	width: 30px;
 	height: 30px;
 	margin: 10px;

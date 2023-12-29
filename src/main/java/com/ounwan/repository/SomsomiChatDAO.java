@@ -40,5 +40,17 @@ public class SomsomiChatDAO {
 	public int deleteMessage(Integer messageId) {
 		return sqlSession.delete(NAMESPACE + "deleteMessage", messageId);
 	}
+	
+	public int selectResolvedStatus(String roomId) {
+		return sqlSession.selectOne(NAMESPACE + "selectResolvedStatus", roomId);
+	}
+
+	public int updateResolvedStatus(String roomId) {
+		return sqlSession.update(NAMESPACE + "updateResolvedStatus", roomId);
+	}
+
+	public int quitChatting(String roomId) {
+		return sqlSession.update(NAMESPACE + "quitChatting", roomId);
+	}
 
 }
