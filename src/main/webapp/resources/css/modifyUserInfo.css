@@ -206,6 +206,7 @@ button:hover {
 	border-color: var(--main-color-2); /* 호버시 테두리 색상 변경 */
 }
 
+
 .input-form {
 	font-size: 14px;
 	color: #eee7d8;

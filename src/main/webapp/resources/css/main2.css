@@ -24,15 +24,10 @@
     font-style: normal;
 }
 @font-face {
-    font-family: 'VitroPride';
-    font-weight: normal;
+    font-family: 'OAGothic-ExtraBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/OAGothic-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
     font-style: normal;
-    src: url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroPride.eot');
-    src: url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroPride.eot?#iefix') format('embedded-opentype'),
-        url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroPride.woff2') format('woff2'),
-        url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroPride.woff') format('woff'),
-        url('https://cdn.jsdelivr.net/gh/webfontworld/vitro/VitroPride.ttf') format("truetype");
-    font-display: swap;
 }
 
 :root {

@@ -51,18 +51,15 @@
 				<div class="modal-content">
 					<span class="close">&times;</span>
 					<div class="profile-password">
-						<label class="modal-attribute-name" for="">비밀번호</label> <input
-							type="password" class="modal-input-form" id="firstPass"
-							placeholder="비밀번호를 입력하세요"> <span id="wrongForm-inform">잘못된
-							형식입니다.</span>
+						<label class="modal-attribute-name" for="">비밀번호</label> 
+						<input type="password" class="modal-input-form" id="firstPass" placeholder="비밀번호를 입력하세요"> 
+						<span id="wrongForm-inform">잘못된	형식입니다.</span>
 					</div>
 					<div class="profile-password">
-						<label class="modal-attribute-name" for="">비밀번호 확인</label> <input
-							type="password" class="modal-input-form" placeholder="비밀번호를 입력하세요"
-							id="secondPass" required /> <span id="notMatch-inform">비밀번호가
-							일치하지 않습니다.</span>
+						<label class="modal-attribute-name" for="">비밀번호 확인</label> 
+						<input type="password" class="modal-input-form" placeholder="비밀번호를 입력하세요"	id="secondPass" required /> 
+						<span id="notMatch-inform">비밀번호가 일치하지 않습니다.</span>
 					</div>
-	
 					<button id="savePassword">저장</button>
 				</div>
 			</div>

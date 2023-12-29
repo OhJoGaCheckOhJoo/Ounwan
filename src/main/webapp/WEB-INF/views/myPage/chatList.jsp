@@ -14,21 +14,28 @@
 
 <div class="chat-history-container">
 	<div class="user-info-container">
+		<div class="chat-list-header">
+			<div class="user-info-title">
+				<div>전체 대화</div>
+			</div>
+		</div>
 		<c:if test="${empty chatList}">
 			<div>채팅 내역이 없습니다.</div>
 		</c:if>
 		<c:if test="${not empty chatList}">
 			<c:forEach var="roomInfo" items="${chatList}" varStatus="loop">
-				<a href="javascript:getChatRoom('${roomInfo.chatRoom.roomId}')">
-					<div class="danggun-user-info">
-						<div class="danggun-user-info img">
-							<img src="${roomInfo.partnerInfo.profileUrl}">
-						</div>
-						 <div class="danggun-user-info name">
-							<span>${roomInfo.partnerInfo.clientId}</span>
+				<div class="partner-info-container">
+					<a href="javascript:getChatRoom('${roomInfo.chatRoom.roomId}')">
+						<div class="danggun-user-info">
+							<div class="danggun-user-info img">
+								<img src="${roomInfo.partnerInfo.profileUrl}">
+							</div>
+							 <div class="danggun-user-info name">
+								<span>${roomInfo.partnerInfo.clientId}</span>
+							 </div>
 						 </div>
-					 </div>
-				</a>
+					</a>
+				</div>
 			</c:forEach>
 		</c:if>
 	</div>

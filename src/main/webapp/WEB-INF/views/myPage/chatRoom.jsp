@@ -13,9 +13,6 @@
 
 <div class="chat-wrap">
 	<div class="chat-header">
-		<div class="chat-title">
-			<h3>채팅방</h3>
-		</div>
 		<div class="product-bar">
 			<div>
 				<c:forEach var="images" items="${post.productImagesList}">
@@ -32,7 +29,6 @@
 		</div>
 		<hr>
 	</div>
-
 	<div id="chat" class="chat"></div>
 	<!-- 채팅저장출력 -->
 	<script id="temp" type="text/x-handlebars-template">
