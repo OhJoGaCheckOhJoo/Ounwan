@@ -109,7 +109,7 @@
 					</div>
 					<div class="product-comment" hidden>
 						<div class="comment-info">
-							<span>리뷰&nbsp;</span> <span class=".reviewTotalCount"></span>
+							<span>리뷰&nbsp;</span> <span class="reviewTotalCount"></span>
 						</div>
 						<div class="comment-total">
 							<div class="total-score">
@@ -173,30 +173,51 @@
 									</div>
 								</c:if>
 								<c:if test="${reviewList ne null}">
-									<div class="personal-comment">
-										<div class="comment-user">
-											<div class="comment-user-info">
-												<img src="${reviewList.PROFILE_URL}">
-												<div>
-													<div class="comment-user-id">${reviewList.CLIENT_ID}</div>
-													<div class="comment-option">[옵션명]
-														${reviewList.COUPUNG_OPTION_NAME}</div>
+									<c:if test="${reviewList.IMAGE_URL eq null}">
+										<div class="personal-comment no-image">
+											<div class="comment-user">
+												<div class="comment-user-info">
+													<img src="${reviewList.PROFILE_URL}">
+													<div>
+														<div class="comment-user-id">${reviewList.CLIENT_ID}</div>
+														<div class="comment-option">[옵션명]
+															${reviewList.COUPUNG_OPTION_NAME}</div>
+													</div>
+												</div>
+												<div class="personal-score">
+													<div style="width: calc(${reviewList.SCORE} * 50px);"></div>
+													<img src="${appPath}/images/star.png">
 												</div>
 											</div>
-											<div class="personal-score">
-												<div style="width: calc(${reviewList.SCORE} * 50px);"></div>
-												<img src="${appPath}/images/star.png">
-											</div>
+											<div class="personal-comment-content">${reviewList.CONTENTS}</div>
+
+
+
 										</div>
-										<div class="personal-comment-content">${reviewList.CONTENTS}</div>
-										<c:if test="${reviewList.IMAGE_URL ne null}">
+									</c:if>
+									<c:if test="${reviewList.IMAGE_URL ne null}">
+										<div class="personal-comment image-exist">
+											<div class="comment-user">
+												<div class="comment-user-info">
+													<img src="${reviewList.PROFILE_URL}">
+													<div>
+														<div class="comment-user-id">${reviewList.CLIENT_ID}</div>
+														<div class="comment-option">[옵션명]
+															${reviewList.COUPUNG_OPTION_NAME}</div>
+													</div>
+												</div>
+												<div class="personal-score">
+													<div style="width: calc(${reviewList.SCORE} * 50px);"></div>
+													<img src="${appPath}/images/star.png">
+												</div>
+											</div>
+											<div class="personal-comment-content">${reviewList.CONTENTS}</div>
 											<div class="personal-review-image">
 												<img src="${reviewList.IMAGE_URL}">
 											</div>
-										</c:if>
-										<c:if test="${reviewList.IMAGE_URL == null}">
-										</c:if>
-									</div>
+										</div>
+									</c:if>
+
 								</c:if>
 
 							</c:forEach>

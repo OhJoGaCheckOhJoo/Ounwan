@@ -443,10 +443,16 @@
     bottom: 38px;
     padding-right: 15px;
 }
+
 .personal-comment {
-    height: 450px;
     margin:  60px auto 0px auto;
     border-bottom: 1px solid var(--main-color-1);
+}
+.personal-comment.no-image {
+    height: 200px;
+}
+.personal-comment.image-exist {
+    height: 450px;
 }
 .comment-user {
     height: 80px;
