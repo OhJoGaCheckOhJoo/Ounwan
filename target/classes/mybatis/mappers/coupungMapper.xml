@@ -48,4 +48,9 @@
     	SET AVAILABLE_CHECK = FALSE
     	WHERE COUPUNG_NUMBER = #{coupungId}
     </update>
+    
+    <select id="getPrice" parameterType="int" resultType="int">
+    	SELECT PRICE FROM COUPUNG 
+    	WHERE COUPUNG_NUMBER = #{coupungNumber}
+    </select>
 </mapper>

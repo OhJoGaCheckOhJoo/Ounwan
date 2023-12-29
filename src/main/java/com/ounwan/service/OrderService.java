@@ -61,7 +61,6 @@ public class OrderService {
 		int result = orderDAO.updateTradeStatus(order);
 		return result > 0;
 	}
-	
 	public List<OrdersDTO> changeDTOList(List<Orders> orderList) {
 		List<OrdersDTO> changedList = new ArrayList<OrdersDTO>();
 		for (Orders order : orderList) {

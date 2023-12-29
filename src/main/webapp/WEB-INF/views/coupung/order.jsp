@@ -8,8 +8,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${appPath }/css/main.css" />
 <link href="${appPath }/css/main2.css" rel="stylesheet">
 <link href="${appPath }/css/header.css" rel="stylesheet">
@@ -97,11 +96,12 @@
 											alt="Line 21" /> <img class="line-19-1 line-19-4"
 											src="../images/order/line-19.svg" alt="Line 19" />
 									</div>
-									<div>
+									<div id="product-area">
 										<c:forEach var="product" items="${products}"
 											varStatus="status">
 											<div class="x01">
 												<div class="x01-1">
+													<input type="hidden" value="${product.coupungNumber }" />
 													<img class="x50-2" src="${product.image[0].url }" alt="50" />
 													<div class="text-container">
 														<p class="jtext-10 valign-text-middle">-[옵션] :
@@ -110,7 +110,7 @@
 															class="text-11 valign-text-middle inter-normal-black-12px">${product.name}</div>
 													</div>
 												</div>
-												<div class="text-12 valign-text-middle">${product.quantity}</div>
+												<div class="text-12 valign-text-middle" id="quantity">${product.quantity}</div>
 												<div
 													class="text-13 valign-text-middle juliussansone-normal-black-12px price-value">${product.price}</div>
 												<div
@@ -397,28 +397,68 @@
 		});
 		
 		$('#payment').on('click', function() {
-			 IMP.init("imp43370630");
-             // IMP.request_pay(param, callback) 결제창 호출
+			var list = '${products}'.split('CoupungDTO');
+			var productName = '${products[0].name}';
+			var len = list.length;
+			if (len > 2) {
+				productName += ' 외 ' + (len - 2) + ' 개'; 
+				
+			}
+			
+			var coupungNumber = [];
+			for(var i = 0; i < $('#product-area .x01-1 input').length; i++) {
+				coupungNumber.push($('#product-area .x01-1 input').eq(i).val());
+			}
+			console.log(coupungNumber);
+			
+			var quantities = [];
+			for(var i = 0; i < $('#product-area .x01 #quantity').length; i++) {
+				quantities.push($('#product-area .x01 #quantity').eq(i).text());
+			}
+			
+			console.log(quantities);
+			var price = 0;
+			
+			var priceUrl = "${appPath}/coupung/price?coupungNumbers=" + coupungNumber.join(',') + "&quantities=" + quantities.join(',');
+			var orderer = $('#name-txt').val();
+			var zipCode = $('#zipcode-txt').val();
+			var address = $('#address-txt').val() + " " + $('#address-detail-txt').val();
+			var phoneNumber = $('#phone-txt').val();
+			var email = $('#id-txt').val() + "@" + $('#domain-txt').val();
+			
+			 $.ajax({
+				 url : priceUrl,
+				 type : 'get',
+				 success : function(price) {
+					 IMP.init("imp43370630");
+		             // IMP.request_pay(param, callback) 결제창 호출
 
-             IMP.request_pay({ // param
-                 pg: "kcp",
-                 merchant_uid: "사과", // 상품 번호 
-                 amount: "1234", // 상품 비용
-                 name: "123", // 상품명
-                 buyer_email: "123", // 주문자 이메일
-                 buyer_name: "123", // 주문자 명
-                 buyer_tel: "123", // 주문자 번호
-                 buyer_addr: "123", // 주문자 주소
-                 buyer_postcode: "123", // 우편번호
-                 m_redirect_url: "${appPath}" //
-
-             }, function (rsp) { // callback
-                 if (rsp.success) {
-               		alert("success");
-                 } else {
-                     alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
-                 }
-             });
+		             IMP.request_pay({ // param
+		                 pg: "kcp",
+		                 amount: price, // 상품 비용
+		                 name: productName, // 상품명
+		                 buyer_email: email, // 주문자 이메일
+		                 buyer_name: orderer, // 주문자 명
+		                 buyer_tel: phoneNumber, // 주문자 번호
+		                 buyer_addr: address, // 주문자 주소
+		                 buyer_postcode: zipCode// 우편번호
+		             }, 
+		             function (rsp) { // callback
+		    			console.log(rsp);
+		             	$.ajax({
+		             		type: "POST",
+		             		url : "${appPath}/coupung/orderCheck?imp_uid=" + rsp.imp_uid 
+		             	}).done(function(data) {
+		             		console.log(data);
+		             		if (rsp.paid_amount === data.response.amount) {
+		             			alert("성공");
+		             		} else {
+		             			alert("결제에 실패하였습니다.");
+		             		}
+		             	});
+		            });
+				 } 
+			});
 		});
 	</script>
 

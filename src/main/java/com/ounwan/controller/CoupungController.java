@@ -1,7 +1,10 @@
 package com.ounwan.controller;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +26,10 @@ import com.ounwan.dto.GuestsDTO;
 import com.ounwan.dto.OrdersDTO;
 import com.ounwan.service.CoupungService;
 import com.ounwan.service.OrderService;
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
 
 @Controller
 @RequestMapping("/coupung")
@@ -31,6 +39,10 @@ public class CoupungController {
 	CoupungService coupungService;
 	@Autowired
 	OrderService orderService;
+	
+	private static final String IAMPORT_REST_APIKEY = "00";
+	private static final String IAMPORT_SECRET = "00";
+	private IamportClient api = new IamportClient(IAMPORT_REST_APIKEY, IAMPORT_SECRET);
 	
 	@GetMapping("/products")
 	public String getProductMain (@RequestParam(defaultValue = "0")String categoryNum, Model model) {
@@ -118,5 +130,20 @@ public class CoupungController {
 		boolean result = orderService.setOrder(order, client, guest);
 		
 		return (result) ? "success" : "fail";
+	}
+	
+	@GetMapping("/price")
+	public @ResponseBody int getPrice(@RequestParam List<String> coupungNumbers, @RequestParam List<String> quantities) {
+		return coupungService.getPrice(coupungNumbers, quantities);
+	}
+	
+	// 결제 검증
+	@RequestMapping("/orderCheck")
+	public @ResponseBody IamportResponse<Payment> paymentByImpUid(Model model
+																	, Locale locale
+																	, HttpSession session
+																	, @RequestParam(value= "imp_uid") String imp_uid) 
+																			throws IamportResponseException, IOException {	
+		return api.paymentByImpUid(imp_uid);
 	}
 }
