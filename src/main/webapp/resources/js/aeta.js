@@ -26,6 +26,7 @@
 		}
 	})
 	});
+	
 
 /* 검색 function */
 function search(page) {
@@ -34,11 +35,11 @@ function search(page) {
 				"selectedOption" : $('select[name="option"]').val(),
 				"inputValue" : $("#inputValue").val(),
 				"page": page
-			};		
-			
+			};	
 			$.ajax({
 				url : appPath+"/community/aetaSearch",
 				data : obj,
+				type:"get",
 				success : function(response) {
 					console.log("button works");
 					$('#aeta-list').html(response);
@@ -48,7 +49,6 @@ function search(page) {
 				}
 			});
 }
-
 /*검색 기능*/
 $("#searchBtn").click(function(){
  	search(1);

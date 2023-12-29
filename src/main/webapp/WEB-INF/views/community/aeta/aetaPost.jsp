@@ -63,30 +63,30 @@
 					<img id="aeta-like-png" class="aeta-like-png"
 						src="${appPath}/images/likeImages/dislike.png">
 				</c:otherwise>
-			</c:choose> <span>좋아요:<span id="count-likes">${aetaCountLikes}</span></span>
+			</c:choose><span id="count-likes"> ${aetaCountLikes}</span>
 		</a>
-		<div>댓글:${aetaPost[0].AETA_TOTAL_COMMENTS}</div>
+		<div><p>댓글 ${aetaCountComments}</p></div>
 		​
 		<hr>
 		<h4>댓글</h4>
 		<h5>댓글은 수정이 불가능하르모 신중히 입력하세요!</h5>
 
 		<div class="commentList">
-			<c:forEach items="${aetaPost}" var="aeta">
-				<c:if test="${aeta.COMMENTER_ID ne null}">
+			<c:forEach items="${aetaComments}" var="aeta">
+				<c:if test="${aeta.CLIENT_ID ne null}">
 					<div>
 						<input type="hidden" class="commentId"
 							value="${aeta.COMMENT_NUMBER}">
 						<span>
-							<img class="aeta-photo" src="${appPath}/${aeta.COMMENTER_PHOTO}"/></span>
-						<span>댓글작성자: ${aeta.COMMENTER_ID}</span>
-						<span>${aeta.AETA_CREATED_DATE }</span> 
+							<img class="aeta-photo" src="${aeta.PROFILE_URL}"/></span>
+						<span>댓글작성자: ${aeta.CLIENT_ID}</span>
+						<span>${aeta.CREATED_DATE }</span> 
 						<span id=""> 
-						<c:if test="${aeta.COMMENTER_ID == clientId}">
+						<c:if test="${aeta.CLIENT_ID == clientId}">
 								<button type="button" id="deleteCommentBtn">삭제</button>
 						</c:if>
 						</span>
-						<div class="commentContent">댓글:${aeta.AETA_COMMENT}</div>
+						<div class="commentContent">댓글: ${aeta.CONTENTS}</div>
 					</div>
 				</c:if>
 			</c:forEach>
@@ -96,6 +96,7 @@
 			<button type="button" id="insertCommentBtn">등록</button>
 		</div>
 	</div>
+	
 <%--
 		</div>
 		<hr>

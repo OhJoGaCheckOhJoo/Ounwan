@@ -49,12 +49,8 @@ public class CommunityController {
 		List<AetaDTO> aetaList = communityService.aetaList(page,inputValue,selectedOption);
 		PaginatingDTO paginating= communityService.getPages(page,inputValue,selectedOption);
 		
-		System.out.println();
-		
 		model.addAttribute("aetaList", aetaList);
-//		System.out.println(aetaList);
 		model.addAttribute("paginating",paginating);
-		
 		model.addAttribute("inputValue",inputValue);
 		model.addAttribute("selectedOption",selectedOption);
 		
@@ -97,6 +93,12 @@ public class CommunityController {
 			model.addAttribute("aetaPost", communityService.aetaReadPost(Integer.parseInt(aetaNumber)));
 			//좋아요 갯수
 			model.addAttribute("aetaCountLikes",communityService.aetaCountLikes(Integer.parseInt(aetaNumber)));
+			//게시글 댓글 데이터 전송
+			model.addAttribute("aetaComments",communityService.aetaReadComments(Integer.parseInt(aetaNumber)));
+			System.out.println("\n\n\naetaReadPost controller, model댓글추가:"+model);
+			//댓글 갯수
+			model.addAttribute("aetaCountComments",communityService.aetaCountComments(Integer.parseInt(aetaNumber)));
+			
 			//접속자 좋아요 체크 여부
 			model.addAttribute("aetaLikesCheck",communityService.aetaLikesCheck(Integer.parseInt(aetaNumber),logedInClient.getClientId()));
 //			System.out.println(model);
