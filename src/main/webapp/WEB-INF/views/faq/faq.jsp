@@ -51,14 +51,24 @@
         </div>
     </div>
     
-    <a id="help" href="#">
-    	<img src="${appPath}/images/help.png">
+    <a id="adminChatting" class="help" href="#">
+    	<img src="${appPath}/images/help.jpg" />
     </a>
     
     <%@ include file="../danggun/danggunProhibitedListModal.jsp"%>
     
     <script src="./js/main.js"></script>
     <script>    	
+	    $("#adminChatting").on("click",function(e){
+	    	e.preventDefault();
+	    	if(!"${userInfo.clientId}"){
+	    		alert("로그인을 해주세요!");
+	    		window.location.href = "${appPath}/clients/login";
+	    	}else{
+	    		window.open("${appPath}/somsomi/chat","/chat/somsomiChat","width=500, height=800, top=200, left=200");
+	    	}
+	    });
+    
     	var faqOffset = 0;
     	var faqCategory = 0;
     	var keyword = '';
