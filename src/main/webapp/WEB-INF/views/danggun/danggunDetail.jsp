@@ -23,17 +23,15 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-	<%@ include file="../common/header.jsp" %>
+	<%@ include file="../common/header.jsp"%>
 
-    <div class="container">
-        <%@ include file="../common/nav.jsp" %>
+	<div class="container">
+		<%@ include file="../common/nav.jsp"%>
 
-			<div class="product-all">
-				<div class="toList">
-					<a href="${appPath}/danggun/main">목록으로 > </a>
-				</div>
-				<div class="details">
-					<div class="photos">
+		<div class="product-all">
+			<div class="details">
+				<div class="photos">
+					<c:if test="${post.productImagesList.size() ne 1}">
 						<div class="product-img-2 small-img">
 							<c:forEach var="images" items="${post.productImagesList}">
 								<c:if test="${images.type eq 1}">
@@ -43,76 +41,69 @@
 								</c:if>
 							</c:forEach>
 						</div>
-						<!-- small_img -->
-						<div class="product-img-1 big-img">
-							<c:forEach var="images" items="${post.productImagesList}">
-								<c:if test="${images.type eq 0}">
-									<img class="big-img" src="${images.url }" />
-								</c:if>
-							</c:forEach>
-						</div>
-						<!-- big_img -->
+					 </c:if>
+					<c:if test="${post.productImagesList.size() eq 1}">
+					</c:if>
+					<div class="product-img-1 big-img">
+						<c:forEach var="images" items="${post.productImagesList}">
+							<c:if test="${images.type eq 0}">
+								<img class="big-img" src="${images.url }" />
+							</c:if>
+						</c:forEach>
 					</div>
-					<!-- photo -->
-
-					<div class="product">
-						<div class="product-detail">
-							<div class="product-top">
-								<div class="product-name">${post.productName}</div>
-								<c:if test="${userInfo.clientId != post.clientId}">
-									<div class="hamburger">
-										<div class="post-menu">이미지들어간다</div>
-										<div class="small-menu" id="small-menu">
-											<button class="modal-button" onclick="openShareModal()">공유</button>
-											<button class="modal-button" onclick="openReportModal()">신고</button>
-										</div>
-									</div>
-									<!-- hamburger -->
-								</c:if>
-							</div>
-							<!-- product_top -->
-							<div class="seller" id="seller">판매자 : ${post.clientId}</div>
-							<div class="product-price" id="product-price">가격 :
-								${post.price}원</div>
-							<div class="registered-date" id="registered-date">등록일 :
-								${post.uploadDate}</div>
-							<div class="trade_step">${post.tradeStep}</div>
-
-							<div class="product-bottom">
-								<c:if test="${userInfo.clientId != post.clientId}">
-									<!-- session의 clientid와 작성자의 clientid가 다를 때 -->
-									<button class="zzimBtn" id="wishListBtn" type="button"
-										value="${post.danggunNumber}">
-										<img id="wishListImg" class="wish-list-img"
-											src="${appPath}/images/danggun_wishlist_${post.wishListImg}.png" />
-										<div id="small" class="small">${post.countZzim}</div>
-									</button>
-									<button class="chatting main-btn" id="chatting" type="button">
-										채팅하기</button>
-
-								</c:if>
-								<c:if test="${userInfo.clientId == post.clientId}">
-									<!-- session의 clientid와 작성자의 clientid가 같을 때 -->
-									<button class="modal-button white-btn"
-										onclick="openModal(${post.tradeHistoryNumber})">수정하기</button>
-									<button class="danggunDelete main-btn" id="danggunDelete"
-										type="submit">삭제하기</button>
-								</c:if>
-							</div>
-							<!-- product_bottom -->
-						</div>
-						<!-- product detail -->
-					</div>
-					<!-- product -->
 				</div>
-				<!-- details -->
-				<hr />
-				<div class="here">${post.detail}</div>
+
+				<div class="product">
+					<div class="product-detail">
+						<div class="product-top">
+							<div class="product-name">${post.productName}</div>
+							<c:if test="${userInfo.clientId != post.clientId}">
+								<div class="hamburger">
+									<div class="post-menu" onclick="toggle()">
+										<img src="${appPath}/images/toggleButton.png">
+									</div>
+									<div class="small-menu" id="smallMenu">
+										<button class="modal-button" onclick="openShareModal()">공유</button>
+										<button class="modal-button" onclick="openReportModal()">신고</button>
+									</div>
+								</div>
+							</c:if>
+						</div>
+						<!-- product_top -->
+						<div class="seller" id="seller">판매자 : ${post.clientId}</div>
+						<div class="product-price" id="product-price">가격 :
+							${post.price}원</div>
+						<div class="registered-date" id="registered-date">등록일 :
+							${post.uploadDate}</div>
+						<div class="trade_step">${post.tradeStep}</div>
+
+						<div class="product-bottom">
+							<c:if test="${userInfo.clientId != post.clientId}">
+								<button class="zzimBtn" id="wishListBtn" type="button"
+									value="${post.danggunNumber}">
+									<img id="wishListImg" class="wish-list-img"
+										src="${appPath}/images/danggun_wishlist_${post.wishListImg}.png" />
+									<div id="small" class="small">${post.countZzim}</div>
+								</button>
+								<button class="chatting main-button" id="chatting" type="button">
+									채팅하기</button>
+
+							</c:if>
+							<c:if test="${userInfo.clientId == post.clientId}">
+								<!-- session의 clientid와 작성자의 clientid가 같을 때 -->
+								<button class="modal-button white-button"
+									onclick="openModal(${post.tradeHistoryNumber})">수정하기</button>
+								<button class="danggun-delete main-button" id="danggunDelete"
+									type="submit">삭제하기</button>
+							</c:if>
+						</div>
+					</div>
+				</div>
 			</div>
-			<!-- product ALL-->
+			<div class="here">${post.detail}</div>
 		</div>
-		<!-- container -->
-		<hr />
+	</div>
+	<hr />
 	</main>
 	<div id="danggunModal" danggunNumber="${post.danggunNumber}"
 		clientId="${post.clientId}"></div>
@@ -125,5 +116,10 @@
 	<script src="${appPath}/js/danggunShareModal.js"></script>
 	<script src="${appPath}/js/main.js"></script>
 	<script src="${appPath}/js/danggunDetail.js"></script>
+	<script>
+		function toggle() {
+			$("#smallMenu").toggle();
+		}
+	</script>
 </body>
 </html>

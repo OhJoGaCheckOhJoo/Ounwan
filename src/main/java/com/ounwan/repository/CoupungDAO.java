@@ -1,6 +1,7 @@
 package com.ounwan.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +56,13 @@ public class CoupungDAO {
 
 	public int getPrice(int coupungNumber) {
 		return sqlSession.selectOne(NAMESPACE + "getPrice", coupungNumber);
+	}
+	
+	public List<Map<String, Object>> getReviewList(int coupungNumber) {
+		return sqlSession.selectList(NAMESPACE + "selectReview", coupungNumber);
+	}
+
+	public Integer getScoreList(Map<String, Object> scoreInfo) {
+		return sqlSession.selectOne(NAMESPACE + "getScoreList", scoreInfo);
 	}
 }

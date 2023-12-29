@@ -53,4 +53,42 @@
     	SELECT PRICE FROM COUPUNG 
     	WHERE COUPUNG_NUMBER = #{coupungNumber}
     </select>
+
+	<select id="selectReview" parameterType="int" resultType="map">
+		SELECT
+		O.CLIENT_ID,
+		R.SCORE,
+		R.CONTENTS,
+		R.IMAGE_URL,
+		C.PROFILE_URL,
+		CO.NAME AS
+		COUPUNG_OPTION_NAME
+		FROM
+		ORDERS O
+		JOIN
+		ORDER_DETAILS OD ON O.ORDER_NUMBER
+		= OD.ORDER_NUMBER
+		JOIN
+		REVIEWS R ON OD.ORDER_DETAIL_NUMBER =
+		R.ORDER_DETAIL_NUMBER
+		JOIN
+		CLIENTS C ON O.CLIENT_ID = C.CLIENT_ID
+		JOIN
+		COUPUNG_OPTIONS CO ON OD.COUPUNG_OPTION_NUMBER =
+		CO.COUPUNG_OPTION_NUMBER
+		WHERE
+		OD.COUPUNG_NUMBER = #{coupungNumber}
+	</select>
+
+	<select id="getScoreList" parameterType="map" resultType="int">
+		SELECT
+		COUNT(*) AS review_count
+		FROM REVIEWS
+		WHERE ORDER_DETAIL_NUMBER IN (
+		SELECT ORDER_DETAIL_NUMBER
+		FROM ORDER_DETAILS
+		WHERE COUPUNG_NUMBER = #{coupungNumber}
+		)
+		AND SCORE = #{score};
+	</select>
 </mapper>

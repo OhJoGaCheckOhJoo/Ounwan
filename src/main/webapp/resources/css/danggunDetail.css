@@ -18,23 +18,38 @@
 	justify-content: space-around;
 }
 
+.i {
+	color: #444;
+}
+
 .small-img {
-	width: 80px;
+	margin-right: 20px; 
+	width: 120px;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	margin-right: 20px;
+	height: 120px;
+}
+
+.small-img.detail-img {
+	border-radius: 20px;
+	cursor: pointer;
+}
+
+.small-img>div {
+	margin: 10px 0px;
 }
 
 .big-img {
-	width: 300px;
-	height: 300px;
+	width: 500px;
+	height: 500px;
 	bottom: 0;
+	border-radius: 50px;
 }
 
 .photos {
 	display: flex;
 	flex-direction: row;
-	border: solid 2px black;
 	padding: 20px;
 	margin-bottom: 20px;
 	justify-content: center;
@@ -42,16 +57,21 @@
 }
 
 .product-all {
-	width: 800px;
+	width: 1250px;
 	display: flex;
 	flex-direction: column;
 	margin: auto;
 	margin-top: 30px;
+	display: flex;
 }
 
 .product-name {
-	font-size: 25px;
+	font-size: 50px;
 	font-weight: bolder;
+}
+
+.seller, .product-price, .registered-date, .trade_step {
+	font-size: 25px;
 }
 
 .details {
@@ -64,13 +84,12 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	height: 300px;
+	height: 400px;
 }
 
 .product {
-	width: 300px;
-	height: 300px;
-	border: solid 2px black;
+	width: 600px;
+	height: 500px;
 	padding: 20px;
 	margin-bottom: 20px;
 }
@@ -79,64 +98,74 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	margin-bottom: 15px;
 }
 
 .product-bottom {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	bottom: 0px;
+	position: relative;
 }
 
 .here {
-	width: 770px;
-	margin-top: 20px;
-	margin-bottom: 30px;
-	padding: 10px;
-	height: 500px;
-	border: 2px solid black;
+	width: 1140px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    height: 500px;
+    border: 2px solid black;
+    padding: 50px;
+    font-size: 35px;
+    border-radius: 50px;
+    background-color: #444;
 }
 
 .hamburger {
-	display: flex;
+	display: relative;
 	flex-direction: column;
 	text-align: right;
 }
 
 .small-menu {
-	display: inline-block;
-	background-image: url("../images/dot3.png");
-	background-size: cover;
+	text-align: center;
+	display: none;
+	position: absolute;
+	width: 70px;
+}
+
+.small-menu>button {
+	display: block;
+	width: 100%;
+	padding: 5px 0px;
+	font-size: 20px;
+	margin-bottom: 3px;
+	background-color: rgba(0, 0, 0, 0.2);
 }
 
 .small-menu:hover {
 	transform: scaleY(1);
 }
 
-.toList {
-	text-align: right;
-	margin-bottom: 10px;
+.main-button {
+	position: absolute;
+    right: 10px;
+} 
+
+.main-button:hover, .white-button:hover {
+	color: var(--main-color-2);
 }
 
-.main-btn {
-	height: 50px;
-	width: 120px;
-	font-size: 1.25em;
-	font-weight: bold;
-	color: #fff;
-	border-radius: 10px;
-	background-color: var(- -main-color);
-}
+ .white-button {
+	position: absolute;
+    right: 140px;
+} 
 
-.white-btn {
-	height: 50px;
-	width: 120px;
-	font-size: 1.25em;
-	font-weight: bold;
-	color: var(- -main-color);
-	border: 1px solid var(- -main-color);
-	border-radius: 10px;
-	background-color: white;
+.white-button, .main-button {
+	cursor: pointer;
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-right: 10px;
+    border: 1px solid var(--main-color-1);
 }
 
 .zzim {
@@ -147,6 +176,14 @@
 .wish-list-img {
 	width: 30px;
 	height: 30px;
+	cursor: pointer;
+}
+
+.small {
+	width: 30px;
+	height: 30px;
+	font-size: 22px;
+	margin: 3px 0px 0px 10px;
 }
 
 .zzimBtn {
@@ -155,43 +192,15 @@
 	display: flex;
 	flex-direction: row;
 }
-/* 
+
 .post-menu {
-    position: relative;
-    display: inline-block;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-} */
-
-/* .small-menu {
-	opacity: 0;
-    visibility: hidden;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    padding: 10px;
-    z-index: 1;
-    transition: opacity 0.3s, visibility 0.3s;
+	width: 70px;
+	height: 70px;
+	display: flex;
+	cursor: pointer;
 }
 
-.post-menu:hover .small-menu {
-    opacity: 1;
-    visibility: visible;
+.post-menu>img {
+	width: 100%;
+	height: 100%;
 }
-
-.small-menu a {
-    display: block;
-    color: #333;
-    text-decoration: none;
-    padding: 8px 0;
-    transition: background-color 0.3s;
-}
-
-.small-menu a:hover {
-    background-color: #f2f2f2;
-}
- */
