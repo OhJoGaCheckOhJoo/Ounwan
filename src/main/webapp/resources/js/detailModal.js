@@ -1,4 +1,4 @@
-function openDeatilModal(selectedorderNumber, selectedDate) {
+function openDeatilModal(selectedorderNumber, selectedDate, selectedTotalPrice, selectedTotalQuantity) {
 	document.getElementById("detailModal").style.display = "block";
 	document.getElementById("detailModalOverlay").style.display = "block";
 
@@ -7,6 +7,8 @@ function openDeatilModal(selectedorderNumber, selectedDate) {
 	
 	$("#modalOrderNumber").text(orderNumber);
 	$("#modalOrderDate").text(orderDate);
+	$("#modalOrderTotalPrice").text(selectedTotalPrice+"원");
+	$("#modalOrderTotalQuantity").text(selectedTotalQuantity+"개");
 	
 	showOrderDetails(orderNumber);
 }
@@ -19,5 +21,4 @@ function showOrderDetails(orderNumber) {
 function closeDetailModal() {
 	document.getElementById("detailModal").style.display = "none";
 	document.getElementById("detailModalOverlay").style.display = "none";
-
 }

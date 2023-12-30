@@ -1,9 +1,6 @@
-@charset "UTF-8";
-
-/* 파일 업로드 버튼 스타일링 */
 .custom-file-upload {
 	display: flex;
-    margin-top: 10px;
+    margin-top: 30px;
     width: 100px;
     padding: 10px;
     background-color: #444;
@@ -15,12 +12,11 @@
 }
 
 .custom-file-upload:hover {
-    background-color: var(--main-color-2); /* 호버시 배경색 변경 */
-	color: var(--main-back); /* 호버시 텍스트 색상 변경 */
-	border-color: var(--main-color-2); /* 호버시 테두리 색상 변경 */
+    background-color: var(--main-color-2);
+	color: var(--main-back);
+	border-color: var(--main-color-2);
 }
 
-/* 파일 업로드 필드 숨기기 */
 input[type="file"] {
     display: none;
 }
@@ -29,9 +25,8 @@ input[type="file"] {
 	padding: 15px 0px 8px 0px;;
 }
 
-/* 모달 스타일 */
 .modal {
-	color: black; /* 텍스트 색상 */
+	color: black;
 	display: none;
 	position: fixed;
 	z-index: 1;
@@ -90,8 +85,6 @@ input[type="file"] {
 	cursor: pointer;
 }
 
-
-/* 입력 필드 스타일 */
 input[type="password"] {
 	width: 100%;
 	padding: 10px;
@@ -99,6 +92,10 @@ input[type="password"] {
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-sizing: border-box;
+}
+
+.mypage-subtitle {
+	font-size: 25px;
 }
 
 .modifyUserInfo-container {
@@ -114,6 +111,7 @@ input[type="password"] {
     display: flex;
     align-items: center;
     border-bottom: 1px solid;
+    padding-bottom: 40px;
 }
 
 :root { 
@@ -199,13 +197,11 @@ button {
 	padding: 5px;
 }
 
-/* 호버 효과 */
 button:hover {
-	background-color: var(--main-color-2); /* 호버시 배경색 변경 */
-	color: var(--main-back); /* 호버시 텍스트 색상 변경 */
-	border-color: var(--main-color-2); /* 호버시 테두리 색상 변경 */
+	background-color: var(--main-color-2); 
+	color: var(--main-back);
+	border-color: var(--main-color-2); 
 }
-
 
 .input-form {
 	font-size: 14px;
@@ -219,7 +215,6 @@ button:hover {
 	background: none;
 }
 
-/* 우편번호 검색, 회원가입 버튼 스타일 */
 .form-address button {
 	margin-left: 10px;
 	margin-top: 10px;
@@ -247,12 +242,15 @@ button:hover {
     padding: 0;
     font: inherit;
     cursor: pointer;
-    transition: border-bottom 0.3s ease; /* 부드러운 전환 효과를 위한 애니메이션 지속 시간 및 전환 함수 */
+    transition: border-bottom 0.3s ease;
 }
 
 #withdrawlCompleted:hover {
-    background-color: var(--main-color-2); /* 호버시 배경색 변경 */
-	color: var(--main-back); /* 호버시 텍스트 색상 변경 */
-	border-color: var(--main-color-2); /* 호버시 테두리 색상 변경 */
+    background-color: var(--main-color-2);
+	color: var(--main-back); 
+	border-color: var(--main-color-2);
 }
     
+.zip-code-button {
+	width: 120px;
+}

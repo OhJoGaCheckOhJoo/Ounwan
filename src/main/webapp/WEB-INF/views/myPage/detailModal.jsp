@@ -5,21 +5,25 @@
 	value="${pageContext.request.contextPath}" />
 <link href="${appPath}/css/detailModal.css" rel="stylesheet">
 
-<%-- 모달 --%>
 <div id="detailModal" class="detail-modal">
 	<div id="modalContent">
 		<div id="modalBody">
 			<span id="closeBtn" class="close-button" onclick="closeDetailModal()">&times;</span>
 			<div>
 				<div class="modal-title">
-					<div>
-						주문번호 <span id="modalOrderNumber"></span>
+					<div class="detail-order-number">
+						[주문번호]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="modalOrderNumber"></span>
 					</div>
-					<div>
-						주문일자 <span id="modalOrderDate"></span>
+					<div class="detail-order-date">
+						[주문일자]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="modalOrderDate"></span>
+					</div>
+					<div class="detail-order-total-price">
+						[총 주문금액]&nbsp; <span id="modalOrderTotalPrice"></span>
+					</div>
+					<div class="detail-order-total-quantity">
+						[총 결제수량]&nbsp; <span id="modalOrderTotalQuantity"></span>
 					</div>
 				</div>
-
 				<hr>
 
 				<c:forEach var="orderList" items="${coupungOrderList}">
@@ -41,13 +45,13 @@
 										수량<span>&nbsp;${orderList.QUANTITY}</span> <span>개</span>
 									</div>
 									<div class="order-detail-product-info-content price">
-										결제금액<span>&nbsp;${orderList.PRICE * orderList.QUANTITY}</span>
+										결제금액<span>&nbsp;${orderList.PRICE}</span>
 										<span>원</span>
 									</div>
 								</div>
 							</div>
 						</a>
-						<div class="order-detail-product-info-content review-button modal">
+						<div class="order-detail-product-info-content ">
 							<c:choose>
 								<c:when test="${orderList.TRADE_HISTORY_NUMBER eq 4 && orderList.REVIEW_CHECK eq 0}">
 									<button class="active review-button modal"
@@ -58,7 +62,6 @@
 								</c:when>
 								<c:otherwise>
 									<button class="disabled review-button modal" disabled>리뷰작성</button>
-
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -71,6 +74,3 @@
 
 <div id="detailModalOverlay" class="detail-modal-overlay"
 	onclick="closeDetailModal()"></div>
-<script src="${appPath}/js/detailModal.js"></script>
-<script src="${appPath}/js/reviewModal.js"></script>
-

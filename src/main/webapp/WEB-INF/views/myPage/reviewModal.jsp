@@ -5,7 +5,6 @@
 	value="${pageContext.request.contextPath}" />
 <link href="${appPath}/css/reviewModal.css" rel="stylesheet">
 
-
 <div id="reviewModal" class="review-container-modal">
 	<span id="closeBtn" class="close-button" onclick="closeReviewModal()">&times;</span>
 	<div class="review head">
@@ -17,7 +16,6 @@
 			<div class="review-product image">
 				<img id="reviewImage">
 			</div>
-
 			<div class="review-product info">
 				<div class="review-product-info name">
 					[상품명] <span id="reviewName"></span>
@@ -61,7 +59,6 @@
 							id="reviewContent"></textarea>
 						<div class="text-count" id="reviewCount">0/50</div>
 					</div>
-
 				</div>
 				<div class="review-content image">
 					<div class="review-content-image entitle">이미지</div>
@@ -71,7 +68,6 @@
 						<img id="reviewImagePreview"
 							src="${appPath}/images/danggunInsertDefault.png">
 					</div>
-
 				</div>
 			</div>
 			<div class="button-container">
@@ -82,24 +78,3 @@
 </div>
 <div id="reviewModalOverlay" class="review-modal-overlay"
 	onclick="closeReviewModal()"></div>
-
-
-<%-- <script src="${appPath}/js/reviewModal.js"></script> --%>
-
-<script>
-
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

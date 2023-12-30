@@ -2,7 +2,6 @@
     position: relative;
     width: 150px;
     height: 30px;
-
 }
 
 .review-list-personal-score > div,
@@ -36,6 +35,11 @@
 	border: 1px solid #ccc5b6;
 }
 
+.delete-button:hover {
+    color: var(--main-back);
+    background-color: var(--main-color-2);
+    border: 1px solid var(--main-color-2);	
+}
 .review-list-input {
 	width: 60px;
 	display: flex;

@@ -6,7 +6,7 @@
 	value="${pageContext.request.contextPath}" />
 <link href="${appPath}/css/danggunWishList.css" rel="stylesheet">
 <div class="section-header">
-	<h2 class="section-title">관심 상품</h2>
+	<div class="section-title">관심 상품</div>
 </div>
 <div class="table-container">
 	<table>
@@ -31,23 +31,22 @@
 					<c:if test="${wishInfo.TRADE_HISTORY_NUMBER eq 6}">
 						<tr>
 							<td class="td-wish-list check">
-								<div class="wish-list-checkbox">
+								<div class="td-wish-list-checkbox">
 									<input class="checkbox" type="checkbox"
 										value="${wishInfo.WISH_LIST_NUMBER }">
 								</div>
 							</td>
-							<td class="td-wish-list info">
-								<div class="wish-list-info-container">
-									<a href="${appPath}/danggun/detail?danggunNumber=${wishInfo.DANGGUN_NUMBER}">
+							<td class="td-wish-list info"><a
+								href="${appPath}/danggun/detail?danggunNumber=${wishInfo.DANGGUN_NUMBER}">
+									<div class="wish-list-info-container">
 										<div class="wish-list-info img">
 											<img src="${wishInfo.URL}">
 										</div>
 										<div class="wish-list-info name">
 											<span>${wishInfo.PRODUCT_NAME}</span>
 										</div>
-									</a>
-								</div>
-							</td>
+									</div>
+							</a></td>
 							<td class="td-wish-list price">${wishInfo.PRICE}</td>
 							<td class="td-wish-list upload-date"><fmt:formatDate
 									value="${wishInfo.UPLOAD_DATE}" pattern="yyy-MM-dd" /></td>
@@ -59,22 +58,21 @@
 					<c:if test="${wishInfo.TRADE_HISTORY_NUMBER eq 7}">
 						<tr>
 							<td class="td-wish-list check">
-								<div class="wish-list-checkbox">
+								<div class="td-wish-list-checkbox">
 									<input type="checkbox" value="${wishInfo.WISH_LIST_NUMBER }">
 								</div>
 							</td>
-							<td class="td-wish-list info">
-								<div class="wish-list-info-container">
-									<a href="${appPath}/danggun/detail?danggunNumber=${wishInfo.DANGGUN_NUMBER}">
+							<td class="td-wish-list info"><a
+								href="${appPath}/danggun/detail?danggunNumber=${wishInfo.DANGGUN_NUMBER}">
+									<div class="wish-list-info-container">
 										<div class="wish-list-info img">
 											<img src="${wishInfo.URL}">
 										</div>
 										<div class="wish-list-info name">
 											<span>${wishInfo.PRODUCT_NAME}</span>
 										</div>
-									</a>
-								</div>
-							</td>
+									</div>
+							</a></td>
 							<td class="td-wish-list price">${wishInfo.PRICE}</td>
 							<td class="td-wish-list upload-date"><fmt:formatDate
 									value="${wishInfo.UPLOAD_DATE}" pattern="yyy-MM-dd" /></td>
@@ -90,8 +88,8 @@
 									<input type="checkbox" value="${wishInfo.WISH_LIST_NUMBER }">
 								</div>
 							</td>
-							<td class="td-wish-list info">
-									<a href="${appPath}/danggun/detail?danggunNumber=${wishInfo.DANGGUN_NUMBER}">
+							<td class="td-wish-list info"><a
+								href="${appPath}/danggun/detail?danggunNumber=${wishInfo.DANGGUN_NUMBER}">
 									<div class="wish-list-info-container">
 										<div class="wish-list-info img completed">
 											<img src="${wishInfo.URL}">
@@ -99,9 +97,8 @@
 										<div class="wish-list-info name completed">
 											<span>${wishInfo.PRODUCT_NAME}</span>
 										</div>
-										</div>
-									</a>								
-							</td>
+									</div>
+							</a></td>
 							<td class="td-wish-list price completed">${wishInfo.PRICE}</td>
 							<td class="td-wish-list upload-date completed"><fmt:formatDate
 									value="${wishInfo.UPLOAD_DATE}" pattern="yyy-MM-dd" /></td>
