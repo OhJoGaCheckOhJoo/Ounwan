@@ -10,7 +10,7 @@
     </insert>
     
     <select id="getSalesRate" parameterType="int" resultType="int">
-    	SELECT SUM(QUANTITY) FROM ORDER_DETAILS WHERE COUPUNG_NUMBER = #{coupungNumber}
+    	SELECT IFNULL(SUM(QUANTITY), 0) FROM ORDER_DETAILS WHERE COUPUNG_NUMBER = #{coupungNumber}
     </select>
     
     <select id="getTopFive" resultType="int">

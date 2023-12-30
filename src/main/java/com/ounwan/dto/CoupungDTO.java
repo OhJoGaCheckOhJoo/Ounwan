@@ -28,4 +28,5 @@ public class CoupungDTO {
 	private List<CoupungOptionsDTO> options;
 	private Integer quantity;
 	private Integer salesRate;
+	private String category;
 }

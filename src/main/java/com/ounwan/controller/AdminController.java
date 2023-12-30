@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,10 +60,18 @@ public class AdminController {
 	}
 	
 	@GetMapping("/coupung/select.do")
-	public String getProductPage() {
+	public String getProductPage(@RequestParam int offset, Model model) {
+		model.addAttribute("productList", coupungService.getAdminProductList(offset));
+		model.addAttribute("pages", coupungService.getProductCount());
 		return "admin/product";
 	}
 	
+	@GetMapping("/coupung/searchProduct")
+	public String searchProduct(@RequestParam String searchOption, @RequestParam String searchValue) {
+		System.out.println(searchOption + " : " + searchValue);
+		return "admin/product";
+	}
+	/*
 	@PostMapping("/coupung/addProduct")
 	public String addProduct(@RequestPart MultipartFile mainImage, 
 						@RequestPart(required=false) MultipartFile[] subImage,
@@ -72,16 +81,15 @@ public class AdminController {
 		return null;
 	} 
 	
-	@GetMapping("/coupung/searchProduct")
-	public String searchProduct(@RequestParam String searchOption, @RequestParam String searchValue) {
-		System.out.println(searchOption + " : " + searchValue);
-		return "admin/product";
-	}
-	
 	@GetMapping("/coupung/sortProduct")
 	public String sortProduct(@RequestParam String sort, @RequestParam String searchOption, @RequestParam String searchValue) {
 		System.out.println("정렬옵션 : " + sort + "\n" + searchOption + " : " + searchValue);
 		return "admin/product";
+	}
+	
+	@GetMapping("/coupung/insert.do")
+	public String insertProductView() {
+		return "admin/productDetail";
 	}
 	
 	@PostMapping("/coupung/insert.do")
@@ -117,4 +125,5 @@ public class AdminController {
 		boolean result = orderService.updateTradeStatus(order);
 		return (result) ? "success" : "fail";
 	}
+	*/
 }

@@ -202,8 +202,9 @@ a {
 }
 .product-menu, .product-info {
     width: 1500px;
-    margin: auto;
+    margin: 5px auto 5px auto;
     padding-left: 50px;
+    text-align: center;
 }
 .product-menu input, .product-info input {
     margin-right: 10px;
@@ -213,7 +214,12 @@ a {
 }
 .product-info span, .product-info select, .product-info button, .product-menu span {
     display: inline-block;
+    height: 32px;
     width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: top;
 }
 .product-info button {
     border: 0;

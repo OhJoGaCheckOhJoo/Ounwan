@@ -102,6 +102,9 @@
         $("#coupungProductList").on("click", function() {
         	$.ajax({
         		url: "${appPath}/admin/coupung/select.do",
+        		data: {
+        			'offset': 0
+        		},
        			success: function(res) {
        				$(".admin-wrap").html(res);
        			}

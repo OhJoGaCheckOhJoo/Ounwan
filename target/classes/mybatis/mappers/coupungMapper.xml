@@ -7,8 +7,16 @@
     	SELECT * FROM COUPUNG WHERE AVAILABLE_CHECK = 1
     </select>
     
-    <select id="selectAdminAll" resultType="coupung">
-    	SELECT * FROM COUPUNG 
+    <select id="selectAdminAll" parameterType="int" resultType="coupung">
+    	SELECT * FROM COUPUNG LIMIT 20 OFFSET #{offset}
+    </select>
+    
+    <select id="selectProductCategory" parameterType="int" resultType="String">
+    	SELECT NAME FROM COUPUNG_CATEGORIES WHERE COUPUNG_CATEGORY_NUMBER = #{categoryId}
+    </select>
+    
+    <select id="selectProductCount" resultType="int">
+    	SELECT COUNT(*) FROM COUPUNG
     </select>
     
     <select id="selectById" parameterType="int" resultType="coupung">
@@ -54,7 +62,7 @@
     	WHERE COUPUNG_NUMBER = #{coupungNumber}
     </select>
 
-		<select id="selectReview" parameterType="int" resultType="map">
+	<select id="selectReview" parameterType="int" resultType="map">
 		SELECT
 		O.CLIENT_ID,
 		R.SCORE,
