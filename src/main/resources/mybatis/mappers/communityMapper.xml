@@ -506,6 +506,20 @@
 		from AETA
 		where AETA_NUMBER=#{aetaNumber}
 	</select>
+	
+	<select id="getAetaReportList" resultType="aeta">
+		SELECT *
+		FROM AETA
+		WHERE VISIBILITY = 0
+	</select>
+	
+	<update id="restoreAeta" parameterType="int">
+		UPDATE AETA
+		SET
+		VISIBILITY = 1,
+		REPORT_REASON = NULL
+		WHERE AETA_NUMBER = #{aetaNumber}
+	</update>
 
 </mapper>
 
