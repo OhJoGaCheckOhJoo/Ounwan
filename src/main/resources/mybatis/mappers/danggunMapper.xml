@@ -160,15 +160,14 @@
 		WHERE TYPE = 0 AND DANGGUN_NUMBER = #{danggunNumber}
 	</select>
 	
-	<select id="getDanggunReport" resultType="danggun">
-		SELECT d.*
-		FROM DANGGUN d
-		JOIN (
-		    SELECT danggun_number
-		    FROM STORE_REPORTS sr 
-		    GROUP BY danggun_number
-		    HAVING COUNT(*) >= 3
-		) AS JSR ON d.danggun_number = JSR.danggun_number
+	<select id="getDanggunReportList" resultType="danggun">
+		SELECT * FROM DANGGUN WHERE VISIBILITY = 0
 	</select>
+	
+	<update id="restoreDanggun">
+		UPDATE DANGGUN
+		SET VISIBILITY = 1
+		WHERE DANGGUN_NUMBER = #{danggunNumber}
+	</update>
 	
 </mapper>
