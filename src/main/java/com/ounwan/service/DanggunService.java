@@ -254,6 +254,11 @@ public class DanggunService {
 		return result;
 	}
 	
+	public List<DanggunDTO> getDanggunReportList() {
+		List<DanggunDTO> result = changeDTOList(danggunDAO.getDanggunReportList());
+		return result;
+	}
+	
 	public List<DanggunDTO> changeDTOList(List<Danggun> danggun){
 		List<DanggunDTO> changeList = new ArrayList<>();
 		for (Danggun data : danggun) {
