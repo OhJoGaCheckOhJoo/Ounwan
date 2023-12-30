@@ -54,7 +54,7 @@
                 <li>
                     <a href="#">오늘 운동했다그램</a>
                     <ul class="submenu">
-                        <li><a href="#">최근 등록 게시물</a></li>
+                        <li><a id="gramReportBoards" href="#">신고게시물</a></li>
                         <li><a href="#">해시태그</a></li>
                     </ul>
                 </li>
@@ -117,6 +117,18 @@
        			success: function(res) {
        				$(".admin-wrap").html(res);
        			}
+        	});
+        });
+        
+        $("#gramReportBoards").on("click", function() {
+        	$.ajax({
+        		url: "${appPath}/admin/ounwangram/reports",
+        		data: {
+        			'offset': 0
+        		},
+        		success: function(res) {
+        			$(".admin-wrap").html(res);
+        		}
         	});
         });
         

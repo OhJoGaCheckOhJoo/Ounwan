@@ -20,6 +20,7 @@ import com.ounwan.dto.AdminDTO;
 import com.ounwan.dto.CoupungDTO;
 import com.ounwan.dto.OrdersDTO;
 import com.ounwan.service.AdminService;
+import com.ounwan.service.CommunityService;
 import com.ounwan.service.CoupungService;
 import com.ounwan.service.OrderService;
 
@@ -35,6 +36,9 @@ public class AdminController {
 	
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	CommunityService communityService;
 	
 	@GetMapping("/main.do")
 	public String getMainPage(HttpSession session) {
@@ -70,6 +74,12 @@ public class AdminController {
 	public String searchProduct(@RequestParam String searchOption, @RequestParam String searchValue) {
 		System.out.println(searchOption + " : " + searchValue);
 		return "admin/product";
+	}
+	
+	@GetMapping("/ounwangram/reports")
+	public String getGramReportBoards(@RequestParam int offset, Model model) {
+		model.addAttribute("boards", communityService.getReportGramBoard(offset));
+		return "admin/gramReportBoards";
 	}
 	/*
 	@PostMapping("/coupung/addProduct")
