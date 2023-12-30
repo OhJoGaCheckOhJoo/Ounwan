@@ -44,5 +44,13 @@ public class DanggunDAO {
 	public int updateReport(int danggunNumber) {
 		return sqlSession.update(NAMESPACE + "updateReport", danggunNumber);
 	}
+
+	public List<Danggun> getTopFiveDanggun() {
+		return sqlSession.selectList(NAMESPACE + "getTopFiveDanggun");
+	}
+
+	public String getMainImage(int danggunNumber) {
+		return sqlSession.selectOne(NAMESPACE + "getMainImage", danggunNumber);
+	}
 	
 }
