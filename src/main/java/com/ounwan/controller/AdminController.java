@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,9 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.AdminDTO;
 import com.ounwan.dto.CoupungDTO;
+import com.ounwan.dto.DanggunDTO;
 import com.ounwan.dto.OrdersDTO;
 import com.ounwan.service.AdminService;
 import com.ounwan.service.CoupungService;
+import com.ounwan.service.DanggunService;
 import com.ounwan.service.OrderService;
 
 @Controller
@@ -34,6 +37,9 @@ public class AdminController {
 	
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	DanggunService danggunService;
 	
 	@GetMapping("/main.do")
 	public String getMainPage(HttpSession session) {
@@ -117,4 +123,23 @@ public class AdminController {
 		boolean result = orderService.updateTradeStatus(order);
 		return (result) ? "success" : "fail";
 	}
+	
+	@GetMapping("/danggun/report")
+	public String getDanggunReport(Model model) {
+		List<DanggunDTO> result = danggunService.getDanggunReportList();
+		model.addAttribute("danggun", result);
+		return "admin/danggunReport";
+	}
+	
+	@GetMapping("/aeta/report")
+	public String getAetaReport() {
+		return "admin/aetaReport";
+	}
+	
+	@PostMapping("/danggun/report")
+	public @ResponseBody List<DanggunDTO> getDanggunReportList() {
+		List<DanggunDTO> result = danggunService.getDanggunReportList();
+		return result;
+	}
+	
 }
