@@ -17,8 +17,13 @@ public class StoreReportsService {
 	DanggunService danggunService;
 	
 	public boolean insertReport(StoreReportsDTO storeReports) {
+		int confirmReport = storeReportsDAO.confirmReport(storeReports);
+		if(confirmReport > 0) {
+			return false;
+		}
 		int result = storeReportsDAO.insertReport(storeReports);
 		int danggunNumber = storeReports.getDanggunNumber();
+		
 		
 		int reportCount = storeReportsDAO.countReport(danggunNumber);
 		if(reportCount >= 3) {

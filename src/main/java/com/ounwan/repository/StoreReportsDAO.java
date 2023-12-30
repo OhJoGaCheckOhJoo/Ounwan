@@ -20,4 +20,8 @@ public class StoreReportsDAO {
 	public int countReport(Integer danggunNumber) {
 		return sqlSession.selectOne(NAMESPACE+"countReport", danggunNumber);
 	}
+
+	public int confirmReport(StoreReportsDTO storeReports) {
+		return sqlSession.selectOne(NAMESPACE + "confirmReport", storeReports);
+	}
 }

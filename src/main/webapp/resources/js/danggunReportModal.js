@@ -28,7 +28,7 @@ function submitReport() {
 	}
     var obj = {
         "danggunNumber" : danggunNumber,
-      	"reason" : reason
+      	"reason" : reason   	
     };
     
     $.ajax({
@@ -37,7 +37,13 @@ function submitReport() {
       	data : JSON.stringify(obj),
       	contentType : 'application/json',
       	success : function(responseData){
-      		alert(responseData);
+      		if(responseData == "success"){
+      			alert("신고에 성공하였습니다.");
+      			closeReportModal();
+      		}else {
+      			alert("이미 신고한 게시물입니다.");
+      			closeReportModal();
+      		}
        }
       	
     });

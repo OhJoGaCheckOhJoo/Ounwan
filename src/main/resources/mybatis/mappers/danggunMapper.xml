@@ -135,6 +135,12 @@
 		WHERE DANGGUN_NUMBER = #{danggunNumber}
 	</select>
 	
+	<select id="confirmReport" parameterType="storeReports" resultType="int">
+		SELECT COUNT(*) 
+		FROM STORE_REPORTS
+		WHERE DANGGUN_NUMBER = #{danggunNumber} AND CLIENT_ID = #{clientId}
+	</select>
+	
 	<!-- visibility 변경 -->
 	<update id="updateReport">
 		UPDATE DANGGUN
