@@ -1,30 +1,83 @@
 .email-check {
-    height: 600px;
-    width: 800px;
-    margin: auto;
-    text-align: center;
+	height: 600px;
+	width: 800px;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
-
+html, body {
+    background-color: var(--main-back);
+    height: 100%;
+}
+.container {
+    width: 1250px;
+    min-height: calc(100% - 320px);
+    margin: auto;
+}
+* {
+    margin: 0;
+    padding: 0;
+    color: var(--main-color-1);
+    font-family: 'OAGothic-Medium.woff2';
+}
+button {
+    border: 0;
+    background: none;
+}
 .email-check-title {
-    padding: 60px;
-    font-size: 50px;
+	padding: 85px 0px 20px 0px;
+	font-size: 40px;
 }
 
 .email-input-container {
-    height: 300px;
-    padding: 50px;
+	display: flex;
+	justify-content: center;
+	width: 390px;
+	border-top: 2px solid #EEE7D8;
+	
+	height: 250px;
+	padding: 50px;
+	border-bottom: 2px solid #EEE7DB;
 }
 
-.email-input > input {
-    margin: 50px 0px 30px 0px;
-    width: 400px;
-    height: 40px;
-    padding: 10px;
+.email-input input {
+	
+	height: 45px;
+	width: 320px;
+	margin: 10px 0px 10px 0px;
+	border-radius: 10px;
+	font-size: 15px;
+	padding: 0px 0px 0px 10px;
+}
+.email-input input:hover{
+	border: 1px solid var(--main-color-2);
 }
 
-.email-input > button {
-    width: 100px;
-    height: 40px;
-    margin: auto;
-    display: block;
+.email-input button {
+	font-size: 20px;
+	border: 1px solid;
+	border-radius: 10px;
+	width: 135px;
+	height: 45px;
+	margin: auto;
+	display: block;
 }
+
+.emailCheckPart_T {
+	font-size: 25px;
+	padding-left: 10px;
+}
+
+.checkBtnPart {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+}
+:root {
+    --main-back: #333;
+    --main-color-1: #EEE7D8;
+    --main-color-2: #CBF83E;
+    --red: #ff2400;
+}
+
