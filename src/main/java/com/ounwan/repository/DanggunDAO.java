@@ -52,5 +52,9 @@ public class DanggunDAO {
 	public String getMainImage(int danggunNumber) {
 		return sqlSession.selectOne(NAMESPACE + "getMainImage", danggunNumber);
 	}
+
+	public List<Danggun> getDanggunReportList() {
+		return sqlSession.selectList(NAMESPACE + "getDanggunReport");
+	}
 	
 }
