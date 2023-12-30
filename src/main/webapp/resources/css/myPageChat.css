@@ -9,11 +9,6 @@
 }
 
 .chat-header {
-	position: sticky;
-	top: 0;
-} 
-
-.chat-header {
 	font-size: 14px;
 	text-align: center;
 }
@@ -32,7 +27,7 @@
 
 .chat {
 	font-size: 12px;
-	height: 500px;
+	height: 533px;
 	overflow-y: auto;
 	overflow-x: hidden; 
 }
@@ -81,8 +76,9 @@
 
 
 .main-img {
-	width : 100px;
-	height : 100px;
+	width: 60px;
+    height: 61px;
+    padding: 4px 15px;
 }
 
 .product-bar {
@@ -93,5 +89,22 @@
 
 .product-info {
 	display: flex;
-	flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+}
+
+.product-info-1{
+	width: 200px;
+	display: flex;
+    flex-direction: column;
+    align-items: flex-start;	
+}
+.product-info-price{
+	font-size: 20px;
+}
+.product-info-2{
+	padding-right: 11px;
+    display: flex;
+    justify-content: flex-end;
+    width: 310px;
 }

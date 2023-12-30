@@ -22,12 +22,15 @@
 				</c:forEach>
 			</div>
 			<div class="product-info">
-				<div>${post.tradeStep}</div>
-				<div>${post.productName}</div>
-				<div>${post.price}</div>
+				<div class="product-info-1">
+					<div class="product-info-price">${post.price}원</div>
+					<div>${post.productName}</div>
+				</div>
+				<div class="product-info-2">
+					<div>${post.tradeStep}</div>
+				</div>
 			</div>
 		</div>
-		<hr>
 	</div>
 	<div id="chat" class="chat"></div>
 	<!-- 채팅저장출력 -->

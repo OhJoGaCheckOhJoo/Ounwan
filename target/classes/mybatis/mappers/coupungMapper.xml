@@ -54,7 +54,7 @@
     	WHERE COUPUNG_NUMBER = #{coupungNumber}
     </select>
 
-		<select id="selectReview" parameterType="int" resultType="map">
+	<select id="selectReview" parameterType="int" resultType="map">
 		SELECT
 		O.CLIENT_ID,
 		R.SCORE,
