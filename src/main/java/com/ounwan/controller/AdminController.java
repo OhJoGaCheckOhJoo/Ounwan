@@ -81,7 +81,7 @@ public class AdminController {
 		model.addAttribute("boards", communityService.getReportGramBoard(offset));
 		return "admin/gramReportBoards";
 	}
-	/*
+	
 	@PostMapping("/coupung/addProduct")
 	public String addProduct(@RequestPart MultipartFile mainImage, 
 						@RequestPart(required=false) MultipartFile[] subImage,
@@ -135,5 +135,5 @@ public class AdminController {
 		boolean result = orderService.updateTradeStatus(order);
 		return (result) ? "success" : "fail";
 	}
-	*/
+	
 }

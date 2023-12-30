@@ -170,7 +170,6 @@ public class CommunityService {
 			reportBoard.put("hashTags",  communityDAO.hashTagsByNumber((int)reportBoard.get("COMMUNITY_NUMBER")));
 			result.add(reportBoard);
 		}
-		System.out.println(result.toString());
 		return result;
 	}
 

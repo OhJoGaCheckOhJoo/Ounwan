@@ -53,7 +53,6 @@
                     		</div>
                     	</c:forEach>
                     </div>
-                    <button value="${board.COMMUNITY_NUMBER}">공개/임시차단</button>
                 </div>
             </div>
             </c:forEach>
