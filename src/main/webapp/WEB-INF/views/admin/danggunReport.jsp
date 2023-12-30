@@ -12,17 +12,36 @@
 <body>
 	<h1>당근 신고 관리</h1>
 	<div>
-		<c:forEach var="product" items="${danggun}" varStatus="loopStatus">
-			<a href="${appPath}/danggun/detail?danggunNumber=${product.danggunNumber}"> 
-				<span>신고 번호: ${loopStatus.count}</span> 
-				<span>당근 게시글 번호 : ${product.danggunNumber }</span> 
-				<span>당근 상품명 : ${product.productName }</span> 
-				<span>당근 가격 : ${product.price }</span> 
-				<span>작성자 : ${product.clientId }</span> 
-				<span>작성 일자 : ${product.uploadDate }</span> 
-				<button id="restoreDanggun">복구</button>
-			</a>
-		</c:forEach>
+		<c:if test="${danggun ne null}">
+			<c:forEach var="product" items="${danggun}" varStatus="loopStatus">
+			<div>
+				<input class="danggunNumber" value="${product.danggunNumber }" type="hidden">
+				<a href="${appPath}/danggun/detail?danggunNumber=${product.danggunNumber}"> 
+					<span>신고 번호: ${loopStatus.count}</span> 
+					<span>당근 게시글 번호 : ${product.danggunNumber }</span> 
+					<span>당근 상품명 : ${product.productName }</span> 
+					<span>당근 가격 : ${product.price }</span> 
+					<span>작성자 : ${product.clientId }</span> 
+					<span>작성 일자 : ${product.uploadDate }</span> 
+				</a>
+				<button class="restoreDanggun" type="button">복구</button>
+			</div>	
+			</c:forEach>
+		</c:if>
 	</div>
+	
+	<script>
+        $(".restoreDanggun").on("click", function(){
+        	var danggunNumber = $(this).parent().find(".danggunNumber").val();
+        	$.ajax({
+                url : "${appPath}/admin/danggun/restore",
+                type : "post",
+                data : {"danggunNumber" : danggunNumber},
+                success : function(res){
+                    alert("복구에 성공하였습니다.");    
+                }
+            });
+        });
+    </script>
 </body>
 </html>

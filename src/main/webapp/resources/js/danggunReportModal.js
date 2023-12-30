@@ -39,7 +39,7 @@ function submitReport() {
       	success : function(responseData){
       		if(responseData == "success"){
       			alert("신고에 성공하였습니다.");
-      			closeReportModal();
+      			location.href = appPath + "/danggun/main";
       		}else {
       			alert("이미 신고한 게시물입니다.");
       			closeReportModal();
