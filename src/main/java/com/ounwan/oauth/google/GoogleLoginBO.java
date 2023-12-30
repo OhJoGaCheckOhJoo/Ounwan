@@ -26,10 +26,10 @@ public class GoogleLoginBO {
 	@Autowired
 	ClientsService clientsService;
 	
-	private static final String CLIENT_ID = "000";
-	private static final String REDIRECT_URI = "000";
-	private static final String GOOGLE_TOKEN_URL = "000";
-	private static final String CLIENT_SECRET = "000";
+	private static final String CLIENT_ID = "00";
+    private static final String REDIRECT_URI = "00";
+    private static final String GOOGLE_TOKEN_URL = "00";
+    private static final String CLIENT_SECRET = "00";
 	
 	
 	public String getURL() {

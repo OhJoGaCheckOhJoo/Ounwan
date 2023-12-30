@@ -29,12 +29,12 @@ public class NaverLoginBO {
 	
 	// redirect_uri: 네이버 로그인 인증의 결과를 전달받을 콜백 URL(URL 인코딩). 애플리케이션을 등록할 때 Callback
 	// state: 애플리케이션이 생성한 상태 토큰
-	private static final String CLIENT_ID = "000";
-	private static final String CLIENT_SECRET = "000";
-	private static final String REDIRECT_URI = "000";
-	private static final String SESSION_STATE = "000";
-	/* 프로필 조회 API URL */
-	private final static String PROFILE_API_URL = "000";
+	private static final String CLIENT_ID = "00";
+    private static final String CLIENT_SECRET = "00";
+    private static final String REDIRECT_URI = "00";
+    private static final String SESSION_STATE = "00";
+    /* 프로필 조회 API URL */
+    private final static String PROFILE_API_URL = "00";
 
 	/* 네이버 아이디로 인증 URL 생성 Method */
 	public String getAuthorizationUrl(HttpSession session) {
