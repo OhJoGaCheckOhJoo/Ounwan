@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.checkerframework.checker.units.qual.t;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,7 @@ import com.ounwan.dto.AetaDTO;
 import com.ounwan.dto.AetaImagesDTO;
 import com.ounwan.dto.AetaLikesDTO;
 import com.ounwan.dto.ClientsDTO;
+import com.ounwan.dto.DanggunDTO;
 import com.ounwan.dto.InbodyDTO;
 import com.ounwan.dto.OunwanGramDTO;
 import com.ounwan.dto.PaginatingDTO;
@@ -714,6 +716,16 @@ public class CommunityService {
 	// 게시글 번호(BOARD_NUMBER)로 작성자(CLIENT_ID) 아이디 가져오기
 	public String findClientId(int aetaNumber) {
 		return communityDAO.findClientId(aetaNumber);
+	}
+	
+	public List<AetaDTO> getAetaReportList() {
+		List<AetaDTO> result = changeDTOList(communityDAO.getAetaReportList());
+		return result;
+	}
+	
+	public boolean restoreAeta(Integer aetaNumber) {
+		int result = communityDAO.restoreAeta(aetaNumber);
+		return (result > 0) ? true : false;
 	}
 
 	/* DTO와 Entity 타입바꿔주는 함수들 */

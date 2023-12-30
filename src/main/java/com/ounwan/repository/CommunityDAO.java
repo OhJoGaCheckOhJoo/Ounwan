@@ -259,4 +259,12 @@ public class CommunityDAO {
 		return sqlSession.update(NAMESPACE + "updateInbody", inbody);
 	}
 
+	public List<Aeta> getAetaReportList() {
+		return sqlSession.selectList(NAMESPACE + "getAetaReportList");
+	}
+
+	public int restoreAeta(Integer aetaNumber) {
+		return sqlSession.update(NAMESPACE + "restoreAeta", aetaNumber);
+	}
+
 }

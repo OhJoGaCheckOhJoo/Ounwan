@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ounwan.dto.ClientsDTO;
+import com.ounwan.dto.CoupungDTO;
 import com.ounwan.dto.DanggunDTO;
 import com.ounwan.dto.ProductImagesDTO;
 import com.ounwan.dto.StoreReportsDTO;
@@ -167,6 +168,12 @@ public class DanggunController {
 		storeReports.setClientId(clients.getClientId());
 		boolean result = storeReportsService.insertReport(storeReports);
 		return (result) ? "success" : "fail";
+	}
+	
+	// 메인 페이지에 보여줄 인기상품 5개
+	@GetMapping("/product/top-five")
+	public @ResponseBody List<DanggunDTO> getTopFive() {
+		return danggunService.getTopFive();
 	}
 	
 }

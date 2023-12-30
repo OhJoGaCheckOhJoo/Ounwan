@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
@@ -68,9 +68,8 @@
                 <li>
                     <a href="#">신고센터</a>
                     <ul class="submenu">
-                        <li><a href="#">오늘의 쿠펑</a></li>
-                        <li><a href="#">오늘의 당군</a></li>
-                        <li><a href="#">오늘의 애타</a></li>
+                        <li><a id="danggunReport" href="#">오늘의 당군</a></li>
+                        <li><a id="aetaReport" href="#">오늘의 애타</a></li>
                         <li><a href="#">오늘의 운동했다그램</a></li>
                     </ul>
                 </li>
@@ -121,7 +120,24 @@
         	$.ajax({
         		url: "${appPath}/admin/clients/chat.do",
        			success: function(res) {
-       				console.log("도착");
+       				$(".admin-wrap").html(res);
+       			}
+        	});
+        });
+        
+        $("#danggunReport").on("click", function() {
+        	$.ajax({
+        		url: "${appPath}/admin/danggun/report",
+       			success: function(res) {
+       				$(".admin-wrap").html(res);
+       			}
+        	});
+        });
+        
+        $("#aetaReport").on("click", function() {
+        	$.ajax({
+        		url: "${appPath}/admin/aeta/report",
+       			success: function(res) {
        				$(".admin-wrap").html(res);
        			}
         	});

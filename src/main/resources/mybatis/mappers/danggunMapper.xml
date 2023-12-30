@@ -135,10 +135,38 @@
 		WHERE DANGGUN_NUMBER = #{danggunNumber}
 	</select>
 	
+	<select id="confirmReport" parameterType="storeReports" resultType="int">
+		SELECT COUNT(*) 
+		FROM STORE_REPORTS
+		WHERE DANGGUN_NUMBER = #{danggunNumber} AND CLIENT_ID = #{clientId}
+	</select>
+	
 	<!-- visibility 변경 -->
 	<update id="updateReport">
 		UPDATE DANGGUN
 		SET VISIBILITY = 0
+		WHERE DANGGUN_NUMBER = #{danggunNumber}
+	</update>
+	
+	<select id="getTopFiveDanggun" resultType="danggun">
+		SELECT *
+		FROM DANGGUN d 
+		ORDER BY upload_date DESC
+		LIMIT 5;
+	</select>
+	
+	<select id="getMainImage" parameterType="int" resultType="String">
+		SELECT URL FROM PRODUCT_IMAGES
+		WHERE TYPE = 0 AND DANGGUN_NUMBER = #{danggunNumber}
+	</select>
+	
+	<select id="getDanggunReportList" resultType="danggun">
+		SELECT * FROM DANGGUN WHERE VISIBILITY = 0
+	</select>
+	
+	<update id="restoreDanggun">
+		UPDATE DANGGUN
+		SET VISIBILITY = 1
 		WHERE DANGGUN_NUMBER = #{danggunNumber}
 	</update>
 	
