@@ -7,8 +7,9 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-
+<div class="mypage-subtitle">회원정보 수정</div>
 <div class="modifyUserInfo-container">
+	
  	<div class="modifyUserInfo-container-wrap">
 		<div class="profile-photo">
 			<img class="profile-photo-file" src="${clientInfo.profileUrl}" id="registerProfileImage">
@@ -40,13 +41,12 @@
 				<label class="attribute-name" for="">연락처</label> <input type="text"
 					class="input-form" value="${clientInfo.phone}" id="phoneNum" />
 			</div>
-			<!-- 수정 버튼 클릭 시 모달창 띄우기 -->
+			
 			<div class="profile-password">
 				<label class="attribute-name" for="">비밀번호</label>
 				<button id="modifyPwdBtn">수정</button>
 			</div>
 	
-			<!-- 모달창 -->
 			<div id="myModal" class="modal">
 				<div class="modal-content">
 					<span class="close">&times;</span>
@@ -68,7 +68,7 @@
 				<label class="attribute-name" for="">주소</label> <input
 					class="form-address-" size="10" id="zipCode"
 					value="${clientInfo.zipCode}" />
-				<button id="findAddr" type="button">우편번호 검색</button>
+				<button id="findAddr" type="button" class="zip-code-button">우편번호 검색</button>
 				<br> <label class="attribute-name" for=""></label> <input
 					class="form-address" size="35" id="addr" value="${clientInfo.address}" />
 				<br> <label class="attribute-name" for=""></label> <input

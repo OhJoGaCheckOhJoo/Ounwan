@@ -14,6 +14,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>오운완</title>
 <link href="${appPath}/css/main2.css" rel="stylesheet">
+<link href="${appPath}/css/main.css" rel="stylesheet">
 <link href="${appPath}/css/header.css" rel="stylesheet">
 <link href="${appPath}/css/nav.css" rel="stylesheet">
 <link href="${appPath}/css/mypagemain.css" rel="stylesheet">
@@ -21,9 +22,9 @@
 </head>
 
 <body>
-	<%@ include file="../common/header.jsp" %>
+	<%@ include file="../common/header.jsp"%>
 	<div class="container">
-		<%@ include file="../common/nav.jsp" %>
+		<%@ include file="../common/nav.jsp"%>
 
 		<div class="mypage-container">
 			<div class="mypage-content">
@@ -45,7 +46,7 @@
 							</a> <a href="javascript:danggunWishList()">
 								<div class="danggun-menu wish-list">관심 상품</div>
 							</a><a href="javascript:chatList()">
-								<div class="chat-menu danggun">내 채팅방</div>
+								<div class="danggun-menu danggun">내 채팅방</div>
 							</a>
 						</div>
 
@@ -64,7 +65,10 @@
 				<div class="content-container">
 					<div class="preview-container">
 						<div class="preview user">
-							<img src="${userInfo.profileUrl}">
+							<div class="preview-user-image">
+								<img src="${userInfo.profileUrl}">
+							</div>
+
 							<div>
 								<p class="preview-user text">반갑습니다</p>
 								<p class="preview-user name">
@@ -76,7 +80,8 @@
 							<a href="javascript:danggunWishList()"
 								class="preview-menu wish-list">
 								<div>
-									<img class="preview-menu-image">
+									<img class="preview-menu-image"
+										src="${appPath}/images/myPage/mypage_wishlist.png">
 									<div class="preview-menu-text">
 										<p>관심 상품</p>
 										<span>${wishListCount}</span><span> 개</span>
@@ -84,7 +89,8 @@
 								</div>
 							</a> <a href="${appPath}/coupung/cart" class="preview-menu cart">
 								<div>
-									<img class="preview-menu-image">
+									<img class="preview-menu-image"
+										src="${appPath}/images/cart_0.png">
 									<div class="preview-menu-text">
 										<p>장바구니</p>
 										<span>${cartListCount}</span><span> 개</span>
@@ -93,14 +99,13 @@
 							</a>
 						</div>
 					</div>
-
-					<!--여기부분이 계속 바뀔 예정입니당-->
 					<div class="content-info-container">
 						<div class="content-info" id="content">
 							<div class="recent-info order">
 								<div class="section-header">
-									<h2 class="section-title">최근 주문 정보</h2>
-									<a href="javascript:orderList()">더보기 > </a>
+									<div class="section-title">최근 주문 상품</div>
+<!-- 									<h2 class="section-title">최근 주문 상품</h2> -->
+									<a href="javascript:orderList()" class="expand">더보기 > </a>
 								</div>
 								<table>
 									<thead>
@@ -114,25 +119,27 @@
 									<tbody>
 										<c:if test="${empty orderList}">
 											<tr class="none-content">
-												<td colspan="5">최근 주문 정보가 없습니다.</td>
+												<td colspan="5">최근 주문 상품이 없습니다.</td>
 											</tr>
 										</c:if>
 										<c:if test="${not empty orderList}">
 											<c:forEach var="oList" items="${orderList}">
 												<tr>
-													<td><fmt:formatDate value="${oList.ORDER_DATE}"
-															pattern="yyyy-MM-dd" /></td>
-													<td><a href="${appPath}/coupung/product/detail?coupungId=${oList.COUPUNG_NUMBER}">
-															<div>
-																<img src="${oList.PRODUCT_IMAGE_URL}"
-																	style="width: 60px; height: 60px;">
-															</div>
-															<div>
-																<span>${oList.COUPUNG_NAME}</span>
+													<td class="recent-order-date"><fmt:formatDate
+															value="${oList.ORDER_DATE}" pattern="yyyy-MM-dd" /></td>
+													<td class="recent-order-info"><a
+														href="${appPath}/coupung/product/detail?coupungId=${oList.COUPUNG_NUMBER}">
+															<div class="recent-order-info-container">
+																<div class="recent-order-info-image">
+																	<img src="${oList.PRODUCT_IMAGE_URL}"
+																		style="width: 60px; height: 60px;">
+																</div>
+																<div class="recent-order-info-name">
+																	${oList.COUPUNG_NAME}</div>
 															</div>
 													</a></td>
-													<td>${oList.ORDER_NUMBER}</td>
-													<td>${oList.PRICE * oList.QUANTITY}원</td>
+													<td class="recent-order-number">${oList.ORDER_NUMBER}</td>
+													<td class="recent-order-price">${oList.PRICE * oList.QUANTITY}원</td>
 												</tr>
 											</c:forEach>
 										</c:if>
@@ -141,8 +148,9 @@
 							</div>
 							<div class="recent-info aeta">
 								<div class="section-header">
-									<h2 class="section-title">최근 등록 게시글</h2>
-									<a href="javascript:aetaList()">더보기 > </a>
+									<div class="section-title">최근 등록 게시글</div>
+<!-- 									<h2 class="section-title">최근 등록 게시글</h2> -->
+									<a href="javascript:aetaList()" class="expand">더보기 > </a>
 								</div>
 								<table>
 									<thead>
@@ -164,7 +172,8 @@
 											<c:forEach var="list" items="${aetaList}" varStatus="loop">
 												<tr class="content-tr">
 													<td class="aeta-list num">${aetaList.size() - loop.index }</td>
-													<td class="aeta-list title"><a href="${appPath}/community/aetaPost?aetaNumber=${list.aetaNumber}">${list.title}</a>
+													<td class="aeta-list title"><a
+														href="${appPath}/community/aetaPost?aetaNumber=${list.aetaNumber}">${list.title}</a>
 													</td>
 													<td class="aeta-list upload-date"><fmt:formatDate
 															value="${list.createdDate}" pattern="yyyy-MM-dd" /></td>
@@ -178,8 +187,9 @@
 							</div>
 							<div class="recent-info cart">
 								<div class="section-header">
-									<h2 class="section-title">장바구니</h2>
-									<a href="${appPath}/coupung/cart">더보기 > </a>
+									<div class="section-title">장바구니</div>
+<!-- 									<h2 class="section-title">장바구니</h2> -->
+									<a href="${appPath}/coupung/cart" class="expand">더보기 > </a>
 								</div>
 								<table>
 									<thead>
@@ -200,35 +210,39 @@
 										<c:if test="${not empty cartList}">
 											<c:forEach var="cList" items="${cartList}" varStatus="loop">
 												<tr>
-													<td>${cartList.size() - loop.index}</td>
+													<td class="recent-cart-number">${cartList.size() - loop.index}</td>
 													<c:if test="${cList.AVAILABLE_STOCK <=10 }">
-														<td>
-															<div class="coupung-block-container">
-																<img src="${cList.URL}"
-																	style="width: 60px; height: 60px;">
-																<div class="coupung-block" /></div>
-															</div>
-															<div>
-																<span>${cList.COUPUNG_NAME}</span>
-															</div>
-														</td>
-														<td>${cList.QUANTITY}</td>
-														<td>품절</td>
-													</c:if>
-													<c:if test="${cList.AVAILABLE_STOCK > 10 }">
-														<td><a href="${appPath}/coupung/product/detail?coupungId=${cList.COUPUNG_NUMBER}">
-																<div>
+														<td class="recent-cart-info">
+															<div class="recent-cart-info-container">
+																<div class="recent-cart-image coupung-block-container">
 																	<img src="${cList.URL}"
 																		style="width: 60px; height: 60px;">
+																	<div class="coupung-block" /></div>
 																</div>
-																<div>
-																	<span>${cList.COUPUNG_NAME}</span>
+																<div class="recent-cart-name block">
+																	${cList.COUPUNG_NAME}</div>
+															</div>
+														</td>
+														<td class="recent-cart-quantity block">${cList.QUANTITY}</td>
+														<td class="recent-cart-stock-state block">품절</td>
+														<td class="recent-cart-info-price block">${cList.PRICE * cList.QUANTITY}원</td>
+													</c:if>
+													<c:if test="${cList.AVAILABLE_STOCK > 10 }">
+														<td class="recent-cart-info"><a
+															href="${appPath}/coupung/product/detail?coupungId=${cList.COUPUNG_NUMBER}">
+																<div class="recent-cart-info-container">
+																	<div class="recent-cart-image">
+																		<img src="${cList.URL}"
+																			style="width: 60px; height: 60px;">
+																	</div>
+																	<div class="recent-cart-name">
+																		${cList.COUPUNG_NAME}</div>
 																</div>
 														</a></td>
-														<td>${cList.QUANTITY}</td>
-														<td>재고있음</td>
+														<td class="recent-cart-quantity">${cList.QUANTITY}</td>
+														<td class="recent-cart-stock-state">재고있음</td>
+														<td class="recent-cart-info-price">${cList.PRICE * cList.QUANTITY}원</td>
 													</c:if>
-													<td>${cList.PRICE * cList.QUANTITY}원</td>
 												</tr>
 											</c:forEach>
 										</c:if>
@@ -240,6 +254,8 @@
 				</div>
 			</div>
 		</div>
+		<hr class="footer-line">
+		<%@ include file="../common/footer.jsp"%>
 
 		<script src="./js/main.js"></script>
 		<script>

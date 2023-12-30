@@ -8,13 +8,12 @@
 	background-color: #333;
 	border: 1px solid #ccc;
 	z-index: 1000;
-	max-height: 80vh; /* 모달 창의 최대 높이를 화면 높이의 80%로 설정 */
-	overflow-y: auto; /* 필요할 때 스크롤을 추가 */
-	width: 40%; /* 모달 창의 너비를 화면 너비의 80%로 설정 */
-	max-width: 920px; /* 모달 창의 최대 너비를 600px로 설정 */
+	max-height: 80vh; 
+	overflow-y: auto; 
+	width: 40%;
+	max-width: 920px; 
 }
 
-/* 배경 회색 불투명도 */
 .detail-modal-overlay {
 	display: none;
 	position: fixed;
@@ -25,7 +24,6 @@
 	background: rgba(0, 0, 0, 0.5);
 	z-index: 900;
 }
-
 
 .close-button {
   position: relative;
@@ -38,24 +36,16 @@
 }
 
 .modal-title {
-	padding-left: 10px;
-	font-size: 20px;
+	padding: 10px;
+	font-size: 15px;
+}
+
+.detail-order-number, .detail-order-date, .detail-order-total-price {
+	margin-bottom: 5px;
 }
 
 hr {
 	margin: 20px 0px 10px 0px; 
-}
-
-.order-detail.product-info.modal {
-	margin-bottom: 30px;
-}
-
-.order-detail-product-info-container {
-	margin: 0 auto;
-}
-
-.order-detail-product-info-content.review-button {
-	display: flex;
 }
 
 .review-button.modal {
@@ -63,5 +53,8 @@ hr {
 	margin: 0 auto;
 	text-align: center;
 	display: block;
-	padding: 5px;
+}
+
+.order-detail.product-info.modal {
+	margin-bottom: 30px;
 }

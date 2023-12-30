@@ -1,21 +1,22 @@
-
 table {
     font-size: 15px;
 }
 
 .order-detail.order-info {
-    width: 23%;
-    /* background-color: brown; */
- /*    text-align: left; */
-
+    width: 300px;
 }
 
 .order-detail-order-info-container {
-	
     margin: 12px;
     cursor: pointer;
+    text-align: left;
+    padding: 0px 10px 0px 30px;
 }
 
+.order-detail-order-info-title {
+	width: 80px;
+	text-align: left;
+}
 
 td.order-detail.product-info {
     width: 52%;
@@ -57,8 +58,16 @@ td.order-detail.product-info {
     padding: 2px 0px;
 }
 
+.order-detail.order-total-price {
+	width: 150px;
+}
+
+.order-detail.order-total-quantity {
+	width: 150px;	
+}
+
 .order-detail.state {
-    width: 25%;
+    width: 350px;
 }
 
 
@@ -66,6 +75,7 @@ td.order-detail.product-info {
     display: flex;
     justify-content: center; 
     align-items: center;
+    padding: 10px 0px;
 }
 
 .order-detail-state.now {
@@ -74,7 +84,6 @@ td.order-detail.product-info {
     margin-right: 30px; 
     font-size: 26px;
 }
-
 
 .refund-button, .review-button, .confirm-button {
     display: block;
@@ -85,8 +94,14 @@ td.order-detail.product-info {
 }
 
 .active.refund-button, .active.review-button, .active.confirm-button {
-    /* border: 1px solid #EEE7D8; */
+    border: 1px solid #EEE7D8;
     cursor: pointer;
+}
+
+.active.refund-button:hover, .active.review-button:hover, .active.confirm-button:hover {
+    border: 1px solid var(--main-color-2);
+    background-color: var(--main-color-2);
+    color: var(--main-back);
 }
 
 .disabled {
