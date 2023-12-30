@@ -242,9 +242,25 @@ public class DanggunService {
 	public boolean updateReport(int danggunNumber) {
 		int result = danggunDAO.updateReport(danggunNumber);
 		return (result > 0)?true:false;
-		
 	}
 	
+	public List<DanggunDTO> getTopFive() {
+		List<DanggunDTO> result = changeDTOList(danggunDAO.getTopFiveDanggun());
+		for(int i = 0; i < result.size(); i++) {
+			int danggunNumber = result.get(i).getDanggunNumber();
+			String url = danggunDAO.getMainImage(danggunNumber);
+			result.get(i).setUrl(url);
+		}
+		return result;
+	}
+	
+	public List<DanggunDTO> changeDTOList(List<Danggun> danggun){
+		List<DanggunDTO> changeList = new ArrayList<>();
+		for (Danggun data : danggun) {
+			changeList.add(changeDTO(data));
+		}
+		return changeList;
+	}
 
 	public Danggun changeEntity(DanggunDTO danggun) {
 		return Danggun.builder().danggunNumber(danggun.getDanggunNumber())
@@ -258,8 +274,6 @@ public class DanggunService {
 				.tradeHistoryNumber(danggun.getTradeHistoryNumber()).clientId(danggun.getClientId())
 				.productName(danggun.getProductName()).price(danggun.getPrice()).detail(danggun.getDetail())
 				.uploadDate(danggun.getUploadDate()).visibility(danggun.getVisibility()).build();
-	}
-
-	
+	}	
 
 }
