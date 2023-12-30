@@ -142,4 +142,16 @@
 		WHERE DANGGUN_NUMBER = #{danggunNumber}
 	</update>
 	
+	<select id="getTopFiveDanggun" resultType="danggun">
+		SELECT *
+		FROM DANGGUN d 
+		ORDER BY upload_date DESC
+		LIMIT 5;
+	</select>
+	
+	<select id="getMainImage" parameterType="int" resultType="String">
+		SELECT URL FROM PRODUCT_IMAGES
+		WHERE TYPE = 0 AND DANGGUN_NUMBER = #{danggunNumber}
+	</select>
+	
 </mapper>
