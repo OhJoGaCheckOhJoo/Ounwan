@@ -63,7 +63,7 @@ public class AdminController {
 		return "fail";
 	}
 	
-	@GetMapping("/coupung/select.do")
+	@GetMapping("/coupung/product.do")
 	public String getProductPage(@RequestParam int offset, Model model) {
 		model.addAttribute("productList", coupungService.getAdminProductList(offset));
 		model.addAttribute("pages", coupungService.getProductCount());
@@ -72,7 +72,7 @@ public class AdminController {
 	
 	@GetMapping("/coupung/searchProduct")
 	public String searchProduct(@RequestParam String searchOption, @RequestParam String searchValue) {
-		System.out.println(searchOption + " : " + searchValue);
+		
 		return "admin/product";
 	}
 	
@@ -93,7 +93,7 @@ public class AdminController {
 	
 	@GetMapping("/coupung/sortProduct")
 	public String sortProduct(@RequestParam String sort, @RequestParam String searchOption, @RequestParam String searchValue) {
-		System.out.println("정렬옵션 : " + sort + "\n" + searchOption + " : " + searchValue);
+		
 		return "admin/product";
 	}
 	
@@ -119,12 +119,7 @@ public class AdminController {
 		boolean result = coupungService.deleteProduct(coupungNumber);
 		return (result) ? "success" : "fail";
  	}
-	
-	@GetMapping("/coupung/products.do")
-	public @ResponseBody List<CoupungDTO> getProductList() {
-		return coupungService.getAdminProductList();
-	}
-	
+
 	@GetMapping("/order/orderList.do")
 	public @ResponseBody List<OrdersDTO> getOrderList() {
 		return orderService.getAdminOrderList();

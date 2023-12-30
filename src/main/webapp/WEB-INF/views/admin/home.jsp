@@ -101,7 +101,7 @@
         
         $("#coupungProductList").on("click", function() {
         	$.ajax({
-        		url: "${appPath}/admin/coupung/select.do",
+        		url: "${appPath}/admin/coupung/product.do",
         		data: {
         			'offset': 0
         		},
