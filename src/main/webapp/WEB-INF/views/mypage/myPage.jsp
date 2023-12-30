@@ -254,6 +254,7 @@
 				</div>
 			</div>
 		</div>
+		</div>
 		<hr class="footer-line">
 		<%@ include file="../common/footer.jsp"%>
 
