@@ -1,34 +1,3 @@
-// 더미 데이터
-var appPath = '/myapp';
-var array_banner = ["./images/v616_37.png", "./images/v616_38.png", "./images/v616_39.png", "./images/v616_40.png"];
-
-var secondhand1 = {
-    "name" : "이고진 마에스트로 런닝머신",
-    "img" : "./images/v861_260.png"
-}
-
-var secondhand2 = {
-    "name" : "단백질 숯불갈비맛 새상품 9개 냉동",
-    "img" : "./images/v861_261.png"
-}
-
-var secondhand3 = {
-    "name" : "헬스장 스포짐 오목교점 9개월 양도합니다~!",
-    "img" : "./images/v861_262.png"
-}
-
-var secondhand4 = {
-    "name" : "자라 검은색 트레이닝복 팝니다 30",
-    "img" : "./images/v861_263.png"
-}
-
-var secondhand5 = {
-    "name" : "접이식 실내 자전거",
-    "img" : "./images/v861_264.png"
-}
-
-var array_secondhand = [secondhand1, secondhand2, secondhand3, secondhand4, secondhand5];
-
 var host = window.location.host + '/';
 var appPath = '/myapp';
 var router = new Map([
@@ -37,8 +6,6 @@ var router = new Map([
 
 $(function() {
     loadBanner(array_banner);
-  //  $("#populars").html(populars(array_popular));
-    $("#secondhands").html(secondhands(array_secondhand));
 
     $("#profileImage").on("click", function() {
         if($(".header-sub-menu").css("visibility") == 'hidden'){
@@ -143,7 +110,6 @@ $(function() {
             	}
             }
         })
-        console.log(obj);
     })
 
     $("#loginButton").on("click", function() {
@@ -162,8 +128,6 @@ $(function() {
         if($("#loginId").val() == userInfo.clientId && $("#loginPassword").val() == userInfo.password) {
             sessionStorage.setItem("userInfo", userInfo);
             //location.href = "./";
-            alert(1);
-            console.log(sessionStorage.getItem("userInfo"));
         }
 
     })

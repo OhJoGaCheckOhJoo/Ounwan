@@ -60,7 +60,6 @@ prefix="c" %>
 					res.forEach(function(product) {
 		                let price = numberComma(product.price);
 		                var danggunDiv = $("<div></div>").addClass("pointer");
-		                danggunDiv.append($("<div></div>").text("메롱"));
 		                danggunDiv.append($("<img>").addClass("img-2 img-border").attr("src", product.url));
 		                danggunDiv.append($("<div></div>").text(product.name));
 		                danggunDiv.append($("<div></div>").text(price + ' 원'));
