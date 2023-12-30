@@ -12,8 +12,10 @@
 		CLIENT_ID ,
 		TITLE ,	
 		TO_CHAR(CREATED_DATE, 'YYYY-MM-DD') AS createdDate,
-		VIEWS 
+		VIEWS,
+		VISIBILITY
 		from AETA
+		WHERE VISIBILITY=1
 		order by AETA_NUMBER DESC
 		limit #{start},#{limit}
 	</select>
@@ -24,14 +26,17 @@
 		CLIENT_ID ,
 		TITLE ,	
 		TO_CHAR(CREATED_DATE, 'YYYY-MM-DD') AS createdDate,
-		VIEWS
+		VIEWS,
+		VISIBILITY
 		from AETA
 		where
-		title like
+		VISIBILITY=1
+		and
+		(title like
 		CONCAT('%',#{inputValue},'%')
 		or
 		CLIENT_ID like
-		CONCAT('%',#{inputValue},'%')
+		CONCAT('%',#{inputValue},'%'))
 		order by AETA_NUMBER DESC
 		limit
 		#{start},#{limit}
@@ -44,9 +49,12 @@
 		CLIENT_ID ,
 		TITLE ,	
 		TO_CHAR(CREATED_DATE, 'YYYY-MM-DD') AS createdDate,
-		VIEWS
+		VIEWS,
+		VISIBILITY
 		from AETA
 		where
+		VISIBILITY=1
+		and
 		TITLE like CONCAT('%',#{inputValue},'%')
 		order by AETA_NUMBER DESC
 		limit
@@ -58,9 +66,12 @@
 		CLIENT_ID ,
 		TITLE ,	
 		TO_CHAR(CREATED_DATE, 'YYYY-MM-DD') AS createdDate,
-		VIEWS
+		VIEWS,
+		VISIBILITY
 		from AETA
 		where
+		VISIBILITY=1
+		and
 		CLIENT_ID like CONCAT('%',#{inputValue},'%')
 		order by AETA_NUMBER DESC
 		limit
@@ -269,6 +280,9 @@
 	<select id="AetaCountAllPosts" resultType="int">
 		select count(*) from
 		AETA
+		WHERE
+		VISIBILITY=1
+		
 	</select>
 
 	<select id="AetaCountSearchAll" parameterType="String"
@@ -276,6 +290,7 @@
 		select count(*) from
 		AETA
 		where
+		VISIBILITY=1 and
 		title like
 		CONCAT('%',#{inputValue},'%')
 		or
@@ -286,7 +301,7 @@
 		resultType="int">
 		select count(*) from
 		AETA
-		where
+		where VISIBILITY=1 and
 		title like
 		CONCAT('%',#{inputValue},'%')
 		or
@@ -297,7 +312,7 @@
 		resultType="int">
 		select count(*) from
 		AETA
-		where
+		where VISIBILITY=1 and
 		title like
 		CONCAT('%',#{inputValue},'%')
 		or
@@ -320,7 +335,6 @@
 		#{url}
 		);
 	</insert>
-
 
 
 	<select id="AetaPostToBeUpdated" parameterType="int"
@@ -498,6 +512,15 @@
 		set
 		views=views+1
 		where AETA_NUMBER=#{aetaNumber}
+	</update>
+	
+	<update id="AetaUpdateVisibilityAndReason" parameterType="aeta">
+		UPDATE AETA 
+		SET
+		VISIBILITY=0 ,
+		REPORT_REASON = #{reportReason}
+		WHERE 
+		AETA_NUMBER =#{aetaNumber};
 	</update>
 
 

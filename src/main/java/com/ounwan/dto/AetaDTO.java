@@ -25,4 +25,6 @@ public class AetaDTO {
 	private Timestamp createdDate;
 	private Timestamp updatedDate;
 	private Integer views;
+	private Integer visibility;
+	private String reportReason;
 }

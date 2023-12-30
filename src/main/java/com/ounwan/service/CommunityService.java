@@ -697,7 +697,11 @@ public class CommunityService {
 		int result = communityDAO.aetaDeletePost(post.getAetaNumber());
 		return result;
 	}
-
+	// 게시글 신고
+	public int aetaReport(AetaDTO aeta) {
+		System.out.println("service :"+aeta);
+		return communityDAO.aetaReport(changeEntity(aeta));
+	}
 	// 댓글 등록
 	public boolean aetaInsertComment(AetaCommentsDTO comment) {
 		return (communityDAO.aetaInsertComment(changeEntity(comment)) > 0) ? true : false;
@@ -720,12 +724,9 @@ public class CommunityService {
 	private Aeta changeEntity(AetaDTO aeta) {
 		return Aeta.builder().aetaNumber(aeta.getAetaNumber()).title(aeta.getTitle()).contents(aeta.getContents())
 				.clientId(aeta.getClientId()).createdDate(aeta.getCreatedDate()).updatedDate(aeta.getCreatedDate())
-				.views(aeta.getViews()).build();
+				.views(aeta.getViews()).visibility(aeta.getVisibility()).reportReason(aeta.getReportReason()).build();
 	}
 
-	private AetaImages changeEntity(AetaImagesDTO images) {
-		return AetaImages.builder().url(images.getUrl()).aetaNumber(images.getAetaNumber()).build();
-	}
 
 	private Comments changeEntity(AetaCommentsDTO comment) {
 		return Comments.builder().clientId(comment.getClientId()).commentNumber(comment.getCommentNumber())
@@ -746,7 +747,7 @@ public class CommunityService {
 	private AetaDTO changeDTO(Aeta aeta) {
 		return AetaDTO.builder().aetaNumber(aeta.getAetaNumber()).title(aeta.getTitle()).contents(aeta.getContents())
 				.clientId(aeta.getClientId()).createdDate(aeta.getCreatedDate()).updatedDate(aeta.getCreatedDate())
-				.views(aeta.getViews()).build();
+				.views(aeta.getViews()).visibility(aeta.getVisibility()).reportReason(aeta.getReportReason()).build();
 	}
 
 	private AetaLikes changeEntity(AetaLikesDTO aetaLikesDTO) {
