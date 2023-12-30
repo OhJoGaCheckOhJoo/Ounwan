@@ -50,6 +50,32 @@ prefix="c" %>
 					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
+			
+			$.ajax({
+				url : "${appPath}/danggun/product/top-five",
+				type : "GET",
+				success : function(res) {
+					var tag = '';
+					
+					res.forEach(function(product) {
+		                let price = numberComma(product.price);
+		                var danggunDiv = $("<div></div>").addClass("pointer");
+		                danggunDiv.append($("<div></div>").text("메롱"));
+		                danggunDiv.append($("<img>").addClass("img-2 img-border").attr("src", product.url));
+		                danggunDiv.append($("<div></div>").text(product.name));
+		                danggunDiv.append($("<div></div>").text(price + ' 원'));
+
+		                danggunDiv.on("click", function() {
+		                    window.location.href = '${appPath}/danggun/detail?danggunNumber=' + product.danggunNumber;
+		                });
+
+		                $("#secondhands").append(danggunDiv);
+		            });
+				},
+				error : function(request, status, error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
 		});
 		
 		function numberComma(n) {
