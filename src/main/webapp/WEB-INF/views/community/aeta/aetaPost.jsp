@@ -23,18 +23,22 @@
 	<div class="container">
 		<%@ include file="../../common/nav.jsp" %>
 			
-			<div id="aetaPostDetail">
-		<div>
+		<div id="aetaPostDetail">
+		<div id="post-contents">
 			<div>
 				<div id="aetaTitle">${aetaPost[0].TITLE}</div>
-				<span><img src=""/></span>
+				<span>
+					<img src="${aetaPost[0].URL}"/>
+				</span>
 				<span id="aetaWriter">${aetaPost[0].CLIENT_ID}</span>
-				<div>작성일:${aetaPost[0].AETA_CREATED_DATE}</div>
-				<div>조회수:${aetaPost[0].VIEWS}</div>
-			</div>
+				<div>
+					<span>${aetaPost[0].AETA_CREATED_DATE}</span>
+					<span>조회수:${aetaPost[0].VIEWS}</span>
+				</div>
 				<c:if test="${aetaPost[0].CLIENT_ID != userInfo.clientId}">
-				<button class="modal-button" onclick="openReportModal()">신고</button>
+					<button class="modal-button" onclick="openReportModal()">신고</button>
 				</c:if>
+			</div>
 				<hr>
 
 			<div id="aetaContent">
@@ -55,45 +59,46 @@
 			</c:if>
 		</div>
 		<hr>
-
-		<a id="like-button" class="aeta-like"> 
-			<c:choose>
-				<c:when test="${aetaLikesCheck==1}">
-					<img id="aeta-like-png" class="aeta-like-png"
-						src="${appPath}/images/likeImages/like.png">
-				</c:when>
-				<c:otherwise>
-					<img id="aeta-like-png" class="aeta-like-png"
-						src="${appPath}/images/likeImages/dislike.png">
-				</c:otherwise>
-			</c:choose><span id="count-likes"> ${aetaCountLikes}</span>
-		</a>
-		<div><p>댓글 ${aetaCountComments}</p></div>
-		​
-		<hr>
+		<div id="aeta-post-likes">
+			<a id="like-button" class="aeta-like"> 
+				<c:choose>
+					<c:when test="${aetaLikesCheck==1}">
+						<img id="aeta-like-png" class="aeta-like-png"
+							src="${appPath}/images/likeImages/like.png">
+					</c:when>
+					<c:otherwise>
+						<img id="aeta-like-png" class="aeta-like-png"
+							src="${appPath}/images/likeImages/dislike.png">
+					</c:otherwise>
+				</c:choose><span id="count-likes">${aetaCountLikes}</span>
+			</a>
+			<span>댓글 ${aetaCountComments}</span>
+		</div>​
 		<h4>댓글</h4>
 		<h5>댓글은 수정이 불가능하르모 신중히 입력하세요!</h5>
 
 		<div class="commentList">
 			<c:forEach items="${aetaComments}" var="aeta">
 				<c:if test="${aeta.CLIENT_ID ne null}">
-					<div>
+					<div class='aeta-comment'>
 						<input type="hidden" class="commentId"
 							value="${aeta.COMMENT_NUMBER}">
-						<span><img class="aeta-photo" src="${aeta.PROFILE_URL}"/></span>
-						<span>댓글작성자: ${aeta.CLIENT_ID}</span>
-						<span>${aeta.CREATED_DATE }</span> 
-						<span id=""> 
-						<c:if test="${aeta.CLIENT_ID == clientId}">
-								<button type="button" id="deleteCommentBtn">삭제</button>
-						</c:if>
+						<span>
+							<img class="aeta-profile" src="${aeta.PROFILE_URL}"/>
 						</span>
-						<div class="commentContent">댓글: ${aeta.CONTENTS}</div>
+						<span>${aeta.CLIENT_ID}</span>
+						<span class='comment-date'>${aeta.CREATED_DATE }</span> 
+						<c:if test="${aeta.CLIENT_ID == clientId}">
+							<span class='comment-delete'> 
+								<button type="button" id="deleteCommentBtn">삭제</button>
+							</span>
+						</c:if>
+						<div class="commentContent">${aeta.CONTENTS}</div>
 					</div>
 				</c:if>
 			</c:forEach>
 		</div>
-		<div>
+		<div class="input-comment-wrap">
 			<textarea id="inputComment" rows="" cols="" placeholder="댓글 입력"></textarea>
 			<button type="button" id="insertCommentBtn">등록</button>
 		</div>
@@ -187,7 +192,7 @@
 		--%>
 	</div>
 	<%@include file="../../common/footer.jsp"%>
-	<%@ include file="./aetaReportModal.jsp"%>
+	<%-- <%@ include file="./aetaReportModal.jsp"%> --%>
 	<script src="../js/aeta.js"></script>
 	<script src="../js/aetaReportModal.js"></script>
 	

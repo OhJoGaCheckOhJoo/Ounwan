@@ -43,7 +43,7 @@
             </div>
             <c:forEach var="product" items="${productList}">
             	<div class="product-info">
-                <input type="checkbox" value="${product.productNumber}">
+                <input type="checkbox" value="${product.coupungNumber}">
                 <span>${product.name}</span>
                 <span>${product.price}</span>
                 <span>${product.category}</span>
@@ -51,25 +51,30 @@
                	<select>
             		<option hidden>옵션</option>
                		<c:forEach var="option" items="${product.options}">
-                		<option>${option}</option>
+                		<option value="${option.coupungOptionNumber}">${option.name}</option>
                		</c:forEach>
                	</select>
-                <span>${product.totalSales}</span>
-                <button value="${product.productNumber}">${product.availableCheck}</button>
+                <span>${product.salesRate}</span>
+                <c:if test="${product.availableCheck}">
+                	<button value="${product.coupungNumber}">판매중</button>
+                </c:if>
+                <c:if test="${!product.availableCheck}">
+                	<button value="${product.coupungNumber}">판매 중단</button>
+                </c:if>
                 <div>
                     <h3>${product.name}</h3>
-                    <img src="${product.mainImage}">
-                    <button value="${product.productNumber}">상품 수정</button>
+                    <img src="${product.image[0].url}">
+                    <button value="${product.coupungNumber}">상품 수정</button>
                 </div>
             </div>
             </c:forEach>
         </div>
         <div id="productPages">
-        	<c:forEach var="index" begin="1" end="${endPage}">
-        		<c:if test="${index eq page}">
+        	<c:forEach var="index" begin="1" end="${pages}">
+        		<c:if test="${index eq offset}">
         			<a href="#" class="selected">${index}</a>
         		</c:if>
-        		<c:if test="${index ne page}">
+        		<c:if test="${index ne offset}">
         			<a href="#">${index}</a>
         		</c:if>
         	</c:forEach>
@@ -78,6 +83,7 @@
 </div>
 
 <script>
+	console.log("${pages}");
     var searchOption = "";
     var searchValue = "";
     

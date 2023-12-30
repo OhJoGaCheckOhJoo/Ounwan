@@ -163,6 +163,17 @@ public class CommunityService {
 		inbodyData.put("updatedDate", updatedDate);
 		return inbodyData;
 	}
+	
+	public List<Map<String, Object>> getReportGramBoard(int offset) {
+		List<Map<String, Object>> result = new ArrayList<>();
+		
+		for(Map<String, Object> reportBoard : communityDAO.getAdminReportBoard(offset)) {
+			reportBoard.put("reportInfo", communityDAO.getAdminReportReason((int)reportBoard.get("COMMUNITY_NUMBER")));
+			reportBoard.put("hashTags",  communityDAO.hashTagsByNumber((int)reportBoard.get("COMMUNITY_NUMBER")));
+			result.add(reportBoard);
+		}
+		return result;
+	}
 
 	public String reportBoard(String clientId, int communityNumber, int[] reason) {
 		Map<String, Object> data = new HashMap<>();

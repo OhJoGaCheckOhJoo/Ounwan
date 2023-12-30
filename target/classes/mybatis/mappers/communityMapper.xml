@@ -77,6 +77,16 @@
 		limit
 		#{start},#{limit}
 	</select>
+	
+	<select id="getAdminReportBoard" parameterType="int" resultType="map">
+		SELECT OUNWAN_COMMUNITY.*, IFNULL(COMMUNITY_REPORTS.CNT, 0) AS REPORT_NUM 
+		FROM OUNWAN_COMMUNITY LEFT JOIN (SELECT COMMUNITY_NUMBER, COUNT(*) AS CNT FROM COMMUNITY_REPORTS GROUP BY COMMUNITY_NUMBER) AS COMMUNITY_REPORTS 
+		ON OUNWAN_COMMUNITY.COMMUNITY_NUMBER = COMMUNITY_REPORTS.COMMUNITY_NUMBER WHERE CNT > 0 LIMIT 20 OFFSET #{offset}
+	</select>
+	
+	<select id="getAdminReportReason" parameterType="int" resultType="map">
+		SELECT * FROM COMMUNITY_REPORTS WHERE COMMUNITY_NUMBER = #{communityNumber}
+	</select>
 
 	<select id="getProfileImage" parameterType="String" resultType="string">
 		SELECT PROFILE_URL FROM CLIENTS WHERE CLIENT_ID = #{profileId}

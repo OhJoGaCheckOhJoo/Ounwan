@@ -179,6 +179,14 @@ public class CommunityDAO {
 	public List<Map<String, Object>> selectFollowingList(Map<String, Object> data) {
 		return sqlSession.selectList(NAMESPACE + "selectFollowingList", data);
 	}
+	
+	public List<Map<String, Object>> getAdminReportBoard(int offset) {
+		return sqlSession.selectList(NAMESPACE + "getAdminReportBoard", offset);
+	}
+	
+	public List<Map<String, Object>> getAdminReportReason(int communityNumber) {
+		return sqlSession.selectList(NAMESPACE + "getAdminReportReason", communityNumber);
+	}
 
 	public int checkFollow(Map<String, Object> data) {
 		return sqlSession.selectOne(NAMESPACE + "checkFollow", data);

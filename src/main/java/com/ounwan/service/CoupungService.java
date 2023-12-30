@@ -52,18 +52,24 @@ public class CoupungService {
 	}
 	
 
-	public List<CoupungDTO> getAdminProductList() {
+	public List<CoupungDTO> getAdminProductList(int offset) {
 		List<CoupungDTO> result = new ArrayList<>();
 		
-		result = changeDTOList(coupungDAO.getAdminProductList());
+		result = changeDTOList(coupungDAO.getAdminProductList(offset));
 		
 		for (CoupungDTO product : result) {
 			product.setSalesRate(orderDetailService.getSalesRate(product.getCoupungNumber()));
+			product.setCategory(coupungDAO.getProductCategory(product.getCoupungCategoryNumber()));
 			product.setImage(productImageService.getProductImageByCoupungId(product.getCoupungNumber()));
 			product.setOptions(coupungOptionsService.selectOptions(product.getCoupungNumber()));
 		}
 		
 		return result;
+	}
+	
+	public int getProductCount() {
+		int num = coupungDAO.getProductCount(); 
+		return (num / 20) + (num % 20 > 0 ? 1 : 0);
 	}
 
 	public List<CoupungDTO> findByProductName(String text) {
