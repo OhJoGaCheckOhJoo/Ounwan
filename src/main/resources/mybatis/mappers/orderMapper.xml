@@ -22,4 +22,10 @@
     <update id="updateTradeHistory" parameterType="orders" >
     	UPDATE ORDERS SET TRADE_HISTORY_NUMBER = #{tradeHistoryNumber} WHERE ORDER_NUMBER = #{orderNumber}
     </update>
+    
+    <select id="getOrderById" parameterType="String" resultType="orders">
+    	SELECT * 
+    	FROM ORDERS 
+    	WHERE ORDER_NUMBER = #{orderNumber}
+    </select>
 </mapper>

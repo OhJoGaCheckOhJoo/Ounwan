@@ -14,6 +14,7 @@
 		TO_CHAR(CREATED_DATE, 'YYYY-MM-DD') AS createdDate,
 		VIEWS 
 		from AETA
+		WHERE VISIBILITY = 1
 		order by AETA_NUMBER DESC
 		limit #{start},#{limit}
 	</select>

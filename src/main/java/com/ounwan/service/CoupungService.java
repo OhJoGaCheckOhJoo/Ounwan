@@ -139,6 +139,10 @@ public class CoupungService {
 		return price;
 	}
 	
+	public int getPrice (int coupungNumber, int quantities) {
+		return (coupungDAO.getPrice(coupungNumber) * quantities);
+	}
+	
 	public List<CoupungDTO> getHotDealProductList() {
 		List<CoupungDTO> hotDeal = changeDTOList(coupungDAO.getHotDealProductList());
 		for (CoupungDTO product : hotDeal) {

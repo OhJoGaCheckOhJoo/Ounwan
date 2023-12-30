@@ -28,9 +28,9 @@ public class KakaoLoginBO {
 	ClientsService clientsService;
 	
 	private String accessToken = "";
-	private String refreshToken = "";
-	private String RESTAPI_KEY = "000";
-	private String redirectURI = "000";
+    private String refreshToken = "";
+    private String RESTAPI_KEY = "00";
+    private String redirectURI = "00";
 
 	public String getURL() {
 		StringBuffer bf = new StringBuffer();

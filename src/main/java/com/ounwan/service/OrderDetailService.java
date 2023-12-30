@@ -34,10 +34,12 @@ public class OrderDetailService {
 	}
 
 	public List<OrderDetailsDTO> getOrderDetails(String orderNumber) {
-		List<OrderDetailsDTO> orderList = orderDetailDAO.getOrderDetails(orderNumber);
-		
+		List<OrderDetails> orderLists = orderDetailDAO.getOrderDetails(orderNumber);
+		System.out.println("orderEntity : " + orderLists);
+		List<OrderDetailsDTO> orderList = changeDTOList(orderDetailDAO.getOrderDetails(orderNumber));
+		System.out.println("orderList : " + orderList);
 		for (OrderDetailsDTO order : orderList) {
-			order.setCoupungDTO(coupungService.getProductDetail(order.getCoupungNumber(), order.getOptionNumber(), order.getQuantity()));
+			order.setCoupungDTO(coupungService.getProductDetail(order.getCoupungNumber(), order.getCoupungOptionNumber(), order.getQuantity()));
 		}
 		
 		return orderList;
@@ -56,7 +58,7 @@ public class OrderDetailService {
 				.orderDetailNumber(order.getOrderDetailNumber())
 				.orderNumber(order.getOrderNumber())
 				.coupungNumber(order.getCoupungNumber())
-				.optionNumber(order.getOptionNumber())
+				.coupungOptionNumber(order.getCoupungOptionNumber())
 				.price(order.getPrice())
 				.quantity(order.getQuantity())
 				.build();
@@ -67,7 +69,7 @@ public class OrderDetailService {
 				.orderDetailNumber(order.getOrderDetailNumber())
 				.orderNumber(order.getOrderNumber())
 				.coupungNumber(order.getCoupungNumber())
-				.optionNumber(order.getOptionNumber())
+				.coupungOptionNumber(order.getCoupungOptionNumber())
 				.price(order.getPrice())
 				.quantity(order.getQuantity())
 				.build();

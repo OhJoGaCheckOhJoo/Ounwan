@@ -17,7 +17,7 @@ public class OrderDetails {
 	private Integer orderDetailNumber;
 	private String orderNumber;
 	private Integer coupungNumber;
-	private Integer optionNumber;
+	private Integer coupungOptionNumber;
 	private Integer price;
 	private Integer quantity;
 }

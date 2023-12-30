@@ -1,7 +1,6 @@
 package com.ounwan.controller;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -14,13 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ounwan.dto.CartsDTO;
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.dto.CoupungDTO;
 import com.ounwan.dto.GuestsDTO;
@@ -42,9 +41,9 @@ public class CoupungController {
 	OrderService orderService;
 	
 	private static final String IAMPORT_REST_APIKEY = "00";
-	private static final String IAMPORT_SECRET = "00";
-	private IamportClient api = new IamportClient(IAMPORT_REST_APIKEY, IAMPORT_SECRET);
-	
+    private static final String IAMPORT_SECRET = "00";
+    private IamportClient api = new IamportClient(IAMPORT_REST_APIKEY, IAMPORT_SECRET);
+    
 	@GetMapping("/products")
 	public String getProductMain (@RequestParam(defaultValue = "0")String categoryNum, Model model) {
 		List<CoupungDTO> productList = coupungService.getProductList(Integer.parseInt(categoryNum));
@@ -128,14 +127,12 @@ public class CoupungController {
 	public @ResponseBody String setOrder(@RequestBody OrdersDTO order, HttpSession session) {
 		ClientsDTO client = (ClientsDTO) session.getAttribute("userInfo");
 		GuestsDTO guest = (GuestsDTO) session.getAttribute("guest");
-		if (client == null && guest == null) {
-			session.setAttribute("guestOrderList", order.getOrderDetails());
-			return "empty";
-		}
-
-//		ClientsDTO client = null;
-//		GuestsDTO guest = GuestsDTO.builder().guestNumber(2).email("yyy@gmail.com").phone("010-1234-1234").build();
-		boolean result = orderService.setOrder(order, client, guest);
+//		if (client == null && guest == null) {
+//			session.setAttribute("guestOrderList", order.getOrderDetails());
+//			return "empty";
+//		}
+		
+		boolean result = orderService.setOrder(order, client, guest, session);
 		
 		return (result) ? "success" : "fail";
 	}

@@ -2,11 +2,15 @@ package com.ounwan.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ounwan.dto.CartsDTO;
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.dto.GuestsDTO;
 import com.ounwan.dto.OrderDetailsDTO;
@@ -21,34 +25,61 @@ public class OrderService {
 	OrderDAO orderDAO;
 	@Autowired
 	OrderDetailService orderDetailService;
+	@Autowired
+	CoupungService coupungService;
+	@Autowired
+	CartService cartService;
 	
 	public List<OrdersDTO> getOrderList(String clientId) {
 		return changeDTOList(orderDAO.getOrderList(clientId));
 	}
 
-	public boolean setOrder(OrdersDTO order, ClientsDTO client, GuestsDTO guest) {
-		String orderNumber = UUID.randomUUID().toString().split("-")[4]; // 5번째 값 가져오기 (12자리 수)
-		order.setOrderNumber(orderNumber);
-		order.setTradeHistoryNumber(1);// sql 에서 now 찍기 
+	public boolean setOrder(OrdersDTO orderDTO, ClientsDTO client, GuestsDTO guest, HttpSession session) {
+		List<CartsDTO> guestCarts = (List<CartsDTO>) session.getAttribute("cartList");
 		
-		List<OrderDetailsDTO> productList = order.getOrderDetails();
-		
-		int result = 0;
-		if (client != null) {
-			order.setClientId(client.getClientId());
-			result = orderDAO.setOrder(changeEntity(order));
-		} else {
-			order.setGuestNumber(guest.getGuestNumber());
-			result = orderDAO.setOrder(changeEntity(order));
+		for (OrderDetailsDTO orderDetail : orderDTO.getOrderDetails()) {
+			orderDetail.setPrice(coupungService.getPrice(orderDetail.getCoupungNumber(), orderDetail.getQuantity()));
 		}
 		
-		for (OrderDetailsDTO product : productList) {
+		Orders order = putOrderInfo(orderDTO, client, guest);
+		
+		int result = orderDAO.setOrder(order);
+		String orderNumber = order.getOrderNumber();
+		
+		List<OrderDetailsDTO> orderDetails = orderDTO.getOrderDetails();
+		
+		for (OrderDetailsDTO product : orderDetails) {
 			orderDetailService.setOrder(product, orderNumber);
 		}
-		
+	
+		for (OrderDetailsDTO orderDetail : orderDetails) {
+			if (guest != null) {// 비회원 주문된거 삭제 해주기
+				if (guestCarts != null) {
+					for(int i = 0; i < guestCarts.size(); i++) {
+						if(orderDetail.getCoupungNumber() == guestCarts.get(i).getCoupungNumber() 
+								&& orderDetail.getCoupungOptionNumber() == guestCarts.get(i).getCoupungOptionNumber())
+							guestCarts.remove(i);
+					}
+					session.setAttribute("cartList", guestCarts);
+				}
+			} else {
+				List<Map<Object, Object>> clientCarts = cartService.getCartById(client.getClientId());
+				if (clientCarts != null) {
+					for (Map<Object, Object> cart : clientCarts) {
+						if (orderDetail.getCoupungNumber() == cart.get("coupungNumber") 
+								&& orderDetail.getCoupungOptionNumber() == cart.get("optionNumber"))
+							cartService.deleteCart(CartsDTO.builder()
+															.clientId(client.getClientId())
+															.coupungNumber(orderDetail.getCoupungNumber())
+															.coupungOptionNumber(orderDetail.getCoupungOptionNumber())
+															.build());
+					}
+				}
+			}
+		}
 		return (result > 0) ? true : false;
 	}
-
+	
 	public List<OrdersDTO> getAdminOrderList() {
 		List<OrdersDTO> orderList = changeDTOList(orderDAO.getAdminOrderList());
 		for (OrdersDTO order : orderList) {
@@ -61,6 +92,31 @@ public class OrderService {
 		int result = orderDAO.updateTradeStatus(order);
 		return result > 0;
 	}
+	
+	public Orders putOrderInfo(OrdersDTO orderDTO, ClientsDTO client, GuestsDTO guest) {
+		String orderNumber = UUID.randomUUID().toString().split("-")[4]; // 5번째 값 가져오기 (12자리 수)
+		orderDTO.setTradeHistoryNumber(1);
+		return Orders.builder()
+					.orderNumber(orderNumber)
+					.clientId((client != null)? client.getClientId() : null)
+					.guestNumber((guest != null) ? guest.getGuestNumber() : null)
+					.tradeHistoryNumber(1)
+					.totalPrice(orderDTO.getTotalPrice())
+					.shippingAddress(orderDTO.getShippingAddress())
+					.receiverName(orderDTO.getReceiverName())
+					.receiverPhone(orderDTO.getReceiverPhone())
+					.paymentMethod(orderDTO.getPaymentMethod())
+					.totalQuantity(orderDTO.getTotalQuantity())
+					.build();
+	}
+
+	public OrdersDTO getOrders(String orderNumber) {
+		OrdersDTO order = changeDTO(orderDAO.getOrderById(orderNumber));
+		order.setOrderDetails(orderDetailService.getOrderDetails(orderNumber));
+		System.out.println("HERE : " + order);
+		return order;
+	}
+	
 	public List<OrdersDTO> changeDTOList(List<Orders> orderList) {
 		List<OrdersDTO> changedList = new ArrayList<OrdersDTO>();
 		for (Orders order : orderList) {

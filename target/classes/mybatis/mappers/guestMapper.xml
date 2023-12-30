@@ -4,11 +4,17 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.guest">
 
-    <insert id="addGuest" parameterType="guests">
+    <insert id="addGuest" parameterType="guests" useGeneratedKeys="true" keyProperty="guestNumber">
     	INSERT INTO
     	GUESTS(EMAIL, PHONE)
     	VALUES(#{email}, #{phone})
     </insert>
 
-
+	<select id="getGuestInfo" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM GUESTS guest
+		JOIN ORDERS o on guest.GUEST_NUMBER = o.GUEST_NUMBER
+		WHERE o.ORDER_NUMBER = #{orderNumber}
+		AND guest.EMAIL = #{guestEmail}
+	</select>
 </mapper>
