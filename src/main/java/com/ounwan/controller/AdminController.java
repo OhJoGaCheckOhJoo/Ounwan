@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.AdminDTO;
+import com.ounwan.dto.AetaDTO;
 import com.ounwan.dto.CoupungDTO;
 import com.ounwan.dto.DanggunDTO;
 import com.ounwan.dto.OrdersDTO;
 import com.ounwan.service.AdminService;
+import com.ounwan.service.CommunityService;
 import com.ounwan.service.CoupungService;
 import com.ounwan.service.DanggunService;
 import com.ounwan.service.OrderService;
@@ -40,6 +42,9 @@ public class AdminController {
 	
 	@Autowired
 	DanggunService danggunService;
+	
+	@Autowired
+	CommunityService communityService;
 	
 	@GetMapping("/main.do")
 	public String getMainPage(HttpSession session) {
@@ -131,15 +136,26 @@ public class AdminController {
 		return "admin/danggunReport";
 	}
 	
+	
+	@PostMapping("/danggun/restore") 
+	public @ResponseBody String restoreDanggun(@RequestParam("danggunNumber") Integer danggunNumber) {
+		boolean result = danggunService.restoreDanggun(danggunNumber);
+		return result? "success" : "fail"; 
+	}
+	
+	
 	@GetMapping("/aeta/report")
-	public String getAetaReport() {
+	public String getAetaReport(Model model) {
+		List<AetaDTO> result = communityService.getAetaReportList();
+		model.addAttribute("aeta", result);
 		return "admin/aetaReport";
 	}
 	
-	@PostMapping("/danggun/report")
-	public @ResponseBody List<DanggunDTO> getDanggunReportList() {
-		List<DanggunDTO> result = danggunService.getDanggunReportList();
-		return result;
+	@PostMapping("/aeta/restore") 
+	public @ResponseBody String restoreAeta(@RequestParam("aetaNumber") Integer aetaNumber) {
+		boolean result = communityService.restoreAeta(aetaNumber);
+		System.out.println(result);
+		return result? "success" : "fail";  
 	}
 	
 }
