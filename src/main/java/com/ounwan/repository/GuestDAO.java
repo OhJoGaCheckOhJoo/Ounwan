@@ -1,5 +1,7 @@
 package com.ounwan.repository;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,6 +17,10 @@ public class GuestDAO {
 	
 	public int addGuestInfo(Guests guest) {
 		return sqlSession.insert(NAMESPACE + "addGuest", guest);
+	}
+
+	public int getGuestInfo(Map<String, Object> guest) {
+		return sqlSession.selectOne(NAMESPACE + "getGuestInfo", guest);
 	}
 
 }

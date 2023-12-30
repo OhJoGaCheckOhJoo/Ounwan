@@ -101,7 +101,8 @@
 											varStatus="status">
 											<div class="x01">
 												<div class="x01-1">
-													<input type="hidden" value="${product.coupungNumber }" />
+													<input type="hidden" value="${product.coupungNumber }" id="coupungNumber"/>
+													<input type="hidden" value="${product.options[0].coupungOptionNumber }" id="optionNumber"/>
 													<img class="x50-2" src="${product.image[0].url }" alt="50" />
 													<div class="text-container">
 														<p class="jtext-10 valign-text-middle">-[옵션] :
@@ -406,17 +407,20 @@
 			}
 			
 			var coupungNumber = [];
-			for(var i = 0; i < $('#product-area .x01-1 input').length; i++) {
-				coupungNumber.push($('#product-area .x01-1 input').eq(i).val());
+			for(var i = 0; i < $('#product-area .x01-1 #coupungNumber').length; i++) {
+				coupungNumber.push($('#product-area .x01-1 #coupungNumber').eq(i).val());
 			}
-			console.log(coupungNumber);
 			
 			var quantities = [];
 			for(var i = 0; i < $('#product-area .x01 #quantity').length; i++) {
 				quantities.push($('#product-area .x01 #quantity').eq(i).text());
 			}
 			
-			console.log(quantities);
+			var options = [];
+			for(var i = 0; i < $('#product-area .x01-1 #optionNumber').length; i++) {
+				options.push($('#product-area .x01-1 #optionNumber').eq(i).val());
+			} 
+			
 			var price = 0;
 			
 			var priceUrl = "${appPath}/coupung/price?coupungNumbers=" + coupungNumber.join(',') + "&quantities=" + quantities.join(',');
@@ -425,7 +429,7 @@
 			var address = $('#address-txt').val() + " " + $('#address-detail-txt').val();
 			var phoneNumber = $('#phone-txt').val();
 			var email = $('#id-txt').val() + "@" + $('#domain-txt').val();
-			
+
 			 $.ajax({
 				 url : priceUrl,
 				 type : 'get',
@@ -451,7 +455,41 @@
 		             	}).done(function(data) {
 		             		console.log(data);
 		             		if (rsp.paid_amount === data.response.amount) {
-		             			alert("성공");
+		             			var orderList = [];
+		             			var totalQuantity = 0;
+		             			for (let i = 0; i < coupungNumber.length; i++) {
+		             				var product = {
+		             					'coupungNumber' : Number(coupungNumber[i]),
+		             					'optionNumber' : Number(options[i]),
+		             					'quantity' : Number(quantities[i])
+		             				}
+		             				orderList.push(product);
+		             				totalQuantity += Number(quantities[i]);
+		             			}
+		             			
+		             			var orders = {
+		             					'totalPrice' : data.response.amount,
+		             					'totalQuantity' : totalQuantity,
+		             					'paymentMethod' : 'card',
+		             					'receiverName' : $('#name-txt-2').val(),
+		             					'receiverPhone' :  $('#phone-txt-2').val(),
+		             					'shippingAddress' : zipCode + " " + address,
+		             					'orderDetails' : orderList
+		             			}
+		             			$.ajax({
+		             				url : "${appPath}/coupung/order",
+		             				type : "post",
+		             				data : JSON.stringify(orders),
+		             				contentType : 'application/json',
+		             				success : function (res) {
+		             					if (res === 'success') {
+		             						alert('success');
+		             					}
+		             				},
+		                            error: function(request, status, error) {
+		                                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		                            }
+		             			});
 		             		} else {
 		             			alert("결제에 실패하였습니다.");
 		             		}

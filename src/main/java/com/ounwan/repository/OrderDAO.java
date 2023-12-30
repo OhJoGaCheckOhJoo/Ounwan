@@ -31,4 +31,8 @@ public class OrderDAO {
 	public int updateTradeStatus(OrdersDTO order) {
 		return sqlSession.update(NAMESPACE + "updateTradeStatus", order);
 	}
+
+	public Orders getOrderById(String orderNumber) {
+		return sqlSession.selectOne(NAMESPACE + "getOrderById", orderNumber);
+	}
 }

@@ -4,7 +4,7 @@
 <c:set var="appPath" scope="application" value="${pageContext.request.contextPath}" />
 <link href="${appPath}/css/aetaList.css" rel="stylesheet">
 <div class="section-header">
-	<h2 class="section-title">게시글 내역</h2>
+	<div class="section-title">게시글 내역</div>
 </div>
 <table>
 	<thead>

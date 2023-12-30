@@ -17,4 +17,6 @@ public class GuestsDTO {
 	private Integer guestNumber;
 	private String email;
 	private String phone;
+	// 주문 조회를 위한 컬럼 추가
+	private String orderNumber;
 }

@@ -15,7 +15,7 @@
 		VIEWS,
 		VISIBILITY
 		from AETA
-		WHERE VISIBILITY=1
+		WHERE VISIBILITY = 1
 		order by AETA_NUMBER DESC
 		limit #{start},#{limit}
 	</select>

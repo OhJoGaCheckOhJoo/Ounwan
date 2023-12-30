@@ -8,7 +8,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <div class="section-header">
-	<h2 class="section-title">리뷰 관리</h2>
+	<div class="section-title">리뷰 관리</div>
 </div>
 <div class="table-container">
 	<table>

@@ -52,7 +52,7 @@
 									<c:out value="${list.productName}" />
 								</div>
 								<div class="danggun-price">
-									<c:out value="${list.price}" />
+									<c:out value="${list.price}원" />
 								</div>
 							</div>
 						</a>

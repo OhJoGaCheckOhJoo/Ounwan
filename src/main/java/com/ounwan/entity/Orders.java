@@ -18,7 +18,7 @@ import lombok.ToString;
 public class Orders {
 	private String orderNumber;
 	private String clientId;
-	private int guestNumber;
+	private Integer guestNumber;
 	private int tradeHistoryNumber;
 	private int totalPrice;
 	private Date orderDate;

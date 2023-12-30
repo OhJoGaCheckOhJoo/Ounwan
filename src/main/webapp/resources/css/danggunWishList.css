@@ -66,6 +66,12 @@
 	border: 1px solid #ccc5b6;
 }
 
+.delete-button:hover {
+    color: var(--main-back);
+    background-color: var(--main-color-2);
+    border: 1px solid var(--main-color-2);	
+}
+
 .none-content>td {
 	text-align: center;
 	padding: 80px;

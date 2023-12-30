@@ -40,64 +40,62 @@
 		            <tbody>
 						<c:choose>
 							<c:when test="${clientId == null}">
-								<c:forEach var="cart" items="${cartList}" varStatus="status">
-					            	<c:if test="${empty cartList}">
-										<tr class="none-content">
-											<td colspan="5">장바구니가 비어있습니다.</td>
-										</tr>
-									</c:if>
-									<c:if test="${not empty cartList}">
-										<c:forEach var="cList" items="${cartList}" varStatus="loop">
-							                <tr>
-							                <div>
-							                	<td>
-							                		<div class="checkbox">
-														<input type="checkbox" name="checkbox" class="selectCheckbox">
-														<input type="hidden" value="${cart.coupungNumber}" class="productNum" />
-														<input type="hidden" value="${cart.coupungOptionNumber}" class="optionNum" />
-														<input type="hidden" value="${cart.quantity}" class="productQuantity" />
+					            <c:if test="${empty cartList}">
+									<tr class="none-content">
+										<td colspan="5">장바구니가 비어있습니다.</td>
+									</tr>
+								</c:if>
+								<c:if test="${not empty cartList}">
+									<c:forEach var="cart" items="${cartList}" varStatus="loop">
+							               <tr>
+						                <div>
+						                	<td>
+						                		<div class="checkbox">
+													<input type="checkbox" name="checkbox" class="selectCheckbox">
+													<input type="hidden" value="${cart.coupungNumber}" class="productNum" />
+													<input type="hidden" value="${cart.coupungOptionNumber}" class="optionNum" />
+													<input type="hidden" value="${cart.quantity}" class="productQuantity" />
+												</div>
+						                	</td>
+						                    <td>
+						                    	<div class="clist-product-info">
+							                		<img src="${cart.url}" alt="productImage">
+							                    	<div class="product-info">
+								                    	 <span>${cart.name}</span>
+														 <span>${cart.price}원</span>
+														 <span>구매옵션 : ${cart.option }</span>
 													</div>
-							                	</td>
-							                    <td>
-							                    	<div class="clist-product-info">
-								                		<img src="${cart.url}" alt="productImage">
-								                    	<div class="product-info">
-									                    	 <span>${cart.name}</span>
-															 <span>${cart.price}원</span>
-															 <span>구매옵션 : ${cart.option }</span>
+												</div>
+						                    </td>
+						                    <td>
+						                    	<div class="clist-quantity">
+							                    	<div class="count">
+														<div class="minus">
+															<input type='hidden' value='${cart.coupungNumber}' class='coupung-num' /> 
+															<input type='hidden' value='${cart.price}' class='coupung-price' /> 
+															<input type='hidden' value='${status.count}' class='index-num' /> -
+														</div>
+														<span id="result${status.count}">${cart.quantity}</span>
+														<div class="plus">
+															<input type='hidden' value='${cart.coupungNumber}' class='coupung-num' /> 
+															<input type='hidden' value='${cart.price}' class='coupung-price' /> 
+															<input type='hidden' value='${status.count}' class='index-num' /> +
 														</div>
 													</div>
-							                    </td>
-							                    <td>
-							                    	<div class="clist-quantity">
-								                    	<div class="count">
-															<div class="minus">
-																<input type='hidden' value='${cart.coupungNumber}' class='coupung-num' /> 
-																<input type='hidden' value='${cart.price}' class='coupung-price' /> 
-																<input type='hidden' value='${status.count}' class='index-num' /> -
-															</div>
-															<span id="result${status.count}">${cart.quantity}</span>
-															<div class="plus">
-																<input type='hidden' value='${cart.coupungNumber}' class='coupung-num' /> 
-																<input type='hidden' value='${cart.price}' class='coupung-price' /> 
-																<input type='hidden' value='${status.count}' class='index-num' /> +
-															</div>
-														</div>
-													</div>
-							                    </td>
-							                    <td class="clsit-order-price">
-							                    	<span id="resultPrice${status.count}">금액:${cart.price*cart.quantity}</span>원
-							                    </td>
-							                    <td>
-							                    <div>
-							                    	<button class="delete-button" data-coupung-num="${cart.coupungNumber}" data-option-num="${cart.coupungOptionNumber}">&times;</button>
-							                    </div>
-							                    </td>
-							                </tr>
-							               </div>
-						                </c:forEach>
-									</c:if>
-					           </c:forEach>
+												</div>
+						                    </td>
+						                    <td class="clsit-order-price">
+						                    	<span id="resultPrice${status.count}">금액:${cart.price*cart.quantity}</span>원
+						                    </td>
+						                    <td>
+						                    <div>
+						                    	<button class="delete-button" data-coupung-num="${cart.coupungNumber}" data-option-num="${cart.coupungOptionNumber}">&times;</button>
+						                    </div>
+						                    </td>
+						                </tr>
+						               </div>
+					               </c:forEach>
+								</c:if>
 							</c:when>
 							<c:otherwise>
 								<c:if test="${empty UserCartList}">

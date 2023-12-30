@@ -8,13 +8,12 @@
 	background-color: #333;
 	border: 1px solid #ccc;
 	z-index: 1000;
-	max-height: 80vh; /* 모달 창의 최대 높이를 화면 높이의 80%로 설정 */
-	overflow-y: auto; /* 필요할 때 스크롤을 추가 */
-	width: 25%; /* 모달 창의 너비를 화면 너비의 80%로 설정 */
-	max-width: 920px; /* 모달 창의 최대 너비를 600px로 설정 */
+	max-height: 80vh;
+	overflow-y: auto;
+	width: 35%;
+	max-width: 920px; 
 }
 
-/* 배경 회색 불투명도 */
 .refund-modal-overlay {
 	display: none;
 	position: fixed;
@@ -26,7 +25,6 @@
 	z-index: 900;
 }
 
-
 .close-button {
   position: relative;
   float:right;
@@ -37,8 +35,6 @@
   bottom: 15px;
 }
 
-
-
 .refund-title {
 	text-align: center;
 	font-weight: bold;
@@ -46,34 +42,45 @@
 	color: var(--main-color);
 }
 
-.refund-reason > div {
-	margin-bottom: 10px;
+.refund-reason {
+	display: flex;
+	flex-direction: column;
 }
 
-.refund-reason > input {
+.refund-reason > div {
+	margin: 0px 0px 10px 10px;
+}
+
+.refund-reason > div> label > input {
 	transform: scale(1.5);
 	margin-right: 10px;
 }
 
-.refund-reason > button {
-	width: 300px;
-	height: 50px;
-	margin: 10px 0px 0px 68px;
-	border: 0;
-	border-radius: 15px;
-	background-color: var(--main-color);
-	color: #fff;
-	font-size: 20px;
-	font-weight: bold;
-	text-align: center;
+.refund-reason > div> label{
 	cursor: pointer;
 }
 
-.refund-reason > button:hover {
-	color: #ddd;
+.refund-modal-button {
+	margin-left:auto;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #444;
+    color: #eee7d8;
+    border: 1px solid var(--main-color-1);
+}
+
+.refund-modal-button:hover {
+    color: var(--main-back);
+    background-color: var(--main-color-2);
+    border: 1px solid var(--main-color-2);
 }
 
 .refund-hr {
-	margin : 10px 0px 10px 0px;
-	
+	margin : 10px 0px 10px 0px;	
+}
+
+.refund-ment {
+	margin: 5px 0px;
 }

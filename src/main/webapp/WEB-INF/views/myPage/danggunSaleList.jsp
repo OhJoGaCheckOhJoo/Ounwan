@@ -6,7 +6,7 @@
 	value="${pageContext.request.contextPath}" />
 <link href="${appPath}/css/danggunSaleList.css" rel="stylesheet">
 <div class="section-header">
-	<h2 class="section-title">판매 내역</h2>
+	<div class="section-title">판매 내역</div>
 </div>
 <table>
 	<thead>
@@ -38,7 +38,7 @@
 								</div>
 							</div>
 					</a></td>
-					<td class="danggun-sale price">${saleInfo.PRICE}</td>
+					<td class="danggun-sale price">${saleInfo.PRICE}원</td>
 					<td class="danggun-sale upload-date"><fmt:formatDate
 							value="${saleInfo.UPLOAD_DATE}" pattern="yyyy-MM-dd" /></td>
 					<td class="danggun-sale state"><c:if

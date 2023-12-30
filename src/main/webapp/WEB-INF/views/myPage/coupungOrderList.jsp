@@ -8,13 +8,15 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <div class="section-header">
-	<h2 class="section-title">상세 주문 내역</h2>
+	<div class="section-title">상세 주문 내역</div>
 </div>
 <div class="check-container">
 	<table>
 		<thead>
 			<tr class="head-tr">
 				<th>주문정보</th>
+				<th>총 결제금액</th>
+				<th>총 결제수량</th>
 				<th>진행상태</th>
 			</tr>
 		</thead>
@@ -33,17 +35,27 @@
 								value="${orderList.ORDER_NUMBER}" />
 							<tr>
 								<td class="order-detail order-info">
-<!-- 									<div class="order-detail-order-info-container"
-										onclick="openDeatilModal(this)"> -->
 									<div class="order-detail-order-info-container"
-										onclick="openDeatilModal('${orderList.ORDER_NUMBER}', '${orderList.ORDER_DATE}')">
+										onclick="openDeatilModal('${orderList.ORDER_NUMBER}', '${orderList.ORDER_DATE}', '${orderList.TOTAL_PRICE}', '${orderList.TOTAL_QUANTITY}')">
+										<div class="order-detail-order-info order-number">
+											<span class="order-detail-order-info-title">주문번호&nbsp;&nbsp;</span>
+											<span class="send-order-number">${orderList.ORDER_NUMBER}</span>
+										</div>
 										<div class="order-detail-order-info date">
-											주문일자 <span class="send-order-date"><fmt:formatDate
+											<span class="order-detail-order-info-title">주문일자&nbsp;&nbsp;</span>
+											<span class="send-order-date"><fmt:formatDate
 													value="${orderList.ORDER_DATE}" pattern="yyyy-MM-dd" /></span>
 										</div>
-										<div class="order-detail-order-info order-number">
-											주문번호 <span class="send-order-number">${orderList.ORDER_NUMBER}</span>
-										</div>
+									</div>
+								</td>
+								<td class="order-detail order-total-price">
+									<div class="order-detail-order-info total-price">
+										<span class="send-order-price">${orderList.TOTAL_PRICE}원</span>
+									</div>
+								</td>
+								<td class="order-detail order-total-quantity">
+									<div class="order-detail-order-info total-quantity">
+										<span class="send-order-quantity">${orderList.TOTAL_QUANTITY}개</span>
 									</div>
 								</td>
 
@@ -66,7 +78,8 @@
 												<div class="order-detail-state buttons">
 													<button class="active refund-button"
 														onclick="openRefundModal('${orderList.ORDER_NUMBER}')">환불접수</button>
-													<button class="active confirm-button" onclick="confirmPurchase('${orderList.ORDER_NUMBER}')">거래확정</button>
+													<button class="active confirm-button"
+														onclick="confirmPurchase('${orderList.ORDER_NUMBER}')">거래확정</button>
 												</div>
 											</div>
 										</td>
@@ -77,7 +90,8 @@
 												<div class="order-detail-state now">${orderList.TRADE_STEP}</div>
 												<div class="order-detail-state buttons">
 													<button class="disabled refund-button" disabled>환불접수</button>
-													<button class="active review-button" onclick="openDeatilModal('${orderList.ORDER_NUMBER}', '${orderList.ORDER_DATE}')">리뷰작성</button>
+													<button class="active review-button"
+														onclick="openDeatilModal('${orderList.ORDER_NUMBER}', '${orderList.ORDER_DATE}', '${orderList.TOTAL_PRICE}', '${orderList.TOTAL_QUANTITY}')">리뷰작성</button>
 												</div>
 											</div>
 										</td>
@@ -107,29 +121,31 @@
 </div>
 <%@ include file="./refundModal.jsp"%>
 <%@ include file="./detailModal.jsp"%>
-<%@ include file="./reviewModal.jsp" %>
+<%@ include file="./reviewModal.jsp"%>
 <script src="${appPath}/js/refundModal.js"></script>
 <script src="${appPath}/js/detailModal.js"></script>
+<script src="${appPath}/js/reviewModal.js"></script>
 
 <script>
 	function confirmPurchase(orderNumber) {
-		var confirmCheck =  confirm("구매 확정하시겠습니까?");
-		if(confirmCheck) {
+		var confirmCheck = confirm("구매 확정하시겠습니까?");
+		if (confirmCheck) {
 			$.ajax({
-				url: "${appPath}/myPage/confirmPurchase",
-				type: 'POST',
-				data: {orderNumber: orderNumber},
+				url : "${appPath}/myPage/confirmPurchase",
+				type : 'POST',
+				data : {
+					orderNumber : orderNumber
+				},
 				success : function(res) {
-					if(res === "success") {
+					if (res === "success") {
 						alert("구매확정 완료되었습니다. 리뷰를 작성해 중세요");
-					}
-					else {
+					} else {
 						alert("구매확정 중 문제가 발생했습니다.");
-					}				
+					}
 					orderList();
-				}	
-			});			
-		}		
+				}
+			});
+		}
 	}
 </script>
 

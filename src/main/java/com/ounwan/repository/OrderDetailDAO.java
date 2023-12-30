@@ -6,7 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ounwan.dto.OrderDetailsDTO;
 import com.ounwan.entity.OrderDetails;
 
 @Repository
@@ -28,7 +27,7 @@ public class OrderDetailDAO {
 		return sqlSession.selectList(NAMESPACE + "getTopFive");
 	}
 
-	public List<OrderDetailsDTO> getOrderDetails(String orderNumber) {
+	public List<OrderDetails> getOrderDetails(String orderNumber) {
 		return sqlSession.selectList(NAMESPACE + "getOrderDetails", orderNumber);
 	}
 

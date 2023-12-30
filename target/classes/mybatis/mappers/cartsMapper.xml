@@ -5,7 +5,7 @@
 <mapper namespace="net.ounwan.carts">
 
 	<select id="getCartById" parameterType="String" resultType="map">
-		SELECT coupung.name, option.name AS option, coupung.price, cart.*, image.URL
+		SELECT coupung.name, option.name AS option, coupung.price, cart.*, image.URL, coupung.COUPUNG_NUMBER as coupungNumber, cart.COUPUNG_OPTION_NUMBER as optionNumber
 		FROM COUPUNG coupung
 		JOIN CARTS cart ON coupung.COUPUNG_NUMBER = cart.COUPUNG_NUMBER
 		JOIN PRODUCT_IMAGES image ON cart.coupung_number = image.coupung_number
