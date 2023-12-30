@@ -82,16 +82,11 @@
 
 .danggun-name, .danggun-price {
 	margin-top: 5px;
-}
-
-.danggun-name {
 	width: 180px;
 	height: 21.8px;
+	overflow: hidden;
 }
 
-.danggun-price {
-	
-}
 input {
 	padding-left: 10px;
 }
