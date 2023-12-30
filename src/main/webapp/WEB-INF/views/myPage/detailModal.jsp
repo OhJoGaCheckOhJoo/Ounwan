@@ -12,16 +12,16 @@
 			<div>
 				<div class="modal-title">
 					<div class="detail-order-number">
-						[주문번호]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="modalOrderNumber"></span>
+						주문번호&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; <span id="modalOrderNumber"></span>
 					</div>
 					<div class="detail-order-date">
-						[주문일자]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="modalOrderDate"></span>
+						주문일자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; <span id="modalOrderDate"></span>
 					</div>
 					<div class="detail-order-total-price">
-						[총 주문금액]&nbsp; <span id="modalOrderTotalPrice"></span>
+						총 주문금액&nbsp;&nbsp;|&nbsp;&nbsp; <span id="modalOrderTotalPrice"></span>
 					</div>
 					<div class="detail-order-total-quantity">
-						[총 결제수량]&nbsp; <span id="modalOrderTotalQuantity"></span>
+						총 결제수량&nbsp;&nbsp;|&nbsp;&nbsp; <span id="modalOrderTotalQuantity"></span>
 					</div>
 				</div>
 				<hr>
