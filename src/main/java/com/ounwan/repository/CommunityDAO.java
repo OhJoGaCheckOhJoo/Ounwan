@@ -46,10 +46,6 @@ public class CommunityDAO {
 		return sqlSession.selectList(NAMESPACE + "AetaReadPost", aetaNumber);
 	}
 
-	public List<Map<String, Object>> aetaReadComments(int aetaNumber) {
-		return sqlSession.selectList(NAMESPACE + "AetaReadComments", aetaNumber);
-	}
-
 	public int aetaCountLikes(int boardNumber) {
 		return sqlSession.selectOne(NAMESPACE + "AetaCountLikes", boardNumber);
 	}
@@ -79,22 +75,6 @@ public class CommunityDAO {
 	public int aetaUpdateViews(int boardNumber) {
 		return sqlSession.update(NAMESPACE + "AetaUpdateView", boardNumber);
 	}
-	
-	//댓글 조회
-
-	// 댓글 갯수
-	public int aetaCountComments(int aetaNumber) {
-		return sqlSession.selectOne(NAMESPACE+"AetaCountComments",aetaNumber);
-	}
-
-	// 게시글 댓글 등록/삭제
-	public int aetaInsertComment(Comments comment) {
-		return sqlSession.insert(NAMESPACE + "AetaInsertComment", comment);
-	}
-
-	public int aetaDeleteComment(Comments comment) {
-		return sqlSession.delete(NAMESPACE + "AetaDeleteComment", comment);
-	}
 
 	// 게시글 수정 시 보여줄 데이터
 	public List<Map<String, Object>> aetaPostToBeUpdated(int boardNumber) {
@@ -111,12 +91,33 @@ public class CommunityDAO {
 		return sqlSession.delete(NAMESPACE + "AetaDeleteImageUrls", aetaNumber);
 	}
 
-//	public int aetaUpdateImageUrls(Map<String, Object> aetaUrlMap) {
-//		return sqlSession.update(NAMESPACE+"AetUpdateImageUrls");
-//	}
+	// 게시글 신고 (update visibility to 0, Reason(null)to reason)
+	public int aetaReport(Aeta aeta) {
+		return sqlSession.update(NAMESPACE + "AetaUpdateVisibilityAndReason", aeta);
+	}
+
 	// 게시글 삭제
 	public int aetaDeletePost(int boardNumber) {
 		return sqlSession.delete(NAMESPACE + "AetaDeletePost", boardNumber);
+	}
+
+	// 댓글 조회
+	public List<Map<String, Object>> aetaReadComments(int aetaNumber) {
+		return sqlSession.selectList(NAMESPACE + "AetaReadComments", aetaNumber);
+	}
+
+	// 댓글 갯수
+	public int aetaCountComments(int aetaNumber) {
+		return sqlSession.selectOne(NAMESPACE + "AetaCountComments", aetaNumber);
+	}
+
+	// 게시글 댓글 등록/삭제
+	public int aetaInsertComment(Comments comment) {
+		return sqlSession.insert(NAMESPACE + "AetaInsertComment", comment);
+	}
+
+	public int aetaDeleteComment(Comments comment) {
+		return sqlSession.delete(NAMESPACE + "AetaDeleteComment", comment);
 	}
 
 	public int CountAllPosts() {
@@ -135,8 +136,8 @@ public class CommunityDAO {
 		return sqlSession.selectOne(NAMESPACE + "AetaCountSearchId", inputValue);
 	}
 
-	public String findClientId(int boardNumber) {
-		return sqlSession.selectOne(NAMESPACE + "FindClientId" + boardNumber);
+	public String findClientId(int aetaNumber) {
+		return sqlSession.selectOne(NAMESPACE + "FindClientId" + aetaNumber);
 	}
 
 	public List<OunwanGram> gramFollowBoard(Map<String, Object> dataMap) {

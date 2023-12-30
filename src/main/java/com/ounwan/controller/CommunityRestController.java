@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.dto.InbodyDTO;
 import com.ounwan.dto.OunwanGramDTO;
+import com.ounwan.dto.StoreReportsDTO;
 import com.ounwan.service.CommunityService;
 import com.ounwan.dto.AetaCommentsDTO;
 import com.ounwan.dto.AetaDTO;
@@ -113,6 +114,13 @@ public class CommunityRestController {
 		boolean result = communityService.aetaDeleteComment(comment);
 		return (result) ? "success" : "fail";
 	}
+	//애타 신고 기능
+	@PostMapping("/report")
+	public @ResponseBody String reportPost(@RequestBody AetaDTO aeta) {
+		int result = communityService.aetaReport(aeta);
+		return (result>0) ? "success" : "fail";
+	}
+	
 
 	// 친구보기 요청
 	@RequestMapping("/ounwangram/followBoard")

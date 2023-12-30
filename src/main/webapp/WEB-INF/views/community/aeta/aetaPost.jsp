@@ -12,6 +12,7 @@
 <link href="${appPath}/css/header.css" rel="stylesheet" />
 <link href="${appPath}/css/nav.css" rel="stylesheet" />
 <link href="${appPath}/css/aeta.css" rel="stylesheet" />
+<link href="${appPath}/css/aetaReportModal.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>애타 게시글</title>
@@ -26,13 +27,15 @@
 		<div>
 			<div>
 				<div id="aetaTitle">${aetaPost[0].TITLE}</div>
-				<div id="aetaWriter">${aetaPost[0].CLIENT_ID}</div>
+				<span><img src=""/></span>
+				<span id="aetaWriter">${aetaPost[0].CLIENT_ID}</span>
 				<div>작성일:${aetaPost[0].AETA_CREATED_DATE}</div>
 				<div>조회수:${aetaPost[0].VIEWS}</div>
-				<button class="modal-button" onclick="openReportModal()">신고</button>
-	
-				<hr>
 			</div>
+				<c:if test="${aetaPost[0].CLIENT_ID != userInfo.clientId}">
+				<button class="modal-button" onclick="openReportModal()">신고</button>
+				</c:if>
+				<hr>
 
 			<div id="aetaContent">
 				<c:forEach items="${aetaPost}" var="aeta">
@@ -77,8 +80,7 @@
 					<div>
 						<input type="hidden" class="commentId"
 							value="${aeta.COMMENT_NUMBER}">
-						<span>
-							<img class="aeta-photo" src="${aeta.PROFILE_URL}"/></span>
+						<span><img class="aeta-photo" src="${aeta.PROFILE_URL}"/></span>
 						<span>댓글작성자: ${aeta.CLIENT_ID}</span>
 						<span>${aeta.CREATED_DATE }</span> 
 						<span id=""> 
@@ -187,6 +189,8 @@
 	<%@include file="../../common/footer.jsp"%>
 	<%@ include file="./aetaReportModal.jsp"%>
 	<script src="../js/aeta.js"></script>
+	<script src="../js/aetaReportModal.js"></script>
+	
 	<script>
 		var appPath = "${appPath}";
 	</script>
