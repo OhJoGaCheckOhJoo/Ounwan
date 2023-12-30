@@ -259,6 +259,11 @@ public class DanggunService {
 		return result;
 	}
 	
+	public boolean restoreDanggun(Integer danggunNumber) {
+		int result = danggunDAO.restoreDanggun(danggunNumber);
+		return (result > 0) ? true : false;
+	}	
+	
 	public List<DanggunDTO> changeDTOList(List<Danggun> danggun){
 		List<DanggunDTO> changeList = new ArrayList<>();
 		for (Danggun data : danggun) {
@@ -279,6 +284,6 @@ public class DanggunService {
 				.tradeHistoryNumber(danggun.getTradeHistoryNumber()).clientId(danggun.getClientId())
 				.productName(danggun.getProductName()).price(danggun.getPrice()).detail(danggun.getDetail())
 				.uploadDate(danggun.getUploadDate()).visibility(danggun.getVisibility()).build();
-	}	
+	}
 
 }
