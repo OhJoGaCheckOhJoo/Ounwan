@@ -59,8 +59,11 @@ public class MyPageDAO {
 		return sqlSession.delete(NAMESPACE + "deleteWishList", wishListNumber);
 	}
 
-	public List<Aeta> getAetaList(String userId) {
-		return sqlSession.selectList(NAMESPACE + "aetaList", userId);
+	public List<Aeta> getAetaList(Map<String,Object> userPosts) {
+		return sqlSession.selectList(NAMESPACE + "aetaList", userPosts);
+	}	
+	public int countAetaList(String userId) {
+		return sqlSession.selectOne(NAMESPACE + "countAetaList", userId);
 	}
 	
 	public List<Map<String, Object>> getReviewList(String userId) {

@@ -2,6 +2,7 @@ package com.ounwan.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import com.ounwan.dto.AetaDTO;
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.dto.DanggunChatRoomDTO;
 import com.ounwan.dto.DanggunDTO;
+import com.ounwan.dto.PaginatingDTO;
 import com.ounwan.entity.Aeta;
 import com.ounwan.entity.Clients;
 import com.ounwan.entity.Danggun;
@@ -86,8 +88,26 @@ public class MyPageService {
 		return selectWishLists.size() == result ? true : false;
 	}
 
-	public List<AetaDTO> getAetaList(String userId) {
-		return changeDTOList(myPageDAO.getAetaList(userId));
+	int pageLimit=10;
+	int blockLimit=10;
+	public List<AetaDTO> getAetaList(String userId,int page) {
+		Map<String,Object> userPosts=new HashMap<>();
+		userPosts.put("clientId", userId);
+		userPosts.put("start",(page-1)*pageLimit);
+		userPosts.put("limit",pageLimit);
+
+		return changeDTOList(myPageDAO.getAetaList(userPosts));
+	}
+
+	public PaginatingDTO getPages(int page, String userId) {
+		int countPosts = myPageDAO.countAetaList(userId);
+		int maxPageNumber = (int) (Math.ceil((double) countPosts / pageLimit));
+		int startPageNumber = (((int) (Math.ceil((double) page / blockLimit))) - 1) * blockLimit + 1;
+		int endPageNumber = startPageNumber + blockLimit - 1;
+		if (endPageNumber > maxPageNumber) {
+			endPageNumber = maxPageNumber;
+		}
+		return PaginatingDTO.builder().pageNumber(page).maxPageNumber(maxPageNumber).startPageNumber(startPageNumber).endPageNumber(endPageNumber).build();
 	}
 
 	public List<Map<String, Object>> getReviewList(String userId) {

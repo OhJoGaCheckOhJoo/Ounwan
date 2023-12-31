@@ -219,9 +219,19 @@
 	</delete>
 
 	<!-- aeta list -->
-	<select id="aetaList" parameterType="String" resultType="aeta">
+	<select id="aetaList" parameterType="map" resultType="aeta">
 		SELECT *
-		FROM AETA WHERE CLIENT_ID = #{clientId} ORDER BY AETA_NUMBER DESC
+		FROM AETA 
+		WHERE CLIENT_ID = #{clientId}
+		AND VISIBILITY=1
+		ORDER BY AETA_NUMBER DESC
+		LIMIT #{start},#{limit}
+	</select>
+	<select id="countAetaList" parameterType ="String" resultType="int">
+		SELECT count(*) 
+		FROM AETA
+		WHERE CLIENT_ID=#{clientId}
+		AND VISIBILITY = 1
 	</select>
 
 	<!-- review list -->
