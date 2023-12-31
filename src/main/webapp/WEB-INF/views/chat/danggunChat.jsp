@@ -18,30 +18,27 @@
 
 </head>
 <body>
-<div class="chat-container">
 	<div class="chat-wrap">
 		<div class="chat-header">
 			<div class="product-bar">
-			<div class="product-info">
-				<div>
-					<c:forEach var="images" items="${post.productImagesList}">
-						<c:if test="${images.type eq 0}">
-							<img class="main-img" src="${images.url}" />
-						</c:if>
-					</c:forEach>
+				<div class="product-info">
+					<div>
+						<c:forEach var="images" items="${post.productImagesList}">
+							<c:if test="${images.type eq 0}">
+								<img class="main-img" src="${images.url}" />
+							</c:if>
+						</c:forEach>
+					</div>
+					
+					<div class="product-info-1">
+						<div class="product-info-price">${post.price}원</div>
+						<div>${post.productName}</div>
+					</div>
 				</div>
-				
-				<div class="product-info-1">
-					<div class="product-info-price">${post.price}원</div>
-					<div>${post.productName}</div>
-				</div>
-			</div>
 				<div class="product-info-2">
 					<div>${post.tradeStep}</div>
 				</div>
-			
 			</div>
-
 		</div>
 
 		<div id="chat" class="chat"></div>
@@ -85,7 +82,6 @@
 				placeholder="메세지를 입력한 후에 엔터키를 누르세요."></textarea>
 		</div>
 	</div>
-</div>
 </body>
 <script>
 	getList();

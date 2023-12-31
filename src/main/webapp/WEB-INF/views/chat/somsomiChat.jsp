@@ -20,7 +20,14 @@
 <body>
 	<div class="chat-wrap">
 		<div class="chat-header">
-			<h3>채팅방</h3>
+			<div class="chat-header-wrap" >
+				<div><img class="logo"/></div>
+				<div>오운완</div>
+			</div>
+		</div>
+		<div class="chat-notice">
+			<h3>오운완에 문의하기</h3>
+			<span>고객센터 : 평일 오전 10:00 ~ 오후 5:00 (점심시간 12:00 ~ 13:00) 토/일/공휴일 휴무</span>
 		</div>
 		<div id="chat" class="chat"></div>
 		<div id="quitMessage" class="quit-message"></div>
@@ -30,7 +37,7 @@
        <div class="{{printLeftRight sender}}">
           <div class="sender">{{sender}}</div>
           <div class="message">{{message}}
-			<a href="{{messageId}}" style="display:{{printNone sender}}">X</a>
+			<a href="{{messageId}}" style="display:{{printNone sender}}">&times;</a>
 		</div>
           <div class="date">{{regdate}}</div>
        </div>
@@ -41,7 +48,7 @@
        <div class="{{printLeftRight sender}}">
           <div class="sender">{{sender}}</div>
           <div class="message">{{message}}
-			<a href="{{messageId}}" style="display:{{printNone sender}}">X</a>
+			<a href="{{messageId}}" style="display:{{printNone sender}}">&times;</a>
 		</div>
           <div class="date">{{date}}</div>
        </div>
