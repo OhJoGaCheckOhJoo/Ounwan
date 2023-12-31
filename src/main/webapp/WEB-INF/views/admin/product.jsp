@@ -113,7 +113,8 @@
                 <div>
                     <h3>${product.name}</h3>
                     <img src="${product.image[0].url}">
-                    <button value="${product.coupungNumber}">상품 수정</button>
+                    <button class="updateBtn" value="${product.coupungNumber}">상품 수정</button>
+                    <button class="removeBtn" value="${product.coupungNumber}">상품 삭제</button>
                 </div>
             </div>
             </c:forEach>
@@ -135,6 +136,7 @@
 	console.log('${offset}');
     var searchOption = '${searchOption}';
     var searchValue = '${searchValue}';
+    var sortOption = '${sortOption}';
 
     // 검색 옵션
     $("#searchOption").on("change", function() {
@@ -188,7 +190,7 @@
             	"offset": 0,
                 "searchOption": searchOption,
                 "searchValue": searchValue,
-                "sortOption": 'name'
+                "sortOption": sortOption
             }
             $.ajax({
             	url: "${appPath}/admin/coupung/product.do",
@@ -281,12 +283,12 @@
     });
 
     // 수정하기 하였을 때 
-    $(".product-info div").on("click", ".product-info div button", function() {
+    $(".product-info div").on("click", ".updateBtn", function() {
         var obj = {
-            "productNumber": $(this).val()
+            "coupungNumber": $(this).val()
         };
         $.ajax({
-        	url: "${appPath}/admin/coupung/updateProduct",
+        	url: "${appPath}/admin/coupung/update.do",
         	data: obj,
         	success: function(res) {
         		$(".admin-wrap").html(res);
@@ -305,7 +307,7 @@
             "offset": ((Number)($(this).html()) - 1) * 20,
             "searchOption": searchOption,
             "searchValue": searchValue,
-            "sortOption": "name"
+            "sortOption": sortOption
         };
         console.log(obj);
         $.ajax({

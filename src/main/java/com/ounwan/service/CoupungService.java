@@ -107,6 +107,15 @@ public class CoupungService {
 			return "fail";
 		}
 	}
+	
+	public CoupungDTO getAdminProductDetail(int coupungNumber) {
+		CoupungDTO product = changeDTO(coupungDAO.getProductDetail(coupungNumber));
+		product.setImage(productImageService.getProductImageByCoupungId(product.getCoupungNumber()));
+		product.setDetailImages(productImageService.getDetailImageByCoupungId(product.getCoupungNumber()));
+		product.setOptions(coupungOptionsService.selectOptions(coupungNumber));
+		product.setCategory(coupungDAO.getProductCategory(coupungNumber));
+		return product;
+	}
 
 	public List<CoupungDTO> findByProductName(String text) {
 		List<CoupungDTO> result = changeDTOList(coupungDAO.findByName(text));

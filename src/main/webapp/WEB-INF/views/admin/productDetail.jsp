@@ -4,26 +4,38 @@
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
 <div class="product-detail-wrap">
-    <div id="productInput">
-    	<div>물품명</div>
-        <textarea id="productName" placeholder="물품 이름을 입력해주세요"></textarea>
-        <label for="mainImage">👉 메인이미지 👈</label>
-        <input id="mainImage" name="mainImage" type="file" accept="image/*">
-        <label for="subImage">👉 서브이미지 👈</label>
-        <input id="subImage" name="subImage" type="file" accept="image/*" multiple>
-        <div>가격</div>
-        <input id="productPrice" type="number" placeholder="가격을 입력해주세요">
-        <label id="explanationLabel" for="explanationImg">👉 설명이미지 👈</label>
-        <input id="explanationImg" name="explanationImg" type="file" accept="image/*" multiple>
-        <div>재고 수량</div>
-        <input id="availableStock" type="number" placeholder="재고 수량을 입력해주세요.">
-        <c:if test="${product eq null}">
-        	<button>등록</button>
-        </c:if>
-        <c:if test="${product ne null}">
-        	<button>수정</button>
-        </c:if>
-    </div>
+	<c:if test="${product ne null}">
+		<div id="productInput">
+	    	<div>물품명</div>
+	        <textarea id="productName" placeholder="물품 이름을 입력해주세요">${product.name}</textarea>
+	        <div>옵션</div>
+	        <%--
+	        <select>
+	        	<option hidden>옵션</option>
+	        	<c:forEach>
+	        	
+	        	</c:forEach>
+	        </select>
+	         --%>
+	        <div>가격</div>
+	        <input id="productPrice" placeholoder="가격을 입력해주세요" value="${product.price}">
+	        <div>메인 이미지</div>
+	        <img src="${product.image[0].url}">
+	        <div>서브 이미지</div>
+	        <c:forEach var="i" begin="1" end="${product.image.size()}">
+				<img src="${product.image[i].url}">
+	        </c:forEach>
+	        <div>재고 수량</div>
+	        <input id="availableStock" type="number" placeholder="재고 수량을 입력해주세요." value="${product.availableStock}">
+	       	<c:forEach var="detailImg" items="${product.detailImages}">
+	       		<img src="${detailImg.url}">
+	       	</c:forEach>
+	       	<button>수정</button>
+	    </div>
+	</c:if>
+
+    
+   	<%--
     <div id="productPreview">
     	<div>미리보기</div>
         <div id="namePreview">${product.name}</div>
@@ -52,6 +64,7 @@
         	</c:forEach>
         </div>
     </div>
+     --%>
 </div>
 
 <script>
