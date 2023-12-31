@@ -117,7 +117,7 @@ public class DanggunService {
 		return result== count ? 1 : 0;
 	}
 
-	public DanggunDTO selectDanggun(String clientId, int danggunNumber) {
+	public DanggunDTO selectDanggun(String clientId, String adminId, int danggunNumber) {
 		Danggun resultDanggun = danggunDAO.selectDanggun(danggunNumber);
 //		여기서 danggun 결과, tradeHistoryNumber로 거래 결과 나오고, danggunNumber로 이미지랑 찜 리스트 가져오기 
 		DanggunDTO danggun = null;
@@ -136,10 +136,13 @@ public class DanggunService {
 		int zzimCount = wishListsService.selectCountZzim(danggunNumber);
 		danggun.setCountZzim(zzimCount);
 		
-		List<Integer> zzimList = wishListsDAO.hasZzim(clientId);
-		if(zzimList.contains(danggunNumber)) {
-			danggun.setWishListImg(1);
-		}else {
+		if (clientId != null) {
+			List<Integer> zzimList = wishListsDAO.hasZzim(clientId);
+			if(zzimList.contains(danggunNumber)) {
+				danggun.setWishListImg(1);
+			}
+		}
+		else {
 			danggun.setWishListImg(0);
 		}
 		

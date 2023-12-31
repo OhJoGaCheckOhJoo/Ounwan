@@ -73,4 +73,12 @@ public class CoupungDAO {
 	public Integer getScoreList(Map<String, Object> scoreInfo) {
 		return sqlSession.selectOne(NAMESPACE + "getScoreList", scoreInfo);
 	}
+
+	public int getAvailableStock(int coupungNumber) {
+		return sqlSession.selectOne(NAMESPACE + "getAvailableStock", coupungNumber);
+	}
+	
+	public int updateAvailableStock(Coupung product) {
+		return sqlSession.selectOne(NAMESPACE + "updateAvailableStock", product);
+	}
 }

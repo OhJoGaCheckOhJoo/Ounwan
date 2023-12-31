@@ -35,10 +35,13 @@ public class OrderService {
 	}
 
 	public boolean setOrder(OrdersDTO orderDTO, ClientsDTO client, GuestsDTO guest, HttpSession session) {
-		List<CartsDTO> guestCarts = (List<CartsDTO>) session.getAttribute("cartList");
+		List<OrderDetailsDTO> orderDetails = orderDTO.getOrderDetails();
 		
-		for (OrderDetailsDTO orderDetail : orderDTO.getOrderDetails()) {
-			orderDetail.setPrice(coupungService.getPrice(orderDetail.getCoupungNumber(), orderDetail.getQuantity()));
+		for (OrderDetailsDTO product : orderDetails) {
+			int availableStock = coupungService.getAvaliableStock(product.getCoupungNumber());
+			if (availableStock < product.getQuantity())
+				return false;
+			product.setPrice(coupungService.getPrice(product.getCoupungNumber(), product.getQuantity()));
 		}
 		
 		Orders order = putOrderInfo(orderDTO, client, guest);
@@ -46,12 +49,19 @@ public class OrderService {
 		int result = orderDAO.setOrder(order);
 		String orderNumber = order.getOrderNumber();
 		
-		List<OrderDetailsDTO> orderDetails = orderDTO.getOrderDetails();
-		
 		for (OrderDetailsDTO product : orderDetails) {
 			orderDetailService.setOrder(product, orderNumber);
+			coupungService.updateAvailableStock(product.getCoupungNumber(), product.getQuantity());
 		}
+		
+		deleteCart(orderDetails, session, client, guest);
+		
+		return (result > 0) ? true : false;
+	}
 	
+	public void deleteCart(List<OrderDetailsDTO> orderDetails, HttpSession session, ClientsDTO client, GuestsDTO guest) {
+		List<CartsDTO> guestCarts = (List<CartsDTO>) session.getAttribute("cartList");
+		
 		for (OrderDetailsDTO orderDetail : orderDetails) {
 			if (guest != null) {// 비회원 주문된거 삭제 해주기
 				if (guestCarts != null) {
@@ -77,7 +87,6 @@ public class OrderService {
 				}
 			}
 		}
-		return (result > 0) ? true : false;
 	}
 	
 	public List<OrdersDTO> getAdminOrderList() {

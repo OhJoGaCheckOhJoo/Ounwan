@@ -99,4 +99,16 @@
 		)
 		AND SCORE = #{score};
 	</select>
+	
+	<select id="getAvailableStock" parameterType="int" resultType="int">
+		SELECT AVAILABLE_STOCK
+		FROM COUPUNG
+		WHERE COUPUNG_NUMBER = #{coupungNumber}
+	</select>
+	
+	<update id="updateAvailableStock" parameterType="coupung">
+		UPDATE COUPUNG
+		SET AVAILABLE_STOCK = #{availableStock}
+		WHERE COUPUNG_NUMBER = #{coupungNumber}
+	</update>
 </mapper>
