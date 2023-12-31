@@ -221,17 +221,22 @@
 
     // 개별 물품 상태변경
     $("#productList").on("click", ".product-info > button", function() {
-        if($(this).html() == "판매중") {
+    	var button = $(this);
+        if(button.html() == "판매중") {
             if(confirm("정말 판매 중지하시겠습니까?")) {
                 // ajax
                 var obj = {
                     "productList": [$(this).val()]
                 };
                 $.ajax({
-                	url: "${appPath}/admin/coupung/stopSales",
+                	url: "${appPath}/admin/coupung/stopSales.do",
                 	data: obj,
+                	traditional: true,
                 	success: function(res) {
-                		alert("해당 물품 판매 중지하였습니다.");
+                		if(res == 'success') {
+                			button.html('판매 중단');
+                			alert("해당 물품을 판매 중지하였습니다.");
+                		}
                 	}
                 });
             }
@@ -241,10 +246,14 @@
                     "productList": [$(this).val()]
                 };
                 $.ajax({
-                	url: "${appPath}/admin/coupung/startSales",
+                	url: "${appPath}/admin/coupung/startSales.do",
                 	data: obj,
+                	traditional: true,
                 	success: function(res) {
-                		alert("해당 물품 판매 시작하였습니다.");
+                		if(res == 'success') {
+                			button.html('판매중');
+                			alert("해당 물품을 판매 시작하였습니다.");
+                		}
                 	}
                 });
             }
@@ -312,9 +321,11 @@
     $("#stopSales").on("click", function() {
         if(confirm("상품들의 판매를 중단하시겠습니까?")) {
             var productList = [];
+            var changedProduct = [];
             for(var i = 0; i < $(".product-info input").length; i++) {
                 if($(".product-info input").eq(i).is(':checked')) {
                     productList.push($(".product-info input").eq(i).val());
+                    changedProduct.push(i);
                 }
             }
             if(productList.length > 0) {
@@ -322,10 +333,16 @@
                     "productList": productList
                 };
                 $.ajax({
-                	url: "${appPath}/admin/coupung/stopSales",
+                	url: "${appPath}/admin/coupung/stopSales.do",
                 	data: obj,
+                	traditional: true,
                 	success: function(res) {
-                		$(".admin-wrap").html(res);
+                		if(res == 'success') {
+                			alert("해당 물품들을 판매 중지하였습니다.");
+                			for(var i = 0; i < changedProduct.length; i++) {
+                				$(".product-info button").eq(changedProduct[i]).html("판매 중단");
+                			}
+                		}
                 	}
                 });
             } else {
@@ -338,9 +355,11 @@
     $("#startSales").on("click", function() {
         if(confirm("상품들의 판매를 시작하시겠습니까?")) {
             var productList = [];
+            var changedProduct = [];
             for(var i = 0; i < $(".product-info input").length; i++) {
                 if($(".product-info input").eq(i).is(':checked')) {
                     productList.push($(".product-info input").eq(i).val());
+                    changedProduct.push(i);
                 }
             }
             if(productList.length > 0) {
@@ -348,10 +367,16 @@
                     "productList": productList
                 };
                 $.ajax({
-                	url: "${appPath}/admin/coupung/startSales",
+                	url: "${appPath}/admin/coupung/startSales.do",
                 	data: obj,
+                	traditional: true,
                 	success: function(res) {
-                		alert("해당 물품 판매 시작하였습니다.");
+                		if(res == 'success') {
+                			alert("해당 물품들을 판매 시작하였습니다.");
+                			for(var i = 0; i < changedProduct.length; i++) {
+                				$(".product-info button").eq(changedProduct[i]).html("판매중");
+                			}
+                		}
                 	}
                 });
             } else {

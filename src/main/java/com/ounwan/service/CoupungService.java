@@ -78,6 +78,35 @@ public class CoupungService {
 		int num = coupungDAO.getProductCount(data); 
 		return (num / 20) + (num % 20 > 0 ? 1 : 0);
 	}
+	
+	public String stopSales(String[] productList) {
+		int result = 1;
+		for(String coupungNumber : productList) {
+			Coupung product = coupungDAO.getProductDetail(Integer.parseInt(coupungNumber));
+			product.setAvailableCheck(false);
+			result *= coupungDAO.updateProduct(product);
+		}
+		if(result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+
+
+	public String startSales(String[] productList) {
+		int result = 1;
+		for(String coupungNumber : productList) {
+			Coupung product = coupungDAO.getProductDetail(Integer.parseInt(coupungNumber));
+			product.setAvailableCheck(true);
+			result *= coupungDAO.updateProduct(product);
+		}
+		if(result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
 
 	public List<CoupungDTO> findByProductName(String text) {
 		List<CoupungDTO> result = changeDTOList(coupungDAO.findByName(text));
