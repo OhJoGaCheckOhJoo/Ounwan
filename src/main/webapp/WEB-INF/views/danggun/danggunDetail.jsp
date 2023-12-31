@@ -3,8 +3,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
-<!DOCTYPE html>
-<html>
+
+<c:choose>
+	<c:when test="${empty unserInfo and empty admin }">
+		<script>
+			alert("로그인을 해주세요!");
+			window.location.href = "${appPath}/clients/login";
+		</script>
+	</c:when>
+	<c:when test="${userInfo ne null or admin ne null }">
+		<!DOCTYPE html>
+		<html>
 <head>
 <link href="${appPath}/css/main.css" rel="stylesheet" />
 <link href="${appPath}/css/main2.css" rel="stylesheet" />
@@ -41,7 +50,7 @@
 								</c:if>
 							</c:forEach>
 						</div>
-					 </c:if>
+					</c:if>
 					<c:if test="${post.productImagesList.size() eq 1}">
 					</c:if>
 					<div class="product-img-1 big-img">
@@ -78,7 +87,7 @@
 						<div class="trade_step">${post.tradeStep}</div>
 
 						<div class="product-bottom">
-							<c:if test="${userInfo.clientId != post.clientId}">
+							<c:if test="${!admin && userInfo.clientId != post.clientId}">
 								<button class="zzimBtn" id="wishListBtn" type="button"
 									value="${post.danggunNumber}">
 									<img id="wishListImg" class="wish-list-img"
@@ -122,4 +131,6 @@
 		}
 	</script>
 </body>
-</html>
+		</html>
+	</c:when>
+</c:choose>
