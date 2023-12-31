@@ -125,12 +125,13 @@ public class MyPageController {
 	}
 	
 	@RequestMapping(value = "/aetaList", method = RequestMethod.GET)
-	public String AetaList(HttpSession session, Model model) {
+	public String AetaList(HttpSession session, Model model,
+			@RequestParam(value="page",required=false,defaultValue="1")int page) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
 		String clientId = userInfo.getClientId();		
 		
-		model.addAttribute("aetaList", myPageService.getAetaList(clientId));
-		
+		model.addAttribute("aetaList", myPageService.getAetaList(clientId,page));
+		model.addAttribute("pages", myPageService.getPages(page, clientId));
 		return "myPage/aetaList";
 	}
 	
