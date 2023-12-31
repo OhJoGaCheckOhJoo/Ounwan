@@ -59,10 +59,13 @@ public class DanggunService {
 	}
 
 	public List<DanggunDTO> listAll() {
-		List<DanggunDTO> list = new ArrayList<>();
-		for (Danggun danggun : danggunDAO.listAll()) {
-			list.add(changeDTO(danggun));
+		List<DanggunDTO> list = changeDTOList(danggunDAO.listAll());
+		
+		for (DanggunDTO danggun : list) {
+			ProductImagesDTO image = productImageService.selectAllImages(danggun.getDanggunNumber());
+			danggun.setUrl(image.getUrl());
 		}
+		
 		return list;
 	}
 	

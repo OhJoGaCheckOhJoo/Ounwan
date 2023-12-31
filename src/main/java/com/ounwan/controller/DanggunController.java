@@ -53,22 +53,14 @@ public class DanggunController {
 	@GetMapping("/bixSiri/chat")
 	public String chat(@RequestParam(name = "danggunNumber") Integer danggunNumber, @RequestParam(name = "seller") String seller, Model model) {
 		DanggunDTO danggun = danggunService.selectDanggun(seller, danggunNumber);
-		System.out.println("step = " + danggun.getTradeStep());
 		model.addAttribute("post", danggun);
 		return "/chat/danggunChat";
 	}
 
 //	당군 메인 페이지로 이동
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String mainGet(HttpSession session, Model model) {
-
-		List<DanggunDTO> list = danggunService.listAll();
-
-		for (DanggunDTO danggun : list) {
-			ProductImagesDTO image = productImageService.selectAllImages(danggun.getDanggunNumber());
-			danggun.setUrl(image.getUrl());
-		}
-		model.addAttribute("list", list);
+	public String mainGet(Model model) {
+		model.addAttribute("list", danggunService.listAll());
 		
 		return "/danggun/danggunMain";
 	}
@@ -107,8 +99,11 @@ public class DanggunController {
 //	상품 상세 목록 조회하기 
 	@GetMapping(value = "/detail")
 	public ModelAndView danggunDetail(@RequestParam("danggunNumber") int danggunNumber, HttpSession session) {
-		ClientsDTO clients = (ClientsDTO) session.getAttribute("userInfo");
-		if(clients == null) {
+		if(session.getAttribute("admin") != null) {
+			ModelAndView mv = new ModelAndView("danggun/danggunDetail");
+			return mv;
+		}
+		if(session.getAttribute("userInfo") == null) {
 			ModelAndView mv = new ModelAndView("/login");
 			return mv;
 		}
