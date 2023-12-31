@@ -20,16 +20,16 @@ public class SomsomiChatService {
 	public List<SomsomiChatMessageDTO> selectSomsomiChatList(String clientId) {
 		List<String> somsomiChatRoom = chatDAO.selectRoomList();
 		SomsomiChatRoom makeChatRoom = new SomsomiChatRoom();
-//		일단 방이 존재하는지 체크
+
 		String roomId = clientId + clientId;
 		makeChatRoom.setRoomId(roomId);
 		makeChatRoom.setClientId(clientId);
 		makeChatRoom.setAdminId("admin");
-		System.out.println(somsomiChatRoom);
-		int resolvedStatus = chatDAO.selectResolvedStatus(roomId);
 		if(!somsomiChatRoom.contains(roomId)) {
 			chatDAO.makeRoom(makeChatRoom);
+			System.out.println("함");
 		}
+		int resolvedStatus = chatDAO.selectResolvedStatus(roomId);
 		if(resolvedStatus == 1) {
 			chatDAO.updateResolvedStatus(roomId);
 		}
