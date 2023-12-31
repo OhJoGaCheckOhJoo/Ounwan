@@ -25,7 +25,7 @@
             <a href="${appPath}/danggun/main">오늘의 당군</a>
             <div id="navSubmenu" class="nav-submenu">
                 <a href="${appPath}/danggun/main">전체 보기</a>
-                <a href="#">관심 상품</a>
+                <a href="${appPath}/danggun/insert">상품 등록</a>
             </div>
         </div>
         <div>

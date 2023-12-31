@@ -13,7 +13,7 @@ function openModal(tradeHistoryNumber) {
 			break;
 		}
 	}
-	
+	$("#modalInputText").text(($("#modalInputText").val()).replace(/<br>/g, '\n'));
 }
 
 // 모달 닫기
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 	
 	function updateCounter(inputElement, counterElement, maxLength) {
-		const inputText = inputElement.value;
+		let inputText = inputElement.value;
 		if(inputText.length > maxLength){
 			inputText = inputText.substring(0, maxLength);
 			inputElement.value = inputText;
@@ -197,19 +197,20 @@ $(function() {
 			contentType : false,
 			success : function(responseData) {
 				if(responseData == true){
-					alert("success");
+					alert("상품의 정보가 수정되었습니다.");
+					
+				
 					window.location.href = appPath + "/danggun/detail?danggunNumber="+danggunNumber;
 				}
 				else{
-					alert("fail");
+					alert("정보 수정에 실패했습니다");
 				}
 			},
 			error : function() {
-				alert("error");
+				alert("정보 수정에 실패했습니다");
 			}
 		});
 
 	});
 })
-
 
