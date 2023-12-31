@@ -18,12 +18,11 @@
 
 </head>
 <body>
+<div class="chat-container">
 	<div class="chat-wrap">
 		<div class="chat-header">
-			<div class="chat-title">
-				<h3>채팅방</h3>
-			</div>
 			<div class="product-bar">
+			<div class="product-info">
 				<div>
 					<c:forEach var="images" items="${post.productImagesList}">
 						<c:if test="${images.type eq 0}">
@@ -31,13 +30,18 @@
 						</c:if>
 					</c:forEach>
 				</div>
-				<div class="product-info">
-					<div>${post.tradeStep}</div>
+				
+				<div class="product-info-1">
+					<div class="product-info-price">${post.price}원</div>
 					<div>${post.productName}</div>
-					<div>${post.price}</div>
 				</div>
 			</div>
-			<hr>
+				<div class="product-info-2">
+					<div>${post.tradeStep}</div>
+				</div>
+			
+			</div>
+
 		</div>
 
 		<div id="chat" class="chat"></div>
@@ -47,7 +51,7 @@
        <div class="{{printLeftRight sender}}">
           <div class="sender">{{sender}}</div>
           <div class="message">{{message}}
-			<a href="{{messageId}}" style="display:{{printNone sender}}">X</a>
+			<a href="{{messageId}}" style="display:{{printNone sender}}">&times;</a>
 		</div>
           <div class="date">{{regdate}}</div>
        </div>
@@ -58,7 +62,7 @@
        <div class="{{printLeftRight sender}}">
           <div class="sender">{{sender}}</div>
           <div class="message">{{message}}
-			<a href="{{messageId}}" style="display:{{printNone sender}}">X</a>
+			<a href="{{messageId}}" style="display:{{printNone sender}}">&times;</a>
 		</div>
           <div class="date">{{date}}</div>
        </div>
@@ -81,7 +85,7 @@
 				placeholder="메세지를 입력한 후에 엔터키를 누르세요."></textarea>
 		</div>
 	</div>
-
+</div>
 </body>
 <script>
 	getList();

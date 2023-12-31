@@ -4,12 +4,7 @@
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
 <link href="${appPath}/css/myPageChat.css" rel="stylesheet">
-<style>
-.chat-info-container {
-	width: 550px;
-	padding-top: 60px;
-}
-</style>
+
 
 <div class="chat-wrap">
 	<div class="chat-header">

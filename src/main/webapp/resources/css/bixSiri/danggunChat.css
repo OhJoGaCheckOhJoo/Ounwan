@@ -1,28 +1,39 @@
 @CHARSET "UTF-8";
 :root {
-  --main-mint-color: #CBF83E;
+    --main-back: #333;
+    --main-color-1: #EEE7D8;
+    --main-color-2: #CBF83E;
+    --red: #ff2400;
+}
+
+@font-face {
+    font-family: 'OAGothic-Medium.woff2';
+    src: url('https://cdn.jsdelivr.net/gh/fontbee/font@main/Oa/OAGothic-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
 }
 
 * {
+	background-color: #282828;
 	margin: 0px;
 	padding: 0px;
+	color: var(--main-color-1);
+    font-family: 'OAGothic-Medium.woff2';
 }
+
 
 .chat-header {
 	position: sticky;
 	top: 0;
+	font-size: 14px;
+    padding-bottom: 15px;
+    text-align: center;
 } 
 
-.chat-header {
-	background-color: white;
-	font-size: 14px;
-	padding: 15px 0px;
-	text-align: center;
-}
-
 .chat {
-	padding-bottom: 100px;
+	font-size: 12px;
 	width: 100%;
+	padding-bottom: 130px;
 }
 
 .chat .left {
@@ -33,68 +44,84 @@
 	text-align: right;
 }
 
-.chat {
-	font-size: 12px;
-}
-
 .chat .sender {
-	margin: 10px 25px 0px 10px;
+	margin: 10px 15px 0px 15px;
 	font-weight: bold;
 }
 
 .chat .message {
 	display: inline-block;
-	margin: 5px 20px 0px 10px;
+	margin: 10px 10px 0px 10px;
 	max-width: 75%;
 	border: 1px solid gray;
 	padding: 5px;
-	border-radius: 5px;
-	background-color: #FCFCFC;
+	border-radius: 10px;
+	background-color: var(--main-back);
 	text-align: left;
 }
 
 .chat .date {
-	margin: 5px 20px 10px 10px;
-	font-size: 10px;
+	margin: 5px 10px 10px 10px;
+    font-size: 9px;
 }
-
+.chat a{
+	background-color: var(--main-back);
+}
 .message-input {
 	position: fixed;
-	bottom: 0px;
+	bottom: -5px;
 	width: 100%;
-	background-color: #FFF;
 	text-align: center;
-	border-top: 1px solid var(--main-mint-color);
 }
 
 .txtMessage {
-	width: 100%;
-	height: 80px;
-	border: none;
-	padding: 5px;
-}
-
-/* 내가 추가 */
-.chat-title{
-	background-color: var(--main-min-color);
-}
-hr {
-	border : 1px solid var(--main-mint-color);
+	background-color: #444;
+    width: 100%;
+    height: 100px;
+    border: none;
+    padding: 10px;
 }
 
 .main-img {
-	width : 100px;
-	height : 100px;
+	width: 60px;
+    height: 61px;
+    padding: 4px 15px;
 }
 
 .product-bar {
-	display: flex;
-	flex-direction: row;
+	height: 100px;
+    background-color: #444;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.product-bar div{
+	background-color: #444;
+}
+.product-bar img{
+	background-color: #444;
+}
+.product-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.product-info {
+.product-info-1{
+	width: 230px;
 	display: flex;
-	flex-direction: column;
+    flex-direction: column;
+    align-items: flex-start;	
+}
+.product-info-price{
+	font-size: 20px;
+}
+.product-info-2{
+	padding-right: 15px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 
