@@ -46,7 +46,6 @@
 					<div class="danggun-image">						
 						<label for="imageInput"></label>			
 						<input type="file" id="imageInput" name="dnaggunImage" class="input-file"/>    	
-		<!-- 				<input type="file" id="imageInput" name="dnaggunImage" class="input-file" onchange="setMainImage(event)"/>    --> 	
 						<img id = "mainPreview" src="../images/danggunInsertDefault.png">
 					</div>
                 </div>
@@ -58,7 +57,6 @@
                     <div class = "danggun-images" id = "detailImageContainer">
                     	<div class="danggun-image">								
 						<label for="detailInput" ></label>							
-<!-- 						<input type="file" id="detailInput" name="dnaggunImage" class="input-file" onchange="setDetailImages(event)" multiple/>    	 -->
 						<input type="file" id="detailInput" name="dnaggunImage" class="input-file" onchange="setDetailImages(event)" multiple/>    	
 						<img id = "DetailPreview1" class="detail-preview" src="../images/danggunInsertDefault.png">	
 					</div>
@@ -71,26 +69,11 @@
 						<img id = "DetailPreview3" class="detail-preview" src="../images/danggunInsertDefault.png">
 					</div>
                     </div>
-<!-- 					<div class="danggun-image">								
-						<label for="detailInput" ></label>							
-						<input type="file" id="detailInput" name="dnaggunImage" class="input-file" onchange="setDetailImages(event)" multiple/>    	
-						<input type="file" id="detailInput" name="dnaggunImage" class="input-file" onchange="setDetailImages(event)" multiple/>    	
-						<img id = "DetailPreview1" class="detail-preview" src="../images/danggunInsertDefault.png">	
-					</div>
-					<div class="danggun-image">						
-						<label for="imageInput2"></label>						
-						<img id = "DetailPreview2" class="detail-preview" src="../images/danggunInsertDefault.png">
-					</div>
-					<div class="danggun-image">						
-						<label for="imageInput2"></label>
-						<img id = "DetailPreview3" class="detail-preview" src="../images/danggunInsertDefault.png">
-					</div> -->
                 </div>
                 <div class="danggun-product">					
                     <div class="danggun-product-text">
                         상품명
-						<div class="register-required asterisk">*</div>
-						
+						<div class="register-required asterisk">*</div>					
                     </div> 
 					<div class="text-input-name">
                     	<input placeholder="상품명을 입력해주세요" name="danggunName" id="danggunName"/> 
@@ -120,33 +103,16 @@
         </div>      
     </div>
 <hr>
-​
-<!-- footer -->
-<footer>
-	<div>
-		<div>오운완 쇼핑몰 & 커뮤니티</div>
-		<div>대표자 : 김태완, 박정우, 박지원, 방은지, 신서영, 윤윤성</div>
-		<div>대표전화 : 010-9424-2784 / 주소 : 03993 서울특별시 마포구 월드컵북로4길 77, 1층</div>
-		<div>상품&제휴 문의 메일 : ounwan50@gmail.com</div>
-		<div class="text-1">고객센터 : 평일 오전 10:00 ~ 오후 5:00</div>
-		<div class="text-1">(점심시간 12:00 ~ 13:00) 토/일/공휴일 휴무</div>
-	</div>
-	<div class="float-right">
-		<br><br>
-		<div><a href="#">이벤트</a></div>
-		<div><a href="#">개인정보처리방침</a></div>
-		<div><a href="#">이용약관</a></div>
-		<div><img class="float-right img-1 pointer" src="../images/insta.png"></div>
-	</div>
-</footer>
+​<%@ include file="../common/footer.jsp"%>
+
+
 <%@ include file="./danggunProhibitedListModal.jsp"%>
 <script src="../js/danggunProhibitedListModal.js"></script>
 <script src="../js/main.js"></script>
 <script>	
 var detailImageCount =0;	
 
-	$(function(){	
-		
+	$(function(){		
 		$("#submitButton").on("click", function(){
 			var mainImage = document.getElementById("imageInput");
 			var mainImageName = mainImage.value;
