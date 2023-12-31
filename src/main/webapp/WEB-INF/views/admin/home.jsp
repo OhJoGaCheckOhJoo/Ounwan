@@ -41,7 +41,7 @@
                 <li>
                     <a href="#">오늘의 당군</a>
                     <ul class="submenu">
-                        <li><a href="#">거래중인 상품</a></li>
+                        <li><a href="#" id="danggunAllList">거래중인 상품</a></li>
                     </ul>
                 </li>
                 <li>
@@ -134,6 +134,15 @@
         $("#ounwanChat").on("click", function() {
         	$.ajax({
         		url: "${appPath}/admin/clients/chat.do",
+       			success: function(res) {
+       				$(".admin-wrap").html(res);
+       			}
+        	});
+        });
+        
+        $("#danggunAllList").on("click", function() {
+        	$.ajax({
+        		url: "${appPath}/admin/danggun/AllList",
        			success: function(res) {
        				$(".admin-wrap").html(res);
        			}

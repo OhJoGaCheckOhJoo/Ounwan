@@ -60,15 +60,8 @@ public class DanggunController {
 
 //	당군 메인 페이지로 이동
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String mainGet(HttpSession session, Model model) {
-
-		List<DanggunDTO> list = danggunService.listAll();
-
-		for (DanggunDTO danggun : list) {
-			ProductImagesDTO image = productImageService.selectAllImages(danggun.getDanggunNumber());
-			danggun.setUrl(image.getUrl());
-		}
-		model.addAttribute("list", list);
+	public String mainGet(Model model) {
+		model.addAttribute("list", danggunService.listAll());
 		
 		return "/danggun/danggunMain";
 	}

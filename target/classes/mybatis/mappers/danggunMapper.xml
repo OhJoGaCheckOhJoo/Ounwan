@@ -77,12 +77,6 @@
 		SET URL = #{url}
 		WHERE PRODUCT_IMAGE_NUMBER = #{productImageNumber}
 	</update>
-	<!-- 
-	<update id="updateDanggunImages" parameterType="map">
-		UPDATE PRODUCT_IMAGES
-		SET URL = #{url}
-		WHERE PRODUCT_IMAGE_NUMBER = #{productImageNumber}
-	</update> -->
 	
 	<!-- 거래 수정시 사진 삽입 -->
 	<insert id="insertNewDetailImages" parameterType="productImages">
@@ -90,12 +84,6 @@
 		PRODUCT_IMAGES (DANGGUN_NUMBER, URL, TYPE)
 		VALUES (#{danggunNumber}, #{url}, 1)
 	</insert>
-	
-	<!-- <insert id="insertNewDetailImages" parameterType="map">
-		INSERT INTO
-		PRODUCT_IMAGES (DANGGUN_NUMBER, URL, TYPE)
-		VALUES (#{danggunNumber}, #{url}, 1)
-	</insert> -->
 
 	<!-- 찜 개수 -->
 	<select id="selectCountZzim" parameterType="int"
@@ -151,6 +139,7 @@
 	<select id="getTopFiveDanggun" resultType="danggun">
 		SELECT *
 		FROM DANGGUN d 
+		WHERE VISIBILITY = 1
 		ORDER BY upload_date DESC
 		LIMIT 5;
 	</select>

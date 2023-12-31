@@ -30,35 +30,35 @@ import com.ounwan.service.OrderService;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	
+
 	@Autowired
 	AdminService adminService;
-	
+
 	@Autowired
 	CoupungService coupungService;
-	
+
 	@Autowired
 	OrderService orderService;
-	
+
 	@Autowired
 	DanggunService danggunService;
-	
+
 	@Autowired
 	CommunityService communityService;
-	
+
 	@GetMapping("/main.do")
 	public String getMainPage(HttpSession session) {
-		System.out.println((AdminDTO)session.getAttribute("admin"));
-		if(session.getAttribute("admin") == null)
+		System.out.println((AdminDTO) session.getAttribute("admin"));
+		if (session.getAttribute("admin") == null)
 			return "admin/login";
 		return "admin/home";
 	}
-	
+
 	@GetMapping("/login.do")
 	public String getLoginPage() {
 		return "admin/login";
 	}
-	
+
 	@PostMapping("login.do")
 	public @ResponseBody String checkAuthorization(@RequestBody AdminDTO adminDTO, HttpSession session) {
 		AdminDTO result = adminService.checkAuthorization(adminDTO);
@@ -68,102 +68,106 @@ public class AdminController {
 		}
 		return "fail";
 	}
-	
+
 	@GetMapping("/coupung/product.do")
 	public String getProductPage(@RequestParam int offset, Model model) {
 		model.addAttribute("productList", coupungService.getAdminProductList(offset));
 		model.addAttribute("pages", coupungService.getProductCount());
 		return "admin/product";
 	}
-	
+
 	@GetMapping("/coupung/searchProduct")
 	public String searchProduct(@RequestParam String searchOption, @RequestParam String searchValue) {
-		
+
 		return "admin/product";
 	}
-	
+
 	@GetMapping("/ounwangram/reports")
 	public String getGramReportBoards(@RequestParam int offset, Model model) {
 		model.addAttribute("boards", communityService.getReportGramBoard(offset));
 		return "admin/gramReportBoards";
 	}
-	
+
 	@PostMapping("/coupung/addProduct")
-	public String addProduct(@RequestPart MultipartFile mainImage, 
-						@RequestPart(required=false) MultipartFile[] subImage,
-						@RequestPart(required=false) MultipartFile[] explanationImg,
-						String name,
-						int price) {
+	public String addProduct(@RequestPart MultipartFile mainImage,
+			@RequestPart(required = false) MultipartFile[] subImage,
+			@RequestPart(required = false) MultipartFile[] explanationImg, String name, int price) {
 		return null;
-	} 
-	
+	}
+
 	@GetMapping("/coupung/sortProduct")
-	public String sortProduct(@RequestParam String sort, @RequestParam String searchOption, @RequestParam String searchValue) {
-		
+	public String sortProduct(@RequestParam String sort, @RequestParam String searchOption,
+			@RequestParam String searchValue) {
+
 		return "admin/product";
 	}
-	
+
 	@GetMapping("/coupung/insert.do")
 	public String insertProductView() {
 		return "admin/productDetail";
 	}
-	
+
 	@PostMapping("/coupung/insert.do")
 	public @ResponseBody String insertProduct(@RequestBody CoupungDTO product) {
 		int result = coupungService.insertProduct(product);
 		return (result > 0) ? "success" : "fail";
 	}
-	
+
 	@PostMapping("/coupung/update.do")
 	public @ResponseBody String updateProduct(@RequestBody CoupungDTO product) {
 		boolean result = coupungService.updateProduct(product);
 		return (result) ? "success" : "fail";
 	}
-	
+
 	@PostMapping("/coupung/delete.do")
 	public @ResponseBody String deleteProduct(@RequestBody int coupungNumber) {
 		boolean result = coupungService.deleteProduct(coupungNumber);
 		return (result) ? "success" : "fail";
- 	}
+	}
 
 	@GetMapping("/order/orderList.do")
 	public @ResponseBody List<OrdersDTO> getOrderList() {
 		return orderService.getAdminOrderList();
 	}
-	
+
 	@PostMapping("/order/tradeStep.do")
 	public @ResponseBody String updateTradeStatus(@RequestBody OrdersDTO order) {
 		boolean result = orderService.updateTradeStatus(order);
 		return (result) ? "success" : "fail";
 	}
-	
+
+	@GetMapping("/danggun/AllList")
+	public String danggunAllList(Model model) {
+		model.addAttribute("list", danggunService.listAll());
+
+		return "admin/danggunList";
+	}
+
 	@GetMapping("/danggun/report")
 	public String getDanggunReport(Model model) {
 		List<DanggunDTO> result = danggunService.getDanggunReportList();
 		model.addAttribute("danggun", result);
 		return "admin/danggunReport";
 	}
-	
-	
-	@PostMapping("/danggun/restore") 
+
+	@PostMapping("/danggun/restore")
 	public @ResponseBody String restoreDanggun(@RequestParam("danggunNumber") Integer danggunNumber) {
 		boolean result = danggunService.restoreDanggun(danggunNumber);
-		return result? "success" : "fail"; 
+		return result ? "success" : "fail";
 	}
-	
-	
+
 	@GetMapping("/aeta/report")
 	public String getAetaReport(Model model) {
 		List<AetaDTO> result = communityService.getAetaReportList();
 		model.addAttribute("aeta", result);
 		return "admin/aetaReport";
 	}
-	
-	@PostMapping("/aeta/restore") 
+
+	@PostMapping("/aeta/restore")
 	public @ResponseBody String restoreAeta(@RequestParam("aetaNumber") Integer aetaNumber) {
 		boolean result = communityService.restoreAeta(aetaNumber);
 		System.out.println(result);
-		return result? "success" : "fail";  
+		return result ? "success" : "fail";
 	}
-	
+
 }
