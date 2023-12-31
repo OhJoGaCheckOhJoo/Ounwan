@@ -256,6 +256,7 @@ a {
     height: 100%;
     padding-top: 30px;
     text-align: center;
+    overflow-Y: auto;
 }
 #productInput {
     width: 300px;

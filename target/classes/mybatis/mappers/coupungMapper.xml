@@ -7,16 +7,46 @@
     	SELECT * FROM COUPUNG WHERE AVAILABLE_CHECK = 1
     </select>
     
-    <select id="selectAdminAll" parameterType="int" resultType="coupung">
-    	SELECT * FROM COUPUNG LIMIT 20 OFFSET #{offset}
+    <select id="selectAdminAll" parameterType="map" resultType="coupung">
+    	SELECT COUPUNG.*, IFNULL(ORDER_DETAILS.SALES_RATE, 0) AS SALES_RATE 
+    	FROM COUPUNG LEFT JOIN (SELECT COUPUNG_NUMBER, SUM(QUANTITY) AS SALES_RATE FROM ORDER_DETAILS GROUP BY COUPUNG_NUMBER) AS ORDER_DETAILS 
+    	ON COUPUNG.COUPUNG_NUMBER = ORDER_DETAILS.COUPUNG_NUMBER
+    	<if test='searchOption == "name"'>
+    		WHERE NAME LIKE CONCAT('%', #{searchValue}, '%') 
+    	</if>
+    	<if test='searchOption == "category"'>
+    		WHERE COUPUNG_CATEGORY_NUMBER = #{searchValue} 
+    	</if>
+    	<if test='searchOption == "availableCheck"'>
+    		WHERE AVAILABLE_CHECK = #{searchValue} 
+    	</if>
+    	<if test='sortOption == "name"'>
+			ORDER BY NAME 
+		</if>
+		<if test='sortOption == "price"'>
+			ORDER BY PRICE
+		</if>
+		<if test='sortOption == "salesRate"'>
+			ORDER BY SALES_RATE DESC
+		</if>
+    	LIMIT 20 OFFSET #{offset}
     </select>
     
     <select id="selectProductCategory" parameterType="int" resultType="String">
     	SELECT NAME FROM COUPUNG_CATEGORIES WHERE COUPUNG_CATEGORY_NUMBER = #{categoryId}
     </select>
     
-    <select id="selectProductCount" resultType="int">
+    <select id="selectProductCount" parameterType="map" resultType="int">
     	SELECT COUNT(*) FROM COUPUNG
+    	<if test='searchOption == "name"'>
+    		WHERE NAME LIKE CONCAT('%', #{searchValue}, '%') 
+    	</if>
+    	<if test='searchOption == "category"'>
+    		WHERE COUPUNG_CATEGORY_NUMBER = #{searchValue} 
+    	</if>
+    	<if test='searchOption == "availableCheck"'>
+    		WHERE AVAILABLE_CHECK = #{searchValue} 
+    	</if>
     </select>
     
     <select id="selectById" parameterType="int" resultType="coupung">

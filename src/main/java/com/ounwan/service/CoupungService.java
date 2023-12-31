@@ -52,10 +52,14 @@ public class CoupungService {
 	}
 	
 
-	public List<CoupungDTO> getAdminProductList(int offset) {
+	public List<CoupungDTO> getAdminProductList(int offset, String searchOption, String searchValue, String sortOption) {
 		List<CoupungDTO> result = new ArrayList<>();
-		
-		result = changeDTOList(coupungDAO.getAdminProductList(offset));
+		Map<String, Object> data = new HashMap<>();
+		data.put("offset", offset);
+		data.put("searchOption", searchOption);
+		data.put("searchValue", searchValue);
+		data.put("sortOption", sortOption);
+		result = changeDTOList(coupungDAO.getAdminProductList(data));
 		
 		for (CoupungDTO product : result) {
 			product.setSalesRate(orderDetailService.getSalesRate(product.getCoupungNumber()));
@@ -67,9 +71,50 @@ public class CoupungService {
 		return result;
 	}
 	
-	public int getProductCount() {
-		int num = coupungDAO.getProductCount(); 
+	public int getProductCount(String searchOption, String searchValue) {
+		Map<String, Object> data = new HashMap<>();
+		data.put("searchOption", searchOption);
+		data.put("searchValue", searchValue);
+		int num = coupungDAO.getProductCount(data); 
 		return (num / 20) + (num % 20 > 0 ? 1 : 0);
+	}
+	
+	public String stopSales(String[] productList) {
+		int result = 1;
+		for(String coupungNumber : productList) {
+			Coupung product = coupungDAO.getProductDetail(Integer.parseInt(coupungNumber));
+			product.setAvailableCheck(false);
+			result *= coupungDAO.updateProduct(product);
+		}
+		if(result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+
+
+	public String startSales(String[] productList) {
+		int result = 1;
+		for(String coupungNumber : productList) {
+			Coupung product = coupungDAO.getProductDetail(Integer.parseInt(coupungNumber));
+			product.setAvailableCheck(true);
+			result *= coupungDAO.updateProduct(product);
+		}
+		if(result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	public CoupungDTO getAdminProductDetail(int coupungNumber) {
+		CoupungDTO product = changeDTO(coupungDAO.getProductDetail(coupungNumber));
+		product.setImage(productImageService.getProductImageByCoupungId(product.getCoupungNumber()));
+		product.setDetailImages(productImageService.getDetailImageByCoupungId(product.getCoupungNumber()));
+		product.setOptions(coupungOptionsService.selectOptions(coupungNumber));
+		product.setCategory(coupungDAO.getProductCategory(coupungNumber));
+		return product;
 	}
 
 	public List<CoupungDTO> findByProductName(String text) {

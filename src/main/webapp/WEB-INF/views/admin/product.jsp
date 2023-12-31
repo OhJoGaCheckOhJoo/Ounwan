@@ -6,15 +6,53 @@
 <div class="product-wrap">
     <div id="adminProductSearch">
         <select id="searchOption">
-            <option value='0' hidden>검색조건선택</option>
-            <option value='1'>물품이름</option>
-            <option value='2'>카테고리</option>
-            <option value='3'>판매여부</option>
+            <option value=''>전체조회</option>
+            <c:if test='${searchOption eq "name"}'>
+            	<option value='1' selected>물품이름</option>
+            	<option value='2'>카테고리</option>
+            	<option value='3'>판매여부</option>
+            </c:if>
+            <c:if test='${searchOption eq "category"}'>
+            	<option value='1'>물품이름</option>
+            	<option value='2' selected>카테고리</option>
+            	<option value='3'>판매여부</option>
+            </c:if>
+            <c:if test='${searchOption eq "availableCheck"}'>
+            	<option value='1'>물품이름</option>
+            	<option value='2'>카테고리</option>
+            	<option value='3' selected>판매여부</option>
+            </c:if>
+            <c:if test='${searchOption.length() == 0}'>
+	            <option value='1'>물품이름</option>
+	           	<option value='2'>카테고리</option>
+	            <option value='3'>판매여부</option>
+            </c:if>
         </select>
         <div>
-            <input type="text" placeholder="검색 조건을 선택해주세요." disabled>
+        	<c:if test='${searchOption eq "name"}'>
+            	<input id="searchName" type="text" placeholder="검색할 물품을 입력해주세요.">
+            </c:if>
+            <c:if test='${searchOption eq "category"}'>
+            	<select id="selectCategory">
+                    <option hidden>카테고리선택</option>
+                    <option value='1'>의류</option>
+                    <option value='2'>식품</option>
+                    <option value='3'>운동기구</option>
+                    <option value='4'>헬스이용권</option>
+                </select>
+            </c:if>
+            <c:if test='${searchOption eq "availableCheck"}'>
+            	<select id="selectAvailableCheck">
+                    <option hidden>선택</option>
+                    <option value='1'>판매중</option>
+                    <option value='0'>판매중단</option>
+                </select>
+            </c:if>
+            <c:if test='${searchOption.length() == 0}'>
+	            <input type="text" placeholder="검색 조건을 선택해주세요." disabled>
+            </c:if>
         </div>
-        <button disabled>검색</button>
+       	<button>검색</button>
     </div>
     <div>
         <div id="option">
@@ -24,10 +62,21 @@
                 <button id="startSales">일괄 판매 시작</button>
             </div>
             <div id="sortingOption">
-                <button value="name">이름순</button>
-                <button value="price">가격순</button>
-                <button value="weekSales">일주일 판매량순</button>
-                <button value="totalSales">총 판매량순</button>
+            	<c:if test='${sortOption eq "name"}'>
+            		<button value="name" class="selected">이름순</button>
+	                <button value="price">가격순</button>
+	                <button value="salesRate">총 판매량순</button>
+            	</c:if>
+                <c:if test='${sortOption eq "price"}'>
+            		<button value="name">이름순</button>
+	                <button value="price" class="selected">가격순</button>
+	                <button value="salesRate">총 판매량순</button>
+            	</c:if>
+            	<c:if test='${sortOption eq "salesRate"}'>
+            		<button value="name">이름순</button>
+	                <button value="price">가격순</button>
+	                <button value="salesRate" class="selected">총 판매량순</button>
+            	</c:if>
             </div>
         </div>
         <div id="productList">
@@ -64,18 +113,19 @@
                 <div>
                     <h3>${product.name}</h3>
                     <img src="${product.image[0].url}">
-                    <button value="${product.coupungNumber}">상품 수정</button>
+                    <button class="updateBtn" value="${product.coupungNumber}">상품 수정</button>
+                    <button class="removeBtn" value="${product.coupungNumber}">상품 삭제</button>
                 </div>
             </div>
             </c:forEach>
         </div>
         <div id="productPages">
         	<c:forEach var="index" begin="1" end="${pages}">
-        		<c:if test="${index eq offset}">
-        			<a href="#" class="selected">${index}</a>
+        		<c:if test="${index eq offset + 1}">
+        			<a href="#" class="page selected">${index}</a>
         		</c:if>
-        		<c:if test="${index ne offset}">
-        			<a href="#">${index}</a>
+        		<c:if test="${index ne offset + 1}">
+        			<a href="#" class="page">${index}</a>
         		</c:if>
         	</c:forEach>
         </div>
@@ -83,19 +133,10 @@
 </div>
 
 <script>
-	console.log("${pages}");
-    var searchOption = "";
-    var searchValue = "";
-    
-    if("${sort}" == "price") {
-    	$("#sortingOption button").eq(1).addClass('selected');
-    } else if("${sort}" == "weekSales") {
-    	$("#sortingOption button").eq(2).addClass('selected');
-    } else if("${sort}" == "totalSales") {
-    	$("#sortingOption button").eq(3).addClass('selected');
-    } else {
-    	$("#sortingOption button").eq(0).addClass('selected');
-    }
+	console.log('${offset}');
+    var searchOption = '${searchOption}';
+    var searchValue = '${searchValue}';
+    var sortOption = '${sortOption}';
 
     // 검색 옵션
     $("#searchOption").on("change", function() {
@@ -106,10 +147,10 @@
             $("#adminProductSearch div").html(`
                 <select id="selectCategory">
                     <option hidden>카테고리선택</option>
-                    <option value='의류'>의류</option>
-                    <option value='식품'>식품</option>
-                    <option value='운동기구'>운동기구</option>
-                    <option value='헬스이용권'>헬스이용권</option>
+                    <option value='1'>의류</option>
+                    <option value='2'>식품</option>
+                    <option value='3'>운동기구</option>
+                    <option value='4'>헬스이용권</option>
                 </select>
             `);
             searchOption = "category";
@@ -122,6 +163,9 @@
                 </select>
             `);
             searchOption = "availableCheck";
+        } else {
+        	$("#adminProductSearch div").html('<input type="text" placeholder="검색 조건을 선택해주세요." disabled>');
+        	searchOption = '';
         }
         $("#adminProductSearch button").attr("disabled", false);
         searchValue = "";
@@ -141,36 +185,35 @@
 
     // 검색
     $("#adminProductSearch button").on("click", function() {
-        if(searchValue.length > 0) {
+        if(searchValue.length > 0 || searchOption == '') {
             var obj = {
+            	"offset": 0,
                 "searchOption": searchOption,
-                "searchValue": searchValue
+                "searchValue": searchValue,
+                "sortOption": sortOption
             }
             $.ajax({
-            	url: "${appPath}/admin/coupung/searchProduct",
+            	url: "${appPath}/admin/coupung/product.do",
             	data: obj,
             	success: function(res) {
             		$(".admin-wrap").html(res);
             	}
             });
         } else {
-            alert("검색어를 입력해주세요");
+            alert("상세조건을 입력해주세요");
         }
     });
 
     // 정렬 옵션
     $("#sortingOption button").on("click", function() {
-        for(var i = 0; i < 4; i++) {
-            $("#sortingOption button").eq(i).removeClass("selected");
-        }
-        $(this).addClass("selected");
         var obj = {
-            "sort": $(this).val(),
+        	"offset": 0,
             "searchOption": searchOption,
-            "searchValue": searchValue
+            "searchValue": searchValue,
+            "sortOption": $(this).val()
         }
         $.ajax({
-        	url: "${appPath}/admin/coupung/sortProduct",
+        	url: "${appPath}/admin/coupung/product.do",
         	data: obj,
         	success: function(res) {
         		$(".admin-wrap").html(res);
@@ -180,17 +223,22 @@
 
     // 개별 물품 상태변경
     $("#productList").on("click", ".product-info > button", function() {
-        if($(this).html() == "판매중") {
+    	var button = $(this);
+        if(button.html() == "판매중") {
             if(confirm("정말 판매 중지하시겠습니까?")) {
                 // ajax
                 var obj = {
                     "productList": [$(this).val()]
                 };
                 $.ajax({
-                	url: "${appPath}/admin/coupung/stopSales",
+                	url: "${appPath}/admin/coupung/stopSales.do",
                 	data: obj,
+                	traditional: true,
                 	success: function(res) {
-                		alert("해당 물품 판매 중지하였습니다.");
+                		if(res == 'success') {
+                			button.html('판매 중단');
+                			alert("해당 물품을 판매 중지하였습니다.");
+                		}
                 	}
                 });
             }
@@ -200,10 +248,14 @@
                     "productList": [$(this).val()]
                 };
                 $.ajax({
-                	url: "${appPath}/admin/coupung/startSales",
+                	url: "${appPath}/admin/coupung/startSales.do",
                 	data: obj,
+                	traditional: true,
                 	success: function(res) {
-                		alert("해당 물품 판매 시작하였습니다.");
+                		if(res == 'success') {
+                			button.html('판매중');
+                			alert("해당 물품을 판매 시작하였습니다.");
+                		}
                 	}
                 });
             }
@@ -231,12 +283,12 @@
     });
 
     // 수정하기 하였을 때 
-    $(".product-info div").on("click", ".product-info div button", function() {
+    $(".product-info div").on("click", ".updateBtn", function() {
         var obj = {
-            "productNumber": $(this).val()
+            "coupungNumber": $(this).val()
         };
         $.ajax({
-        	url: "${appPath}/admin/coupung/updateProduct",
+        	url: "${appPath}/admin/coupung/update.do",
         	data: obj,
         	success: function(res) {
         		$(".admin-wrap").html(res);
@@ -250,14 +302,16 @@
     });
 
     // 페이징처리
-    $("#productPages").on("click", "#productPages a", function() {
+    $("#productPages").on("click", ".page", function() {
         var obj = {
-            "rowNum": ((Number)($(this).html()) - 1) * 20,
+            "offset": ((Number)($(this).html()) - 1) * 20,
             "searchOption": searchOption,
-            "searchValue": searchValue
+            "searchValue": searchValue,
+            "sortOption": sortOption
         };
+        console.log(obj);
         $.ajax({
-        	url: "${appPath}/admin/coupung/pagingProduct",
+        	url: "${appPath}/admin/coupung/product.do",
         	data: obj,
         	success: function(res) {
         		$(".admin-wrap").html(res);
@@ -269,9 +323,11 @@
     $("#stopSales").on("click", function() {
         if(confirm("상품들의 판매를 중단하시겠습니까?")) {
             var productList = [];
+            var changedProduct = [];
             for(var i = 0; i < $(".product-info input").length; i++) {
                 if($(".product-info input").eq(i).is(':checked')) {
                     productList.push($(".product-info input").eq(i).val());
+                    changedProduct.push(i);
                 }
             }
             if(productList.length > 0) {
@@ -279,10 +335,16 @@
                     "productList": productList
                 };
                 $.ajax({
-                	url: "${appPath}/admin/coupung/stopSales",
+                	url: "${appPath}/admin/coupung/stopSales.do",
                 	data: obj,
+                	traditional: true,
                 	success: function(res) {
-                		$(".admin-wrap").html(res);
+                		if(res == 'success') {
+                			alert("해당 물품들을 판매 중지하였습니다.");
+                			for(var i = 0; i < changedProduct.length; i++) {
+                				$(".product-info button").eq(changedProduct[i]).html("판매 중단");
+                			}
+                		}
                 	}
                 });
             } else {
@@ -295,9 +357,11 @@
     $("#startSales").on("click", function() {
         if(confirm("상품들의 판매를 시작하시겠습니까?")) {
             var productList = [];
+            var changedProduct = [];
             for(var i = 0; i < $(".product-info input").length; i++) {
                 if($(".product-info input").eq(i).is(':checked')) {
                     productList.push($(".product-info input").eq(i).val());
+                    changedProduct.push(i);
                 }
             }
             if(productList.length > 0) {
@@ -305,10 +369,16 @@
                     "productList": productList
                 };
                 $.ajax({
-                	url: "${appPath}/admin/coupung/startSales",
+                	url: "${appPath}/admin/coupung/startSales.do",
                 	data: obj,
+                	traditional: true,
                 	success: function(res) {
-                		alert("해당 물품 판매 시작하였습니다.");
+                		if(res == 'success') {
+                			alert("해당 물품들을 판매 시작하였습니다.");
+                			for(var i = 0; i < changedProduct.length; i++) {
+                				$(".product-info button").eq(changedProduct[i]).html("판매중");
+                			}
+                		}
                 	}
                 });
             } else {
