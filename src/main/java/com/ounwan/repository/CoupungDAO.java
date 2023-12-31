@@ -22,16 +22,16 @@ public class CoupungDAO {
 		return sqlSession.selectList(NAMESPACE + "selectAll");
 	}
 
-	public List<Coupung> getAdminProductList(int offset) {
-		return sqlSession.selectList(NAMESPACE + "selectAdminAll", offset);
+	public List<Coupung> getAdminProductList(Map<String, Object> data) {
+		return sqlSession.selectList(NAMESPACE + "selectAdminAll", data);
 	}
 	
 	public String getProductCategory(int categoryId) {
 		return sqlSession.selectOne(NAMESPACE + "selectProductCategory", categoryId);
 	}
 	
-	public int getProductCount() {
-		return sqlSession.selectOne(NAMESPACE + "selectProductCount");
+	public int getProductCount(Map<String, Object> data) {
+		return sqlSession.selectOne(NAMESPACE + "selectProductCount", data);
 	}
 	
 	public List<Coupung> getProductListById(int categoryId) {

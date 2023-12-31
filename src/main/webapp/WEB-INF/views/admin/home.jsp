@@ -102,7 +102,10 @@
         	$.ajax({
         		url: "${appPath}/admin/coupung/product.do",
         		data: {
-        			'offset': 0
+        			'offset': 0,
+        			'searchOption': '',
+        			'searchValue': '',
+        			'sortOption': 'name'
         		},
        			success: function(res) {
        				$(".admin-wrap").html(res);

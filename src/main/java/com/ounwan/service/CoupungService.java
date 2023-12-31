@@ -52,10 +52,14 @@ public class CoupungService {
 	}
 	
 
-	public List<CoupungDTO> getAdminProductList(int offset) {
+	public List<CoupungDTO> getAdminProductList(int offset, String searchOption, String searchValue, String sortOption) {
 		List<CoupungDTO> result = new ArrayList<>();
-		
-		result = changeDTOList(coupungDAO.getAdminProductList(offset));
+		Map<String, Object> data = new HashMap<>();
+		data.put("offset", offset);
+		data.put("searchOption", searchOption);
+		data.put("searchValue", searchValue);
+		data.put("sortOption", sortOption);
+		result = changeDTOList(coupungDAO.getAdminProductList(data));
 		
 		for (CoupungDTO product : result) {
 			product.setSalesRate(orderDetailService.getSalesRate(product.getCoupungNumber()));
@@ -67,8 +71,11 @@ public class CoupungService {
 		return result;
 	}
 	
-	public int getProductCount() {
-		int num = coupungDAO.getProductCount(); 
+	public int getProductCount(String searchOption, String searchValue) {
+		Map<String, Object> data = new HashMap<>();
+		data.put("searchOption", searchOption);
+		data.put("searchValue", searchValue);
+		int num = coupungDAO.getProductCount(data); 
 		return (num / 20) + (num % 20 > 0 ? 1 : 0);
 	}
 
