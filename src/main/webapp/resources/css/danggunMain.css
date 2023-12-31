@@ -25,40 +25,20 @@
 
 
 .search-button {
-	width: 80px;
-	height: 40px;
-	cursor: pointer;
 	position: relative;
-	top: 5px;
-	background-color: rgba(0, 0, 0, 0.2);
-	font-size: 20px;
-	border-radius: 10px;
-	margin-left: 10px;
+    width: 30px;
+    height: 30px;
+    top: 14px;
+    background-image: url(../images/search_0.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    margin: 0px 0px 5px 10px
 }
 
-.search-button:hover {
-	border: 1px solid var(--main-color-2);
+.danggun-product-list {
+	margin-top: 60px; 
 }
-
-.register-container {
-	height: 40px;
-	padding: 20px 0px;
-	position: relative;
-}
-
-.register-button {
-	font-size: 20px;
-	width: 100px;
-	height: 40px;
-	position: absolute;
-	right: 20px;
-	cursor: pointer;
-}
-
-.register-button:hover {
-	color: var(--main-color-2);
-}
-
 
 .danggun-pointer {
 	width: 180px;
@@ -101,11 +81,14 @@ input {
 }
 
 .up-button {
-	width: 50px;
-	height: 50px;
-	font-size: 15px;
-	border-style: none;
-	position: fixed;
-	right: 100px;
-	bottom: 100px;
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    bottom: 50px;
+    right: 50px;
+    border: 0;
+    border-radius: 25px;
+    background-color: rgba(255,255,255,0.05);
+    font-size: 24px;
+    cursor: pointer;
 }

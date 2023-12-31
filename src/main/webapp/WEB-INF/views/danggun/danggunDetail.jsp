@@ -16,8 +16,8 @@
 <link href="${appPath}/css/danggunShareModal.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+<meta charset=charset="UTF-8">
+<title>오운완</title>
 <link rel="icon" href="../images/logo.png" type="image/x-icon">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,6 +1,4 @@
-@charset "EUC-KR";
-/* 모달 css */
-.reportModal {
+.report-modal {
 	display: none;
 	position: fixed;
 	top: 50%;
@@ -10,13 +8,12 @@
 	background-color: var(--main-back);
 	border: 1px solid #ccc;
 	z-index: 1000;
-	max-height: 80vh; /* 모달 창의 최대 높이를 화면 높이의 80%로 설정 */
-	overflow-y: auto; /* 필요할 때 스크롤을 추가 */
-	width: 25%; /* 모달 창의 너비를 화면 너비의 80%로 설정 */
-	max-width: 920px; /* 모달 창의 최대 너비를 600px로 설정 */
+	max-height: 80vh;
+	overflow-y: auto; 
+	width: 25%;
+	max-width: 920px;
 }
 
-/* 배경 회색 불투명도 */
 .report-modal-overlay {
 	display: none;
 	position: fixed;
@@ -28,14 +25,13 @@
 	z-index: 900;
 }
 
-
-
-.reportId {
+.report-id {
 	display: inline-block;
 	width: 70px;
+	margin-bottom: 5px;
 }
 
-#closeBtn {
+.close-button {
   position: relative;
   float:right;
   font-weight: bold;
@@ -45,44 +41,53 @@
   bottom: 15px;
 }
 
-#reportReason div:first-child {
-	font-weight: bold;
+.report-reason {
+	margin-left: 10px;
+	
 }
 
-#reportTitle {
+.report-reason div:first-child {
+	font-weight: bold;
+	margin: 15px 0px;
+}
+
+.report-title {
 	text-align: center;
 	font-weight: bold;
 	margin-bottom: 20px;
 	color: var(--main-color);
 }
 
-#reportReason > div {
+.report-reason > div {
 	margin-bottom: 10px;
 }
 
-#reportReason input {
+.report-reason > div > label > input {
 	transform: scale(1.5);
 	margin-right: 10px;
 }
 
-#reportReason button {
-	width: 300px;
-	height: 50px;
-	margin: 10px 0px 0px 68px;
-	border: 0;
-	border-radius: 15px;
-	background-color: var(--main-color);
-	color: #fff;
-	font-size: 20px;
-	font-weight: bold;
-	text-align: center;
+.report-reason > div> label{
+	cursor: pointer;
 }
 
-#reportReason button:hover {
-	color: #ddd;
+.danggun-report-button {
+	margin: 20px 0px 20px 270px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #444;
+    color: #eee7d8;
+    border: 1px solid var(--main-color-1);
+}
+
+.danggun-report-button:hover {
+    color: var(--main-back);
+    background-color: var(--main-color-2);
+    border: 1px solid var(--main-color-2);
 }
 
 .reportHr{
 	margin : 10px 0px 10px 0px;
-	
 }

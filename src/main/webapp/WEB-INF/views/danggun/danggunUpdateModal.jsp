@@ -11,9 +11,8 @@
 
 		<div class="register-container">
 			<div class="register-info">상품 수정하기</div>
+			<div class="register-required">*필수입력사항</div>
 		</div>
-
-		<hr />
 
 		<!-- 상품 등록 전체 form -->
 		<div class="register-content">
@@ -40,7 +39,6 @@
 				<div class="product-explain">
 					상세 이미지<br /> (최대 3장 추가 가능)
 				</div>
-
 				<div class="image-container">
 					<c:forEach var="images" items="${post.productImagesList}"
 						varStatus="loopStatus">
@@ -49,8 +47,7 @@
 								<label for="uploadDetailImageInput${images.productImageNumber}"></label>
 								<img class="small-img"
 									id="detailImage${images.productImageNumber}"
-									src="${images.url}" /> 
-								<input type="file"
+									src="${images.url}" /> <input type="file"
 									name="uploadDetailImageInput"
 									id="uploadDetailImageInput${images.productImageNumber}"
 									accept="image/*"
@@ -63,15 +60,11 @@
 						<c:forEach begin="0" end="${2 - imageCounter}"
 							varStatus="loopStatus">
 							<div class="danggun-detail-image">
-								<label
-									for="newDetailImageInput${loopStatus.index}"></label>
-								<img class="small-img"
-									id="detailNewImage${loopStatus.index}"
-									src="../images/danggunInsertDefault.png" /> 
-									<input type="file"
+								<label for="newDetailImageInput${loopStatus.index}"></label> <img
+									class="small-img" id="detailNewImage${loopStatus.index}"
+									src="../images/danggunInsertDefault.png" /> <input type="file"
 									name="newDetailImageInput"
-									id="newDetailImageInput${loopStatus.index}"
-									accept="image/*"
+									id="newDetailImageInput${loopStatus.index}" accept="image/*"
 									onchange="newDetailImage(${loopStatus.index})" />
 							</div>
 						</c:forEach>
@@ -85,12 +78,10 @@
 				</div>
 				<div class="text-input-description">
 					<div class="input-area">
-						<input class="input-area" id="modalDanggunName"
+						<input class="input-content" id="modalDanggunName"
 							value="${post.productName}" required />
 					</div>
-					<div>
-						<div id="name-count"></div>
-					</div>
+					<div id="name-count" class="name-count count"></div>
 				</div>
 			</div>
 			<!-- 거래현황 라인 -->
@@ -111,8 +102,10 @@
 				<div class="product-explain">
 					가격<span class="star"> *</span>
 				</div>
-				<input class="input-area" id="modalDanggunPrice"
-					value="${post.price}" required type="number" />
+				<div class="input-area">
+					<input class="input-content" id="modalDanggunPrice"
+						value="${post.price}" required type="number" />
+				</div>
 			</div>
 			<!-- 설명 라인 -->
 			<div class="danggun-product">
@@ -121,16 +114,14 @@
 				</div>
 				<div class="text-input-description">
 					<textarea class="input-area" id="modalInputText" required>${post.detail}</textarea>
-					<div>
-						<div class="text-count" id="detail-count"></div>
-					</div>
+					<div class="text-count count" id="detail-count"></div>
 				</div>
-
+			</div>
+			<div class="button-container">
+				<button id="danggunUpdate" class="danggun-button update" type="button">수정</button>
+				<button class="danggun-button update-cancel" onclick="closeModal()">취소</button>
 			</div>
 		</div>
-		<hr />
-		<button id="danggunUpdate" class="danggunUpdate" type="button">수정</button>
-		<button onclick="closeModal()">취소</button>
 	</div>
 </div>
 <!-- 배경 회색 불투명도 -->
