@@ -148,7 +148,18 @@ public class CoupungService {
 	public int getPrice (int coupungNumber, int quantities) {
 		return (coupungDAO.getPrice(coupungNumber) * quantities);
 	}
+
+	public int getAvaliableStock(int coupungNumber) {
+		return coupungDAO.getAvailableStock(coupungNumber);
+	}
 	
+	public void updateAvailableStock(int coupungNumber, int quantity) {
+		coupungDAO.updateAvailableStock(Coupung.builder()
+												.coupungNumber(coupungNumber)
+												.availableStock(quantity)
+												.build());
+	}
+
 	public List<CoupungDTO> getHotDealProductList() {
 		List<CoupungDTO> hotDeal = changeDTOList(coupungDAO.getHotDealProductList());
 		for (CoupungDTO product : hotDeal) {
@@ -212,5 +223,4 @@ public class CoupungService {
 						.availableCheck(coupungDTO.getAvailableCheck())
 						.build();
 	}
-
 }

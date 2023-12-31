@@ -258,13 +258,11 @@ $(document).ready(function() {
 	$('#firstPass').on('input', function() {
 		var password = $('#firstPass').val();
 		var passwordFormat =  /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
-		/*
 		if (!passwordFormat.test(password) && password.length > 0) {
 			$('#wrongForm-inform').css('visibility', 'visible');
 		} else {
 			$('#wrongForm-inform').css('visibility', 'hidden');
 		}
-		*/
 	});
 	
 	$('#secondPass').on('input', function() {

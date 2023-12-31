@@ -25,11 +25,10 @@ public class SomsomiChatService {
 		makeChatRoom.setRoomId(roomId);
 		makeChatRoom.setClientId(clientId);
 		makeChatRoom.setAdminId("admin");
-		System.out.println(somsomiChatRoom);
-		int resolvedStatus = chatDAO.selectResolvedStatus(roomId);
 		if(!somsomiChatRoom.contains(roomId)) {
 			chatDAO.makeRoom(makeChatRoom);
 		}
+		int resolvedStatus = chatDAO.selectResolvedStatus(roomId);
 		if(resolvedStatus == 1) {
 			chatDAO.updateResolvedStatus(roomId);
 		}

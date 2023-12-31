@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ounwan.dto.AdminDTO;
 import com.ounwan.dto.ClientsDTO;
-import com.ounwan.dto.CoupungDTO;
 import com.ounwan.dto.DanggunDTO;
 import com.ounwan.dto.ProductImagesDTO;
 import com.ounwan.dto.StoreReportsDTO;
@@ -52,7 +52,7 @@ public class DanggunController {
 	// 채팅 방으로 seller 데리고 이동
 	@GetMapping("/bixSiri/chat")
 	public String chat(@RequestParam(name = "danggunNumber") Integer danggunNumber, @RequestParam(name = "seller") String seller, Model model) {
-		DanggunDTO danggun = danggunService.selectDanggun(seller, danggunNumber);
+		DanggunDTO danggun = danggunService.selectDanggun(seller, null, danggunNumber);
 		System.out.println("step = " + danggun.getTradeStep());
 		model.addAttribute("post", danggun);
 		return "/chat/danggunChat";
@@ -108,16 +108,18 @@ public class DanggunController {
 	@GetMapping(value = "/detail")
 	public ModelAndView danggunDetail(@RequestParam("danggunNumber") int danggunNumber, HttpSession session) {
 		ClientsDTO clients = (ClientsDTO) session.getAttribute("userInfo");
-		if(clients == null) {
+		AdminDTO admin = (AdminDTO) session.getAttribute("admin");
+		if(clients == null && admin == null) {
 			ModelAndView mv = new ModelAndView("/login");
 			return mv;
 		}
 		
 		ModelAndView mv = new ModelAndView("danggun/danggunDetail");
-		
-		DanggunDTO resultDanggun = danggunService.selectDanggun(((ClientsDTO)session.getAttribute("userInfo")).getClientId(), danggunNumber);
-		mv.addObject("post",resultDanggun);
-
+		if(clients != null) {
+			mv.addObject("post", danggunService.selectDanggun(clients.getClientId(), null, danggunNumber));
+		}else if (admin != null) {
+			mv.addObject("post", danggunService.selectDanggun(null, admin.getAdminId(), danggunNumber));
+		}
 		return mv;
 	}
 

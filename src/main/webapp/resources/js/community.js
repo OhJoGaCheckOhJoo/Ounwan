@@ -365,7 +365,7 @@ $(window).on("load", function() {
                 enctype: 'multipart/form-data',
                 success: function(res) {
                     if(res == 'success') {
-                        location.href = gramPath + "ounwangram";
+                        location.href = gramPath + "/ounwangram";
                     } else {
                         alert("게시글 수정에 실패하였습니다. 이후에 다시 시도해주세요.");
                     }
