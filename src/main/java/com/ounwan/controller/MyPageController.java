@@ -50,6 +50,10 @@ public class MyPageController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String myPage(HttpSession session, Model model) {
 		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
+		
+		if(userInfo==null) {
+			return "login";
+		}
 		String clientId = userInfo.getClientId();
 		
 		model.addAttribute("wishListCount", myPageService.getWishListCount(clientId));

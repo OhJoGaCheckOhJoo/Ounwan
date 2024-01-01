@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +24,7 @@ public class GuestController {
 	
 	@GetMapping()
 	public String getGuestPage() {
-		return "guest";
+		return "/guest/guestCheck";
 	}
 	
 	@PostMapping()
@@ -36,16 +37,12 @@ public class GuestController {
 		}
 		return "fail";
 	}
-	
-	// 비회원 정보조회 페이지 요청 컨트롤러
-//	@GetMapping("/checkInfo")
-//	public String getInfoPage() {
-//		return "guest/checkInfo";
-//	}
-	
+		
 	@PostMapping("/checkInfo")
-	public @ResponseBody OrdersDTO checkInfo(@RequestBody GuestsDTO guest) {
+	public String checkInfo(@RequestBody GuestsDTO guest, Model model) {
 		System.out.println("eeee");
-		return guestService.getGuestInfo(guest);
+		OrdersDTO order = guestService.getGuestInfo(guest);
+		model.addAttribute("orderList", order);
+		return "/guest/guestOrderListModal";
 	}
 }
