@@ -55,7 +55,13 @@
 	               type : "post",
 	               data : {"aetaNumber" : aetaNumber},
 	               success : function(res){
-	                   alert("복구에 성공하였습니다.");  
+	                   alert("복구에 성공하였습니다.");
+	                   $.ajax({
+	                	   url: "${appPath}/admin/aeta/report",
+            			   success : function(res){
+            				   $(".admin-wrap").html(res);
+            			   }
+            		   });
 	               },
 	               error: function(jqXHR, textStatus, errorThrown) {
 	            	    console.error("AJAX Error: " + textStatus + "error" +  errorThrown);

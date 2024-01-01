@@ -84,6 +84,21 @@ public class AdminController {
 		return "admin/product";
 	}
 
+	@GetMapping("/coupung/product.do")
+	public String getProductPage(@RequestParam int offset,
+	@RequestParam String searchOption,
+	@RequestParam String searchValue,
+	@RequestParam String sortOption,
+	Model model) {
+	model.addAttribute("productList", coupungService.getAdminProductList(offset, searchOption, searchValue, sortOption));
+	model.addAttribute("pages", coupungService.getProductCount(searchOption, searchValue));
+	model.addAttribute("offset", offset / 20);
+	model.addAttribute("searchOption", searchOption);
+	model.addAttribute("searchValue", searchValue);
+	model.addAttribute("sortOption", sortOption);
+	return "admin/product";
+	}
+	
 	@GetMapping("/coupung/searchProduct")
 	public String searchProduct(@RequestParam String searchOption, @RequestParam String searchValue) {
 
@@ -146,7 +161,7 @@ public class AdminController {
 
 	@GetMapping("/danggun/AllList")
 	public String danggunAllList(Model model) {
-		model.addAttribute("list", danggunService.listAll());
+		model.addAttribute("danggun", danggunService.listAll());
 
 		return "admin/danggunList";
 	}
