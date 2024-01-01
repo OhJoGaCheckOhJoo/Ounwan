@@ -372,6 +372,8 @@ a {
 }
 #productInput img {
 	width: 300px;
+	transition: 0.2s linear all;
+	transform: scale(1);
 }
 #mainImgInput {
 	background-color: #fff;
@@ -386,8 +388,7 @@ a {
 	z-index: 10;
 }
 #mainImg:hover {
-	transition: 0.2s linear all;
-	transform: scale(0.9);
+	transform: scale(0.95);
 }
 #mainImgInput * {
 	margin: 5px;
@@ -415,5 +416,30 @@ a {
 	width: 400px;
 }
 #optionUpdate button {
+	width: 50px;
+}
+#subImageList, #detailImageList {
+	background-color: #fff;
+	border: 1px solid #444;
+	border-radius: 10px;
+	position: absolute;
+	width: 300px;
+	max-height: calc(100% - 500px);
+	top: 200px;
+	left: calc(50% - 150px);
+	visibility: hidden;
+	z-index: 10;
+	padding: 50px;
+	overflow-Y: auto;
+}
+#subImageWrap > img {
+	width: 80px;
+	height: 80px;
+	border: 1px solid #444;
+	border-radius: 10px;
+	margin: 3px;
+}
+#subImageList button, #detailImageList button {
+	margin: 5px 0px 5px 0px;
 	width: 50px;
 }

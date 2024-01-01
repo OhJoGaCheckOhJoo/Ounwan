@@ -81,4 +81,27 @@ public class CoupungDAO {
 	public int updateAvailableStock(Coupung product) {
 		return sqlSession.selectOne(NAMESPACE + "updateAvailableStock", product);
 	}
+
+	public int insertProductOption(Map<String, Object> data) {
+		return sqlSession.insert(NAMESPACE + "insertProductOption", data);
+	}
+
+	public int deleteProductOption(Integer coupungOptionNumber) {
+		return sqlSession.delete(NAMESPACE + "deleteProductOption", coupungOptionNumber);
+	}
+
+	public int insertProductImg(Map<String, Object> data) {
+		return sqlSession.insert(NAMESPACE + "insertProductImg", data);
+		
+	}
+
+	public int deleteProductImg(Integer productImageNumber) {
+		return sqlSession.delete(NAMESPACE + "deleteProductImg", productImageNumber);
+		
+	}
+
+	public int insertDetailImg(Map<String, Object> data) {
+		return sqlSession.insert(NAMESPACE + "insertDetailImg", data);
+		
+	}
 }

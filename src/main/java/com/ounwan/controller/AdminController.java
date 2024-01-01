@@ -1,6 +1,7 @@
 package com.ounwan.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -124,12 +125,27 @@ public class AdminController {
 	@GetMapping("/coupung/update.do")
 	public String getUpdateProducePage(@RequestParam int coupungNumber, Model model) {
 		model.addAttribute("product", coupungService.getAdminProductDetail(coupungNumber));
-		return "admin/productDetail";
+		return "admin/productUpdate";
 	}
 
 	@PostMapping("/coupung/update.do")
-	public @ResponseBody String updateProduct(@RequestBody CoupungDTO product) {
-		boolean result = coupungService.updateProduct(product);
+	public @ResponseBody String updateProduct(@RequestParam Integer coupungNumber,
+										@RequestParam String name,
+							    		@RequestParam Integer price,
+							    		@RequestParam Integer availableStock,
+							    		@RequestParam(required=false) String[] addOptions,
+							    		@RequestParam(required=false) String[] deleteOptions,
+							    		@RequestParam String[] image,
+							    		@RequestParam(required=false) String[] deleteImage,
+							    		@RequestParam(required=false) String[] detailImages,
+							    		@RequestParam(required=false) String[] deleteDetailImg) {
+		boolean result = coupungService.updateProduct(CoupungDTO.builder()
+														.coupungNumber(coupungNumber)
+														.name(name)
+														.price(price)
+														.availableStock(availableStock)
+														.build(), 
+														addOptions, deleteOptions, image, deleteImage, detailImages, deleteDetailImg);
 		return (result) ? "success" : "fail";
 	}
 

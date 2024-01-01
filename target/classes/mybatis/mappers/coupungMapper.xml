@@ -73,11 +73,9 @@
     
     <update id="updateProduct" parameterType="coupung">
     	UPDATE COUPUNG
-    	SET COUPUNG_CATEGORY_NUMBER = #{coupungCategoryNumber}
-    		, NAME = #{name}
+    	SET NAME = #{name}
     		, PRICE = #{price}
     		, AVAILABLE_STOCK = #{availableStock}
-    		, AVAILABLE_CHECK = #{availableCheck}
     	WHERE COUPUNG_NUMBER = #{coupungNumber}
     </update>
     
@@ -141,4 +139,24 @@
 		SET AVAILABLE_STOCK = #{availableStock}
 		WHERE COUPUNG_NUMBER = #{coupungNumber}
 	</update>
+	
+	<insert id="insertProductOption" parameterType="map">
+		INSERT INTO COUPUNG_OPTIONS(COUPUNG_NUMBER, NAME) VALUES (#{coupungNumber}, #{name})
+	</insert>
+	
+	<insert id="insertProductImg" parameterType="map">
+		INSERT INTO PRODUCT_IMAGES(COUPUNG_NUMBER, URL, TYPE) VALUES (#{coupungNumber}, #{url}, #{type})
+	</insert>
+	
+	<insert id="insertDetailImg" parameterType="map">
+		INSERT INTO PRODUCT_IMAGES(COUPUNG_NUMBER, URL, TYPE) VALUES (#{coupungNumber}, #{url}, 2)
+	</insert>
+	
+	<delete id="deleteProductOption" parameterType="int">
+		DELETE FROM COUPUNG_OPTIONS WHERE COUPUNG_OPTION_NUMBER = #{coupungOptionNumber}
+	</delete>
+	
+	<delete id="deleteProductImg" parameterType="int">
+		DELETE FROM PRODUCT_IMAGES WHERE PRODUCT_IMAGE_NUMBER = #{productImageNumber}
+	</delete>
 </mapper>

@@ -161,14 +161,50 @@ public class CoupungService {
 		return result;
 	}
 
-	public boolean updateProduct(CoupungDTO product) {
-		int result = 0;
-		
-		result = coupungDAO.updateProduct(changeEntity(product));
-		if (product.getImage() != null) 
-			result = productImageService.updateProductImage(product.getImage(), product.getCoupungNumber());
-		if (product.getOptions() != null)
-			result = coupungOptionsService.updateOption(product.getOptions(), product.getCoupungNumber());
+	public boolean updateProduct(CoupungDTO product, String[] addOptions, String[] deleteOptions, String[] image, String[] deleteImage, String[] detailImages, String[] deleteDetailImg) {
+		int result = coupungDAO.updateProduct(changeEntity(product));
+		System.out.println(product.toString());
+		Map<String, Object> data = new HashMap<>();
+		data.put("coupungNumber", product.getCoupungNumber());
+		if(addOptions != null) {
+			for(String option : addOptions) {
+				data.put("name", option);
+				result *= coupungDAO.insertProductOption(data);
+			}
+		}
+		data.remove("name");
+		if(deleteOptions != null) {
+			for(String option : deleteOptions) {
+				result *= coupungDAO.deleteProductOption(Integer.parseInt(option));
+			}
+		}
+		data.put("type", 0);
+		for(String imageUrl : image) {
+			if(!imageUrl.equals(".")) {
+				data.put("url", imageUrl);
+				result *= coupungDAO.insertProductImg(data);
+			}
+			data.put("type", 1);
+		}
+		data.remove("type");
+		if(detailImages != null) {
+			for(String imageUrl : detailImages) {
+				if(!imageUrl.equals(".")) {
+					data.put("url", imageUrl);
+					result *= coupungDAO.insertDetailImg(data);
+				}
+			}
+		}
+		if(deleteImage != null) {
+			for(String productImageNumber : deleteImage) {
+				result *= coupungDAO.deleteProductImg(Integer.parseInt(productImageNumber));
+			}
+		}
+		if(deleteDetailImg != null) {
+			for(String productImageNumber : deleteImage) {
+				result *= coupungDAO.deleteProductImg(Integer.parseInt(productImageNumber));
+			}
+		}
 		
 		return (result > 0);
 	}
