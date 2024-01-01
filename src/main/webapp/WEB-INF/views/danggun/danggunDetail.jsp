@@ -3,17 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
-
-<c:choose>
-	<c:when test="${empty unserInfo and empty admin }">
-		<script>
-			alert("로그인을 해주세요!");
-			window.location.href = "${appPath}/clients/login";
-		</script>
-	</c:when>
-	<c:when test="${userInfo ne null or admin ne null }">
-		<!DOCTYPE html>
-		<html>
+<c:if test="${admin eq null and UserInfo.clientId ne null and danggun.visibility eq 0}">
+	<script>
+		alert("현재는 볼 수 없는 게시물 입니다.");
+		window.location.href= ${appPath} + "/danggun/main";
+	</script>
+</c:if>
+<!DOCTYPE html>
+<html>
 <head>
 <link href="${appPath}/css/main.css" rel="stylesheet" />
 <link href="${appPath}/css/main2.css" rel="stylesheet" />
@@ -66,7 +63,8 @@
 					<div class="product-detail">
 						<div class="product-top">
 							<div class="product-name">${post.productName}</div>
-							<c:if test="${userInfo.clientId != post.clientId}">
+							<c:if test="${admin ne null}"></c:if>
+							<c:if test="${admin eq null and userInfo.clientId != post.clientId}">
 								<div class="hamburger">
 									<div class="post-menu" onclick="toggle()">
 										<img src="${appPath}/images/toggleButton.png">
@@ -87,7 +85,8 @@
 						<div class="trade_step">${post.tradeStep}</div>
 
 						<div class="product-bottom">
-							<c:if test="${!admin && userInfo.clientId != post.clientId}">
+							<c:if test="${admin ne null}"></c:if>
+							<c:if test="${admin eq null and userInfo.clientId != post.clientId}">
 								<button class="zzimBtn" id="wishListBtn" type="button"
 									value="${post.danggunNumber}">
 									<img id="wishListImg" class="wish-list-img"
@@ -132,5 +131,3 @@
 	</script>
 </body>
 		</html>
-	</c:when>
-</c:choose>
