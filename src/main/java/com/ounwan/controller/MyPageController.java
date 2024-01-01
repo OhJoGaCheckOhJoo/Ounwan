@@ -201,22 +201,14 @@ public class MyPageController {
 	@RequestMapping(value = "/modifyUserInfo/pwd", method = RequestMethod.POST, consumes = "application/json")
 	public @ResponseBody String modifyPwd(@RequestBody ClientsDTO clientsDTO, HttpSession session) throws Exception {
 		int result = myPageService.modifyPwd(clientsDTO);
-		
-		if (result > 0) {
-			System.out.println("YESSSSSS");
-		} else {
-			System.out.println("NOOOOOOOOO");
-		}
-		return "success";
+		return (result > 0) ? "success" : "fail";
 	}
 
 	@RequestMapping(value = "/modifyUserInfo", method = RequestMethod.POST, consumes = "application/json", produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String modifyUserInfo(@RequestBody ClientsDTO clientsDTO, HttpSession session) {
 		ClientsDTO updateInfo = myPageService.modifyUserInfo(clientsDTO);
 		if(updateInfo==null) return "fail";
-		// session 수정된 정보로 update
 		session.setAttribute("updateInfo", updateInfo);
-		System.out.println(updateInfo);
 		return "success";
 
 	}

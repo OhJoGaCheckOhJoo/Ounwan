@@ -31,14 +31,12 @@ public class NaverOauthController {
 			throws IOException, ParseException {
 	
 		OAuth2AccessToken oauthToken = naverLogin.getAccessToken(session, code, state);
-
 		ClientsDTO naverClient = naverLogin.getUserProfile(oauthToken);
 		
 		if (naverClient.getClientId() == null) {
 			model.addAttribute("naverClient", naverClient);
 			return "signUp";
 		}	
-		
 		session.setAttribute("userInfo", naverClient);
 		return "home";
 	}

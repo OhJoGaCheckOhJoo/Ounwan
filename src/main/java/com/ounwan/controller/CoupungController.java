@@ -49,7 +49,6 @@ public class CoupungController {
 		return "coupung/products";
 	}
 	
-	// 메인 페이지에 보여줄 인기상품 5개
 	@GetMapping("/product/top-five")
 	public @ResponseBody List<CoupungDTO> getTopFive() {
 		return coupungService.getTopFive();
@@ -77,10 +76,7 @@ public class CoupungController {
 		List<Map<String, Object>> reviewList = coupungService.getReviewList(Integer.parseInt(coupungId));
 		List<Integer> scoreList = coupungService.getScoreList(Integer.parseInt(coupungId));
 		model.addAttribute("reviewList", reviewList);
-		model.addAttribute("scoreList", scoreList);	
-		
-		System.out.println("C_reviewList:" + reviewList);
-		System.out.println("C_socreList:" + scoreList);
+		model.addAttribute("scoreList", scoreList);
 		return "/coupung/detail";
 	}
 	
@@ -114,8 +110,7 @@ public class CoupungController {
 		for (int i = 0; i < productList.size(); i++) {
 			CoupungDTO order = coupungService.getProductDetail(productList.get(i), optionList.get(i), quantityList.get(i));
 			result.add(order);
-		} 
-		System.out.println("result : " + result);
+		}
 		model.addAttribute("products", result);
 		
 		return "coupung/order";
@@ -125,11 +120,7 @@ public class CoupungController {
 	public @ResponseBody String setOrder(@RequestBody OrdersDTO order, HttpSession session) {
 		ClientsDTO client = (ClientsDTO) session.getAttribute("userInfo");
 		GuestsDTO guest = (GuestsDTO) session.getAttribute("guest");
-//		if (client == null && guest == null) {
-//			session.setAttribute("guestOrderList", order.getOrderDetails());
-//			return "empty";
-//		}
-		
+
 		boolean result = orderService.setOrder(order, client, guest, session);
 		
 		return (result) ? "success" : "fail";
@@ -149,7 +140,6 @@ public class CoupungController {
 		return "coupung/complete";
 	}
 	
-	// 결제 검증
 	@RequestMapping("/orderCheck")
 	public @ResponseBody IamportResponse<Payment> paymentByImpUid(@RequestParam(value= "imp_uid") String imp_uid) 
 																			throws IamportResponseException, IOException {	

@@ -1,13 +1,11 @@
 package com.ounwan.repository;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ounwan.dto.DanggunDTO;
 import com.ounwan.entity.Clients;
 import com.ounwan.entity.DanggunChatMessage;
 import com.ounwan.entity.DanggunChatRoom;
@@ -33,12 +31,10 @@ public class MyPageChatDAO {
 		return sqlSession.selectList(NAMESPACE + "selectDanggunChatList", roomId);
 	}
 	
-	// 방 여부 확인
 	public List<String> selectRoomList(){
 		return sqlSession.selectList(NAMESPACE + "selectRoomList");
 	}
 
-	// 방 없으면 만들기
 	public int makeRoom(DanggunChatRoom makeChatRoom) {
 		return sqlSession.insert(NAMESPACE + "makeRoom", makeChatRoom);
 	}

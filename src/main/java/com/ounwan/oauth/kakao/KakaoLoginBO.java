@@ -65,17 +65,14 @@ public class KakaoLoginBO {
 		while ((line = br.readLine()) != null) {
 			result += line;
 		}
-		System.out.println("bufferedReader: " + result);
 		JsonParser parser = new JsonParser();
 		
 		JsonElement element = parser.parse(result);
-		System.out.println("element : " + element);
 		accessToken = element.getAsJsonObject().get("access_token").getAsString();
 		refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
 
 		br.close();
 		bw.close();
-		System.out.println("getaccesstoken");
 		return accessToken;
 	}
 
@@ -90,7 +87,6 @@ public class KakaoLoginBO {
 		conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 
 		int responseCode = conn.getResponseCode();
-		System.out.println("responseCode: " + responseCode);
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		String line = "";
@@ -109,7 +105,6 @@ public class KakaoLoginBO {
 		String token = element.getAsJsonObject().get("id").getAsString();
 
 		String profileURL = properties.getAsJsonObject().get("profile_image").getAsString();
-		// String clientId = properties.getAsJsonObject().get("nickname").getAsString(); -> 받을지 말지 논의 필요
 		String email = accountInfo.getAsJsonObject().get("email").getAsString();
 		
 		ClientsDTO client = clientsService.checkKakaoToken(token);
@@ -132,7 +127,6 @@ public class KakaoLoginBO {
             conn.setRequestProperty("Authorization", "Bearer " + token);
 
             int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -142,9 +136,7 @@ public class KakaoLoginBO {
             while ((line = br.readLine()) != null) {
                 result += line;
             }
-            System.out.println(result);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 	}

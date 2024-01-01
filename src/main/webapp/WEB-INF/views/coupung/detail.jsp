@@ -20,19 +20,11 @@
 <title>Document</title>
 </head>
 <body>
-<script>
-	$(function() {
-		if (!${detail.availableCheck}) {
-			location.href="${appPath}/unsellableProduct";
-		}
-	});
-</script>
-	<%@ include file="../common/header.jsp" %>
-    <div class="container">
-        <%@ include file="../common/nav.jsp" %>
-
+	<%@ include file="../common/header.jsp"%>
+	<div class="container">
+		<%@ include file="../common/nav.jsp"%>
 		<div>
-			<div class="product-detail">
+			<div class="product-detail" id="productDetail">
 				<div class="product-img-2">
 					<c:forEach var="image" items="${detail.image }" begin='1'>
 						<img class="detail-img" src="${image.url }">
@@ -45,7 +37,6 @@
 				<div class="product-box">
 					<div class="product-title">
 						<div>
-							<!-- <%-- 상품명 수정--%> -->
 							<span>${detail.name }</span>
 						</div>
 						<div class="product-share" onclick="clip()"></div>
@@ -68,7 +59,6 @@
 						<div class="product-point">
 							<img src="./poing.png"> <span>구매시 15 포인트로 적립</span>
 						</div>
-						<!-- <%-- 물품 가격 수정--%> -->
 						<div class="product-unit-price">
 							<span id="unitPrice">${detail.price }</span>원
 						</div>
@@ -147,7 +137,6 @@
 											</div>
 										</div>
 									</c:if>
-
 								</c:forEach>
 							</div>
 						</div>
@@ -197,9 +186,6 @@
 												</div>
 											</div>
 											<div class="personal-comment-content">${reviewList.CONTENTS}</div>
-
-
-
 										</div>
 									</c:if>
 									<c:if test="${reviewList.IMAGE_URL ne null}">
@@ -224,9 +210,7 @@
 											</div>
 										</div>
 									</c:if>
-
 								</c:if>
-
 							</c:forEach>
 						</div>
 					</div>
@@ -234,6 +218,7 @@
 			</div>
 		</div>
 	</div>
+	<div id="block"></div>
 	<div id="modalContainer" class="hidden">
 		<div id="modalContent">
 			이메일 : <input type="text" id="guestEmail" /> <br> 핸드폰 번호 : <input
@@ -247,9 +232,29 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous"></script>
+
+	<script>
+	$(function() {
+		console.log("${detail.availableCheck}" + ${detail.availableCheck});
+		if (!${detail.availableCheck} && '${admin}' == "") {
+			var productDetailPosition = $('#productDetail').offset();
+            var documentHeight = $(document).height();
+            
+            alert("판매가 중지된 상품입니다.");
+
+            $('#block').css({
+                'position': 'absolute',
+                'top': productDetailPosition.top - 50 + 'px',
+                'width': '100%',
+                'height': documentHeight + 'px',
+                'background-color': 'rgba(0, 0, 0, 0.7)',
+                'z-index': '9999'
+            });          
+		}
+	});
+	</script>
 	<script>
 const unitPrice = $("#unitPrice").html().replaceAll(",",""); // jsp에서는 DB에서 가져온 가격으로 설정
-
 
 const scoreList = [
     <c:forEach var="score" items="${scoreList}" varStatus="loopStatus">
@@ -271,21 +276,17 @@ else {
 	$("#mainScore").css('width', 0 + 'px');
 }
 
-
-// 막대, 별모양 평점 그래프 출력
 $("#miniScore").css('width', productScore * 30 + 'px');
 for(var i = 0; i < 5; i++) {
     $("#score" + (i + 1)).css('width', (scoreList[i] / scoreNum) * 300 + 'px');
 }
 
-	// 상세이미지 클릭하였을 때, 메인이미지와 변경
 	$(".product-detail").on("click", ".detail-img", function() {
 	    var detailsrc = $(this).attr("src");
 	    $(this).attr("src", $(".product-img-1 img").attr("src"));
 	    $(".product-img-1 img").attr("src", detailsrc);
 	});
 	
-	 // 옵션 선택하면 수량 선택 가능
     $("#productOption").on("change", function() {
         if($(this).val() > 0) {
             $(".product-quantity input").attr("disabled", false);
@@ -296,7 +297,6 @@ for(var i = 0; i < 5; i++) {
         }
     });
 
- 	// 수량을 직접 입력하는 경우
     $(".product-quantity input").on("change", function() {
         if($(this).val() < 1) {
             $(this).val(1);
@@ -304,7 +304,6 @@ for(var i = 0; i < 5; i++) {
         $("#totalPrice").html((unitPrice * $(this).val()).toLocaleString());
     });
  	
- 	// 수량 + / - 버튼
     $("#plus").on("click", function() {
         $(".product-quantity input").val((Number)($(".product-quantity input").val()) + 1);
         $("#totalPrice").html((unitPrice * $(".product-quantity input").val()).toLocaleString());
@@ -316,7 +315,6 @@ for(var i = 0; i < 5; i++) {
         }
     });
 
- 	// 상품설명 버튼 클릭
     $("#explain").on("click", function() {
         if($(this).attr("class") != "selected") {
             $(".product-explain").attr("hidden", false);
@@ -326,7 +324,6 @@ for(var i = 0; i < 5; i++) {
         }
     });
  	
- 	// 후기 버튼 클릭
     $("#comment").on("click", function() {
         if($(this).attr("class") != "selected") {
             $(".product-explain").attr("hidden", true);

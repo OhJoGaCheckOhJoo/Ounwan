@@ -1,6 +1,5 @@
 package com.ounwan.dto;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;

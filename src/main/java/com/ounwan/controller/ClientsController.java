@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ounwan.dto.CartsDTO;
 import com.ounwan.dto.ClientsDTO;
@@ -92,7 +91,7 @@ public class ClientsController {
 	public String withdrawal(@RequestParam("clientId") String clientId, @RequestParam("privacyTerms") int privacyTerms) {
 		return clientService.withdrawalClient(new ClientsDTO().builder().clientId(clientId).privacyTerms(privacyTerms).build());
 	}
-	// Rest Api 처리 필
+	
 	@RequestMapping("/logout")
 	public @ResponseBody String logoutGet(HttpSession session) {
 		String accessToken = (String) session.getAttribute("accessToken");
@@ -133,15 +132,12 @@ public class ClientsController {
 	
 	@GetMapping("/checkId")
 	public @ResponseBody String checkId(String clientId) {
-		System.out.println(clientId);
-		// true = id 존재, false = id 없음
 		boolean result = clientService.checkId(clientId);
 		return (result) ? "exist" : "available";
 	} 
 	
 	@GetMapping("/checkEmail")
 	public @ResponseBody String checkEmail(String email) {
-		// true = id 존재, false = id 없음
 		boolean result = clientService.checkEmail(email);
 		return (result) ? "exist" : "available";
 	} 
@@ -160,7 +156,7 @@ public class ClientsController {
 	@PostMapping(value="/setImage")
 	public @ResponseBody String setImage(@RequestParam("image") MultipartFile image) throws IllegalStateException, IOException {
 		String imgString = clientService.setImage(image);
-		System.out.println("이미지다아아!!!!! : " + imgString);
+		System.out.println("img string : " + imgString);
 		return imgString;
 	}
 }

@@ -21,12 +21,10 @@ public class DanggunChatDAO {
 		return sqlSession.selectList(NAMESPACE + "selectDanggunChatList", roomId);
 	}
 	
-	// 방 여부 확인
 	public List<String> selectRoomList(){
 		return sqlSession.selectList(NAMESPACE + "selectRoomList");
 	}
 
-	// 방 없으면 만들기
 	public int makeRoom(DanggunChatRoom makeChatRoom) {
 		return sqlSession.insert(NAMESPACE + "makeRoom", makeChatRoom);
 	}

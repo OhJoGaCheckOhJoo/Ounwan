@@ -18,20 +18,15 @@ public class CartDAO {
 	private static final String NAMESPACE = "net.ounwan.carts.";
 
 	public List<Map<Object,Object>> getCartById(String clientId) {
-		List<Map<Object,Object>> cartlist = sqlSession.selectList(NAMESPACE + "getCartById", clientId);
-		System.out.println(cartlist);
-		return cartlist;
+		return sqlSession.selectList(NAMESPACE + "getCartById", clientId);
 	}
 
 	public Carts getQuantity(Carts cart) {
 		return sqlSession.selectOne(NAMESPACE + "getQuantity",cart);
-		
 	}
-
 
 	public int updateQuantity(Carts cart) {
 		return sqlSession.update(NAMESPACE + "updateQuantity", cart);
-		
 	}
 	
 	public int insertCart(Carts cart) {
@@ -39,19 +34,10 @@ public class CartDAO {
 	}
 	
 	public int updateCart(Carts cart) {
-		int result = sqlSession.update(NAMESPACE + "updateCart", cart);
-		System.out.println("result : " + result);
-		return result;
+		return sqlSession.update(NAMESPACE + "updateCart", cart);
 	}
 
 	public int deleteCart(Carts cart) {
-		int result =sqlSession.delete(NAMESPACE + "deleteCart", cart); 
-		System.out.println(" delete result : " + result);
-		return result;
+		return sqlSession.delete(NAMESPACE + "deleteCart", cart); 
 	}
-
-
-
-	
-
 }

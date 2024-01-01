@@ -28,8 +28,6 @@ public class GoogleOauthController {
 	@GetMapping("/google")
 	public String googleLogin(@RequestParam String code, HttpSession session, Model model) throws IOException {
 		ClientsDTO loginClient = googleLoginBO.getUserInfo(googleLoginBO.getRequest(code));
-		System.out.println(loginClient);
-		
 		if(loginClient.getClientId() == null) {
 			model.addAttribute("googleClient", loginClient);
 			return "signUp";
@@ -38,4 +36,3 @@ public class GoogleOauthController {
 		return "home";
 	}
 }
-// 116284180177924084473

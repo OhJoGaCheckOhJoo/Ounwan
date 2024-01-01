@@ -26,10 +26,8 @@ public class KakaoOauthController {
 
 	@RequestMapping(value = "/kakao", produces = "text/plain;charset=utf-8")
 	public String kakaoLogin(@RequestParam(required = false) String code, HttpSession session, Model model) throws IOException {
-
 		String kakaoToken = kakaoLogin.getReturnAccessToken(code);
 		session.setAttribute("accessToken", kakaoToken);
-		System.out.println("확인 = " + kakaoToken);
 		ClientsDTO loginClient = kakaoLogin.getUserInfo(kakaoToken);
 		
 		if (loginClient.getClientId() == null) {
@@ -44,12 +42,10 @@ public class KakaoOauthController {
 	public String kakaoLogout(HttpSession session) {
 		String logout = "https://kauth.kakao.com/oauth/logout";
 		String accessToken = (String)session.getAttribute("accessToken");
-
 		String logout_redirect_uri = "http://localhost:9090/myapp/";
 		StringBuilder sb = new StringBuilder();
 		sb.append(logout).append("&client_id=").append(accessToken).append("&logout_redirect_uri=")
 				.append(logout_redirect_uri);
-
 		return "redirect:/" + sb.toString();
 	}
 

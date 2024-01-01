@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.AdminDTO;
 import com.ounwan.dto.AetaDTO;
-import com.ounwan.dto.ClientsDTO;
 import com.ounwan.dto.CoupungDTO;
 import com.ounwan.dto.DanggunDTO;
 import com.ounwan.dto.OrdersDTO;
@@ -70,20 +69,7 @@ public class AdminController {
 		}
 		return "fail";
 	}
-
-	@GetMapping("/coupung/product.do")
-	public String getProductPage(@RequestParam int offset, @RequestParam String searchOption,
-			@RequestParam String searchValue, @RequestParam String sortOption, Model model) {
-		model.addAttribute("productList",
-				coupungService.getAdminProductList(offset, searchOption, searchValue, sortOption));
-		model.addAttribute("pages", coupungService.getProductCount(searchOption, searchValue));
-		model.addAttribute("offset", offset / 20);
-		model.addAttribute("searchOption", searchOption);
-		model.addAttribute("searchValue", searchValue);
-		model.addAttribute("sortOption", sortOption);
-		return "admin/product";
-	}
-
+	
 	@GetMapping("/coupung/product.do")
 	public String getProductPage(@RequestParam int offset,
 	@RequestParam String searchOption,
@@ -189,7 +175,6 @@ public class AdminController {
 	@PostMapping("/aeta/restore")
 	public @ResponseBody String restoreAeta(@RequestParam("aetaNumber") Integer aetaNumber) {
 		boolean result = communityService.restoreAeta(aetaNumber);
-		System.out.println(result);
 		return result ? "success" : "fail";
 	}
 
@@ -212,11 +197,8 @@ public class AdminController {
 		return "admin/aetaList";
 	}
 
-	// 애타 게시글 조회
 	@GetMapping("/aeta/aetaPost")
 	public String aetaReadPost(@RequestParam Integer aetaNumber, Model model) {
-		System.out.println("/aeta/aetaPost controller 지나가나");
-		
 		model.addAttribute("aetaPost", communityService.aetaReadPost(aetaNumber));		
 		model.addAttribute("aetaComments", communityService.aetaReadComments(aetaNumber));
 		model.addAttribute("aetaCountLikes", communityService.aetaCountLikes(aetaNumber));

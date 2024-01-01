@@ -60,7 +60,6 @@ public class GoogleLoginBO {
         HttpResponse response = client.execute(post);
         int responseCode = response.getStatusLine().getStatusCode();
 
-        // JSON 형태 반환값 처리
         ObjectMapper mapper = new ObjectMapper();
         JsonNode resultNode = mapper.readTree(response.getEntity().getContent());
 	
@@ -73,7 +72,7 @@ public class GoogleLoginBO {
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		HttpGet get = new HttpGet(RequestUrl);
 		
-		get.addHeader("Authorization", "Bearer " + accessToken); //token 넣기
+		get.addHeader("Authorization", "Bearer " + accessToken);
 		
 		HttpResponse response = httpClient.execute(get);
         int responseCode = response.getStatusLine().getStatusCode();

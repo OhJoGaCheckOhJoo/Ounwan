@@ -29,7 +29,6 @@ public class AdminChatController {
 	@GetMapping(value = "/getChatRoom")
 	public String getChatRoom(Model model,@RequestParam("roomId") String roomId) {
 		model.addAttribute("roomId", roomId);
-		//model.addAttribute("clientId", clientId);
 		return "/admin/adminChatRoom";
 	}
 	

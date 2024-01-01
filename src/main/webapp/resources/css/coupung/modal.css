@@ -1,19 +1,5 @@
 @charset "UTF-8";
-/*
-#guestModal {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	padding: 20px;
-	background-color: #333;
-	border: 1px solid #ccc;
-	z-index: 1000;
-	max-height: 80vh; 
-	overflow-y: auto; 
-	width: 40%;
-	max-width: 920px;
-}*/
+
 #guestModal {
 	color: black;
 	position: fixed;
@@ -86,7 +72,7 @@
 	margin: 10% auto;
 	padding: 20px;
 	border-radius: 5px;
-	width: 40%;
+	width: 30%;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 

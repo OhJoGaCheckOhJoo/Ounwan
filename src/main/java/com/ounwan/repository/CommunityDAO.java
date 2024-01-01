@@ -1,6 +1,5 @@
 package com.ounwan.repository;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ounwan.entity.Aeta;
-import com.ounwan.entity.AetaImages;
 import com.ounwan.entity.AetaLikes;
 import com.ounwan.entity.Comments;
 import com.ounwan.entity.Inbody;
@@ -23,12 +21,10 @@ public class CommunityDAO {
 	SqlSession sqlSession;
 	private static final String NAMESPACE = "net.ounwan.community.";
 
-	// 게시판 조회
 	public List<Aeta> AetaList(Map<String, Object> paginateParams) {
 		return sqlSession.selectList(NAMESPACE + "AetaList", paginateParams);
 	}
 
-	// 게시판 검색기능
 	public List<Aeta> aetaSearchAll(Map<String, Object> paginateParams) {
 		return sqlSession.selectList(NAMESPACE + "AetaSearchAll", paginateParams);
 	}
@@ -41,7 +37,6 @@ public class CommunityDAO {
 		return sqlSession.selectList(NAMESPACE + "AetaSearchId", paginateParams);
 	}
 
-	// 게시글 조회
 	public List<Map<String, Object>> aetaReadPost(int aetaNumber) {
 		return sqlSession.selectList(NAMESPACE + "AetaReadPost", aetaNumber);
 	}
@@ -62,7 +57,6 @@ public class CommunityDAO {
 		return sqlSession.delete(NAMESPACE + "AetaDislike", aetaLikes);
 	}
 
-	// 게시글 등록
 	public int aetaInsertPost(Aeta post) {
 		return sqlSession.insert(NAMESPACE + "AetaInsertPost", post);
 	}
@@ -71,47 +65,38 @@ public class CommunityDAO {
 		return sqlSession.insert(NAMESPACE + "AetaInsertImageUrls", url);
 	}
 
-	// 게시글 조회수 증가
 	public int aetaUpdateViews(int boardNumber) {
 		return sqlSession.update(NAMESPACE + "AetaUpdateView", boardNumber);
 	}
 
-	// 게시글 수정 시 보여줄 데이터
 	public List<Map<String, Object>> aetaPostToBeUpdated(int boardNumber) {
 		return sqlSession.selectList(NAMESPACE + "AetaPostToBeUpdated", boardNumber);
 	}
 
-	// 게시글 수정 // title,contents,boardNumber
 	public int aetaUpdatePost(Aeta post) {
 		return sqlSession.update(NAMESPACE + "AetaUpdatePost", post);
 	}
 
-	// 게시글 이미지url 수정 // imageUrl,boardNumber
 	public int aetaDeleteImageUrls(int aetaNumber) {
 		return sqlSession.delete(NAMESPACE + "AetaDeleteImageUrls", aetaNumber);
 	}
 
-	// 게시글 신고 (update visibility to 0, Reason(null)to reason)
 	public int aetaReport(Aeta aeta) {
 		return sqlSession.update(NAMESPACE + "AetaUpdateVisibilityAndReason", aeta);
 	}
 
-	// 게시글 삭제
 	public int aetaDeletePost(int boardNumber) {
 		return sqlSession.delete(NAMESPACE + "AetaDeletePost", boardNumber);
 	}
 
-	// 댓글 조회
 	public List<Map<String, Object>> aetaReadComments(int aetaNumber) {
 		return sqlSession.selectList(NAMESPACE + "AetaReadComments", aetaNumber);
 	}
 
-	// 댓글 갯수
 	public int aetaCountComments(int aetaNumber) {
 		return sqlSession.selectOne(NAMESPACE + "AetaCountComments", aetaNumber);
 	}
 
-	// 게시글 댓글 등록/삭제
 	public int aetaInsertComment(Comments comment) {
 		return sqlSession.insert(NAMESPACE + "AetaInsertComment", comment);
 	}
