@@ -47,20 +47,27 @@
     </div>
 </div>
 
-
-
 <script>
-       $(".restoreDanggun").on("click", function(){
-       	var danggunNumber = $(this).parent().find(".danggunNumber").val();
-       	if(confirm("정말로 복구하시겠습니까?")){   	
-       		$.ajax({
-	               url : "${appPath}/admin/danggun/restore",
-	               type : "post",
-	               data : {"danggunNumber" : danggunNumber},
-	               success : function(res){
-	                   alert("복구에 성공하였습니다.");    
-	               }
-	           });
-       	}
-       });
-   </script>
+$(".restoreDanggun").on("click", function(){
+   	var danggunNumber = $(this).parent().find(".danggunNumber").val();
+   	if(confirm("정말로 복구하시겠습니까?")){   	
+   		$.ajax({
+               url : "${appPath}/admin/danggun/restore",
+               type : "post",
+               data : {"danggunNumber" : danggunNumber},
+               success : function(res){
+            	   if(res == "success"){
+            		   alert("복구에 성공하였습니다."); 
+            		   $.ajax({
+            			   url : "${appPath}/admin/danggun/report",
+            			   success : function(res){
+            				   $(".admin-wrap").html(res);
+            			   }
+            		   });
+            	   }
+                      
+               }
+           });
+   	}
+   });
+</script>
