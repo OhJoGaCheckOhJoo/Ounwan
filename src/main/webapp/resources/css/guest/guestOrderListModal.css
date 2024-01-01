@@ -1,5 +1,4 @@
 .guest-order-list-modal-container {
-    display: none;
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -18,7 +17,6 @@
 }
 
 .guest-order-list-modal-overlay {
-    display: none;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -57,7 +55,6 @@
 }
 
 .proudct-container {
-    width: 700px;
     margin: auto;
     padding: 10px 20px;
 }
@@ -70,7 +67,9 @@ a {
 .product-detail-content {
     display: flex;
     align-items: center;
-    width: 100%;
+    padding: 2px 0px;
+    
+
 }
 
 .product-detail.image {
@@ -79,25 +78,28 @@ a {
 }
 
 .product-detail.image > img {
-    width: 100%;
-    height: 100%;
+    width: 110px;
+    height: 110px;
 }
 
 .product-detail.content {
     padding: 0px 10px 0px 20px;
-    width: 80%;
-}
-
-.product-detail-content {
-    padding: 2px 0px;
 }
 
 .title {
     width: 60px;
 }
 
-.value {
-    width: 500px;
+.product-detail-content.name {
+    white-space: normal;
+}
+
+.product-detail-name.value {
+    overflow: hidden;
+    text-overflow: ellipsis; /* 필요에 따라 생략 (...) 표시 가능 */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* 두 줄로 제한하려면 2로 설정, 필요에 따라 조절 가능 */
 }
 
 .guest-modal-footer {

@@ -43,7 +43,7 @@
                     <div class="login login-radius"><button type="button" id="loginButton">로그인</button></div>
                 </form>
                 <div class="login-sub"><a class="login-sub-1" href="#">회원이 아니신가요? 지금 가입하세요!</a></div>
-                <div class="login-sub"><a class="login-sub-2" href="#">비회원 주문조회</a></div>
+                <div class="login-sub"><a class="login-sub-2" href="${appPath}/guest">비회원 주문조회</a></div>
             </div>
         </div>
 
