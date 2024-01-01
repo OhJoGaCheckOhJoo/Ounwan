@@ -18,9 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ounwan.dto.AdminDTO;
 import com.ounwan.dto.AetaDTO;
+import com.ounwan.dto.ClientsDTO;
 import com.ounwan.dto.CoupungDTO;
 import com.ounwan.dto.DanggunDTO;
 import com.ounwan.dto.OrdersDTO;
+import com.ounwan.dto.PaginatingDTO;
 import com.ounwan.service.AdminService;
 import com.ounwan.service.CommunityService;
 import com.ounwan.service.CoupungService;
@@ -70,9 +72,15 @@ public class AdminController {
 	}
 
 	@GetMapping("/coupung/product.do")
-	public String getProductPage(@RequestParam int offset, Model model) {
-		model.addAttribute("productList", coupungService.getAdminProductList(offset));
-		model.addAttribute("pages", coupungService.getProductCount());
+	public String getProductPage(@RequestParam int offset, @RequestParam String searchOption,
+			@RequestParam String searchValue, @RequestParam String sortOption, Model model) {
+		model.addAttribute("productList",
+				coupungService.getAdminProductList(offset, searchOption, searchValue, sortOption));
+		model.addAttribute("pages", coupungService.getProductCount(searchOption, searchValue));
+		model.addAttribute("offset", offset / 20);
+		model.addAttribute("searchOption", searchOption);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("sortOption", sortOption);
 		return "admin/product";
 	}
 
@@ -168,6 +176,38 @@ public class AdminController {
 		boolean result = communityService.restoreAeta(aetaNumber);
 		System.out.println(result);
 		return result ? "success" : "fail";
+	}
+
+	@GetMapping("/aeta/aetaBoard")
+	public String aetaBoard() {		
+		return "admin/aetaBoard";
+	}
+	
+	@GetMapping("/aeta/AllList")
+	public String aetaAllList(@RequestParam(value = "inputValue", defaultValue = "%") String inputValue,
+			@RequestParam(value = "selectedOption", defaultValue = "%") String selectedOption, Model model,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+		List<AetaDTO> aetaList = communityService.aetaList(page, inputValue, selectedOption);
+		PaginatingDTO paginating = communityService.getPages(page, inputValue, selectedOption);
+
+		model.addAttribute("aetaList", aetaList);
+		model.addAttribute("paginating", paginating);
+		model.addAttribute("inputValue", inputValue);
+		model.addAttribute("selectedOption", selectedOption);
+		return "admin/aetaList";
+	}
+
+	// 애타 게시글 조회
+	@GetMapping("/aeta/aetaPost")
+	public String aetaReadPost(@RequestParam Integer aetaNumber, Model model) {
+		System.out.println("/aeta/aetaPost controller 지나가나");
+		
+		model.addAttribute("aetaPost", communityService.aetaReadPost(aetaNumber));		
+		model.addAttribute("aetaComments", communityService.aetaReadComments(aetaNumber));
+		model.addAttribute("aetaCountLikes", communityService.aetaCountLikes(aetaNumber));
+		model.addAttribute("aetaCountComments", communityService.aetaCountComments(aetaNumber));
+		
+		return "/admin/aetaPost";
 	}
 
 }

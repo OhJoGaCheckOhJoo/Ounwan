@@ -47,7 +47,7 @@
                 <li>
                     <a href="#">오늘의 애타</a>
                     <ul class="submenu">
-                        <li><a href="#">게시글 목록</a></li>
+                        <li><a id="aetaAllList" href="#">게시글 목록</a></li>
                         <li><a href="#">전체 댓글</a></li>
                     </ul>
                 </li>
@@ -161,6 +161,14 @@
         	});
         });
         
+        $("#aetaAllList").on("click", function() {
+        	$.ajax({
+        		url: "${appPath}/admin/aeta/aetaBoard",
+       			success: function(res) {
+       				$(".admin-wrap").html(res);
+       			}
+        	});
+        });
         $("#aetaReport").on("click", function() {
         	$.ajax({
         		url: "${appPath}/admin/aeta/report",
