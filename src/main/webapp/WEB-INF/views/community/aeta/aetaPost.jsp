@@ -192,7 +192,7 @@
 		--%>
 	</div>
 	<%@include file="../../common/footer.jsp"%>
-	<%-- <%@ include file="./aetaReportModal.jsp"%> --%>
+	<%@ include file="./aetaReportModal.jsp"%> 
 	<script src="../js/aeta.js"></script>
 	<script src="../js/aetaReportModal.js"></script>
 	
