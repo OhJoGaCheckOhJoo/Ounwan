@@ -70,9 +70,17 @@ public class AdminController {
 	}
 
 	@GetMapping("/coupung/product.do")
-	public String getProductPage(@RequestParam int offset, Model model) {
-		model.addAttribute("productList", coupungService.getAdminProductList(offset));
-		model.addAttribute("pages", coupungService.getProductCount());
+	public String getProductPage(@RequestParam int offset,
+							@RequestParam String searchOption,
+							@RequestParam String searchValue,
+							@RequestParam String sortOption,
+							Model model) {
+		model.addAttribute("productList", coupungService.getAdminProductList(offset, searchOption, searchValue, sortOption));
+		model.addAttribute("pages", coupungService.getProductCount(searchOption, searchValue));
+		model.addAttribute("offset", offset / 20);
+		model.addAttribute("searchOption", searchOption);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("sortOption", sortOption);
 		return "admin/product";
 	}
 
@@ -111,6 +119,12 @@ public class AdminController {
 	public @ResponseBody String insertProduct(@RequestBody CoupungDTO product) {
 		int result = coupungService.insertProduct(product);
 		return (result > 0) ? "success" : "fail";
+	}
+	
+	@GetMapping("/coupung/update.do")
+	public String getUpdateProducePage(@RequestParam int coupungNumber, Model model) {
+		model.addAttribute("product", coupungService.getAdminProductDetail(coupungNumber));
+		return "admin/productDetail";
 	}
 
 	@PostMapping("/coupung/update.do")
