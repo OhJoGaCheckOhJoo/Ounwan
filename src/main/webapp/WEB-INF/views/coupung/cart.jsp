@@ -175,16 +175,39 @@
 		     </div>
 	    </div>
 	
-	    <div id="modalContainer" class="hidden">
-	    	<div id="modalContent">
-	    		이메일 : <input type="text" id="guestEmail" />
-	    		<br>
-	    		핸드폰 번호 : <input type="text" id="guestPhone" />
-	    		<br>
-	    		<button type="button" id="guestSubmitBtn">입력</button>
+	    <div id="guestModal" class="hidden">
+	    	<div class="modal-content">
+		    	<div class="modal-body">
+		    		<span id="closeBtn" class="close-button">&times;</span>
+			    	<div class="modal-title">
+			    		<div>* 비회원 개인정보 수집 및 이용동의</div>
+			    	</div>
+			    	<div class="modal-input">
+				    	<div>
+				    		<label class="modal-attribute-name" for="">이메일 : </label> 
+				    		<input class="box" type="text" id="guestEmail" required/>
+				    	</div>
+				    	<div>
+				    		<label class="modal-attribute-name" for="">연락처 : </label> 
+				    		<input class="box" type="text" id="guestPhone" required/>
+				    	</div>
+			    	</div>
+			    	<div class="modal-check">
+				    	<div class="agreement">
+							<label for="agree1">
+								<input type="checkbox" id="agree1" required>
+								<i class="circle"></i> [필수] 개인정보 수집 및 이용 동의
+							</label>
+						</div>
+				    	<div>
+				    		<button type="button" id="guestSubmitBtn">주문하기</button>
+				    	</div>
+			    	</div>
+		    	</div>
 	    	</div>
 	    </div>
 	</div>
+	
 	
 	<script>
 	$('.selectCheckbox').on('change', function() {
@@ -215,7 +238,7 @@
 				}
 			}); 	
 		});
-		
+	
 	</script>
 
 	<script>
@@ -264,7 +287,6 @@
 					}); 
 				}
 			});
-
 		
 		
 		var productList = [];
@@ -281,8 +303,8 @@
 		    });
 		    
 			if('${userInfo.clientId}' === '') {
-				if(!confirm('로그인 하시겠습니까?')) {
-					$('#modalContainer').removeClass('hidden'); // 모달을 띄우는 부분
+				if(confirm('비회원으로 주문하시겠습니까?')) {
+					$('#guestModal').removeClass('hidden'); // 모달을 띄우는 부분
 				} else {
 					location.href="${appPath}/clients/login";
 				}
@@ -290,6 +312,22 @@
 				
 				location.href = '${appPath}/coupung/order?productList=' + productList + '&optionList=' + optionList +'&quantityList=' + quantityList;
 			}
+		});
+		
+		// 모달 요소 가져오기
+		var modal = document.getElementById("guestModal");
+		var closeBtn = document.getElementById("closeBtn");
+
+		// 닫기 버튼 클릭 시 모달 닫기
+		closeBtn.addEventListener("click", function() {
+		  modal.classList.add("hidden");
+		});
+
+		// 모달 외부를 클릭하면 모달 닫기
+		modal.addEventListener("click", function(event) {
+		  if (event.target === modal) {
+		    modal.classList.add("hidden");
+		  }
 		});
 		
 		var phone = "";
