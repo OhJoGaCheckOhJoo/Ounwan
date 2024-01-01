@@ -19,21 +19,16 @@
 <body>
 	<script>
 		$(document).ready(function() {
-		    // Calculate total price on page load
+			if ('${userInfo.clientId}' === '' && '${guest.email}' === '') {
+				location.href = '${appPath}/clients/login';
+			}
 		    calculateTotalPrice();
-	
-		    // Function to calculate total price
 		    function calculateTotalPrice() {
 		        var totalPrice = 0;
-	
-		        // Loop through all elements with class '.priceValue'
 		        $('.price-value').each(function() {
 		        	console.log($(this).text());
-		            // Get the value from each element and add it to totalPrice
 		            totalPrice += parseInt($(this).text(), 10);
 		        });
-	
-		        // Update the content of element with id '#totalPrice'
 		        $('#totalPrice').text(totalPrice);
 		        $('#totalOrderPrice').text(totalPrice);
 		    }
@@ -41,8 +36,7 @@
 		    var domain = '';
 		    var phone = '';
 		    if ('${userInfo}' != '') {
-				emailId = "${userInfo.email}".split('@')[0];
-				domain = "${userInfo.email}".split('@')[1];
+				emailId = "${userInfo.email}"; 
 				phone = '${userInfo.phone}';
 				$('#name-txt').val('${userInfo.name}');	
 				$('#name-txt').attr('readOnly', true);
@@ -51,11 +45,8 @@
 				domain = '${guest.email}'.split('@')[1];
 				phone = '${guest.phone}';
 			}
-		    
 		    $('#id-txt').val(emailId);
 		    $('#id-txt').attr('readOnly', true);
-		    $('#domain-txt').val(domain);
-		    $('#domain-txt').attr('readOnly', true);
 		    $('#domain-list').attr('disable', true);
 		    $('#phone-txt').val(phone);	
 		    $('#phone-txt').attr('readOnly', true);
@@ -94,8 +85,8 @@
 															<img class="x50-2" src="${product.image[0].url }" alt="50" />
 										                    <div class="product-info">
 										                    		<span>${product.name}</span>
-										                    		<input type="hidden" value="${product.coupungNumber }" id="coupungNumber"/>
-																	<input type="hidden" value="${product.options[0].coupungOptionNumber }" id="optionNumber"/>
+										                    		<input type="hidden" value="${product.coupungNumber }" class="coupungNumber"/>
+																	<input type="hidden" value="${product.options[0].coupungOptionNumber }" class="optionNumber"/>
 																	<span class="text-container">
 																		<p>-[옵션] : ${product.options[0].name}</p>												
 																	</span>
@@ -104,11 +95,11 @@
 								                    	</div>
 								                    </td>
 								                    <td>
-								                    	<div class="product-quantity" id="quantity">${product.quantity}</div>
+								                    	<div class="product-quantity">${product.quantity}</div>
 								                    </td>
 								                    <td class="product-order-price">
 								                    	<div
-														class="">${product.price*product.quantity}원</div>
+														class="price-value">${product.price*product.quantity}원</div>
 								                    </td>
 							                	</div>
 							                </tr>
@@ -208,12 +199,10 @@
 							<div class="purchaser-payment-wrap">
 								<div class="purchaser-payment">결제 방법</div>
 								<div class="pay-option-wrap">
-									<input type="checkbox">
+									<input type="checkbox" class="paymentMethod" id="creditCard">
 									<div >신용카드</div>
-									<input type="checkbox">
-									<div >카카오페이</div>
-									<input type="checkbox">
-									<div >토스페이</div>						
+									<input type="checkbox" class="paymentMethod" id="kakaoPay">
+									<div >카카오페이</div>				
 								</div>
 							</div>
 						</div>
@@ -281,9 +270,13 @@
 					$detailsContent.slideUp(500);
 				}
 			});
-
 			// 초기에 숨겨진 상태로 시작
 			$detailsContent.hide();
+		});
+		
+		$('.paymentMethod').on('click', function() {
+			  $('.paymentMethod').prop('checked', false);
+			  $(this).prop('checked', true);
 		});
 		
 		$('#orderCheckBox').on('click', function() {
@@ -295,9 +288,6 @@
 			    } else {
 					$('#id-txt-2').val($('#id-txt').val());
 				    $('#id-txt-2').attr('readOnly', true);
-				    $('#domain-txt-2').val($('#domain-txt').val());
-				    $('#domain-txt-2').attr('readOnly', true);
-				    $('#domain-list').attr('disable', true);
 				    $('#phone-txt-2').val($('#phone-txt').val());	
 				    $('#phone-txt-2').attr('readOnly', true);
 				    $('#name-txt-2').val($('#name-txt').val());
@@ -315,6 +305,14 @@
 						$('#findAddr').attr('disabled', true);
 					}	
 			    }
+			} else {
+				$('#id-txt-2').val('');
+				$('#phone-txt-2').val('');
+				$('#name-txt-2').val('');
+				$('#zipcode-txt').val('');
+				$('#address-txt').val('');
+				$('#address-detail-txt').val('');
+				$('#findAddr').attr('disabled', false);
 			}
 		});
 		$('#findAddr').on('click', function() {
@@ -330,7 +328,6 @@
 		            }
 
 		            if(data.userSelectedType === 'R'){
-		               
 		                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
 		                    extraAddr += data.bname;
 		                }
@@ -347,7 +344,6 @@
 		            $('#zipcode-txt').val(data.zonecode);
 		            $('#address-txt').val(addr);
 		            $('#address-detail-txt').attr('readOnly', false);
-		     
 		            $('#address-detail-txt').focus();
 		        }
 		    }).open();
@@ -358,24 +354,23 @@
 			var productName = '${products[0].name}';
 			var len = list.length;
 			if (len > 2) {
-				productName += ' 외 ' + (len - 2) + ' 개'; 
-				
+				productName += ' 외 ' + (len - 2) + ' 개';
 			}
 			
 			var coupungNumber = [];
-			for(var i = 0; i < $('#product-area .x01-1 #coupungNumber').length; i++) {
-				coupungNumber.push($('#product-area .x01-1 #coupungNumber').eq(i).val());
-			}
+			$('.coupungNumber').each(function() {
+				coupungNumber.push($(this).val());
+			});
 			
 			var quantities = [];
-			for(var i = 0; i < $('#product-area .x01 #quantity').length; i++) {
-				quantities.push($('#product-area .x01 #quantity').eq(i).text());
-			}
+			$('.product-quantity').each(function() {
+				quantities.push($(this).text());
+			});
 			
 			var options = [];
-			for(var i = 0; i < $('#product-area .x01-1 #optionNumber').length; i++) {
-				options.push($('#product-area .x01-1 #optionNumber').eq(i).val());
-			} 
+			$('.optionNumber').each(function() {
+				options.push($(this).val());
+			});
 			
 			var price = 0;
 			
@@ -385,74 +380,144 @@
 			var address = $('#address-txt').val() + " " + $('#address-detail-txt').val();
 			var phoneNumber = $('#phone-txt').val();
 			var email = $('#id-txt').val() + "@" + $('#domain-txt').val();
-
-			 $.ajax({
-				 url : priceUrl,
-				 type : 'get',
-				 success : function(price) {
-					 IMP.init("imp43370630");
-		             // IMP.request_pay(param, callback) 결제창 호출
-
-		             IMP.request_pay({ // param
-		                 pg: "kcp",
-		                 amount: price, // 상품 비용
-		                 name: productName, // 상품명
-		                 buyer_email: email, // 주문자 이메일
-		                 buyer_name: orderer, // 주문자 명
-		                 buyer_tel: phoneNumber, // 주문자 번호
-		                 buyer_addr: address, // 주문자 주소
-		                 buyer_postcode: zipCode// 우편번호
-		             }, 
-		             function (rsp) { // callback
-		    			console.log(rsp);
-		             	$.ajax({
-		             		type: "POST",
-		             		url : "${appPath}/coupung/orderCheck?imp_uid=" + rsp.imp_uid 
-		             	}).done(function(data) {
-		             		console.log(data);
-		             		if (rsp.paid_amount === data.response.amount) {
-		             			var orderList = [];
-		             			var totalQuantity = 0;
-		             			for (let i = 0; i < coupungNumber.length; i++) {
-		             				var product = {
-		             					'coupungNumber' : Number(coupungNumber[i]),
-		             					'optionNumber' : Number(options[i]),
-		             					'quantity' : Number(quantities[i])
-		             				}
-		             				orderList.push(product);
-		             				totalQuantity += Number(quantities[i]);
-		             			}
-		             			
-		             			var orders = {
-		             					'totalPrice' : data.response.amount,
-		             					'totalQuantity' : totalQuantity,
-		             					'paymentMethod' : 'card',
-		             					'receiverName' : $('#name-txt-2').val(),
-		             					'receiverPhone' :  $('#phone-txt-2').val(),
-		             					'shippingAddress' : zipCode + " " + address,
-		             					'orderDetails' : orderList
-		             			}
-		             			$.ajax({
-		             				url : "${appPath}/coupung/order",
-		             				type : "post",
-		             				data : JSON.stringify(orders),
-		             				contentType : 'application/json',
-		             				success : function (res) {
-		             					if (res === 'success') {
-		             						alert('success');
-		             					}
-		             				},
-		                            error: function(request, status, error) {
-		                                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-		                            }
-		             			});
-		             		} else {
-		             			alert("결제에 실패하였습니다.");
-		             		}
-		             	});
-		            });
-				 } 
-			});
+			if ($('#creditCard').is(':checked')) {
+				 $.ajax({
+					 url : priceUrl,
+					 type : 'get',
+					 success : function(price) {
+						 IMP.init("imp43370630");
+			             // IMP.request_pay(param, callback) 결제창 호출
+	
+			             IMP.request_pay({ // param
+			                 pg: "kcp",
+			                 amount: price, // 상품 비용
+			                 name: productName, // 상품명
+			                 buyer_email: email, // 주문자 이메일
+			                 buyer_name: orderer, // 주문자 명
+			                 buyer_tel: phoneNumber, // 주문자 번호
+			                 buyer_addr: address, // 주문자 주소
+			                 buyer_postcode: zipCode// 우편번호
+			             }, 
+			             function (rsp) { // callback
+			    			console.log(rsp);
+			             	$.ajax({
+			             		type: "POST",
+			             		url : "${appPath}/coupung/orderCheck?imp_uid=" + rsp.imp_uid 
+			             	}).done(function(data) {
+			             		console.log(data);
+			             		if (rsp.paid_amount === data.response.amount) {
+			             			var orderList = [];
+			             			var totalQuantity = 0;
+			             			for (let i = 0; i < coupungNumber.length; i++) {
+			             				var product = {
+			             					'coupungNumber' : Number(coupungNumber[i]),
+			             					'optionNumber' : Number(options[i]),
+			             					'quantity' : Number(quantities[i])
+			             				}
+			             				orderList.push(product);
+			             				totalQuantity += Number(quantities[i]);
+			             			}
+			             			
+			             			var orders = {
+			             					'totalPrice' : data.response.amount,
+			             					'totalQuantity' : totalQuantity,
+			             					'paymentMethod' : 'card',
+			             					'receiverName' : $('#name-txt-2').val(),
+			             					'receiverPhone' :  $('#phone-txt-2').val(),
+			             					'shippingAddress' : zipCode + " " + address,
+			             					'orderDetails' : orderList
+			             			}
+			             			$.ajax({
+			             				url : "${appPath}/coupung/order",
+			             				type : "post",
+			             				data : JSON.stringify(orders),
+			             				contentType : 'application/json',
+			             				success : function (res) {
+			             					if (res === 'success') {
+			             						alert('success');
+			             					}
+			             				},
+			                            error: function(request, status, error) {
+			                                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			                            }
+			             			});
+			             		} else {
+			             			alert("결제에 실패하였습니다.");
+			             		}
+			             	});
+			            });
+					 } 
+				});
+			}
+			
+			if($('#kakaoPay').is(':checked')) {
+				$.ajax({
+					 url : priceUrl,
+					 type : 'get',
+					 success : function(price) {
+						 IMP.init("imp43370630");
+			             // IMP.request_pay(param, callback) 결제창 호출
+			             IMP.request_pay({ // param
+			                 pg: "kakaopay",
+			                 amount: price, // 상품 비용
+			                 name: productName, // 상품명
+			                 buyer_email: email, // 주문자 이메일
+			                 buyer_name: orderer, // 주문자 명
+			                 buyer_tel: phoneNumber, // 주문자 번호
+			                 buyer_addr: address, // 주문자 주소
+			                 buyer_postcode: zipCode// 우편번호
+			             }, 
+			             function (rsp) { // callback
+			    			console.log(rsp);
+			             	$.ajax({
+			             		type: "POST",
+			             		url : "${appPath}/coupung/orderCheck?imp_uid=" + rsp.imp_uid 
+			             	}).done(function(data) {
+			             		console.log(data);
+			             		if (rsp.paid_amount === data.response.amount) {
+			             			var orderList = [];
+			             			var totalQuantity = 0;
+			             			for (let i = 0; i < coupungNumber.length; i++) {
+			             				var product = {
+			             					'coupungNumber' : Number(coupungNumber[i]),
+			             					'coupungOptionNumber' : Number(options[i]),
+			             					'quantity' : Number(quantities[i])
+			             				}
+			             				orderList.push(product);
+			             				totalQuantity += Number(quantities[i]);
+			             			}
+			             			
+			             			var orders = {
+			             					'totalPrice' : data.response.amount,
+			             					'totalQuantity' : totalQuantity,
+			             					'paymentMethod' : 'kakaoPay',
+			             					'receiverName' : $('#name-txt-2').val(),
+			             					'receiverPhone' :  $('#phone-txt-2').val(),
+			             					'shippingAddress' : zipCode + " " + address,
+			             					'orderDetails' : orderList
+			             			}
+			             			$.ajax({
+			             				url : "${appPath}/coupung/order",
+			             				type : "post",
+			             				data : JSON.stringify(orders),
+			             				contentType : 'application/json',
+			             				success : function (res) {
+			             					if (res === 'success') {
+			             						alert('success');
+			             					}
+			             				},
+			                            error: function(request, status, error) {
+			                                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			                            }
+			             			});
+			             		} else {
+			             			alert("결제에 실패하였습니다.");
+			             		}
+			             	});
+			            });
+					 } 
+				});
+			}
 		});
 		
 		// 클릭 이벤트 핸들러 함수
@@ -479,23 +544,5 @@
 		});
 
 	</script>
-
-	<!-- <script>
-		$(document).ready(function() {
-			let isVisible = false;
-			const $detailsContent = $('#order-details .view-3');
-
-			$('#order-details summary').click(function() {
-				isVisible = !isVisible;
-
-				if (isVisible) {
-					$detailsContent.slideDown(500);
-				} else {
-					$detailsContent.slideUp(500);
-				}
-			});
-		});
-	</script> -->
-
 </body>
 </html>

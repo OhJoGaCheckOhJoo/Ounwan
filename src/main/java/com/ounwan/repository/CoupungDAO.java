@@ -6,9 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import com.ounwan.dto.CoupungDTO;
 import com.ounwan.entity.Coupung;
 
 @Repository
@@ -79,6 +77,6 @@ public class CoupungDAO {
 	}
 	
 	public int updateAvailableStock(Coupung product) {
-		return sqlSession.selectOne(NAMESPACE + "updateAvailableStock", product);
+		return sqlSession.update(NAMESPACE + "updateAvailableStock", product);
 	}
 }

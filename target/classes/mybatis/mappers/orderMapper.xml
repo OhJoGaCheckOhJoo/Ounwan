@@ -28,4 +28,20 @@
     	FROM ORDERS 
     	WHERE ORDER_NUMBER = #{orderNumber}
     </select>
+    
+    <select id="getClientLatestOrderNumber" parameterType="String" resultType="String">
+    	SELECT ORDER_NUMBER
+    	FROM ORDERS
+    	WHERE CLIENT_ID = #{clientId}
+    	ORDER BY ORDER_DATE DESC
+    	LIMIT 1
+    </select>
+    
+    <select id="getGuestLatestOrderNumber" parameterType="String" resultType="String">
+    	SELECT ORDER_NUMBER
+    	FROM ORDERS
+    	WHERE GUEST_NUMBER = #{guestId}
+    	ORDER BY ORDER_DATE DESC
+    	LIMIT 1
+    </select>
 </mapper>

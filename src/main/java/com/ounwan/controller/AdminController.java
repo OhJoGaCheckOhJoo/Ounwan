@@ -70,9 +70,15 @@ public class AdminController {
 	}
 
 	@GetMapping("/coupung/product.do")
-	public String getProductPage(@RequestParam int offset, Model model) {
-		model.addAttribute("productList", coupungService.getAdminProductList(offset));
-		model.addAttribute("pages", coupungService.getProductCount());
+	public String getProductPage(@RequestParam int offset, @RequestParam String searchOption,
+			@RequestParam String searchValue, @RequestParam String sortOption, Model model) {
+		model.addAttribute("productList",
+				coupungService.getAdminProductList(offset, searchOption, searchValue, sortOption));
+		model.addAttribute("pages", coupungService.getProductCount(searchOption, searchValue));
+		model.addAttribute("offset", offset / 20);
+		model.addAttribute("searchOption", searchOption);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("sortOption", sortOption);
 		return "admin/product";
 	}
 
@@ -169,5 +175,4 @@ public class AdminController {
 		System.out.println(result);
 		return result ? "success" : "fail";
 	}
-
 }

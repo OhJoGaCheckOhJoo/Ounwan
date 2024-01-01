@@ -35,4 +35,12 @@ public class OrderDAO {
 	public Orders getOrderById(String orderNumber) {
 		return sqlSession.selectOne(NAMESPACE + "getOrderById", orderNumber);
 	}
+
+	public String getClientLatestOrderNumber(String clientId) {
+		return sqlSession.selectOne(NAMESPACE + "getClientLatestOrderNumber", clientId);
+	}
+	
+	public String getGuestLatestOrderNumber(Integer guestId) {
+		return sqlSession.selectOne(NAMESPACE + "getGuestLatestOrderNumber", guestId); 
+	}
 }

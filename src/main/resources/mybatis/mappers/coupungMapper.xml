@@ -137,8 +137,9 @@
 	</select>
 	
 	<update id="updateAvailableStock" parameterType="coupung">
-		UPDATE COUPUNG
+		UPDATE COUPUNG 
 		SET AVAILABLE_STOCK = #{availableStock}
+			, AVAILABLE_CHECK = #{availableCheck} 
 		WHERE COUPUNG_NUMBER = #{coupungNumber}
 	</update>
 </mapper>

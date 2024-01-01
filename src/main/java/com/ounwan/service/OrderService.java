@@ -41,6 +41,7 @@ public class OrderService {
 			int availableStock = coupungService.getAvaliableStock(product.getCoupungNumber());
 			if (availableStock < product.getQuantity())
 				return false;
+			product.setAvailableStock(availableStock - product.getQuantity());
 			product.setPrice(coupungService.getPrice(product.getCoupungNumber(), product.getQuantity()));
 		}
 		
@@ -51,7 +52,7 @@ public class OrderService {
 		
 		for (OrderDetailsDTO product : orderDetails) {
 			orderDetailService.setOrder(product, orderNumber);
-			coupungService.updateAvailableStock(product.getCoupungNumber(), product.getQuantity());
+			coupungService.updateAvailableStock(product.getCoupungNumber(), product.getAvailableStock());
 		}
 		
 		deleteCart(orderDetails, session, client, guest);
@@ -100,6 +101,13 @@ public class OrderService {
 	public boolean updateTradeStatus(OrdersDTO order) {
 		int result = orderDAO.updateTradeStatus(order);
 		return result > 0;
+	}
+
+	public String getOrderNumber(ClientsDTO client, GuestsDTO guest) {
+		if (client != null) {
+			return orderDAO.getClientLatestOrderNumber(client.getClientId());
+		}
+		return orderDAO.getGuestLatestOrderNumber(guest.getGuestNumber());
 	}
 	
 	public Orders putOrderInfo(OrdersDTO orderDTO, ClientsDTO client, GuestsDTO guest) {
