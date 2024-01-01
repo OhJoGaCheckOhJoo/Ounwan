@@ -48,6 +48,4 @@ public class GuestController {
 		System.out.println("eeee");
 		return guestService.getGuestInfo(guest);
 	}
-	
-	
 }

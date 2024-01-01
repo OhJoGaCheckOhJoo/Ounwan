@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.ounwan.dto.CoupungDTO;
 import com.ounwan.dto.OrdersDTO;
-import com.ounwan.dto.ReviewsDTO;
 import com.ounwan.entity.Coupung;
 import com.ounwan.repository.CoupungDAO;
 
@@ -198,11 +197,20 @@ public class CoupungService {
 		return coupungDAO.getAvailableStock(coupungNumber);
 	}
 	
-	public void updateAvailableStock(int coupungNumber, int quantity) {
+	public void updateAvailableStock(int coupungNumber, int availableStock) {
+		if (availableStock < 10) {
+			coupungDAO.updateAvailableStock(Coupung.builder()
+						.coupungNumber(coupungNumber)
+						.availableStock(availableStock)
+						.availableCheck(false)
+						.build());
+		} else {
 		coupungDAO.updateAvailableStock(Coupung.builder()
 												.coupungNumber(coupungNumber)
-												.availableStock(quantity)
+												.availableStock(availableStock)
+												.availableCheck(true)
 												.build());
+		}
 	}
 
 	public List<CoupungDTO> getHotDealProductList() {

@@ -22,4 +22,5 @@ public class OrderDetailsDTO {
 	private Integer quantity;
 	// 주문 페이지에 필요한 정보들 추가
 	private CoupungDTO coupungDTO;
+	private Integer availableStock;
 }

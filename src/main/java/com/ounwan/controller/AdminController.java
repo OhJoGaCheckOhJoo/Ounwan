@@ -209,5 +209,4 @@ public class AdminController {
 		
 		return "/admin/aetaPost";
 	}
-
 }

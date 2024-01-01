@@ -6,7 +6,7 @@
     <insert id="setOrder" parameterType="orderDetails">
     	INSERT INTO
     	ORDER_DETAILS (ORDER_NUMBER, COUPUNG_NUMBER, COUPUNG_OPTION_NUMBER, PRICE, QUANTITY, REVIEW_CHECK)
-    	VALUES (#{orderNumber}, #{coupungNumber}, #{optionNumber}, #{price}, #{quantity}, 0)
+    	VALUES (#{orderNumber}, #{coupungNumber}, #{coupungOptionNumber}, #{price}, #{quantity}, 0)
     </insert>
     
     <select id="getSalesRate" parameterType="int" resultType="int">

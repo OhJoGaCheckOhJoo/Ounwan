@@ -3,7 +3,6 @@ package com.ounwan.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ounwan.dto.CartsDTO;
 import com.ounwan.dto.ClientsDTO;
 import com.ounwan.dto.CoupungDTO;
 import com.ounwan.dto.GuestsDTO;
@@ -45,7 +43,7 @@ public class CoupungController {
     private IamportClient api = new IamportClient(IAMPORT_REST_APIKEY, IAMPORT_SECRET);
     
 	@GetMapping("/products")
-	public String getProductMain (@RequestParam(defaultValue = "0")String categoryNum, Model model) {
+	public String getProductMain (@RequestParam(defaultValue = "0") String categoryNum, Model model) {
 		List<CoupungDTO> productList = coupungService.getProductList(Integer.parseInt(categoryNum));
 		model.addAttribute("productList", productList);
 		return "coupung/products";
@@ -142,12 +140,18 @@ public class CoupungController {
 		return coupungService.getPrice(coupungNumbers, quantities);
 	}
 	
+	@GetMapping("/order/complete")
+	public String getOrderCompletePage(HttpSession session, Model model) {
+		GuestsDTO guest = (GuestsDTO) session.getAttribute("guest");
+		ClientsDTO client = (ClientsDTO) session.getAttribute("userInfo");
+		String orderNumber = orderService.getOrderNumber(client, guest);
+		model.addAttribute("orderNumber", orderNumber);
+		return "coupung/complete";
+	}
+	
 	// 결제 검증
 	@RequestMapping("/orderCheck")
-	public @ResponseBody IamportResponse<Payment> paymentByImpUid(Model model
-																	, Locale locale
-																	, HttpSession session
-																	, @RequestParam(value= "imp_uid") String imp_uid) 
+	public @ResponseBody IamportResponse<Payment> paymentByImpUid(@RequestParam(value= "imp_uid") String imp_uid) 
 																			throws IamportResponseException, IOException {	
 		return api.paymentByImpUid(imp_uid);
 	}
