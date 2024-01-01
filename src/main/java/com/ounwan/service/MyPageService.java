@@ -147,18 +147,13 @@ public class MyPageService {
 		}
 		return 0;
 	}
-
-	public int modifyUserInfo(ClientsDTO client) {
-		client.setPhone(client.getPhone());
-		client.setAddress(client.getAddress());
-		client.setAddressDetail(client.getAddressDetail());
-		client.setZipCode(client.getZipCode());
-
+	
+	public ClientsDTO modifyUserInfo(ClientsDTO client) {
 		int result = myPageDAO.modifyUserInfo(changeEntity(client));
 		if (result > 0) {
-			return 1;
+			return changeDTO(myPageDAO.getUserInfo(client.getClientId()));
 		}
-		return 0;
+		return null;
 	}
 
 	public ClientsDTO updateImage(MultipartFile multipartFile, ClientsDTO client) throws IllegalStateException, IOException {
@@ -169,7 +164,7 @@ public class MyPageService {
 		metadata.setContentType(multipartFile.getContentType());
 		
 		// 기존에 저장되어 있던 사진 삭제
-		amazonS3.deleteObject(BUCKET, client.getProfileUrl());
+//		amazonS3.deleteObject(BUCKET, client.getProfileUrl());
 		
 		amazonS3.putObject(BUCKET, newFileName, multipartFile.getInputStream(), metadata);
 		

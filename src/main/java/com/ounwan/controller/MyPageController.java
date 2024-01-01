@@ -207,9 +207,12 @@ public class MyPageController {
 	}
 
 	@RequestMapping(value = "/modifyUserInfo", method = RequestMethod.POST, consumes = "application/json", produces = "text/plain;charset=UTF-8")
-	public @ResponseBody String modifyUserInfo(@RequestBody ClientsDTO clientsDTO) {
-		myPageService.modifyUserInfo(clientsDTO);
+	public @ResponseBody String modifyUserInfo(@RequestBody ClientsDTO clientsDTO, HttpSession session) {
+		ClientsDTO updateInfo = myPageService.modifyUserInfo(clientsDTO);
+		if(updateInfo==null) return "fail";
 		// session 수정된 정보로 update
+		session.setAttribute("updateInfo", updateInfo);
+		System.out.println(updateInfo);
 		return "success";
 
 	}
