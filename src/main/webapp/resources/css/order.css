@@ -121,9 +121,9 @@ td {
 }
 
 .purchaser-address-wrap {
-	display: flex;
-	align-items: center;
-	height: 105px;
+	margin-top: 5px;
+    display: flex;
+    height: 98px;
 }
 
 .purchaser-address {
@@ -131,7 +131,7 @@ td {
 }
 
 .purchaser-zipcode {
-	margin-bottom: 20px;
+	margin-bottom: 15px;
 }
 
 .box {
@@ -298,4 +298,36 @@ img {
 
 #findAddr{
 	width: 110px;
+}
+.agreement label {
+	display: block;
+	position: relative;
+	padding-left: 30px; /* 체크박스와 텍스트 간의 여백 조절 */
+	cursor: pointer;
+	line-height: 1.5;
+}
+.agreement input[type="checkbox"] {
+	display: none; /* 기본 체크박스 감추기 */
+}
+.agreement .circle {
+	display: inline-block;
+	position: absolute;
+	left: 0;
+	width: 22px;
+	height: 22px;
+	border: 2px solid #666;
+	box-sizing: border-box;
+	border-radius: 50%;
+	cursor: pointer;
+	background-color: var(--main-color-1);
+}
+.agreement input[type="checkbox"]:checked + .circle {
+	border-color: var(--main-color-1);
+	background-color: var(--main-back);
+	background-image: url(https://blog.kakaocdn.net/dn/t7a2D/btrhtVgLYmG/dUxzAkBy9hIZ4gHmyllQrk/img.png);
+	background-size: contain;
+    background-repeat: no-repeat;
+}
+.agreement a{
+	text-decoration: underline
 }
