@@ -18,7 +18,7 @@
 <script>
 	console.log("${aetaList}");
 </script>
-<title>애타 게시판</title>
+<title>오운완</title>
 </head>
 <body>
 	<%@ include file="../../common/header.jsp"%>
@@ -53,12 +53,11 @@
 						</c:otherwise>
 					</c:choose>
 				</form>
-			</div>
-			<hr>
+			</div>		
 		</div>
 	</div>
 	
-
+	<hr>
 	<%@ include file="../../common/footer.jsp"%>
 
 <script src="../js/aeta.js"></script>

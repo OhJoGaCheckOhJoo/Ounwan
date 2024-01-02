@@ -111,6 +111,7 @@ $('#PostingBtn').on('click',function(){
 	
 	var title=$('#inputTitle').val();
 	var content=$('#inputContent').val();
+	var fomattedContent= content.replace(/\n/g, '<br>');
 
 	if (title.trim() === "" || content.trim() === "") {
 		/*제목 또는 내용 입력 안하면 데이터 못 넘기게 해주기 */
@@ -134,7 +135,7 @@ $('#PostingBtn').on('click',function(){
 			}
 		}
 		formData.append('title',title);
-		formData.append('contents',content);
+		formData.append('contents', fomattedContent);
 		
 		
 		$.ajax({
@@ -179,7 +180,7 @@ $("#insertCommentBtn").click(function(){
 })
 
 /*댓글 삭제*/
-$(".commentList").on('click', "#deleteCommentBtn", function(){
+$("#commentList").on('click', "#deleteCommentBtn", function(){
 	var commentNo=$(this).parent().parent().find('.commentId').val();
 	var aetaNumber = $('#aetaNumber').val(); 
 	
