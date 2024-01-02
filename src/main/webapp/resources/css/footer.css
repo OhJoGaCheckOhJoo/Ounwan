@@ -1,0 +1,100 @@
+@charset "UTF-8";
+
+footer {
+	margin-top: 100px;
+    background-color: #282828;
+    width: 100%;
+    min-width: 1250px;
+}
+
+.footer {
+    display: flex;
+    height: 310px;
+    width: 1260px;
+    
+    margin: auto;
+    flex-direction: column;
+}
+
+footer div {
+  display: inline-block;
+  width: 500px;
+  margin-top: 4px;
+}
+
+footer .logo {
+    display: inline-block;
+    height: 100px;
+    width: 247px;
+    margin-left: 30px;
+    background-image: url("../images/Google_icon.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.footer-wrap-1{
+	display: flex;
+    margin: auto;
+    width: 1150px;
+    padding: 50px;
+    border-bottom: 1px solid;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-wrap-2{
+	margin: 15px 0px;
+	display: flex;
+    width: 1250px;
+    justify-content: space-between;
+}
+
+.footer-wrap-2 span{
+	 width: 575px;
+}
+
+.footer-wrap-2 div{
+	width:575px;
+}
+
+.other-info{
+	display: flex;
+}
+
+.social-media{
+	display: flex;
+    align-items: center;
+    padding-top: 30px;
+}
+
+.social-media-title{
+	width: 50px;
+	padding-bottom: 7px;
+}
+
+.social-media img{
+	width: 25px;
+    height: 25px;
+    padding: 10px
+}
+
+.ounwan-info-1{
+	width: 500px;
+}
+
+.ounwan-info-1 div{
+	display: flex;
+    align-items: center;
+}
+
+.ounwan-info-1 img{
+	margin-right: 15px;
+}
+
+.ounwan-info-2{
+	display: flex;
+}
+
+.footer-text-2 span{
+	padding-left: 324px;
+}

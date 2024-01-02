@@ -20,6 +20,7 @@ prefix="c" %>
     <link href="${appPath}/css/main2.css" rel="stylesheet" />
     <link href="${appPath}/css/header.css" rel="stylesheet" />
     <link href="${appPath}/css/nav.css" rel="stylesheet" />
+    <link href="${appPath}/css/footer.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>오운완</title>
 </head>
@@ -117,7 +118,7 @@ prefix="c" %>
         	</a>
         </div>
     </div>
-    <hr>
+    
     
     <%@ include file="./common/footer.jsp" %>
     <script src="${appPath}/js/main.js"></script>
