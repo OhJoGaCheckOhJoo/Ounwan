@@ -20,17 +20,19 @@
 <body>
 	<div class="chat-wrap">
 		<div class="chat-header">
-			<div class="chat-header-wrap" >
-				<div><img class="logo"/></div>
+			<div class="chat-header-wrap">
+				<div>
+					<img class="logo" />
+				</div>
 				<div>오운완</div>
 			</div>
 		</div>
 		<div class="chat-notice">
 			<h3>오운완에 문의하기</h3>
-			<span>고객센터 : 평일 오전 10:00 ~ 오후 5:00 (점심시간 12:00 ~ 13:00) 토/일/공휴일 휴무</span>
+			<span>고객센터 : 평일 오전 10:00 ~ 오후 5:00 (점심시간 12:00 ~ 13:00)
+				토/일/공휴일 휴무</span>
 		</div>
 		<div id="chat" class="chat"></div>
-		<div id="quitMessage" class="quit-message"></div>
 		<!-- 채팅저장출력 -->
 		<script id="temp" type="text/x-handlebars-template">
 		{{#each .}}
@@ -46,17 +48,20 @@
 		<!-- 새로운채팅출력 -->
 		<script id="temp1" type="text/x-handlebars-template">
        <div class="{{printLeftRight sender}}">
-          <div class="sender">{{sender}}</div>
-          <div class="message">{{message}}
-			<a href="{{messageId}}" style="display:{{printNone sender}}">&times;</a>
-		</div>
-          <div class="date">{{date}}</div>
+            <div class="sender">{{sender}}</div>
+            <div class="message">
+                {{message}}
+                <a href="{{messageId}}" style="display:{{printNone sender}}">&times;</a>
+            </div>
+            <div class="date">{{date}}</div>
        </div>
        </script>
 		<script>
 			var clientId = "${userInfo.clientId}";
 			Handlebars.registerHelper("printLeftRight", function(sender) {
-				if (clientId != sender) {
+				if (sender == "quit") {
+					return "center";
+				} else if (clientId != sender) {
 					return "left";
 				} else {
 					return "right";
@@ -141,20 +146,20 @@
 	});
 
 	$("#chatComplete").on("click", function() {
-		if (!confirm("대화를 종료하시겠습니까?"))
-			return;
-		$.ajax({
-			type : 'get',
-			url : '${appPath}/somsomi/chat/quit',
-			data : {
-				"roomId" : roomId
-			},
-			success : function(messageId) {
-				$("#quitMessage").append("관리자와의 채팅이 종료되었습니다.");
-				//sock.send("quit");
-			}
-		});
-
+		if (confirm("대화를 종료하시겠습니까?")) {
+			$.ajax({
+				type : 'get',
+				url : '${appPath}/somsomi/chat/quit',
+				data : {
+					"roomId" : roomId
+				},
+				success : function(messageId) {
+					var quitMessage = "<div id='quitMessage' class='quit-message'>관리자와의 채팅이 종료되었습니다.</div>";
+					$("#chat").append($(quitMessage));
+					window.scrollTo(0, $("#chat").prop("scrollHeight"))
+				}
+			});
+		}
 	});
 
 	function onMessage(msg) {
@@ -164,7 +169,6 @@
 			getList();
 			return;
 		}
-		
 		var message = items[1];
 		var messageId = items[2];
 		var date = items[3];
