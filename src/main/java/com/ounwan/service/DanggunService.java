@@ -12,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.ounwan.dto.AetaDTO;
 import com.ounwan.dto.DanggunDTO;
+import com.ounwan.dto.PaginatingDTO;
 import com.ounwan.dto.ProductImagesDTO;
 import com.ounwan.entity.Danggun;
 import com.ounwan.entity.ProductImages;
@@ -27,25 +29,25 @@ public class DanggunService {
 
 	@Autowired
 	DanggunDAO danggunDAO;
-	
+
 	@Autowired
 	ProductImagesService productImageService;
 
 	@Autowired
 	ProductImagesDAO productImagesDAO;
-	
+
 	@Autowired
 	TradeHistoryDAO tradeHistoryDAO;
-	
+
 	@Autowired
 	WishListsService wishListsService;
-	
+
 	@Autowired
 	WishListsDAO wishListsDAO;
-	
+
 	@Autowired
 	AmazonS3 amazonS3;
-	
+
 	private static final String BUCKET = "ounwan";
 
 	public List<DanggunDTO> searchProduct(String name) {
@@ -60,31 +62,58 @@ public class DanggunService {
 
 	public List<DanggunDTO> listAll() {
 		List<DanggunDTO> list = changeDTOList(danggunDAO.listAll());
-		
+
 		for (DanggunDTO danggun : list) {
 			ProductImagesDTO image = productImageService.selectAllImages(danggun.getDanggunNumber());
 			danggun.setUrl(image.getUrl());
 		}
-		
+
 		return list;
 	}
-	
-	public int danggunInsert(int detailImagesLength, MultipartFile[] detailImages, MultipartFile image,
-			String clientId, String productName, int price, String detail) throws IllegalStateException, IOException {
-		
+
+	int pageLimit = 10; // the number of posts to show on a page
+	int blockLimit = 10; // the number of paginated number on the bottom
+
+	public List<DanggunDTO> pagenatedList(int page, String name) {
+
+		Map<Object, Object> paginateParams = new HashMap<>();
+		paginateParams.put("start", (page - 1) * pageLimit);
+		paginateParams.put("limit", pageLimit);
+		paginateParams.put("name", name);
+
+		List<DanggunDTO> list = changeDTOList(danggunDAO.paginatedlist(paginateParams));
+
+		return list;
+	}
+
+	public PaginatingDTO getPages(int page, String inputValue) {
+		int countPosts = danggunDAO.countProducts(inputValue);
+		int maxPageNumber = (int) (Math.ceil((double) countPosts / pageLimit));
+		int startPageNumber = (((int) (Math.ceil((double) page / blockLimit))) - 1) * blockLimit + 1;
+		int endPageNumber = startPageNumber + blockLimit - 1;
+		if (endPageNumber > maxPageNumber) {
+			endPageNumber = maxPageNumber;
+		}
+		return PaginatingDTO.builder().pageNumber(page).maxPageNumber(maxPageNumber).startPageNumber(startPageNumber)
+				.endPageNumber(endPageNumber).build();
+	}
+
+	public int danggunInsert(int detailImagesLength, MultipartFile[] detailImages, MultipartFile image, String clientId,
+			String productName, int price, String detail) throws IllegalStateException, IOException {
+
 		int result = 0;
 		Danggun danggun = Danggun.builder().clientId(clientId).productName(productName).price(price).detail(detail)
 				.build();
-		
+
 		if (detailImages == null) {
 			detailImagesLength = 0;
 		}
-		
+
 		int count = detailImagesLength + 1;
 		String[] uploadFileName = new String[count];
 		int[] imageType = new int[count];
 		MultipartFile[] images = new MultipartFile[count];
-		
+
 		images[0] = image;
 		imageType[0] = 0;
 
@@ -94,61 +123,57 @@ public class DanggunService {
 				images[i] = detailImages[i - 1];
 			}
 		}
-		
+
 		for (int i = 0; i < count; i++) {
 			String newFileName = System.currentTimeMillis() + "." + images[i].getContentType().split("/")[1];
-			
+
 			ObjectMetadata metadata = new ObjectMetadata();
 			metadata.setContentLength(images[i].getSize());
 			metadata.setContentType(images[i].getContentType());
-			
+
 			amazonS3.putObject(BUCKET, newFileName, images[i].getInputStream(), metadata);
-			
+
 			uploadFileName[i] = amazonS3.getUrl(BUCKET, newFileName).toString();
 		}
-		int danggunNumber= danggunDAO.danggunInsert(danggun);
+		int danggunNumber = danggunDAO.danggunInsert(danggun);
 
 		if (danggunNumber > 0) {
 			for (int i = 0; i < count; i++) {
-				result += productImagesDAO.imageInsert(ProductImages.builder()
-															.danggunNumber(danggunNumber)
-															.url(uploadFileName[i])
-															.type(imageType[i])
-															.build());
+				result += productImagesDAO.imageInsert(ProductImages.builder().danggunNumber(danggunNumber)
+						.url(uploadFileName[i]).type(imageType[i]).build());
 			}
 		}
-		return result== count ? 1 : 0;
+		return result == count ? 1 : 0;
 	}
 
 	public DanggunDTO selectDanggun(String clientId, String adminId, int danggunNumber) {
 		Danggun resultDanggun = danggunDAO.selectDanggun(danggunNumber);
 //		여기서 danggun 결과, tradeHistoryNumber로 거래 결과 나오고, danggunNumber로 이미지랑 찜 리스트 가져오기 
 		DanggunDTO danggun = null;
-		if(resultDanggun != null) {
+		if (resultDanggun != null) {
 			danggun = changeDTO(resultDanggun);
 			int tradeHistoryNumber = danggun.getTradeHistoryNumber();
 			String tradeStep = tradeHistoryDAO.selectTradeStep(tradeHistoryNumber);
 			danggun.setTradeStep(tradeStep);
 		}
-		
+
 		List<ProductImagesDTO> resultImages = productImageService.selectImages(danggunNumber);
 		if (resultImages != null) {
 			danggun.setProductImagesList(resultImages);
 		}
-		
+
 		int zzimCount = wishListsService.selectCountZzim(danggunNumber);
 		danggun.setCountZzim(zzimCount);
-		
+
 		if (clientId != null) {
 			List<Integer> zzimList = wishListsDAO.hasZzim(clientId);
-			if(zzimList.contains(danggunNumber)) {
+			if (zzimList.contains(danggunNumber)) {
 				danggun.setWishListImg(1);
 			}
-		}
-		else {
+		} else {
 			danggun.setWishListImg(0);
 		}
-		
+
 		return danggun;
 	}
 
@@ -159,36 +184,37 @@ public class DanggunService {
 		wishLists.setClientId(clientId);
 		wishLists.setDanggunNumber(danggunNumber);
 
-		if(zzimList.contains(danggunNumber)) {
-			if(wishListsDAO.minusZzim(wishLists) > 0) {
+		if (zzimList.contains(danggunNumber)) {
+			if (wishListsDAO.minusZzim(wishLists) > 0) {
 				result.put("likesCheck", 0);
-			}else {
+			} else {
 				result.put("likesCheck", 2);
 			}
-		}else {
-			if(wishListsDAO.plusZzim(wishLists) > 0) {
+		} else {
+			if (wishListsDAO.plusZzim(wishLists) > 0) {
 				result.put("likesCheck", 1);
-			}else {
+			} else {
 				result.put("likesCheck", 2);
 			}
 		}
-		
+
 		int zzimCount = wishListsService.selectCountZzim(danggunNumber);
 		result.put("zzimCount", zzimCount);
-		
-		result.put("danggunNumber",danggunNumber);
-		
+
+		result.put("danggunNumber", danggunNumber);
+
 		return result;
 	}
-	
+
 	public boolean deleteDanggun(DanggunDTO danggun) {
 		int result = danggunDAO.deleteDanggun(changeEntity(danggun));
 		return (result > 0) ? true : false;
-	} 
+	}
 
-	public boolean updateDanggun(MultipartFile[] imageFiles, int[] imageFilesNumber, String[] oldImageURL, MultipartFile[] newDetailImages,
-			String loginclientId, int danggunNumber, String clientId, String productName, int price, String detail,
-			int tradeHistoryNumber, int imagesLength, int newImagesLength) throws IllegalStateException, IOException {
+	public boolean updateDanggun(MultipartFile[] imageFiles, int[] imageFilesNumber, String[] oldImageURL,
+			MultipartFile[] newDetailImages, String loginclientId, int danggunNumber, String clientId,
+			String productName, int price, String detail, int tradeHistoryNumber, int imagesLength, int newImagesLength)
+			throws IllegalStateException, IOException {
 		Danggun danggun = danggunDAO.selectDanggun(danggunNumber);
 		danggun.setClientId(loginclientId);
 		danggun.setProductName(productName);
@@ -199,78 +225,77 @@ public class DanggunService {
 		int count = imagesLength + newImagesLength;
 		System.out.println("count : " + count);
 		String[] uploadFileName = new String[count];
-		
+
 		for (int i = 0; i < imagesLength; i++) {
-			uploadFileName[i] = clientId + "_" + System.currentTimeMillis() + "_" + i + "." + imageFiles[i].getContentType().split("/")[1];
+			uploadFileName[i] = clientId + "_" + System.currentTimeMillis() + "_" + i + "."
+					+ imageFiles[i].getContentType().split("/")[1];
 		}
-		for(int i = imagesLength; i < count; i++) {
-			uploadFileName[i] = clientId + "_" + System.currentTimeMillis() + "_" + i + "." + newDetailImages[i - imagesLength].getContentType().split("/")[1];
+		for (int i = imagesLength; i < count; i++) {
+			uploadFileName[i] = clientId + "_" + System.currentTimeMillis() + "_" + i + "."
+					+ newDetailImages[i - imagesLength].getContentType().split("/")[1];
 		}
-		
+
 		if (danggunDAO.updateDanggun(danggun) > 0) {
 			for (int i = 0; i < imagesLength; i++) {
 				ObjectMetadata metadata = new ObjectMetadata();
 				metadata.setContentLength(imageFiles[i].getSize());
 				metadata.setContentType(imageFiles[i].getContentType());
-				
+
 				amazonS3.putObject(BUCKET, uploadFileName[i], imageFiles[i].getInputStream(), metadata);
 				uploadFileName[i] = amazonS3.getUrl(BUCKET, uploadFileName[i]).toString();
 				System.out.println("update : " + uploadFileName[i]);
-				
+
 				amazonS3.deleteObject(BUCKET, oldImageURL[i]);
-				productImagesDAO.updateDanggunImages(ProductImages.builder()
-																	.productImageNumber(imageFilesNumber[i])
-																	.url(uploadFileName[i])
-																	.build());
+				productImagesDAO.updateDanggunImages(
+						ProductImages.builder().productImageNumber(imageFilesNumber[i]).url(uploadFileName[i]).build());
 				result += 1;
 			}
-			for(int i = imagesLength; i < count; i++) {
+			for (int i = imagesLength; i < count; i++) {
 				ObjectMetadata metadata = new ObjectMetadata();
 				metadata.setContentLength(newDetailImages[i - imagesLength].getSize());
 				metadata.setContentType(newDetailImages[i - imagesLength].getContentType());
-				
-				amazonS3.putObject(BUCKET, uploadFileName[i], newDetailImages[i - imagesLength].getInputStream(), metadata);
-				
+
+				amazonS3.putObject(BUCKET, uploadFileName[i], newDetailImages[i - imagesLength].getInputStream(),
+						metadata);
+
 				String url = amazonS3.getUrl(BUCKET, uploadFileName[i]).toString();
 				System.out.println("new : " + url);
-				productImagesDAO.insertNewDetailImages(ProductImages.builder()
-																	.danggunNumber(danggunNumber)
-																	.url(url)
-																	.build());
+				productImagesDAO
+						.insertNewDetailImages(ProductImages.builder().danggunNumber(danggunNumber).url(url).build());
 				result += 1;
 			}
 		}
 
-	return(result==count)?true:false;
+		return (result == count) ? true : false;
 
 	}
-	
+
 	public boolean updateReport(int danggunNumber) {
 		int result = danggunDAO.updateReport(danggunNumber);
-		return (result > 0)?true:false;
+		return (result > 0) ? true : false;
 	}
-	
+
 	public List<DanggunDTO> getTopFive() {
 		List<DanggunDTO> result = changeDTOList(danggunDAO.getTopFiveDanggun());
-		for(int i = 0; i < result.size(); i++) {
+		for (int i = 0; i < result.size(); i++) {
 			int danggunNumber = result.get(i).getDanggunNumber();
 			String url = danggunDAO.getMainImage(danggunNumber);
 			result.get(i).setUrl(url);
 		}
 		return result;
 	}
-	
+
 	public List<DanggunDTO> getDanggunReportList() {
 		List<DanggunDTO> result = changeDTOList(danggunDAO.getDanggunReportList());
 		return result;
 	}
-	
+
 	public boolean restoreDanggun(Integer danggunNumber) {
 		int result = danggunDAO.restoreDanggun(danggunNumber);
 		return (result > 0) ? true : false;
-	}	
-	
-	public List<DanggunDTO> changeDTOList(List<Danggun> danggun){
+	}
+
+	public List<DanggunDTO> changeDTOList(List<Danggun> danggun) {
 		List<DanggunDTO> changeList = new ArrayList<>();
 		for (Danggun data : danggun) {
 			changeList.add(changeDTO(data));

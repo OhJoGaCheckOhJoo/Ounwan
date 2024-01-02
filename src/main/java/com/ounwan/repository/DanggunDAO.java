@@ -1,6 +1,7 @@
 package com.ounwan.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,13 @@ public class DanggunDAO {
 	public List<Danggun> listAll() {
 		return sqlSession.selectList(NAMESPACE + "selectAll");
 	}
+	public List<Danggun> paginatedlist(Map<Object, Object> paginateParams ) {
+		return sqlSession.selectList(NAMESPACE + "paginatedlist",paginateParams);
+	}
 	
+	public int countProducts(String inputValue) {
+		return sqlSession.selectOne(NAMESPACE+"countProducts",inputValue);
+	}
 	public List<Danggun> searchProduct(String name) {
 		return sqlSession.selectList(NAMESPACE + "searchProduct", name);
 	}
