@@ -15,10 +15,10 @@
         <div>
             <a href="${appPath}/coupung/products">오늘의 쿠펑</a>
             <div id="navSubmenu" class="nav-submenu">
+            	<a href="${appPath}/coupung/products?categoryNum=1">의류</a>
+            	<a href="${appPath}/coupung/products?categoryNum=2">건강 보조 식품</a>
+            	<a href="${appPath}/coupung/products?categoryNum=4">헬스 이용권</a>
                 <a href="${appPath}/coupung/products?categoryNum=3">운동 기구</a>
-                <a href="${appPath}/coupung/products?categoryNum=2">건강 보조 식품</a>
-                <a href="${appPath}/coupung/products?categoryNum=4">헬스 이용권</a>
-                <a href="${appPath}/coupung/products?categoryNum=1">의류</a>
             </div>
         </div>
         <div>
@@ -39,21 +39,23 @@
             <a href="${appPath}/faq">고객센터</a>
             <div id="navSubmenu" class="nav-submenu">
                 <a href="${appPath}/faq">FAQ</a>
-                <a href="#" id="adminChat">솜솜이</a>
+                <c:if test="${admin eq null }">
+                	<a href="#" id="adminChat">솜솜이</a>
+                </c:if>
             </div>
         </div>
     </div>
     <div id="navMenu" class="nav-menu">
         <div>
             <div>
-                <a href="#">운동 기구</a>
-                <a href="#">건강 보조 식품</a>
-                <a href="#">헬스 이용권</a>
-                <a href="#">의류</a>
+                <a href="${appPath}/coupung/products?categoryNum=1">의류</a>
+            	<a href="${appPath}/coupung/products?categoryNum=2">건강 보조 식품</a>
+            	<a href="${appPath}/coupung/products?categoryNum=4">헬스 이용권</a>
+                <a href="${appPath}/coupung/products?categoryNum=3">운동 기구</a>
             </div>
             <div>
                 <a href="${appPath}/danggun/main">전체 보기</a>
-                <a href="#">관심 상품</a>
+                <a href="${appPath}/danggun/insert">상품 등록</a>
             </div>
             <div>
                 <a class="ounwangram" href="${appPath}/community/ounwangram">오운완 커뮤니티</a>
@@ -61,7 +63,9 @@
             </div>
             <div>
                 <a href="${appPath}/faq">FAQ</a>
-                <a href="#">채팅문의</a>
+                <c:if test="${admin eq null }">
+                	<a href="#" id="adminChat">솜솜이</a>
+                </c:if>
             </div>
         </div>
     </div>

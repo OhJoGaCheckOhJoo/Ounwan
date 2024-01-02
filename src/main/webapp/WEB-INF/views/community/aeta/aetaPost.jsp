@@ -18,6 +18,7 @@
 <title>애타 게시글</title>
 </head>
 <body>
+	<div class="overlay"></div>
 	<%@ include file="../../common/header.jsp"%>
 	
 	<div class="container">
@@ -35,7 +36,7 @@
 					<span>${aetaPost[0].AETA_CREATED_DATE}</span>
 					<span>조회수:${aetaPost[0].VIEWS}</span>
 				</div>
-				<c:if test="${aetaPost[0].CLIENT_ID != userInfo.clientId}">
+				<c:if test="${aetaPost[0].CLIENT_ID != userInfo.clientId and admin eq null}">
 					<button class="modal-button" onclick="openReportModal()">신고</button>
 				</c:if>
 			</div>
@@ -53,13 +54,14 @@
 			<input type="hidden" value="${aetaPost[0].AETA_NUMBER}" id="aetaNumber"
 				name="aetaNumber"/>
 
-			<c:if test="${aetaPost[0].CLIENT_ID==clientId}">
+			<c:if test="${aetaPost[0].CLIENT_ID==userInfo.clientId}">
 				<button type="button" id="AetaUpdateBtn">수정</button>
 				<button type="button" id="AetaDeleteBtn">삭제</button>
 			</c:if>
 		</div>
 		<hr>
 		<div id="aeta-post-likes">
+			<c:if test="${admin eq null}">
 			<a id="like-button" class="aeta-like"> 
 				<c:choose>
 					<c:when test="${aetaLikesCheck==1}">
@@ -72,6 +74,9 @@
 					</c:otherwise>
 				</c:choose><span id="count-likes">${aetaCountLikes}</span>
 			</a>
+			</c:if>
+			<c:if test="${admin ne null}">
+			</c:if>
 			<span>댓글 ${aetaCountComments}</span>
 		</div>​
 		<h4>댓글</h4>
@@ -88,7 +93,7 @@
 						</span>
 						<span>${aeta.CLIENT_ID}</span>
 						<span class='comment-date'>${aeta.CREATED_DATE }</span> 
-						<c:if test="${aeta.CLIENT_ID == clientId}">
+						<c:if test="${aeta.CLIENT_ID == userInfo.clientId}">
 							<span class='comment-delete'> 
 								<button type="button" id="deleteCommentBtn">삭제</button>
 							</span>
@@ -197,7 +202,17 @@
 	<script src="../js/aetaReportModal.js"></script>
 	<script src="${appPath}/js/main.js"></script>
 	<script>
-		var appPath = "${appPath}";
+	var appPath = "${appPath}";
+		$(function() {
+			if ('${aetaPost[0].VISIBILITY}'==0 && '${admin}' == "") {
+				$(".overlay").show();
+				setTimeout(function() {
+		            alert("판매가 중지된 상품입니다.");
+		            window.location.href= "${appPath}/community/aetaBoard";
+		        }, 100); 
+		    }
+			
+		});
 	</script>
 </body>
 </html>

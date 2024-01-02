@@ -3,12 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
-<c:if test="${admin eq null and UserInfo.clientId ne null and danggun.visibility eq 0}">
-	<script>
-		alert("현재는 볼 수 없는 게시물 입니다.");
-		window.location.href= ${appPath} + "/danggun/main";
-	</script>
-</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,13 +16,14 @@
 <link href="${appPath}/css/danggunShareModal.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<meta charset=charset="UTF-8">
+<meta charset="UTF-8">
 <title>오운완</title>
 <link rel="icon" href="../images/logo.png" type="image/x-icon">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+	<div class="overlay"></div>
 	<%@ include file="../common/header.jsp"%>
 
 	<div class="container">
@@ -64,7 +59,8 @@
 						<div class="product-top">
 							<div class="product-name">${post.productName}</div>
 							<c:if test="${admin ne null}"></c:if>
-							<c:if test="${admin eq null and userInfo.clientId != post.clientId}">
+							<c:if
+								test="${admin eq null and userInfo.clientId != post.clientId}">
 								<div class="hamburger">
 									<div class="post-menu" onclick="toggle()">
 										<img src="${appPath}/images/toggleButton.png">
@@ -86,7 +82,8 @@
 
 						<div class="product-bottom">
 							<c:if test="${admin ne null}"></c:if>
-							<c:if test="${admin eq null and userInfo.clientId != post.clientId}">
+							<c:if
+								test="${admin eq null and userInfo.clientId != post.clientId}">
 								<button class="zzimBtn" id="wishListBtn" type="button"
 									value="${post.danggunNumber}">
 									<img id="wishListImg" class="wish-list-img"
@@ -112,7 +109,6 @@
 		</div>
 	</div>
 	<hr />
-	</main>
 	<div id="danggunModal" danggunNumber="${post.danggunNumber}"
 		clientId="${post.clientId}"></div>
 	<%@ include file="../common/footer.jsp"%>
@@ -128,6 +124,16 @@
 		function toggle() {
 			$("#smallMenu").toggle();
 		}
-	</script>
+	$(function() {
+		if ('${post.visibility}'==0 && '${admin}' == "") {
+			$(".overlay").show();
+			setTimeout(function() {
+	            alert("판매가 중지된 상품입니다.");
+	            window.location.href= "${appPath}/danggun/main";
+	        }, 100); 
+	    }
+		
+	});
+</script>
 </body>
-		</html>
+</html>

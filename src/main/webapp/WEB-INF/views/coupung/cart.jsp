@@ -8,13 +8,14 @@
 <html>
 <head>
 <meta charset="utf-8" />
-	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="${appPath }/css/main.css" />
-	<link href="${appPath }/css/main2.css" rel="stylesheet">
-	<link href="${appPath }/css/header.css" rel="stylesheet">
-	<link href="${appPath }/css/nav.css" rel="stylesheet">
-	<link href="${appPath }/css/cart.css" rel="stylesheet">
-	<link href="${appPath }/css/coupung/modal.css" rel="stylesheet">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<link href="${appPath }/css/main.css" rel="stylesheet"/>
+<link href="${appPath }/css/main2.css" rel="stylesheet">
+<link href="${appPath }/css/header.css" rel="stylesheet">
+<link href="${appPath }/css/nav.css" rel="stylesheet">
+<link href="${appPath }/css/cart.css" rel="stylesheet">
+<link href="${appPath }/css/coupung/modal.css" rel="stylesheet">
+<title>오운완</title>
 </head>
 
 <body>
@@ -23,7 +24,7 @@
 	<div class="container">
     <%@ include file="../common/nav.jsp" %>
 		<div class="contents">
-			<div class="cartList" id="cartList"">
+			<div class="cartList" id="cartList">
 		        <div class="section-header">
 		            <h2 class="section-title">장바구니</h2>
 		        </div>

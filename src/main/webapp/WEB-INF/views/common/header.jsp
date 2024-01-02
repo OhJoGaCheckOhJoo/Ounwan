@@ -5,7 +5,7 @@
 <header>
 	<div class="header">
 	    <a class="logo" href="${appPath}/"></a>
-	    <c:if test="${userInfo.clientId eq null}">
+	    <c:if test="${userInfo.clientId eq null and admin eq null}">
 	    	<div class="float-right">
                 <a id="signUp" href="${appPath}/clients/signUp"></a>
                 <a id="loginSelect" href="${appPath}/clients/login"></a>
@@ -15,7 +15,7 @@
                 </c:if>
             </div>
 	    </c:if>
-	    <c:if test="${userInfo.clientId ne null}">
+	    <c:if test="${userInfo.clientId ne null and admin eq null}">
 	    	<div class="float-right">
                 <a id="profileImage" href="#">
                     <img src="${userInfo.profileUrl }">
@@ -26,6 +26,17 @@
                 <div id="userAction">
                 	<a href="${appPath }/myPage">마이페이지</a>
                 	<a href="#" id="logoutBtn">로그아웃</a>
+                </div>
+            </div>
+	    </c:if>
+	    <c:if test="${userInfo.clientId eq null and admin ne null}">
+	    	<div class="float-right">
+                <a id="profileImage" href="#">
+                    <img src="${userInfo.profileUrl }">
+                </a>
+                <span>관리자님 안녕하세요.</span>
+                <div id="userAction">
+                	<a href="${appPath}/admin/main.do">admin go</a>
                 </div>
             </div>
 	    </c:if>

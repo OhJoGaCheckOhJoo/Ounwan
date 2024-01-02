@@ -229,4 +229,9 @@ public class AdminController {
 		return "/admin/aetaPost";
 	}
 	
+	@RequestMapping("/logout")
+	public @ResponseBody String logoutGet(HttpSession session) {
+		session.invalidate();
+		return "success";
+	}
 }
