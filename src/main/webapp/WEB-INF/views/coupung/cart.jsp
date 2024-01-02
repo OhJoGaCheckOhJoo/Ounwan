@@ -179,29 +179,36 @@
 	    <div id="guestModal" class="hidden">
 	    	<div class="modal-content">
 		    	<div class="modal-body">
-		    		<span id="closeBtn" class="close-button">&times;</span>
 			    	<div class="modal-title">
-			    		<div>* 비회원 개인정보 수집 및 이용동의</div>
+			    		<div>비회원 개인정보 수집 및 이용동의</div>
+			    		<div class="modal-close">
+		    				<span id="closeBtn" class="close-button">&times;</span>
+		    			</div>
 			    	</div>
-			    	<div class="modal-input">
-				    	<div>
-				    		<label class="modal-attribute-name" for="">이메일 : </label> 
-				    		<input class="box" type="text" id="guestEmail" required/>
-				    	</div>
-				    	<div>
-				    		<label class="modal-attribute-name" for="">연락처 : </label> 
-				    		<input class="box" type="text" id="guestPhone" required/>
-				    	</div>
-			    	</div>
-			    	<div class="modal-check">
-				    	<div class="agreement">
+			    	<div class="modal-body-wrap">
+			    	<%@ include file="../guest/guestAgreementTerms.jsp" %>
+			    		<div class="agreement">
 							<label for="agree1">
 								<input type="checkbox" id="agree1" required>
 								<i class="circle"></i> [필수] 개인정보 수집 및 이용 동의
 							</label>
 						</div>
-				    	<div>
-				    		<button type="button" id="guestSubmitBtn">주문하기</button>
+						<div  >
+							<div class="modal-input">
+						    	<div>
+						    		<label class="modal-attribute-name" for="">이메일 </label> 
+						    		<input class="box" type="text" id="guestEmail" required/>
+						    	</div>
+						    	<div>
+						    		<label class="modal-attribute-name" for="">연락처 </label> 
+						    		<input class="box" type="text" id="guestPhone" required/>
+						    	</div>
+					    	</div>
+					    	<div class="modal-check">
+						    	<div>
+						    		<button type="button" id="guestSubmitBtn">주문하기</button>
+						    	</div>
+					    	</div>
 				    	</div>
 			    	</div>
 		    	</div>

@@ -229,13 +229,15 @@
 							<label for="agree1">
 								<input type="checkbox" id="agree1" required>
 								<i class="circle"></i> [필수] 개인정보 수집 및 이용 동의
+								<a id="agree">보기</a>
 							</label>
 						</div>
 						<br>
 						<div class="agreement">
 							<label for="agree2">
 								<input type="checkbox" id="agree2" required>
-								<i class="circle"></i> [필수] 결제대행 서비스 이용약관 (주)KG이니시스 
+								<i class="circle"></i> [필수] 결제대행 서비스 이용약관 
+								<a href="https://www.inicis.com/terms" target="_blank">(주)KG이니시스</a>
 							</label>
 						</div>
 						<br>
@@ -253,6 +255,36 @@
 			</div>
 		</div>
 	</div>
+	
+	<div id="agreementPersonalData">
+		<h3>개인정보 수집 및 이용 동의</h3>
+		<%@ include file="../common/agreementPersonalData.jsp" %>
+		<button>확인</button>
+	</div>
+	
+	<script>
+	var readAgreement1 = false; 
+
+	$(document).ready(function() {
+	    $("#agreementPersonalData").hide();
+	});
+
+	$("#agree").on('click', function(event) {
+	    event.preventDefault();
+	    if (!readAgreement1) {
+	        $("#agreementPersonalData").show(); 
+	    }
+	});
+
+	$("#agreementPersonalData button").on("click", function() {
+	    readAgreement1 = true;
+	    $("#agreementPersonalData").hide(); 
+	    $("#agree").attr('disabled', true);
+	});
+
+
+	</script>
+	
 	<script src="${appPath}/js/main.js"></script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
@@ -560,5 +592,6 @@
 		});
 
 	</script>
+	
 </body>
 </html>
