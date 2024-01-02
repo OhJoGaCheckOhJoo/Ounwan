@@ -20,10 +20,6 @@ public class ProductImagesDAO {
 		return sqlSession.selectOne(NAMESPACE + "selectAllImage", danggunNumber);
 	}
 	
-	public ProductImages paginatedImages(Map<Object,Object> danggunNumber) {
-		return sqlSession.selectOne(NAMESPACE + "paginatedImages", danggunNumber);
-	}
-	
 	public int imageInsert(ProductImages image) {
 		return sqlSession.insert(NAMESPACE + "imageInsert", image);
 	}

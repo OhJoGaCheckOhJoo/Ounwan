@@ -178,6 +178,7 @@ public class AdminController {
 	public String danggunBoard() {		
 		return "admin/danggunBoard";
 	}
+	
 	@GetMapping("/danggun/AllList")
 	public String danggunAllList(Model model,
 			@RequestParam(value = "inputValue", defaultValue = "%") String name,
@@ -185,18 +186,15 @@ public class AdminController {
 		
 		model.addAttribute("danggun", danggunService.pagenatedList(page,name));
 		model.addAttribute("paginating", danggunService.getPages(page,name));
-		System.out.println();
 		
 		return "admin/danggunList";
 	}
-//	@GetMapping("/danggun/danggunDetail")
-//	public String danggunDetailModel (
-//			Model model,
-//			@RequestParam Integer danggunNumber) {
-//			danggunService.danggunAdminDetail(danggunNumber);
-//	
-//		return "admin/danggunDetail";
-//	}
+	
+	@PostMapping("/danggun/blind")
+	public @ResponseBody String adminDanggunBlind(@RequestParam("danggunNumber") int danggunNumber) {
+		boolean result = danggunService.updateReport(danggunNumber);
+		return (result) ? "success" : "fail";
+	}
 	
 	@GetMapping("/danggun/report")
 	public String getDanggunReport(Model model) {

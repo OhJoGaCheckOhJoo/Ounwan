@@ -13,33 +13,6 @@
 	<select id="selectAllImage" parameterType="int" resultType="productImages">
 		select * from PRODUCT_IMAGES where DANGGUN_NUMBER = #{danggunNumber} and TYPE=0;
 	</select>
-	
-	<select id="countProducts" parameterType="String" resultType="int">
-		SELECT count(*)
-		FROM DANGGUN 
-		WHERE VISIBILITY = 1
-		and PRODUCT_NAME like CONCAT('%',#{name},'%') 
-		order by DANGGUN_NUMBER desc
-	</select>
-	
-	<!-- 페이징 상품 리스트 -->
-	<select id="paginatedlist" parameterType="map" resultType="danggun">
-		SELECT * FROM DANGGUN 
-		WHERE VISIBILITY = 1 
-		AND 
-		PRODUCT_NAME like CONCAT('%',#{name},'%')
-		ORDER BY DANGGUN_NUMBER DESC
-		limit #{start},#{limit}
-	</select>
-	
-	<!-- 페이징 이미지 -->
-	<select id="paginatedImages" parameterType="map" resultType="productImages">
-		select * from PRODUCT_IMAGES 
-		where DANGGUN_NUMBER = #{danggunNumber} 
-		and TYPE=0
-		and PRODUCT_NAME like CONCAT('%',#{name},'%')
-		limit #{start},#{limit}
-	</select>
 
 	<!-- 당군 거래 상세 정보 출력 -->
 	<select id="selectDanggun" parameterType="int"
@@ -186,5 +159,34 @@
 		SET VISIBILITY = 1
 		WHERE DANGGUN_NUMBER = #{danggunNumber}
 	</update>
+	
+	
+	<select id="getDanggunCount" parameterType="map" resultType="int">
+    	SELECT COUNT(*) FROM COUPUNG
+    	<if test='searchOption == "productName"'>
+    		WHERE PRODUCT_NAME LIKE CONCAT('%', #{searchValue}, '%') 
+    	</if>
+    	<if test='searchOption == "clientId"'>
+    		WHERE ClientId LIKE CONCAT('%', #{searchValue}, '%')
+    	</if>
+    </select>
+	
+	<select id="countProducts" parameterType="String" resultType="int">
+		SELECT count(*)
+		FROM DANGGUN 
+		WHERE VISIBILITY = 1
+		and PRODUCT_NAME like CONCAT('%',#{name},'%') 
+		order by DANGGUN_NUMBER desc
+	</select>
+	
+	<!-- 페이징 상품 리스트 -->
+	<select id="paginatedlist" parameterType="map" resultType="danggun">
+		SELECT * FROM DANGGUN 
+		WHERE VISIBILITY = 1 
+		AND 
+		PRODUCT_NAME like CONCAT('%',#{name},'%')
+		ORDER BY DANGGUN_NUMBER DESC
+		limit #{start},#{limit}
+	</select>
 	
 </mapper>

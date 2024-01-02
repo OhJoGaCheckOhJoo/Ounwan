@@ -4,35 +4,31 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
-<div id="aetaboardList">
-	<h4>당군 관리자 페이지</h4>
-	<table>
-		<thead>
-			<tr class="top">
-				<th class="">당군번호</th>
-				<th class="">판매자</th>
-				<th class="">상품명</th>
-				<th class="">가격</th>
-				<th class="">업로드일</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="danggun" items="${danggun}">
-				<tr class="danggun-post" >
-					<td class="danggun-number">${danggun.danggunNumber}</td>
-					<td class="client-id">${danggun.clientId}</td>
-					<td class="product-name">${danggun.productName}</td>
-					<td class="price">${danggun.price}</td>
-					<td class="upload-date"><fmt:formatDate value="${danggun.uploadDate}" pattern="yyyy-MM-dd" /></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-</div>	
+<div id="productList">
+	<div class="product-menu">
+		<span>제목</span> 
+		<span>가격</span> 
+		<span>판매자</span>
+		<span>등록일</span> 
+		<span>판매현황</span> 
+		<span>이동</span>
+		<span>비공개</span>
+	</div>
+	<c:forEach var="product" items="${danggun}">
+		<div class="product-info">
+			<input class="danggunNumber" type="hidden" value="${product.danggunNumber }">
+			<span>${product.productName}</span>
+			<span>${product.price}</span> 
+			<span>${product.clientId}</span> 
+			<span>${product.uploadDate}</span>
+			<span>${product.tradeHistoryNumber}</span> 
+			<span><a href="${appPath}/danggun/detail?danggunNumber=${product.danggunNumber}">이동</a></span>
+			<span class="danggunBlind">비공개</span>
+		</div>
+	</c:forEach>
+</div>
 
-<div id="danggun-pagination" class="danggun-pagination">
-	
-
+<div id="productPages" class="danggun-pagination">
 	<c:choose>
 		<c:when test="${paginating.maxPageNumber==0}"></c:when>
 		<c:when test="${paginating.pageNumber<=1}">
@@ -83,3 +79,27 @@
 		</c:otherwise>
 	</c:choose>
 </div>
+
+<script>
+$(".danggunBlind").on("click", function(){
+   	var danggunNumber = $(this).parent().find(".danggunNumber").val();
+   	if(confirm("비공개로 변경하시겠습니까?")){   	
+   		$.ajax({
+               url : "${appPath}/admin/danggun/blind",
+               type : "post",
+               data : {"danggunNumber" : danggunNumber},
+               success : function(res){
+            	   if(res == "success"){
+            		   alert("비공개 처리에 성공하셨습니다."); 
+            		   $.ajax({
+            			   url : "${appPath}/admin/danggun/danggunBoard",
+            			   success : function(res){
+            				   $(".admin-wrap").html(res);
+            			   }
+            		   });
+            	   }
+               }
+           });
+   	}
+   });
+</script>
