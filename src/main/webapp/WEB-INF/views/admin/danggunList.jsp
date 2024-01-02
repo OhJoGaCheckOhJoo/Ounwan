@@ -21,7 +21,9 @@
 			<span>${product.price}</span> 
 			<span>${product.clientId}</span> 
 			<span>${product.uploadDate}</span>
-			<span>${product.tradeHistoryNumber}</span> 
+			<c:if test="${product.tradeHistoryNumber eq '6'}"><span>판매중</span></c:if>
+			<c:if test="${product.tradeHistoryNumber eq '7'}"><span>예약중</span></c:if>
+			<c:if test="${product.tradeHistoryNumber eq '8'}"><span>거래완료</span></c:if>
 			<span><a href="${appPath}/danggun/detail?danggunNumber=${product.danggunNumber}">이동</a></span>
 			<span class="danggunBlind">비공개</span>
 		</div>
