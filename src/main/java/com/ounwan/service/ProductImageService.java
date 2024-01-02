@@ -41,7 +41,6 @@ public class ProductImageService {
 			if(!url.equals(".")) {
 				result *= productImageDAO.insertImage(ProductImages.builder().coupungNumber(coupungNumber).url(url).type(2).build());
 			}
-			
 		}
 		return result;
 	}

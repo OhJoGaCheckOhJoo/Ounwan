@@ -83,10 +83,10 @@
     	WHERE COUPUNG_NUMBER = #{coupungNumber}
     </update>
     
-    <update id="deleteProduct" parameterType="int">
+    <update id="updateProductSales" parameterType="coupung">
     	UPDATE COUPUNG
-    	SET AVAILABLE_CHECK = FALSE
-    	WHERE COUPUNG_NUMBER = #{coupungId}
+    	SET AVAILABLE_CHECK = #{availableCheck}
+    	WHERE COUPUNG_NUMBER = #{coupungNumber}
     </update>
     
     <select id="getPrice" parameterType="int" resultType="int">

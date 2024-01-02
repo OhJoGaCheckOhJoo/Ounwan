@@ -1,5 +1,8 @@
 package com.ounwan.repository;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,5 +19,17 @@ public class AdminDAO {
 
 	public Admin checkAuthorization(String adminId) {
 		return sqlSession.selectOne(NAMESPACE + "checkAuthorization", adminId);
-	}	
+	}
+	
+	public List<Map<String, Object>> getTotalPriceByDate() {
+		return sqlSession.selectList(NAMESPACE + "selectTotalPriceByDate");
+	}
+	
+	public List<Map<String, Object>> getCommunityAct() {
+		return sqlSession.selectList(NAMESPACE + "selectCommunityAct");
+	}
+	
+	public List<Map<String, Object>> getTotalByCategory() {
+		return sqlSession.selectList(NAMESPACE + "selectTotalByCategory");
+	}
 }	

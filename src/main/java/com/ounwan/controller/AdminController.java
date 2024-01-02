@@ -47,10 +47,15 @@ public class AdminController {
 	CommunityService communityService;
 
 	@GetMapping("/main.do")
-	public String getMainPage(HttpSession session) {
+	public String getMainPage(HttpSession session, Model model) {
 		System.out.println((AdminDTO) session.getAttribute("admin"));
 		if (session.getAttribute("admin") == null)
 			return "admin/login";
+		else {
+			model.addAllAttributes(adminService.getTotalPriceByDate());
+			model.addAttribute("communityAct", adminService.getCommunityAct());
+			model.addAllAttributes(adminService.getTotalByCategory());
+		}
 		return "admin/home";
 	}
 
@@ -97,14 +102,25 @@ public class AdminController {
 	}
 
 	@GetMapping("/coupung/insert.do")
-	public String insertProductView() {
+	public String insertProductView(Model model) {
+		model.addAttribute("categories", coupungService.getAllCategories());
 		return "admin/productInsert";
 	}
-
+	
 	@PostMapping("/coupung/insert.do")
-	public @ResponseBody String insertProduct(@RequestBody CoupungDTO product) {
-		int result = coupungService.insertProduct(product);
-		return (result > 0) ? "success" : "fail";
+	public @ResponseBody String insertProduct(@RequestParam Integer coupungCategoryNumber,
+										@RequestParam String name,
+							    		@RequestParam Integer price,
+							    		@RequestParam Integer availableStock,
+							    		@RequestParam String[] options,
+							    		@RequestParam String[] images,
+							    		@RequestParam(required=false) String[] detailImages) {
+		boolean result = coupungService.insertProduct(CoupungDTO.builder()
+													.coupungCategoryNumber(coupungCategoryNumber)
+													.name(name)
+													.price(price)
+													.availableStock(availableStock).build(), options, images, detailImages);
+		return (result) ? "success" : "fail";
 	}
 	
 	@GetMapping("/coupung/update.do")
@@ -133,11 +149,15 @@ public class AdminController {
 														addOptions, deleteOptions, image, deleteImage, detailImages, deleteDetailImg);
 		return (result) ? "success" : "fail";
 	}
-
-	@PostMapping("/coupung/delete.do")
-	public @ResponseBody String deleteProduct(@RequestBody int coupungNumber) {
-		boolean result = coupungService.deleteProduct(coupungNumber);
-		return (result) ? "success" : "fail";
+	
+	@GetMapping("/coupung/stopSales.do")
+	public @ResponseBody String stopSales(@RequestParam String[] productList, Model model) {
+		return coupungService.stopSales(productList);
+	}
+	
+	@GetMapping("/coupung/startSales.do")
+	public @ResponseBody String startSales(@RequestParam String[] productList, Model model) {
+		return coupungService.startSales(productList);
 	}
 
 	@GetMapping("/order/orderList.do")

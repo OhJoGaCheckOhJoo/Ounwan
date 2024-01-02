@@ -117,7 +117,6 @@
     });
 
     $("#mainImg").on("click", function() {
-    	console.log($("#mainImgInput").css("visibility"));
     	$("#mainImgInput").css("visibility", "visible");
     });
 
@@ -133,10 +132,6 @@
     	$("#mainImgInput").css("visibility", "hidden");
     })
 
-    $("#productInput > button").on("click", function() {
-    	console.log($("#mainImgInput input").val());
-    });
-    
     $("#optionButton").on("click", function() {
     	$("#optionUpdate").css("visibility", "visible");
     });

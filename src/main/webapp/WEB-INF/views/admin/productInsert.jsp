@@ -18,8 +18,12 @@
 	        <input id="availableStock" type="number" placeholder="재고 수량을 입력해주세요." value="1">
         </div>
         <div>
+        	<div>카테고리</div>
         	<select id="selectCategory">
-        	
+        		<option value="0" hidden>카테고리</option>
+        		<c:forEach var="category" items="${categories}">
+        			<option value="${category.COUPUNG_CATEGORY_NUMBER}">${category.NAME}</option>
+        		</c:forEach>
         	</select>
         </div>
         <div>
@@ -34,11 +38,11 @@
     	</div>
         <div>
         	<div>메인 이미지</div>
-	        <img id="mainImg" src="/">
+	        <img id="mainImg" src="${appPath}/images/add_image.png">
 	        <div id="mainImgInput">
-	        	<div>메인 이미지 수정</div>
+	        	<div>메인 이미지 입력</div>
 	        	<input type="text">
-	        	<button id="mainImgUpdate">수정</button>
+	        	<button id="mainImgUpdate">입력</button>
 	        	<button id="mainImgCancel">취소</button>
 	        </div>
         </div>
@@ -74,7 +78,7 @@
         <div id="namePreview">상품명</div>
         <img id="mainPreview" src="/">
         <div id="subPreview"></div>
-        <div id="pricePreview">0원</div>
+        <div id="pricePreview">0</div>
         <div id="explanationPreview"></div>
     </div>
     
@@ -97,7 +101,6 @@
     });
 
     $("#mainImg").on("click", function() {
-    	console.log($("#mainImgInput").css("visibility"));
     	$("#mainImgInput").css("visibility", "visible");
     });
 
@@ -112,10 +115,6 @@
     	$("#mainImgInput input").val("");
     	$("#mainImgInput").css("visibility", "hidden");
     })
-
-    $("#productInput > button").on("click", function() {
-    	console.log($("#mainImgInput input").val());
-    });
     
     $("#optionButton").on("click", function() {
     	$("#optionUpdate").css("visibility", "visible");
@@ -196,7 +195,6 @@
     			index = i;
     		}
     	}
-    	else {
    		for(var i = 1; i < detailImages.length; i++) {
    			if($(this).attr('src') == detailImages[i]) {
    				detailImages[i] = '.';
@@ -217,37 +215,50 @@
     });
     
     $("#productInput > button").on("click", function() {
-    	var obj = {
-    		'coupungNumber': $(this).val(),
-    		'name': $("#productName").val(),
-    		'price': $("#productPrice").val(),
-    		'availableStock': $('#availableStock').val(),
-    		'options': options,
-    		'image': images,
-    		'detailImages': detailImages
-    	};
-    	$.ajax({
-        	url: "${appPath}/admin/coupung/insert.do",
-        	type: 'post',
-        	data: obj,
-        	traditional: true,
-        	success: function(res) {
-        		if(res == 'success') {
-        			alert("수정하였습니다.");
-        			$.ajax({
-                		url: "${appPath}/admin/coupung/product.do",
-                		data: {
-                			'offset': 0,
-                			'searchOption': '',
-                			'searchValue': '',
-                			'sortOption': 'name'
-                		},
-               			success: function(res) {
-               				$(".admin-wrap").html(res);
-               			}
-                	});
-        		}
-        	}
-        });
+    	if($("#productName").val().length == 0) {
+    		alert("상품명을 입력해주세요.");
+    	}
+    	else if($("#selectCategory").val() == 0) {
+    		alert("카테고리를 선택해주세요.");
+    	} else if ($("#productPrice").val() < 0) {
+    		alert("가격을 올바르게 입력해주세요.");
+    	} else if (images[0] == ".") {
+    		alert("메인 이미지를 등록해주세요.");
+    	} else if(options.length == 0) {
+    		alert("옵션을 추가해주세요.");
+    	} else {
+    		var obj = {
+   	    		'coupungCategoryNumber': $("#category").val(),
+   	    		'name': $("#productName").val(),
+   	    		'price': $("#productPrice").val(),
+   	    		'availableStock': $('#availableStock').val(),
+   	    		'options': options,
+   	    		'images': images,
+   	    		'detailImages': detailImages
+   	    	};
+   	    	$.ajax({
+   	        	url: "${appPath}/admin/coupung/insert.do",
+   	        	type: 'post',
+   	        	data: obj,
+   	        	traditional: true,
+   	        	success: function(res) {
+   	        		if(res == 'success') {
+   	        			alert("수정하였습니다.");
+   	        			$.ajax({
+   	                		url: "${appPath}/admin/coupung/product.do",
+   	                		data: {
+   	                			'offset': 0,
+   	                			'searchOption': '',
+   	                			'searchValue': '',
+   	                			'sortOption': 'name'
+   	                		},
+   	               			success: function(res) {
+   	               				$(".admin-wrap").html(res);
+   	               			}
+   	                	});
+   	        		}
+   	        	}
+   	        });
+    	}
     });
 </script>

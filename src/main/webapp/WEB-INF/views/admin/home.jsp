@@ -77,11 +77,87 @@
         </nav>
 
         <div class="admin-wrap">
-            메인 추가합시다.
+        	<div class="admin-main-wrap">
+	        	<div>
+	        		<h3>주간 매출 추이</h3>
+	            	<div><canvas id="weekSales" width="600px" height="300px"></canvas></div>
+	        	</div>
+	        	<div>
+	        		<h3>카테고리 별 판매액</h3>
+	            	<div><canvas id="categorySales" width="300px" height="300px"></canvas></div>
+	        	</div>
+	        	<div>
+	        		<h3>커뮤니티 활동 추이</h3>
+	            	<div><canvas id="communityAct" width="600px" height="300px"></canvas></div>
+	        	</div>
+        	</div>         
         </div>
     </div>
 
     <script>
+		var context = document
+		   .getElementById('weekSales')
+		   .getContext('2d');
+		var myChart = new Chart(context, {
+		    type: 'bar',
+		    data: {
+		        labels: ${date},
+		        datasets: [
+		            {
+		                label: '주간 매출',
+		                data: ${totalPrice},
+		                backgroundColor: 'rgb(123,0,123)'
+		            }
+		        ]
+		    },
+		    options: {
+		        responsive: false
+		    }
+		});
+		
+		var context = document
+		   .getElementById('categorySales')
+		   .getContext('2d');
+		var myChart = new Chart(context, {
+		    type: 'doughnut',
+		    data: {
+		        labels: ${categories},
+		        datasets: [
+		            {
+		                label: '카테고리별 판매액',
+		                data: ${totalPriceCategory},
+		                backgroundColor: ['rgb(255, 99, 132)',
+		                    'rgb(54, 162, 235)',
+		                    'rgb(255, 205, 86)',
+		                    'rgb(10,50,20)']
+		            }
+		        ]
+		    },
+		    options: {
+		        responsive: false
+		    }
+		});
+		
+		var context = document
+		   .getElementById('communityAct')
+		   .getContext('2d');
+		var myChart = new Chart(context, {
+		    type: 'bar',
+		    data: {
+		        labels: ${date},
+		        datasets: [
+		            {
+		                label: '커뮤니티 활동',
+		                data: ${communityAct},
+		                backgroundColor: 'rgb(50,10,20)'
+		            }
+		        ]
+		    },
+		    options: {
+		        responsive: false
+		    }
+		});
+    
         $(".admin-chat-sub input").on("input", function() {
             for(var i = 0; i < $(".user-profile span").length; i++) {
                 if($(".user-profile span").eq(i).html().includes($(this).val())) {

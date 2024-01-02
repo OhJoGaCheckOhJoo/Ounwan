@@ -114,7 +114,12 @@
                     <h3>${product.name}</h3>
                     <img src="${product.image[0].url}">
                     <button class="updateBtn" value="${product.coupungNumber}">상품 수정</button>
-                    <button class="removeBtn" value="${product.coupungNumber}">상품 삭제</button>
+                    <c:if test="${product.availableCheck}">
+                    	<button class="stopBtn" value="${product.coupungNumber}">상품 중단</button>
+                    </c:if>
+                    <c:if test="${!product.availableCheck}">
+                    	<button class="restartBtn" value="${product.coupungNumber}">판매 재개</button>
+                    </c:if>
                 </div>
             </div>
             </c:forEach>
@@ -133,12 +138,10 @@
 </div>
 
 <script>
-	console.log('${offset}');
     var searchOption = '${searchOption}';
     var searchValue = '${searchValue}';
     var sortOption = '${sortOption}';
 
-    // 검색 옵션
     $("#searchOption").on("change", function() {
         if($(this).val() == 1) {
             $("#adminProductSearch div").html('<input id="searchName" type="text" placeholder="검색할 물품을 입력해주세요.">');
@@ -183,7 +186,6 @@
         searchValue = $(this).val();
     });
 
-    // 검색
     $("#adminProductSearch button").on("click", function() {
         if(searchValue.length > 0 || searchOption == '') {
             var obj = {
@@ -204,7 +206,6 @@
         }
     });
 
-    // 정렬 옵션
     $("#sortingOption button").on("click", function() {
         var obj = {
         	"offset": 0,
@@ -221,12 +222,10 @@
         });
     });
 
-    // 개별 물품 상태변경
     $("#productList").on("click", ".product-info > button", function() {
     	var button = $(this);
         if(button.html() == "판매중") {
             if(confirm("정말 판매 중지하시겠습니까?")) {
-                // ajax
                 var obj = {
                     "productList": [$(this).val()]
                 };
@@ -253,16 +252,76 @@
                 	traditional: true,
                 	success: function(res) {
                 		if(res == 'success') {
-                			button.html('판매중');
                 			alert("해당 물품을 판매 시작하였습니다.");
+                			$.ajax({
+                        		url: "${appPath}/admin/coupung/product.do",
+                        		data: {
+                        			'offset': 0,
+                        			'searchOption': '',
+                        			'searchValue': '',
+                        			'sortOption': 'name'
+                        		},
+                       			success: function(res) {
+                       				$(".admin-wrap").html(res);
+                       			}
+                        	});
                 		}
                 	}
                 });
             }
         }
     });
+    
+    $("#productList").on("click", ".stopBtn", function() {
+    	var button = $(this);
+    	if(confirm("정말 판매 중지하시겠습니까?")) {
+            var obj = {
+                "productList": [$(this).val()]
+            };
+            $.ajax({
+            	url: "${appPath}/admin/coupung/stopSales.do",
+            	data: obj,
+            	traditional: true,
+            	success: function(res) {
+            		if(res == 'success') {
+            			alert("해당 물품을 판매 중지하였습니다.");
+            			$.ajax({
+                    		url: "${appPath}/admin/coupung/product.do",
+                    		data: {
+                    			'offset': 0,
+                    			'searchOption': '',
+                    			'searchValue': '',
+                    			'sortOption': 'name'
+                    		},
+                   			success: function(res) {
+                   				$(".admin-wrap").html(res);
+                   			}
+                    	});
+            		}
+            	}
+            });
+        }
+    });
+    
+	$("#productList").on("click", ".restartBtn", function() {
+		var button = $(this);
+		if(confirm("판매 재개하시겠습니까?")) {
+            var obj = {
+                "productList": [$(this).val()]
+            };
+            $.ajax({
+            	url: "${appPath}/admin/coupung/startSales.do",
+            	data: obj,
+            	traditional: true,
+            	success: function(res) {
+            		if(res == 'success') {
+            			alert("해당 물품을 판매 시작하였습니다.");
+            		}
+            	}
+            });
+        }
+    });
 
-    // 물품 이미지 + 수정 창 띄우기
     var productInfo = "";
     $("#productList").on("click", ".product-info span", function() {
         if($(this).parent().find('div').css("display") == "none") {
@@ -277,12 +336,10 @@
         }
     });
 
-    // 이미지창 클릭시 닫기
     $("#productList").on("click", ".product-info div", function() {
         $(this).css("display", "none");
     });
-
-    // 수정하기 하였을 때 
+ 
     $(".product-info div").on("click", ".updateBtn", function() {
         var obj = {
             "coupungNumber": $(this).val()
@@ -296,12 +353,10 @@
         });
     });
 
-    // 전체선택, 전체해제
     $(".product-menu input").on("change", function() {
         $(".product-info input").prop('checked', $(this).is(":checked"));
     });
 
-    // 페이징처리
     $("#productPages").on("click", ".page", function() {
         var obj = {
             "offset": ((Number)($(this).html()) - 1) * 20,
@@ -319,15 +374,12 @@
         });
     });
 
-    // 일괄 상품 판매 중단
     $("#stopSales").on("click", function() {
         if(confirm("상품들의 판매를 중단하시겠습니까?")) {
             var productList = [];
-            var changedProduct = [];
             for(var i = 0; i < $(".product-info input").length; i++) {
                 if($(".product-info input").eq(i).is(':checked')) {
                     productList.push($(".product-info input").eq(i).val());
-                    changedProduct.push(i);
                 }
             }
             if(productList.length > 0) {
@@ -341,9 +393,18 @@
                 	success: function(res) {
                 		if(res == 'success') {
                 			alert("해당 물품들을 판매 중지하였습니다.");
-                			for(var i = 0; i < changedProduct.length; i++) {
-                				$(".product-info button").eq(changedProduct[i]).html("판매 중단");
-                			}
+                			$.ajax({
+                        		url: "${appPath}/admin/coupung/product.do",
+                        		data: {
+                        			'offset': 0,
+                        			'searchOption': '',
+                        			'searchValue': '',
+                        			'sortOption': 'name'
+                        		},
+                       			success: function(res) {
+                       				$(".admin-wrap").html(res);
+                       			}
+                        	});
                 		}
                 	}
                 });
@@ -353,15 +414,12 @@
         }
     });
 
-    // 일괄 상품 판매 시작
     $("#startSales").on("click", function() {
         if(confirm("상품들의 판매를 시작하시겠습니까?")) {
             var productList = [];
-            var changedProduct = [];
             for(var i = 0; i < $(".product-info input").length; i++) {
                 if($(".product-info input").eq(i).is(':checked')) {
                     productList.push($(".product-info input").eq(i).val());
-                    changedProduct.push(i);
                 }
             }
             if(productList.length > 0) {
@@ -375,9 +433,18 @@
                 	success: function(res) {
                 		if(res == 'success') {
                 			alert("해당 물품들을 판매 시작하였습니다.");
-                			for(var i = 0; i < changedProduct.length; i++) {
-                				$(".product-info button").eq(changedProduct[i]).html("판매중");
-                			}
+                			$.ajax({
+                        		url: "${appPath}/admin/coupung/product.do",
+                        		data: {
+                        			'offset': 0,
+                        			'searchOption': '',
+                        			'searchValue': '',
+                        			'sortOption': 'name'
+                        		},
+                       			success: function(res) {
+                       				$(".admin-wrap").html(res);
+                       			}
+                        	});
                 		}
                 	}
                 });

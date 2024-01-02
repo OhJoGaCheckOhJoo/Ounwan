@@ -31,8 +31,8 @@ public class CoupungService {
 	@Autowired
 	OrderService orderService;
 	
-	public List<Map<String, Object>> selectAllCategories() {
-		return coupungDAO.selectAllCategories();
+	public List<Map<String, Object>> getAllCategories() {
+		return coupungDAO.getAllCategories();
 	}
 
 	public List<CoupungDTO> getProductList(int categoryId) {
@@ -82,12 +82,26 @@ public class CoupungService {
 		return (num / 20) + (num % 20 > 0 ? 1 : 0);
 	}
 	
+	public String startSales(String[] productList) {
+		int result = 1;
+		for(String coupungNumber : productList) {
+			Coupung product = coupungDAO.getProductDetail(Integer.parseInt(coupungNumber));
+			product.setAvailableCheck(true);
+			result *= coupungDAO.updateProductSales(product);
+		}
+		if(result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
 	public String stopSales(String[] productList) {
 		int result = 1;
 		for(String coupungNumber : productList) {
 			Coupung product = coupungDAO.getProductDetail(Integer.parseInt(coupungNumber));
 			product.setAvailableCheck(false);
-			result *= coupungDAO.updateProduct(product);
+			result *= coupungDAO.updateProductSales(product);
 		}
 		if(result > 0) {
 			return "success";
@@ -116,19 +130,19 @@ public class CoupungService {
 		}
 		return (result > 0);
 	}
-
-	public String startSales(String[] productList) {
-		int result = 1;
-		for(String coupungNumber : productList) {
-			Coupung product = coupungDAO.getProductDetail(Integer.parseInt(coupungNumber));
-			product.setAvailableCheck(true);
-			result *= coupungDAO.updateProduct(product);
+	
+	public boolean insertProduct(CoupungDTO product, String[] options, String[] images, String[] detailImages) {
+		Coupung coupung = changeEntity(product);
+		int result = coupungDAO.insertProduct(coupung);
+		if (result > 0) {
+			int coupungNumber = coupung.getCoupungNumber();
+			result *= coupungOptionsService.insertOption(coupungNumber, options);
+			result *= productImageService.insertProductImg(coupungNumber, images);
+			if(detailImages != null) {
+				result *= productImageService.insertDetailImg(coupungNumber, detailImages);
+			}
 		}
-		if(result > 0) {
-			return "success";
-		} else {
-			return "fail";
-		}
+		return result > 0;
 	}
 	
 	public CoupungDTO getAdminProductDetail(int coupungNumber) {
@@ -171,24 +185,6 @@ public class CoupungService {
 		}
 		
 		return result;
-	}
-
-	/*
-	public int insertProduct(CoupungDTO product) {
-		Coupung coupung = changeEntity(product);
-		int result = coupungDAO.insertProduct(coupung);
-		if (result > 0) {
-			int coupungNumber = coupung.getCoupungNumber();
-			result = coupungOptionsService.insertOption(product.getOptions(), coupungNumber);
-			result = productImageService.insertImage(product.getImage(), coupungNumber);
-		}
-		return result;
-	}
-	*/
-
-	public boolean deleteProduct(int coupungNumber) {
-		int result = coupungDAO.deleteProduct(coupungNumber);
-		return (result > 0);
 	}
 	
 	public boolean checkOrderHistory(String clientId) {

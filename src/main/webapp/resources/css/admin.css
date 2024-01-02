@@ -258,6 +258,13 @@ a {
     text-align: center;
     overflow-Y: auto;
 }
+.admin-main-wrap {
+	background-color: #fff;
+	padding: 50px;
+}
+.admin-main-wrap > div {
+	display: inline-block;
+}
 #productInput {
     width: 300px;
     height: 800px;
