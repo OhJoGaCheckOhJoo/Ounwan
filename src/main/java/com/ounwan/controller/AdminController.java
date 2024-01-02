@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ounwan.dto.AdminDTO;
 import com.ounwan.dto.AetaDTO;
+import com.ounwan.dto.ClientsDTO;
 import com.ounwan.dto.CoupungDTO;
 import com.ounwan.dto.DanggunDTO;
 import com.ounwan.dto.OrdersDTO;
@@ -145,12 +147,32 @@ public class AdminController {
 		return (result) ? "success" : "fail";
 	}
 
+	@GetMapping("/danggun/danggunBoard")
+	public String danggunBoard() {		
+		return "admin/danggunBoard";
+	}
 	@GetMapping("/danggun/AllList")
-	public String danggunAllList(Model model) {
-		model.addAttribute("danggun", danggunService.listAll());
-
+	public String danggunAllList(Model model,
+			@RequestParam(value = "inputValue", defaultValue = "%") String name,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+		
+		model.addAttribute("danggun", danggunService.pagenatedList(page,name));
+		model.addAttribute("paginating", danggunService.getPages(page,name));
+		System.out.println();
+		
 		return "admin/danggunList";
 	}
+	@GetMapping("/danggun/danggunDetail")
+	public String danggunDetailModel (
+			Model model,
+			@RequestParam Integer danggunNumber) {
+			danggunService.danggunAdminDetail(danggunNumber);
+	
+		return "admin/danggunDetail";
+	}
+	
+		
+	
 
 	@GetMapping("/danggun/report")
 	public String getDanggunReport(Model model) {
@@ -206,4 +228,5 @@ public class AdminController {
 		
 		return "/admin/aetaPost";
 	}
+	
 }

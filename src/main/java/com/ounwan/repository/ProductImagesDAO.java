@@ -1,6 +1,7 @@
 package com.ounwan.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,10 @@ public class ProductImagesDAO {
 		
 	public ProductImages selectAllImages(int danggunNumber) {
 		return sqlSession.selectOne(NAMESPACE + "selectAllImage", danggunNumber);
+	}
+	
+	public ProductImages paginatedImages(Map<Object,Object> danggunNumber) {
+		return sqlSession.selectOne(NAMESPACE + "paginatedImages", danggunNumber);
 	}
 	
 	public int imageInsert(ProductImages image) {

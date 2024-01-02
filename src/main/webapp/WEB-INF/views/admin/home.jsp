@@ -145,7 +145,7 @@
         
         $("#danggunAllList").on("click", function() {
         	$.ajax({
-        		url: "${appPath}/admin/danggun/AllList",
+        		url: "${appPath}/admin/danggun/danggunBoard",
        			success: function(res) {
        				$(".admin-wrap").html(res);
        			}
