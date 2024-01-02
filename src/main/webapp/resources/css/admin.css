@@ -20,6 +20,9 @@ header {
     padding: 10px 20px 10px 20px;
     background-color: rgb(57, 46, 179);
     height: 45px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 header > span {
     color: #fff;

@@ -25,8 +25,8 @@
     </script>
 </head>
 <body>
-    <header>
-        <span>OUNWAN</span>
+    <header class="header">
+        <span>OUNWAN</span> <span id="logout">logout</span>
     </header>
     <div class="container">
         <nav>
@@ -39,17 +39,10 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">오늘의 당군</a>
-                    <ul class="submenu">
-                        <li><a href="#" id="danggunAllList">거래중인 상품</a></li>
-                    </ul>
+                    <a href="#" id="danggunAllList">오늘의 당군</a>
                 </li>
                 <li>
-                    <a href="#">오늘의 애타</a>
-                    <ul class="submenu">
-                        <li><a id="aetaAllList" href="#">게시글 목록</a></li>
-                        <li><a href="#">전체 댓글</a></li>
-                    </ul>
+                    <a id="aetaAllList" href="#">오늘의 애타</a>
                 </li>
                 <li>
                     <a href="#">오늘 운동했다그램</a>
@@ -77,7 +70,7 @@
         </nav>
 
         <div class="admin-wrap">
-            메인 추가합시다.
+            메뉴를 선택해 주세요.
         </div>
     </div>
 
@@ -180,6 +173,18 @@
         
         $("header span").on("click", function() {
         	location.reload();
+        });
+        
+        $("#logout").on("click", function(){
+        	$.ajax({
+        		url : "${appPath}/admin/logout",
+        		success : function(res) {
+        			if(res == "success"){
+        				alert("로그아웃에 성공하였습니다.");
+        				window.location.href = "${appPath}/admin/login.do";
+        			}
+        		}
+        	})
         });
     </script>
 </body>
