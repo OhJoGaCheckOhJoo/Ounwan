@@ -26,7 +26,11 @@
 </head>
 <body>
     <header class="header">
-        <span>OUNWAN</span> <span id="logout">logout</span>
+        <span>OUNWAN</span> 
+        <div>
+        	<a href="${appPath}">ounwan page</a>
+        	<span id="logout">logout</span>
+        </div>
     </header>
     <div class="container">
         <nav>

@@ -24,7 +24,7 @@ header {
     flex-direction: row;
     justify-content: space-between;
 }
-header > span {
+header > span, header > div, header a {
     color: #fff;
     margin-left: 20px;
     letter-spacing: 1.2px;
