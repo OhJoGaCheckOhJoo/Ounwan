@@ -56,10 +56,6 @@ public class CoupungDAO {
 		return sqlSession.update(NAMESPACE + "updateProduct", product);
 	}
 
-	public int deleteProduct(int coupungNumber) {
-		return sqlSession.update(NAMESPACE + "deleteProduct", coupungNumber);
-	}
-
 	public int getPrice(int coupungNumber) {
 		return sqlSession.selectOne(NAMESPACE + "getPrice", coupungNumber);
 	}
@@ -78,5 +74,13 @@ public class CoupungDAO {
 	
 	public int updateAvailableStock(Coupung product) {
 		return sqlSession.update(NAMESPACE + "updateAvailableStock", product);
+	}
+	
+	public List<Map<String, Object>> getAllCategories() {
+		return sqlSession.selectList(NAMESPACE + "selectAllCategories");
+	}
+
+	public int updateProductSales(Coupung product) {
+		return sqlSession.update(NAMESPACE + "updateProductSales", product);
 	}
 }

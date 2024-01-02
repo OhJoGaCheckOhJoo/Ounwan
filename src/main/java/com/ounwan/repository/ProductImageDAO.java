@@ -1,6 +1,7 @@
 package com.ounwan.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,8 @@ public class ProductImageDAO {
 		return sqlSession.insert(NAMESPACE + "insertCoupungImage", image);
 	}
 
-	public int updateImage(ProductImages image) {
-		return sqlSession.update(NAMESPACE + "updateImage", image);
+	public int deleteImage(Integer productImageNumber) {
+		return sqlSession.delete(NAMESPACE + "deleteCoupungImage", productImageNumber);
 	}
+
 }

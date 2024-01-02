@@ -30,6 +30,10 @@ public class CoupungService {
 	
 	@Autowired
 	OrderService orderService;
+	
+	public List<Map<String, Object>> getAllCategories() {
+		return coupungDAO.getAllCategories();
+	}
 
 	public List<CoupungDTO> getProductList(int categoryId) {
 		List<CoupungDTO> result = new ArrayList<>();
@@ -78,12 +82,26 @@ public class CoupungService {
 		return (num / 20) + (num % 20 > 0 ? 1 : 0);
 	}
 	
+	public String startSales(String[] productList) {
+		int result = 1;
+		for(String coupungNumber : productList) {
+			Coupung product = coupungDAO.getProductDetail(Integer.parseInt(coupungNumber));
+			product.setAvailableCheck(true);
+			result *= coupungDAO.updateProductSales(product);
+		}
+		if(result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
 	public String stopSales(String[] productList) {
 		int result = 1;
 		for(String coupungNumber : productList) {
 			Coupung product = coupungDAO.getProductDetail(Integer.parseInt(coupungNumber));
 			product.setAvailableCheck(false);
-			result *= coupungDAO.updateProduct(product);
+			result *= coupungDAO.updateProductSales(product);
 		}
 		if(result > 0) {
 			return "success";
@@ -92,19 +110,39 @@ public class CoupungService {
 		}
 	}
 
-
-	public String startSales(String[] productList) {
-		int result = 1;
-		for(String coupungNumber : productList) {
-			Coupung product = coupungDAO.getProductDetail(Integer.parseInt(coupungNumber));
-			product.setAvailableCheck(true);
-			result *= coupungDAO.updateProduct(product);
+	public boolean updateProduct(CoupungDTO product, String[] addOptions, String[] deleteOptions, String[] image, String[] deleteImage, String[] detailImages, String[] deleteDetailImg) {
+		int result = coupungDAO.updateProduct(changeEntity(product));
+		result *= productImageService.insertProductImg(product.getCoupungNumber(), image);
+		if(addOptions != null) {
+			result *= coupungOptionsService.insertOption(product.getCoupungNumber(), addOptions);
 		}
-		if(result > 0) {
-			return "success";
-		} else {
-			return "fail";
+		if(deleteOptions != null) {
+			result *= coupungOptionsService.deleteOption(deleteOptions);
 		}
+		if(detailImages != null) {
+			result *= productImageService.insertDetailImg(product.getCoupungNumber(), detailImages);
+		}
+		if(deleteImage != null) {
+			result *= productImageService.deleteProductImg(deleteImage);
+		}
+		if(deleteDetailImg != null) {
+			result *= productImageService.deleteProductImg(deleteDetailImg);
+		}
+		return (result > 0);
+	}
+	
+	public boolean insertProduct(CoupungDTO product, String[] options, String[] images, String[] detailImages) {
+		Coupung coupung = changeEntity(product);
+		int result = coupungDAO.insertProduct(coupung);
+		if (result > 0) {
+			int coupungNumber = coupung.getCoupungNumber();
+			result *= coupungOptionsService.insertOption(coupungNumber, options);
+			result *= productImageService.insertProductImg(coupungNumber, images);
+			if(detailImages != null) {
+				result *= productImageService.insertDetailImg(coupungNumber, detailImages);
+			}
+		}
+		return result > 0;
 	}
 	
 	public CoupungDTO getAdminProductDetail(int coupungNumber) {
@@ -147,34 +185,6 @@ public class CoupungService {
 		}
 		
 		return result;
-	}
-
-	public int insertProduct(CoupungDTO product) {
-		Coupung coupung = changeEntity(product);
-		int result = coupungDAO.insertProduct(coupung);
-		if (result > 0) {
-			int coupungNumber = coupung.getCoupungNumber();
-			result = coupungOptionsService.insertOption(product.getOptions(), coupungNumber);
-			result = productImageService.insertImage(product.getImage(), coupungNumber);
-		}
-		return result;
-	}
-
-	public boolean updateProduct(CoupungDTO product) {
-		int result = 0;
-		
-		result = coupungDAO.updateProduct(changeEntity(product));
-		if (product.getImage() != null) 
-			result = productImageService.updateProductImage(product.getImage(), product.getCoupungNumber());
-		if (product.getOptions() != null)
-			result = coupungOptionsService.updateOption(product.getOptions(), product.getCoupungNumber());
-		
-		return (result > 0);
-	}
-
-	public boolean deleteProduct(int coupungNumber) {
-		int result = coupungDAO.deleteProduct(coupungNumber);
-		return (result > 0);
 	}
 	
 	public boolean checkOrderHistory(String clientId) {

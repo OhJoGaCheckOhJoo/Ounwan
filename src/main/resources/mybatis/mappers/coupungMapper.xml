@@ -32,6 +32,10 @@
     	LIMIT 20 OFFSET #{offset}
     </select>
     
+    <select id="selectAllCategories" resultType="map">
+    	SELECT * FROM COUPUNG_CATEGORIES
+    </select>
+    
     <select id="selectProductCategory" parameterType="int" resultType="String">
     	SELECT NAME FROM COUPUNG_CATEGORIES WHERE COUPUNG_CATEGORY_NUMBER = #{categoryId}
     </select>
@@ -73,18 +77,16 @@
     
     <update id="updateProduct" parameterType="coupung">
     	UPDATE COUPUNG
-    	SET COUPUNG_CATEGORY_NUMBER = #{coupungCategoryNumber}
-    		, NAME = #{name}
+    	SET NAME = #{name}
     		, PRICE = #{price}
     		, AVAILABLE_STOCK = #{availableStock}
-    		, AVAILABLE_CHECK = #{availableCheck}
     	WHERE COUPUNG_NUMBER = #{coupungNumber}
     </update>
     
-    <update id="deleteProduct" parameterType="int">
+    <update id="updateProductSales" parameterType="coupung">
     	UPDATE COUPUNG
-    	SET AVAILABLE_CHECK = FALSE
-    	WHERE COUPUNG_NUMBER = #{coupungId}
+    	SET AVAILABLE_CHECK = #{availableCheck}
+    	WHERE COUPUNG_NUMBER = #{coupungNumber}
     </update>
     
     <select id="getPrice" parameterType="int" resultType="int">
@@ -142,4 +144,5 @@
 			, AVAILABLE_CHECK = #{availableCheck} 
 		WHERE COUPUNG_NUMBER = #{coupungNumber}
 	</update>
+	
 </mapper>
