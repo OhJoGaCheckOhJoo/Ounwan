@@ -10,16 +10,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<title>Document</title>
+<title>오운완</title>
 <link href="${appPath }/css/main.css" rel="stylesheet">
 <link href="${appPath }/css/main2.css" rel="stylesheet">
 <link href="${appPath }/css/header.css" rel="stylesheet">
 <link href="${appPath }/css/nav.css" rel="stylesheet">
 <link href="${appPath }/css/coupung/coupung.css" rel="stylesheet">
 <link href="${appPath }/css/coupung/modal.css" rel="stylesheet">
-<title>Document</title>
+
 </head>
 <body>
+	<div id="block" class="coupung-product-block"></div>
 	<%@ include file="../common/header.jsp"%>
 	<div class="container">
 		<%@ include file="../common/nav.jsp"%>
@@ -43,13 +44,10 @@
 					</div>
 					<div>
 						<div class="product-score">
-							<!-- <%-- 하단 평점 별이미지 forEach (java에서 처리 필요해보임) --%> -->
-							<img src="./full_star.png"> <img src="./full_star.png">
-							<img src="./full_star.png"> <img src="./full_star.png">
-							<img src="./half_star.png">
-							<!-- <%-- ==================== --%> -->
+							<div id="detailScore"></div>
+							<img src="${appPath}/images/star.png">
 						</div>
-						<span>(<span>62</span>)
+						<span class="review-count">(<span id="reviewTotalCount"></span>)
 						</span>
 					</div>
 					<div class="delivery">
@@ -106,7 +104,7 @@
 					</div>
 					<div class="product-comment" hidden>
 						<div class="comment-info">
-							<span>리뷰&nbsp;</span> <span class="reviewTotalCount"></span>
+							<span>리뷰&nbsp;</span> <span id="reviewTotalCount"></span>
 						</div>
 						<div class="comment-total">
 							<div class="total-score">
@@ -218,7 +216,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="block"></div>
+
 	<div id="modalContainer" class="hidden">
 		<div id="modalContent">
 			이메일 : <input type="text" id="guestEmail" /> <br> 핸드폰 번호 : <input
@@ -234,24 +232,18 @@
 		crossorigin="anonymous"></script>
 
 	<script>
-	$(function() {
-		console.log("${detail.availableCheck}" + ${detail.availableCheck});
-		if (!${detail.availableCheck} && '${admin}' == "") {
-			var productDetailPosition = $('#productDetail').offset();
-            var documentHeight = $(document).height();
+    document.addEventListener("DOMContentLoaded", function() {
+        // 페이지 로딩 후 실행될 코드
+        if(!${detail.availableCheck} && '${admin}' == "") {
+            document.getElementById('block').style.display = 'block';
             
-            alert("판매가 중지된 상품입니다.");
+            setTimeout(function() {
+            	alert("판매 중지된 상품입니다.\ncoupung 메인 화면으로 이동합니다");           	
+            	location.href="${appPath}/coupung/products";
+            }, 400); 
+        }
+    });
 
-            $('#block').css({
-                'position': 'absolute',
-                'top': productDetailPosition.top - 50 + 'px',
-                'width': '100%',
-                'height': documentHeight + 'px',
-                'background-color': 'rgba(0, 0, 0, 0.7)',
-                'z-index': '9999'
-            });          
-		}
-	});
 	</script>
 	<script>
 const unitPrice = $("#unitPrice").html().replaceAll(",",""); // jsp에서는 DB에서 가져온 가격으로 설정
@@ -265,15 +257,17 @@ const scoreList = [
 	const scoreNum = scoreList.reduce((acc, cur) => {return acc + cur}, 0); // 총 리뷰 개수
 	const productScore = (scoreList[0]*1 + scoreList[1]*2 + scoreList[2]*3 + scoreList[3]*4 + scoreList[4]*5) /scoreNum;  // 평균 별점
 	console.log("scoreNum:"+scoreNum);
-	$(".reviewTotalCount").text(scoreNum);
+	$("#reviewTotalCount").text(scoreNum);
 
 if(scoreNum != 0) {
 	$(".total").text((productScore).toFixed(1));
 	$("#mainScore").css('width', productScore * 60 + 'px');
+	$("#detailScore").css('width', productScore * 30 + 'px');
 }
 else {
 	$(".total").text((0.0).toFixed(1));
 	$("#mainScore").css('width', 0 + 'px');
+	$("#detailScore").css('width', 0 + 'px');
 }
 
 $("#miniScore").css('width', productScore * 30 + 'px');

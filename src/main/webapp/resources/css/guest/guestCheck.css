@@ -8,6 +8,10 @@ input:-webkit-autofill:active {
 	border: 1px var(--main-color-1) solid;
 }
 
+input::-webkit-input-placeholder {
+  font-size: 20px; 
+}
+
 .guest-check-container {
     width: 100%;
     padding: 100px 0px 50px 0px;
@@ -25,6 +29,9 @@ input:-webkit-autofill:active {
     margin: auto;
     text-align: center;
     font-size: 20px;
+    border-top: 4px solid;
+    border-bottom: 4px solid #444;
+    padding: 50px 0px;
 }
 
 .input-container {
@@ -39,9 +46,10 @@ input:-webkit-autofill:active {
 }
 
 .input-title {
-    width: 90px;
+    width: 110px;
     text-align: left;
     display: inline-block;
+    font-size: 25px;
 }
 
 .input {
@@ -55,6 +63,10 @@ input:-webkit-autofill:active {
     font-size: 18px;
 }
 
+.input:hover, .input:focus {
+	border: 1px solid var(--main-color-2);
+}
+
 .guest-check-button {
     color: #EEE7D8;
     width: 200px;
@@ -63,7 +75,7 @@ input:-webkit-autofill:active {
     cursor: pointer;
     border-radius: 5px;
     padding: 15px;
-    margin-top: 20px;
+    margin: 20px 0px;
     font-size: 18px;
 }
 

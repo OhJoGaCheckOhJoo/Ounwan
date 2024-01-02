@@ -30,21 +30,21 @@
 					<div class="input-container">
 						<div class="input-info order-number">
 							<div class="input-title order-number">주문번호</div>
-							<input class="input order-number" id="orderNumberInput">
+							<input class="input order-number" id="orderNumberInput" autocomplete="off" placeholder="주문번호를 입력하세요.">
 						</div>
 						<div class="input-info email">
 							<div class="input-title email">이메일</div>
-							<input class="input email" id="emailInput">
+							<input class="input email" id="emailInput" autocomplete="off" placeholder="이메일을 입력하세요.">
 						</div>
 					</div>
-					<button class="guest-check-button" onclick="checkGuestInfo()">확인</button>
+					<button type="button" class="guest-check-button" onclick="checkGuestInfo()">확인</button>
 				</div>
 			</div>
 		</div>
 	</div>
-
+	
 	<hr class="footer-line">
 	<%@ include file="../common/footer.jsp"%>
-	<script src="${appPath}/js/guest.js"></script>
+	<script src="${appPath}/js/guest.js"></script> 
 </body>
 </html>

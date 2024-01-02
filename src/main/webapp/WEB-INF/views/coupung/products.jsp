@@ -8,9 +8,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <title>Document</title>
-    <link href="${appPath }/css/main.css" rel="stylesheet">
+    <title>오운완</title>
     <link href="${appPath }/css/main2.css" rel="stylesheet">
+    <link href="${appPath }/css/main.css" rel="stylesheet">
     <link href="${appPath }/css/header.css" rel="stylesheet">
     <link href="${appPath }/css/nav.css" rel="stylesheet">
     <link href="${appPath }/css/coupung/coupung.css" rel="stylesheet">
@@ -88,6 +88,8 @@
             </div>
         </div>
     </div>
+    <hr>
+    <%@ include file="../common/footer.jsp" %>
 	<script src="../js/main.js"></script>
 	<script>
 	$('.category-detail').click(function() {
@@ -113,7 +115,7 @@ $('.productList').html('');
                 		console.log(product.image[0].url);
 	                    inside += '<div class="product"><a><input type="hidden" value="' + product.coupungNumber + '"class="item-number">' + 
 	                    '<img class="product-image" src="' + product.image[0].url + '">' + 
-	                    '<div>' + product.name + '</div>' + 
+	                    '<div class="product-name">' + product.name + '</div>' + 
 	                    '<div><span>' + product.price + '</span>원</div></a></div>';
                 	});
                 }

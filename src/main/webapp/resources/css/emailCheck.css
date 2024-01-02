@@ -34,23 +34,23 @@ button {
 	display: flex;
 	justify-content: center;
 	width: 390px;
-	border-top: 2px solid #EEE7D8;
-	
-	height: 250px;
+	border-top: 4px solid #EEE7D8;
+	border-bottom: 4px solid #444;	
+	height: 270px;
 	padding: 50px;
-	border-bottom: 2px solid #EEE7DB;
 }
 
 .email-input input {
-	
-	height: 45px;
-	width: 320px;
-	margin: 10px 0px 10px 0px;
-	border-radius: 10px;
-	font-size: 15px;
-	padding: 0px 0px 0px 10px;
+	border: 1px solid;
+    height: 45px;
+    width: 320px;
+    margin: 10px 0px 10px 0px;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 0px 0px 0px 10px;
+    background-color: var(--main-back);
 }
-.email-input input:hover{
+.email-input input:hover, .email-input input:focus{
 	border: 1px solid var(--main-color-2);
 }
 
@@ -62,6 +62,13 @@ button {
 	height: 45px;
 	margin: auto;
 	display: block;
+	cursor: pointer;
+}
+
+.email-input button:hover {
+	background-color: var(--main-color-2);
+	border: 1px solid var(--main-color-2);
+	color: var(--main-back);
 }
 
 .emailCheckPart_T {
@@ -72,7 +79,7 @@ button {
 .checkBtnPart {
 	display: flex;
 	justify-content: center;
-	margin-top: 10px;
+	margin: 30px 0px;
 }
 :root {
     --main-back: #333;

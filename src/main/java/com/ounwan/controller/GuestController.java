@@ -40,9 +40,12 @@ public class GuestController {
 		
 	@PostMapping("/checkInfo")
 	public String checkInfo(@RequestBody GuestsDTO guest, Model model) {
-		System.out.println("eeee");
 		OrdersDTO order = guestService.getGuestInfo(guest);
-		model.addAttribute("orderList", order);
-		return "/guest/guestOrderListModal";
+		if(order != null) {
+			model.addAttribute("orderList", order);
+			return "/guest/guestOrderListModal";
+		}
+		model.addAttribute("alarm", "잘못된 주문번호/이메일 입니다.");
+		return "/guest/guestFail";
 	}
 }

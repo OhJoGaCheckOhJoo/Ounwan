@@ -1,0 +1,25 @@
+.order-complete-container {
+    width: 800px;
+    margin: auto;
+    text-align: center;
+    padding: 150px 0px;
+}   
+
+.content-container {
+	padding: 80px 50px;
+    border-radius: 30px;
+    border: 1px solid #666;
+}
+
+.ment {
+    font-size: 60px;
+    margin-bottom: 75px;
+}
+
+.order-number-content {
+    font-size: 20px;
+}
+
+.order-number {
+    font-weight: bold;
+}

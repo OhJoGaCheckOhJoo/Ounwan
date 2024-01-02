@@ -1,4 +1,8 @@
-var appPath ='/myapp'
+var appPath ='/myapp';
+document.addEventListener("DOMContentLoaded", function() {
+	$('#orderNumberInput').focus();
+});
+
 
 $("#emailInput, #orderNumberInput").keydown(function (e) {
         if (e.keyCode === 13) {
@@ -14,6 +18,7 @@ function checkGuestInfo() {
 		alert("주문번호, 이메일을 모두 입력해주세요.");
 		$("#orderNumberInput").val("");
 		$("#emailInput").val("");
+		$('#orderNumberInput').focus();
 	}
 	else {
 		var data = {
@@ -27,13 +32,7 @@ function checkGuestInfo() {
 			contentType : 'application/json; charset=utf-8', 
 			data : JSON.stringify(data), 
 			success : function(res) {
-				if (res === "") {
-					alert("[비호원 주문 조회 실패] 주문번호/이메일이 잘못되었습니다.");
-					$("#orderNumberInput").val("");
-					$("#emailInput").val("");
-				} else {
-					$("#guestModal").html(res);	
-				}
+				$("#guestModal").html(res);	
 			},
 			error : function() {
 			}

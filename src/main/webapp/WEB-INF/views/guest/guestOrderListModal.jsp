@@ -21,6 +21,14 @@
 					<span class="info-title order-date">주문날짜&nbsp;&nbsp;|&nbsp;</span>
 					<span class="info-content order-date">${orderList.orderDate}</span>
 				</div>
+				<div class="guest-modal-info deliver">
+					<span class="info-title deliver">배송현황&nbsp;&nbsp;|&nbsp;</span>
+					<span class="info-content deliver">
+						<c:if test="${orderList.tradeHistoryNumber eq '1' }">배송전</c:if>
+						<c:if test="${orderList.tradeHistoryNumber eq '2' }">배송중</c:if>
+						<c:if test="${orderList.tradeHistoryNumber ne '1' && orderList.tradeHistoryNumber ne '2'}">배송완료</c:if>
+					</span>
+				</div>
 			</div>
 		</div>
 		<div class="guest-modal body">
@@ -68,6 +76,5 @@
 		</div>
 	</div>
 </div>
-
 <div class="guest-order-list-modal-overlay" id="guestModalOverlay"
 	onclick="closeGuestOrderListModal()"></div>
