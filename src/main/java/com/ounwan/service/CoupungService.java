@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.ounwan.dto.CoupungDTO;
 import com.ounwan.dto.OrdersDTO;
-import com.ounwan.dto.ReviewsDTO;
 import com.ounwan.entity.Coupung;
 import com.ounwan.repository.CoupungDAO;
 
@@ -31,6 +30,10 @@ public class CoupungService {
 	
 	@Autowired
 	OrderService orderService;
+	
+	public List<Map<String, Object>> selectAllCategories() {
+		return coupungDAO.selectAllCategories();
+	}
 
 	public List<CoupungDTO> getProductList(int categoryId) {
 		List<CoupungDTO> result = new ArrayList<>();
@@ -93,6 +96,26 @@ public class CoupungService {
 		}
 	}
 
+	public boolean updateProduct(CoupungDTO product, String[] addOptions, String[] deleteOptions, String[] image, String[] deleteImage, String[] detailImages, String[] deleteDetailImg) {
+		int result = coupungDAO.updateProduct(changeEntity(product));
+		result *= productImageService.insertProductImg(product.getCoupungNumber(), image);
+		if(addOptions != null) {
+			result *= coupungOptionsService.insertOption(product.getCoupungNumber(), addOptions);
+		}
+		if(deleteOptions != null) {
+			result *= coupungOptionsService.deleteOption(deleteOptions);
+		}
+		if(detailImages != null) {
+			result *= productImageService.insertDetailImg(product.getCoupungNumber(), detailImages);
+		}
+		if(deleteImage != null) {
+			result *= productImageService.deleteProductImg(deleteImage);
+		}
+		if(deleteDetailImg != null) {
+			result *= productImageService.deleteProductImg(deleteDetailImg);
+		}
+		return (result > 0);
+	}
 
 	public String startSales(String[] productList) {
 		int result = 1;
@@ -150,6 +173,7 @@ public class CoupungService {
 		return result;
 	}
 
+	/*
 	public int insertProduct(CoupungDTO product) {
 		Coupung coupung = changeEntity(product);
 		int result = coupungDAO.insertProduct(coupung);
@@ -160,54 +184,7 @@ public class CoupungService {
 		}
 		return result;
 	}
-
-	public boolean updateProduct(CoupungDTO product, String[] addOptions, String[] deleteOptions, String[] image, String[] deleteImage, String[] detailImages, String[] deleteDetailImg) {
-		int result = coupungDAO.updateProduct(changeEntity(product));
-		System.out.println(product.toString());
-		Map<String, Object> data = new HashMap<>();
-		data.put("coupungNumber", product.getCoupungNumber());
-		if(addOptions != null) {
-			for(String option : addOptions) {
-				data.put("name", option);
-				result *= coupungDAO.insertProductOption(data);
-			}
-		}
-		data.remove("name");
-		if(deleteOptions != null) {
-			for(String option : deleteOptions) {
-				result *= coupungDAO.deleteProductOption(Integer.parseInt(option));
-			}
-		}
-		data.put("type", 0);
-		for(String imageUrl : image) {
-			if(!imageUrl.equals(".")) {
-				data.put("url", imageUrl);
-				result *= coupungDAO.insertProductImg(data);
-			}
-			data.put("type", 1);
-		}
-		data.remove("type");
-		if(detailImages != null) {
-			for(String imageUrl : detailImages) {
-				if(!imageUrl.equals(".")) {
-					data.put("url", imageUrl);
-					result *= coupungDAO.insertDetailImg(data);
-				}
-			}
-		}
-		if(deleteImage != null) {
-			for(String productImageNumber : deleteImage) {
-				result *= coupungDAO.deleteProductImg(Integer.parseInt(productImageNumber));
-			}
-		}
-		if(deleteDetailImg != null) {
-			for(String productImageNumber : deleteImage) {
-				result *= coupungDAO.deleteProductImg(Integer.parseInt(productImageNumber));
-			}
-		}
-		
-		return (result > 0);
-	}
+	*/
 
 	public boolean deleteProduct(int coupungNumber) {
 		int result = coupungDAO.deleteProduct(coupungNumber);

@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ounwan.dto.CoupungDTO;
 import com.ounwan.dto.CoupungOptionsDTO;
 import com.ounwan.entity.CoupungOptions;
 import com.ounwan.repository.CoupungOptionsDAO;
@@ -24,26 +23,20 @@ public class CoupungOptionsService {
 	public List<CoupungOptionsDTO> getOptionByOptionId(int optionNumber) {
 		return changeListDTO(coupungOptionsDAO.getOptionByOptionId(optionNumber));
 	}
-
-	public int insertOption(List<CoupungOptionsDTO> options, int coupungNumber) {
-		int result = 0;
-		
-		for (CoupungOptionsDTO option : options) {
-			option.setCoupungNumber(coupungNumber);
-			result = coupungOptionsDAO.insertOption(changeEntity(option));
+	
+	public int insertOption(Integer coupungNumber, String[] options) {
+		int result = 1;
+		for(String name : options) {
+			result *= coupungOptionsDAO.insertOption(CoupungOptions.builder().coupungNumber(coupungNumber).name(name).build());
 		}
-		
 		return result;
 	}
 
-	public int updateOption(List<CoupungOptionsDTO> options, Integer coupungNumber) {
-		int result = 0;
-		coupungOptionsDAO.deleteOption(coupungNumber);
-		for (CoupungOptionsDTO option : options) {
-			option.setCoupungNumber(coupungNumber);
-			result = coupungOptionsDAO.insertOption(changeEntity(option));
+	public int deleteOption(String[] options) {
+		int result = 1;
+		for(String coupungOptionNumber : options) {
+			result *= coupungOptionsDAO.deleteOption(Integer.parseInt(coupungOptionNumber));
 		}
-		
 		return result;
 	}
 	
@@ -70,4 +63,5 @@ public class CoupungOptionsService {
 							.name(option.getName())
 							.build();
 	}
+
 }

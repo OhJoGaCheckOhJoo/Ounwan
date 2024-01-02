@@ -15,10 +15,7 @@
     	INSERT INTO PRODUCT_IMAGES(COUPUNG_NUMBER, URL, TYPE) VALUES (#{coupungNumber}, #{url}, #{type})
     </insert>
     
-    <update id="updateImage" parameterType="productImages">
-    	UPDATE PRODUCT_IMAGES
-    	SET URL = #{url}, TYPE = #{type}
-    	WHERE COUPUNG_NUMBER = #{coupungNumber}
-    	AND PRODUCT_IMAGE_NUMBER = #{productImageNumber}
-    </update>
+    <delete id="deleteCoupungImage" parameterType="int">
+		DELETE FROM PRODUCT_IMAGES WHERE PRODUCT_IMAGE_NUMBER = #{productImageNumber}
+	</delete>
 </mapper>

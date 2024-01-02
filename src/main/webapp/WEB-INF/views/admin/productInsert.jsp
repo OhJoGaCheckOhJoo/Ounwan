@@ -7,15 +7,20 @@
 	<div id="productInput">
 		<div>
 			<div>물품명</div>
-        	<textarea id="productName" placeholder="물품 이름을 입력해주세요">${product.name}</textarea>
+        	<textarea id="productName" placeholder="물품 이름을 입력해주세요"></textarea>
 		</div>
         <div>
         	<div>가격</div>
-        	<input id="productPrice" placeholoder="가격을 입력해주세요" value="${product.price}">
+        	<input id="productPrice" placeholoder="가격을 입력해주세요" value="0">
         </div>
         <div>
 	        <div>재고 수량</div>
-	        <input id="availableStock" type="number" placeholder="재고 수량을 입력해주세요." value="${product.availableStock}">
+	        <input id="availableStock" type="number" placeholder="재고 수량을 입력해주세요." value="1">
+        </div>
+        <div>
+        	<select id="selectCategory">
+        	
+        	</select>
         </div>
         <div>
     		<div><button id="optionButton">옵션 추가/삭제</button></div>
@@ -23,17 +28,13 @@
 	        	<div>옵션 추가/삭제</div>
 	        	<input type="text" placeholder="추가할 옵션을 입력해주세요">
 	        	<button>추가</button>
-	        	<div id="optionList">
-		        	<c:forEach var="option" items="${product.options}">
-						<div>${option.name}<button value="${option.coupungOptionNumber}">삭제</button></div>      	
-		        	</c:forEach>
-	        	</div>
+	        	<div id="optionList"></div>
 	        	<a>닫기</a>
 	        </div>
     	</div>
         <div>
         	<div>메인 이미지</div>
-	        <img id="mainImg" src="${product.image[0].url}">
+	        <img id="mainImg" src="/">
 	        <div id="mainImgInput">
 	        	<div>메인 이미지 수정</div>
 	        	<input type="text">
@@ -49,11 +50,7 @@
         			<input type="text">
         			<button>추가</button>
         		</div>
-        		<div id="subImageWrap">
-	        		<c:forEach var="i" begin="1" end="${product.image.size() - 1}">
-						<img id="${product.image[i].productImageNumber}" src="${product.image[i].url}">
-			        </c:forEach>
-		        </div>
+        		<div id="subImageWrap"></div>
 		        <div><a>닫기</a></div>
         	</div>
         </div>
@@ -65,43 +62,26 @@
         			<input type="text">
         			<button>추가</button>
         		</div>
-        		<div id="detailImageWrap">
-		        	<c:forEach var="detailImg" items="${product.detailImages}">
-			       		<img id="${detailImg.productImageNumber}" src="${detailImg.url}">
-			       	</c:forEach>
-		       	</div>
+        		<div id="detailImageWrap"></div>
 		       	<div><a>닫기</a></div>
 	       	</div>
         </div>
-       	<button value="${product.coupungNumber}">수정</button>
+       	<button>추가</button>
     </div>
 
     <div id="productPreview">
     	<div>미리보기</div>
-        <div id="namePreview">${product.name}</div>
-        <img id="mainPreview" src="${product.image[0].url}">
-        <div id="subPreview">
-        	<c:forEach var="i" begin="1" end="${product.image.size() - 1}">
-				<img src="${product.image[i].url}">
-	        </c:forEach>
-        </div>
-        <div id="pricePreview">
-        	${product.price}
-        </div>
-        <div id="explanationPreview">
-        	<c:forEach var="detailImage" items="${product.detailImages}">
-        		<img src="${detailImage.url}">
-        	</c:forEach>
-        </div>
+        <div id="namePreview">상품명</div>
+        <img id="mainPreview" src="/">
+        <div id="subPreview"></div>
+        <div id="pricePreview">0원</div>
+        <div id="explanationPreview"></div>
     </div>
     
 </div>
 
 <script>
-	var deleteOptions = [];
-	var addOptions = [];
-	var deleteImage = [];
-	var deleteDetailImg = [];
+	var options = [];
 	var images = ["."];
 	var detailImages = [];
 	var optionNum = 0;
@@ -190,16 +170,12 @@
     			index = i;
     		}
     	}
-    	if($(this).attr("id") != null) {
-    		deleteImage.push($(this).attr("id"));
-    	} else {
-    		for(var i = 1; i < images.length; i++) {
-    			if($(this).attr('src') == images[i]) {
-    				images[i] = '.';
-    				break;
-    			}
-    		}
-    	}
+   		for(var i = 1; i < images.length; i++) {
+   			if($(this).attr('src') == images[i]) {
+   				images[i] = '.';
+   				break;
+   			}
+   		}
     	$("#subPreview img").eq(index).remove();
 		$(this).remove();
     });
@@ -220,16 +196,13 @@
     			index = i;
     		}
     	}
-    	if($(this).attr("id") != null) {
-    		deleteDetailImg.push($(this).attr("id"));
-    	} else {
-    		for(var i = 1; i < detailImages.length; i++) {
-    			if($(this).attr('src') == detailImages[i]) {
-    				detailImages[i] = '.';
-    				break;
-    			}
-    		}
-    	}
+    	else {
+   		for(var i = 1; i < detailImages.length; i++) {
+   			if($(this).attr('src') == detailImages[i]) {
+   				detailImages[i] = '.';
+   				break;
+   			}
+   		}
     	$("#explanationPreview img").eq(index).remove();
 		$(this).remove();
     });
@@ -249,15 +222,12 @@
     		'name': $("#productName").val(),
     		'price': $("#productPrice").val(),
     		'availableStock': $('#availableStock').val(),
-    		'addOptions': addOptions,
-    		'deleteOptions' : deleteOptions,
+    		'options': options,
     		'image': images,
-    		'deleteImage': deleteImage,
-    		'detailImages': detailImages,
-    		'deleteDetailImg': deleteDetailImg
+    		'detailImages': detailImages
     	};
     	$.ajax({
-        	url: "${appPath}/admin/coupung/update.do",
+        	url: "${appPath}/admin/coupung/insert.do",
         	type: 'post',
         	data: obj,
         	traditional: true,

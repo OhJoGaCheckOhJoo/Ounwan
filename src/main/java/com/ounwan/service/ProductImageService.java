@@ -2,6 +2,7 @@ package com.ounwan.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,21 +25,31 @@ public class ProductImageService {
 		return changeDTOList(productImageDAO.getDetailImageByCoupungId(coupungNumber));
 	}
 	
-	public int insertImage(List<ProductImagesDTO> images, int coupungNumber) {
-		int result = 0;
-		for (ProductImagesDTO image : images) {
-			image.setCoupungNumber(coupungNumber);
-			result = productImageDAO.insertImage(changeEntity(image));
+	public int insertProductImg(Integer coupungNumber, String[] images) {
+		int result = 1;
+		for(int i = 0; i < images.length; i++) {
+			if(!images[i].equals(".")) {
+				result *= productImageDAO.insertImage(ProductImages.builder().coupungNumber(coupungNumber).url(images[i]).type(i > 0 ? 1 : 0).build());
+			}	
 		}
 		return result;
 	}
-	
-	public int updateProductImage(List<ProductImagesDTO> images, int coupungNumber) {
-		int result = 0;
-		
-		for (ProductImagesDTO image : images) {
-			image.setCoupungNumber(coupungNumber);
-			result = productImageDAO.updateImage(changeEntity(image));
+
+	public int insertDetailImg(Integer coupungNumber, String[] detailImages) {
+		int result = 1;
+		for(String url : detailImages) {
+			if(!url.equals(".")) {
+				result *= productImageDAO.insertImage(ProductImages.builder().coupungNumber(coupungNumber).url(url).type(2).build());
+			}
+			
+		}
+		return result;
+	}
+
+	public int deleteProductImg(String[] images) {
+		int result = 1;
+		for(String productImageNumber : images) {
+			result *= productImageDAO.deleteImage(Integer.parseInt(productImageNumber));
 		}
 		return result;
 	}
@@ -70,4 +81,5 @@ public class ProductImageService {
 							.url(image.getUrl())
 							.build();
 	}
+
 }

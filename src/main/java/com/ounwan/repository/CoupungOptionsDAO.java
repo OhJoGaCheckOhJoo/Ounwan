@@ -1,6 +1,7 @@
 package com.ounwan.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,7 @@ public class CoupungOptionsDAO {
 		return sqlSession.insert(NAMESPACE + "insertOption", option);
 	}
 
-	public int updateOption(CoupungOptions option) {
-		return sqlSession.update(NAMESPACE + "updateOption", option);
-	}
-
-	public int deleteOption(int coupungNumber) {
-		return sqlSession.delete(NAMESPACE + "deleteOption", coupungNumber);
+	public int deleteOption(Integer coupungOptionNumber) {
+		return sqlSession.delete(NAMESPACE + "deleteOption", coupungOptionNumber);
 	}
 }

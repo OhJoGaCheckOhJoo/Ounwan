@@ -1,7 +1,6 @@
 package com.ounwan.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -97,23 +96,9 @@ public class AdminController {
 		return "admin/gramReportBoards";
 	}
 
-	@PostMapping("/coupung/addProduct")
-	public String addProduct(@RequestPart MultipartFile mainImage,
-			@RequestPart(required = false) MultipartFile[] subImage,
-			@RequestPart(required = false) MultipartFile[] explanationImg, String name, int price) {
-		return null;
-	}
-
-	@GetMapping("/coupung/sortProduct")
-	public String sortProduct(@RequestParam String sort, @RequestParam String searchOption,
-			@RequestParam String searchValue) {
-
-		return "admin/product";
-	}
-
 	@GetMapping("/coupung/insert.do")
 	public String insertProductView() {
-		return "admin/productDetail";
+		return "admin/productInsert";
 	}
 
 	@PostMapping("/coupung/insert.do")

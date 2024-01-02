@@ -6,9 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import com.ounwan.dto.CoupungDTO;
 import com.ounwan.entity.Coupung;
 
 @Repository
@@ -81,27 +79,8 @@ public class CoupungDAO {
 	public int updateAvailableStock(Coupung product) {
 		return sqlSession.selectOne(NAMESPACE + "updateAvailableStock", product);
 	}
-
-	public int insertProductOption(Map<String, Object> data) {
-		return sqlSession.insert(NAMESPACE + "insertProductOption", data);
-	}
-
-	public int deleteProductOption(Integer coupungOptionNumber) {
-		return sqlSession.delete(NAMESPACE + "deleteProductOption", coupungOptionNumber);
-	}
-
-	public int insertProductImg(Map<String, Object> data) {
-		return sqlSession.insert(NAMESPACE + "insertProductImg", data);
-		
-	}
-
-	public int deleteProductImg(Integer productImageNumber) {
-		return sqlSession.delete(NAMESPACE + "deleteProductImg", productImageNumber);
-		
-	}
-
-	public int insertDetailImg(Map<String, Object> data) {
-		return sqlSession.insert(NAMESPACE + "insertDetailImg", data);
-		
+	
+	public List<Map<String, Object>> selectAllCategories() {
+		return sqlSession.selectList(NAMESPACE + "selectAllCategories");
 	}
 }
