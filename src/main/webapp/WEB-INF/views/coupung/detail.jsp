@@ -219,13 +219,44 @@
 		</div>
 	</div>
 	<div id="block"></div>
-	<div id="modalContainer" class="hidden">
-		<div id="modalContent">
-			이메일 : <input type="text" id="guestEmail" /> <br> 핸드폰 번호 : <input
-				type="text" id="guestPhone" /> <br>
-			<button type="button" id="guestSubmitBtn">입력</button>
-		</div>
-	</div>
+	  <div id="guestModal" class="hidden">
+	    	<div class="modal-content">
+		    	<div class="modal-body">
+			    	<div class="modal-title">
+			    		<div>비회원 개인정보 수집 및 이용동의</div>
+			    		<div class="modal-close">
+		    				<span id="closeBtn" class="close-button">&times;</span>
+		    			</div>
+			    	</div>
+			    	<div class="modal-body-wrap">
+			    	<%@ include file="../guest/guestAgreementTerms.jsp" %>
+			    		<div class="agreement">
+							<label for="agree1">
+								<input type="checkbox" id="agree1" required>
+								<i class="circle"></i> [필수] 개인정보 수집 및 이용 동의
+							</label>
+						</div>
+						<div  >
+							<div class="modal-input">
+						    	<div>
+						    		<label class="modal-attribute-name" for="">이메일 </label> 
+						    		<input class="box" type="text" id="guestEmail" required/>
+						    	</div>
+						    	<div>
+						    		<label class="modal-attribute-name" for="">연락처 </label> 
+						    		<input class="box" type="text" id="guestPhone" required/>
+						    	</div>
+					    	</div>
+					    	<div class="modal-check">
+						    	<div>
+						    		<button type="button" id="guestSubmitBtn">주문하기</button>
+						    	</div>
+					    	</div>
+				    	</div>
+			    	</div>
+		    	</div>
+	    	</div>
+	    </div>
 	<script src="../js/main.js"></script>
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script
@@ -387,8 +418,8 @@ for(var i = 0; i < 5; i++) {
 		if ($('#productOption option:selected').val() === '0') {
 			alert('수량을 선택해 주세요');
 		}  else if('${userInfo}' === '') {
-			if(!confirm('로그인 하시겠습니까?')) {
-				$('#modalContainer').removeClass('hidden'); // 모달을 띄우는 부분
+			if(confirm('비회원으로 주문하시겠습니까?')) {
+				$('#guestModal').removeClass('hidden'); // 모달을 띄우는 부분
 			} else {
 				location.href="${appPath}/clients/login";
 			}
