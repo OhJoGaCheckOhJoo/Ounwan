@@ -183,7 +183,6 @@ public class CoupungService {
 		for (int coupungNumber : coupungNumbers) {
 			result.add(getProductDetail(coupungNumber, 0, 0));
 		}
-		
 		return result;
 	}
 	
@@ -246,7 +245,6 @@ public class CoupungService {
 		for(Map<String, Object> data : coupungDAO.getReviewList(coupungNumber)) {
 			reviewList.add(data);
 		}		
-		System.out.println("Service_review: " + reviewList);
 		return reviewList;
 	}
 
@@ -259,9 +257,6 @@ public class CoupungService {
 			scoreInfo.put("score", i);
 			scoreList.add(coupungDAO.getScoreList(scoreInfo));
 		}
-		
-		System.out.println("Service_scoreList: " + scoreList);
-		
 		return scoreList;
 	}
 	

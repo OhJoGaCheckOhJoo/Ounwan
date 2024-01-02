@@ -34,14 +34,10 @@ public class OrderDetailService {
 	}
 
 	public List<OrderDetailsDTO> getOrderDetails(String orderNumber) {
-		List<OrderDetails> orderLists = orderDetailDAO.getOrderDetails(orderNumber);
-		System.out.println("orderEntity : " + orderLists);
 		List<OrderDetailsDTO> orderList = changeDTOList(orderDetailDAO.getOrderDetails(orderNumber));
-		System.out.println("orderList : " + orderList);
 		for (OrderDetailsDTO order : orderList) {
 			order.setCoupungDTO(coupungService.getProductDetail(order.getCoupungNumber(), order.getCoupungOptionNumber(), order.getQuantity()));
 		}
-		
 		return orderList;
 	}
 	

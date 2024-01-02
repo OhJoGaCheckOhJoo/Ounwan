@@ -13,7 +13,7 @@
 }
 
 .red-star {
-	color: red;
+	color: var(--main-color-2);
 	margin: auto;
 }
 
@@ -177,13 +177,13 @@ button:hover, .profile-photo > label:hover {
 	margin-top: 10px;
 }
 
-
 .profile-info > div > div {
 	width: 315px;
 	color: var(--main-color-2);
 	text-align: right;
 	visibility: hidden;
 }
+
 #agreementPersonalData, #agreementAccessTerms {
 	position: absolute;
 	top: 300px;

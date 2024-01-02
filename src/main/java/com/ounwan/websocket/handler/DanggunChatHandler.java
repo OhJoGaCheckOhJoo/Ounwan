@@ -26,7 +26,6 @@ public class DanggunChatHandler extends TextWebSocketHandler {
 		super.afterConnectionClosed(session, status);
 	}
 
-	// 클라이언트(브라우저)에서 서버로 메시지를 보냈을때
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String strMessage = message.getPayload();

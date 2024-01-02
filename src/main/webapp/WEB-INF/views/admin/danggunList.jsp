@@ -61,7 +61,6 @@
 		<c:if test="${paginating.pageNumber ne i}">
 			<a href="javascript:search(${i})">${i}</a>
 		</c:if>
-		
 	</c:forEach>
 
 	<c:choose>
@@ -84,30 +83,3 @@
 		</c:otherwise>
 	</c:choose>
 </div>
-<script>
-/* $(".danggun-post").click(function(){  
-	var danggunNumber =$(this).find('.danggun-number').text();
-	alert(danggunNumber);
-		$.ajax({
-			url : appPath + "/danggun/detail?danggunNumber="+danggunNumber,
-			data : {"danggunNumber" : danggunNumber},
-			success : function(res) {
-				alert("off to danggunDetail");
-				location.href=appPath+"/danggun/danggunDetail";
-				$('#admin-wrap').html(res);
-			}
-		}); 
-}); */ 
-
-$(".danggun-post").click(function(){  
-	var danggunNumber =$(this).find('.danggun-number').text();
-	var clientId =$(this).find('.client-id').text();
-		$.ajax({
-			url : appPath + "/admin/danggun/danggunDetail?danggunNumber="+danggunNumber,
-			data : { "danggunNumber" : danggunNumber},
-			success : function(res) {
-				$('.admin-wrap').html(res);
-			}
-		}); 
-});
-</script>

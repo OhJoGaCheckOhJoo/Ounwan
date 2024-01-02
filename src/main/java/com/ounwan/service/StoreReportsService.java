@@ -24,12 +24,10 @@ public class StoreReportsService {
 		int result = storeReportsDAO.insertReport(storeReports);
 		int danggunNumber = storeReports.getDanggunNumber();
 		
-		
 		int reportCount = storeReportsDAO.countReport(danggunNumber);
 		if(reportCount >= 3) {
 			danggunService.updateReport(danggunNumber);
 		}
-		
 		return (result > 0) ? true : false;
 	}
 	
@@ -44,6 +42,7 @@ public class StoreReportsService {
 							.category(storeReports.getCategory())
 							.build();
 	}
+	
 	public StoreReportsDTO changeDTO(StoreReports storeReports) {
 		return StoreReportsDTO.builder()
 								.storeReportNumber(storeReports.getStoreReportNumber())
@@ -55,5 +54,4 @@ public class StoreReportsService {
 								.category(storeReports.getCategory())
 								.build();
 	}
-	
 }

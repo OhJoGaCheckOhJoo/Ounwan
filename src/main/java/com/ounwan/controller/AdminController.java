@@ -189,14 +189,14 @@ public class AdminController {
 		
 		return "admin/danggunList";
 	}
-	@GetMapping("/danggun/danggunDetail")
-	public String danggunDetailModel (
-			Model model,
-			@RequestParam Integer danggunNumber) {
-			danggunService.danggunAdminDetail(danggunNumber);
-	
-		return "admin/danggunDetail";
-	}
+//	@GetMapping("/danggun/danggunDetail")
+//	public String danggunDetailModel (
+//			Model model,
+//			@RequestParam Integer danggunNumber) {
+//			danggunService.danggunAdminDetail(danggunNumber);
+//	
+//		return "admin/danggunDetail";
+//	}
 	
 	@GetMapping("/danggun/report")
 	public String getDanggunReport(Model model) {

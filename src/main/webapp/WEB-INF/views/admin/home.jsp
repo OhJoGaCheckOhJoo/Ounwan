@@ -49,25 +49,14 @@
                     <a id="aetaAllList" href="#">오늘의 애타</a>
                 </li>
                 <li>
-                    <a href="#">오늘 운동했다그램</a>
-                    <ul class="submenu">
-                        <li><a id="gramReportBoards" href="#">신고게시물</a></li>
-                        <li><a href="#">해시태그</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">고객센터</a>
-                    <ul class="submenu">
-                        <li><a id="ounwanChat" href="#">문의 채팅</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
+                    <a id="ounwanChat" href="#">문의 채팅</a>
                 </li>
                 <li>
                     <a href="#">신고센터</a>
                     <ul class="submenu">
                         <li><a id="danggunReport" href="#">오늘의 당군</a></li>
                         <li><a id="aetaReport" href="#">오늘의 애타</a></li>
-                        <li><a href="#">오늘의 운동했다그램</a></li>
+                        <li><a id="gramReportBoards" href="#">오늘의 운동했다그램</a></li>
                     </ul>
                 </li>
             </ul>

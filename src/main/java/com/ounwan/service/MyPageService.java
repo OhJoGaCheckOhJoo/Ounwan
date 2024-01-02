@@ -39,6 +39,8 @@ public class MyPageService {
 	
 	private static final String BUCKET = "ounwan";
 	private static final String DEFAULT_PROFILE = "https://ounwan.s3.ap-northeast-2.amazonaws.com/1704123555189.png";
+	private static final int PAGELIMIT = 10; 
+	private static final int BLOCKLIMIT = 10;
 	
 	public boolean changeConfirmState(String orderNumber) {
 		int stateChange = myPageDAO.changeConfirmState(orderNumber);
@@ -89,22 +91,20 @@ public class MyPageService {
 		return selectWishLists.size() == result ? true : false;
 	}
 
-	int pageLimit=10;
-	int blockLimit=10;
 	public List<AetaDTO> getAetaList(String userId,int page) {
 		Map<String,Object> userPosts=new HashMap<>();
 		userPosts.put("clientId", userId);
-		userPosts.put("start",(page-1)*pageLimit);
-		userPosts.put("limit",pageLimit);
+		userPosts.put("start",(page-1)*PAGELIMIT);
+		userPosts.put("limit",PAGELIMIT);
 
 		return changeDTOList(myPageDAO.getAetaList(userPosts));
 	}
 
 	public PaginatingDTO getPages(int page, String userId) {
 		int countPosts = myPageDAO.countAetaList(userId);
-		int maxPageNumber = (int) (Math.ceil((double) countPosts / pageLimit));
-		int startPageNumber = (((int) (Math.ceil((double) page / blockLimit))) - 1) * blockLimit + 1;
-		int endPageNumber = startPageNumber + blockLimit - 1;
+		int maxPageNumber = (int) (Math.ceil((double) countPosts / PAGELIMIT));
+		int startPageNumber = (((int) (Math.ceil((double) page / BLOCKLIMIT))) - 1) * BLOCKLIMIT + 1;
+		int endPageNumber = startPageNumber + BLOCKLIMIT - 1;
 		if (endPageNumber > maxPageNumber) {
 			endPageNumber = maxPageNumber;
 		}
@@ -121,16 +121,14 @@ public class MyPageService {
 			myPageDAO.deleteReviewList(Integer.parseInt(reviewNumber));
 			result++;
 		}
-
 		return selectedReviews.size() == result ? true : false;
-
 	}
 
 	public String getPwdById(String clientId) {
-		String encryptedPassword = myPageDAO.getPwdById(clientId); // 암호화된 비밀번호를 가져옵니다.
+		String encryptedPassword = myPageDAO.getPwdById(clientId); 
 		
 		if (encryptedPassword != null) {
-			return encryptedPassword; // 암호화된 비밀번호 반환
+			return encryptedPassword; 
 		}
 		return null;
 	}
@@ -164,7 +162,6 @@ public class MyPageService {
 		metadata.setContentLength(multipartFile.getSize());
 		metadata.setContentType(multipartFile.getContentType());
 		
-		// 기존에 저장되어 있던 사진 삭제
 		if (!client.getProfileUrl().equals(DEFAULT_PROFILE))
 			amazonS3.deleteObject(BUCKET, client.getProfileUrl());
 	
@@ -210,7 +207,6 @@ public class MyPageService {
 	}
 
 	private static String hashPassword(String plainTextPassword) {
-		// bcrypt 암호화
 		return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
 	}
 

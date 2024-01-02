@@ -9,11 +9,11 @@
 <head>
 <meta charset="utf-8" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="${appPath }/css/main.css" />
+<link href="${appPath }/css/main.css" rel="stylesheet"/>
 <link href="${appPath }/css/main2.css" rel="stylesheet">
 <link href="${appPath }/css/header.css" rel="stylesheet">
 <link href="${appPath }/css/nav.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="${appPath }/css/order.css" />
+<link href="${appPath }/css/order.css" rel="stylesheet"/>
 
 </head>
 <body>

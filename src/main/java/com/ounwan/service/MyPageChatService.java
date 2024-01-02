@@ -53,18 +53,14 @@ public class MyPageChatService {
 			chatInfo.put("chatRoom", chatRoom);
 
 			if (seller.equals(userId)) {
-				// 판매자일 경우
 				Clients partnerInfo = myPageChatDAO.getPartnerInfo(buyer);
 				chatInfo.put("partnerInfo", partnerInfo);
 			} else if (buyer.equals(userId)) {
-				// 구매자일 경우
 				Clients partnerInfo = myPageChatDAO.getPartnerInfo(seller);
 				chatInfo.put("partnerInfo", partnerInfo);
 			}
-			// partners 리스트에 해당 Map 추가
 			partners.add(chatInfo);
 		}
-
 		return partners;
 	}
 	
@@ -90,7 +86,6 @@ public class MyPageChatService {
 		int danggunNumber = myPageChatDAO.selectDanggunNumber(roomId);
 		
 		Danggun resultDanggun = danggunDAO.selectDanggun(danggunNumber);
-//		여기서 danggun 결과, tradeHistoryNumber로 거래 결과 나오고, danggunNumber로 이미지랑 찜 리스트 가져오기 
 		DanggunDTO danggun = null;
 		if(resultDanggun != null) {
 			danggun = changeDTO(resultDanggun);
@@ -103,22 +98,31 @@ public class MyPageChatService {
 		if (resultImages != null) {
 			danggun.setProductImagesList(resultImages);
 		}
-
 		return danggun;
 	}
 	
 	public Danggun changeEntity(DanggunDTO danggun) {
 		return Danggun.builder().danggunNumber(danggun.getDanggunNumber())
-				.tradeHistoryNumber(danggun.getTradeHistoryNumber()).clientId(danggun.getClientId())
-				.productName(danggun.getProductName()).price(danggun.getPrice()).detail(danggun.getDetail())
-				.uploadDate(danggun.getUploadDate()).visibility(danggun.getVisibility()).build();
+									.tradeHistoryNumber(danggun.getTradeHistoryNumber())
+									.clientId(danggun.getClientId())
+									.productName(danggun.getProductName())
+									.price(danggun.getPrice())
+									.detail(danggun.getDetail())
+									.uploadDate(danggun.getUploadDate())
+									.visibility(danggun.getVisibility())
+									.build();
 	}
 
 	public DanggunDTO changeDTO(Danggun danggun) {
 		return DanggunDTO.builder().danggunNumber(danggun.getDanggunNumber())
-				.tradeHistoryNumber(danggun.getTradeHistoryNumber()).clientId(danggun.getClientId())
-				.productName(danggun.getProductName()).price(danggun.getPrice()).detail(danggun.getDetail())
-				.uploadDate(danggun.getUploadDate()).visibility(danggun.getVisibility()).build();
+									.tradeHistoryNumber(danggun.getTradeHistoryNumber())
+									.clientId(danggun.getClientId())
+									.productName(danggun.getProductName())
+									.price(danggun.getPrice())
+									.detail(danggun.getDetail())
+									.uploadDate(danggun.getUploadDate())
+									.visibility(danggun.getVisibility())
+									.build();
 	}
 	
 	public List<DanggunChatRoomDTO> changeDTORoomList(List<DanggunChatRoom> danggunChatRoom) {

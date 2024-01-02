@@ -33,7 +33,6 @@ public class SomsomiChatService {
 		if(resolvedStatus == 1) {
 			chatDAO.updateResolvedStatus(roomId);
 		}
-		
 		List<SomsomiChatMessageDTO> result = changeDTOlist(chatDAO.selectSomsomiChatList(roomId));
 		return result;
 	}

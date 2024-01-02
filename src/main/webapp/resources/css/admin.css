@@ -101,7 +101,7 @@ a {
     padding: 50px;
     width: 1000px;
     height: 600px;
-    margin: 200px auto 0px auto;
+    margin: 100px auto 0px auto;
     border-radius: 50px;
 }
 .admin-chat-sub {
@@ -133,6 +133,7 @@ a {
 .user-profile img {
     height: 40px;
     width: 40px;
+    border-radius: 20px;
 }
 .user-profile span {
     position: relative;

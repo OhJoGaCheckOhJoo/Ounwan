@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.checkerframework.checker.units.qual.t;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,15 +17,12 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.ounwan.dto.AetaCommentsDTO;
 import com.ounwan.dto.AetaDTO;
-import com.ounwan.dto.AetaImagesDTO;
 import com.ounwan.dto.AetaLikesDTO;
 import com.ounwan.dto.ClientsDTO;
-import com.ounwan.dto.DanggunDTO;
 import com.ounwan.dto.InbodyDTO;
 import com.ounwan.dto.OunwanGramDTO;
 import com.ounwan.dto.PaginatingDTO;
 import com.ounwan.entity.Aeta;
-import com.ounwan.entity.AetaImages;
 import com.ounwan.entity.AetaLikes;
 import com.ounwan.entity.Comments;
 import com.ounwan.entity.Inbody;
@@ -335,9 +331,8 @@ public class CommunityService {
 	public String gramUpdateBoard(String clientId, int communityNumber, MultipartFile image, String content,
 			String[] hashTag) throws IllegalStateException, IOException {
 		OunwanGram ounwanBoard = communityDAO.selectBoardByCommunityNum(communityNumber);
-		ounwanBoard.setContents(content); // 내용 수정
+		ounwanBoard.setContents(content); 
 
-		// 이미지 수정
 		if (image != null) {
 			File removeFile = new File(UPLOADPATH + ounwanBoard.getImageUrl().substring(1));
 			amazonS3.deleteObject(BUCKET, ounwanBoard.getImageUrl());
@@ -439,11 +434,9 @@ public class CommunityService {
 				.updatedDate(inbody.getUpdatedDate()).build();
 	}
 
-	int pageLimit = 10; // the number of posts to show on a page
-	int blockLimit = 10; // the number of paginated number on the bottom
+	int pageLimit = 10; 
+	int blockLimit = 10; 
 
-	// 페이징 된 게시판 조회
-	// 게시판 검색 기능
 	public List<AetaDTO> aetaList(int page, String inputValue, String selectedOption) {
 
 		int pageStartNum = (page - 1) * pageLimit;
@@ -463,10 +456,8 @@ public class CommunityService {
 		return changeDTOList(communityDAO.AetaList(paginateParams)); // 애타 게시판메인
 	}
 
-	// 페이징 구현
 	public PaginatingDTO getPages(int page, String inputValue, String selectedOption) {
 		int countPosts = 0;
-		// 출력할 게시글 갯수
 		switch (selectedOption) {
 		
 		case "aetaSearchAll":
@@ -483,11 +474,8 @@ public class CommunityService {
 			break;
 		}
 
-		// 전체 페이지 갯수
 		int maxPageNumber = (int) (Math.ceil((double) countPosts / pageLimit));
-		// 시작할 페이지 값 계산
 		int startPageNumber = (((int) (Math.ceil((double) page / blockLimit))) - 1) * blockLimit + 1;
-		// 끝 페이지 값 계산
 		int endPageNumber = startPageNumber + blockLimit - 1;
 		if (endPageNumber > maxPageNumber) {
 			endPageNumber = maxPageNumber;
@@ -497,7 +485,6 @@ public class CommunityService {
 				.endPageNumber(endPageNumber).build();
 	}
 
-	// 게시글 등록
 	public int aetaInsertPost(HttpSession session, String title, String contents, MultipartFile[] images,
 			Integer imagesLength) throws IllegalStateException, IOException {
 		ClientsDTO user = (ClientsDTO) session.getAttribute("userInfo");
@@ -506,29 +493,21 @@ public class CommunityService {
 
 		int result = 0;
 
-		// 우선 제목&글 insert
 		communityDAO.aetaInsertPost(
 				changeEntity(AetaDTO.builder().clientId(clientId).title(title).contents(contents).build()));
 
-		// 이미지가 없을 시 이미지 길이 0
 		if (images == null) {
 			imagesLength = 0;
 		}
 		if (imagesLength > 0) {
-			// 파일 갯수만큼 이름 만들어기
 			String[] aetaFileNames = aetaMakeFileName(clientId, images, imagesLength, count);
-			// 이미지 갯수 만큼 업로드 (이름 변경된걸로 업데이트
 			aetaFileNames = aetaUploadFiles(images, imagesLength, aetaFileNames, count);
-			// 이미지 url DB에 insert& insert된 갯수 반환
 			result = aetaInsertImageUrls(imagesLength, aetaFileNames, count);
 		}
-		// result와 업로드한 이미지 갯수가 같으면 1 반환
 		return result == imagesLength ? 1 : 0;
 	}
 
-	// 게시글 수정 (원래꺼 삭제?)
 	public int aetaUpdatePost(HttpSession session, int aetaNumber, String title, String contents,
-//			int oldImagesLength,
 			MultipartFile[] newImages, int newImagesLength) throws IllegalStateException, IOException {
 		
 		ClientsDTO user = (ClientsDTO) session.getAttribute("userInfo");
@@ -536,63 +515,33 @@ public class CommunityService {
 		System.out.println(clientId);
 		int result = 0;
 		
-		// 파일의 갯수 = 기존 업로드한 파일 수+ 업로드 할 파일 수
-		// int count = oldImagesLength+newImagesLength;
 		int count = newImagesLength;
 
-		// 업데이트 -> 애타번호로 제목&글 update
 		communityDAO.aetaUpdatePost(changeEntity(AetaDTO.builder()
 														.clientId(clientId)
 														.aetaNumber(aetaNumber)
 														.title(title)
 														.contents(contents)
 														.build()));
-
-		// 이미지가 없을 시 이미지 길이 0
 		if (newImages == null) {
 			newImagesLength = 0;
 		}else{
-			// 수정할 파일 이름 만들기 (성공)
 			String[] aetaFileNames = aetaMakeFileName(clientId, newImages, newImagesLength, count);
-			// 수정한 이미지 갯수 만큼 업로드 (성공)
 			aetaFileNames = aetaUploadFiles(newImages, newImagesLength, aetaFileNames, count);
 			result = aetaUpdateImageUrls(aetaNumber, newImagesLength, aetaFileNames, count);
-
-			// 이미지 url DB에 기존 사진 delete& 수정한 사진 insert
-//		if(aetaDeleteImageUrls(aetaNumber)>0) {
-//			System.out.println("기존 파일 url 삭제 성공");
-//			result= aetaInsertImageUrls(newImagesLength,aetaFileNames,count);	
-//			}
 		}
-
-		// result와 업로드한 이미지 갯수가 같으면 1 반환
 		return result == newImagesLength ? 1 : 0;
-
-		// result 값 주기
-		// count imagesLength+newImagesLength
-		// 삭제할 파일들 이름주기
-		// 추가할 파일들 이름주기
-		// title과contents update 하기
-		// 업데이트 됐으면, 이전 파일 삭제
-		// 업데이트 파일 업로드
 	}
 
 	private int aetaUpdateImageUrls(int aetaNumber, int newImagesLength, String[] aetaFileNames, int count) {
-		// 반환할 이미지 갯수 세주기
 		int countImages = 0;
-		// mapper에 넘길 map 선언
 		Map<String, Object> aetaUrlMap = new HashMap<>();
-		// 게시글의 기존 이미지url 삭제
 		aetaDeleteImageUrls(aetaNumber);
-		// 이미지 갯수만큼 DB에 url insert
 		for (int i = (count - newImagesLength); i < count; i++) {
-			System.out.println("url 업데이트 aetaFile[i]:" + aetaFileNames[i]);
 			aetaUrlMap.put("aetaNumber", aetaNumber);
 			aetaUrlMap.put("url", aetaFileNames[i]);
 			countImages += communityDAO.aetaInsertImageUrls(aetaUrlMap);
-//			countImages += communityDAO.aetaUpdateImageUrls(aetaUrlMap);
 		}
-		System.out.println(countImages);
 		return countImages;
 	}
 
@@ -600,7 +549,6 @@ public class CommunityService {
 		return communityDAO.aetaDeleteImageUrls(aetaNumber);
 	}
 
-	// 이미지 이름 세팅
 	private String[] aetaMakeFileName(String clientId, MultipartFile[] images, int imagesLength, int count) {
 		String[] aetaFileNames = new String[imagesLength];
 		for (int i = (count - imagesLength); i < count; i++) {
@@ -624,75 +572,54 @@ public class CommunityService {
 			amazonS3.putObject(BUCKET, aetaFileNames[i], images[i].getInputStream(), metadata);
 			
 			aetaFileNames[i] = amazonS3.getUrl(BUCKET, aetaFileNames[i]).toString();
-//			aetaUploadFiles[i] = new File(AETA_UPLOADPATH + AETAIMAGEPATH + aetaFileNames[i]);
-//			
-//
-//			try {
-//				// 업로드 m
-//				images[i].transferTo(aetaUploadFiles[i]);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
 		}
-//		System.out.println("업로드 파일 ~ :"+aetaUploadFiles);
 		return aetaFileNames;
 	}
 
-	// DB에 이미지 url 저장
 	private int aetaInsertImageUrls(int imagesLength, String[] aetaFileNames, int count) {
-		// 반환할 이미지 갯수 세주기
 		int countImages = 0;
-		// mapper에 넘길 map 선언
 		Map<String, Object> aetaUrlMap = new HashMap<>();
 
-		// 이미지 갯수만큼 DB에 url insert
 		for (int i = (count - imagesLength); i < count; i++) {
-			System.out.println("aetaFile[i]:" + aetaFileNames[i]);
 			aetaUrlMap.put("url", aetaFileNames[i]);
 			countImages += communityDAO.aetaInsertImageUrls(aetaUrlMap);
 		}
 		return countImages;
 	}
 
-	// 게시글 조회
 	public List<Map<String, Object>> aetaReadPost(int aetaNumber) {
 		return communityDAO.aetaReadPost(aetaNumber);
 	}
-	// 게시글 댓글 조회
+	
 	public List<Map<String,Object>> aetaReadComments(int aetaNumber){
 		return communityDAO.aetaReadComments(aetaNumber);
 	}
-	// 댓글 갯수 
+
 	public int aetaCountComments(int aetaNumber) {
 		return communityDAO.aetaCountComments(aetaNumber);
 	}
 
-	// 게시글 조회수 증가 기능
 	public boolean aetaUpdateViews(int aetaNumber) {
 		return (communityDAO.aetaUpdateViews(aetaNumber) > 0) ? true : false;
 	}
 
-	// 게시글 좋아요 기능
 	public int aetaCountLikes(int aetaNumber) {
 		return communityDAO.aetaCountLikes(aetaNumber);
 	}
-	// 좋아요 갯수
+
 	public int aetaLikesCheck(int aetaNumber, String clientId) {
 		return communityDAO
 				.aetaLikesCheck(changeEntity(AetaLikesDTO.builder().aetaNumber(aetaNumber).clientId(clientId).build()));
 	}
 
-	// 좋아요 버튼 기능
 	public AetaLikesDTO aetaLikesButton(int aetaNumber, ClientsDTO user) {
 		AetaLikesDTO data = AetaLikesDTO.builder().aetaNumber(aetaNumber).clientId(user.getClientId()).build();
 
 		int checkLikes = communityDAO.aetaLikesCheck(changeEntity(data));
 		Boolean like = null;
 		Boolean dislike = null;
-		System.out.println("checklikes:" + checkLikes);
 		if (checkLikes == 0) {
 			like = (communityDAO.aetaLike(changeEntity(data)) > 0) ? true : false;
-
 		} else {
 			dislike = (communityDAO.aetaDislike(changeEntity(data)) > 0) ? true : false;
 		}
@@ -700,42 +627,34 @@ public class CommunityService {
 		return AetaLikesDTO.builder().like(like).dislike(dislike).likesCount(count).build();
 	}
 
-	// 게시글 수정페이지에 보여줄 데이터
 	public List<Map<String, Object>> aetaPostToBeUpdated(int aetaNumber) {
 		return communityDAO.aetaPostToBeUpdated(aetaNumber);
 	}
 
-	// 게시글 삭제
 	public int aetaDeletePost(AetaDTO post) {
 		int result = communityDAO.aetaDeletePost(post.getAetaNumber());
 		return result;
 	}
-	// 게시글 신고
+
 	public int aetaReport(AetaDTO aeta) {
-		System.out.println("service :"+aeta);
 		return communityDAO.aetaReport(changeEntity(aeta));
 	}
-	// 댓글 등록
+
 	public boolean aetaInsertComment(AetaCommentsDTO comment) {
 		return (communityDAO.aetaInsertComment(changeEntity(comment)) > 0) ? true : false;
 	}
 
-	// 댓글 삭제
 	public boolean aetaDeleteComment(AetaCommentsDTO comment) {
 		Comments c = changeEntity(comment);
-		System.out.println("boardNum: " + c.getAetaNumber());
-
 		return (communityDAO.aetaDeleteComment(changeEntity(comment)) > 0) ? true : false;
 	}
 
-	// 게시글 번호(BOARD_NUMBER)로 작성자(CLIENT_ID) 아이디 가져오기
 	public String findClientId(int aetaNumber) {
 		return communityDAO.findClientId(aetaNumber);
 	}
 	
 	public List<AetaDTO> getAetaReportList() {
-		List<AetaDTO> result = changeDTOList(communityDAO.getAetaReportList());
-		return result;
+		return changeDTOList(communityDAO.getAetaReportList());
 	}
 	
 	public boolean restoreAeta(Integer aetaNumber) {
@@ -743,18 +662,30 @@ public class CommunityService {
 		return (result > 0) ? true : false;
 	}
 
-	/* DTO와 Entity 타입바꿔주는 함수들 */
 	private Aeta changeEntity(AetaDTO aeta) {
-		return Aeta.builder().aetaNumber(aeta.getAetaNumber()).title(aeta.getTitle()).contents(aeta.getContents())
-				.clientId(aeta.getClientId()).createdDate(aeta.getCreatedDate()).updatedDate(aeta.getCreatedDate())
-				.views(aeta.getViews()).visibility(aeta.getVisibility()).reportReason(aeta.getReportReason()).build();
+		return Aeta.builder()
+					.aetaNumber(aeta.getAetaNumber())
+					.title(aeta.getTitle())
+					.contents(aeta.getContents())
+					.clientId(aeta.getClientId())
+					.createdDate(aeta.getCreatedDate())
+					.updatedDate(aeta.getCreatedDate())
+					.views(aeta.getViews())
+					.visibility(aeta.getVisibility())
+					.reportReason(aeta.getReportReason())
+					.build();
 	}
 
 
 	private Comments changeEntity(AetaCommentsDTO comment) {
-		return Comments.builder().clientId(comment.getClientId()).commentNumber(comment.getCommentNumber())
-				.aetaNumber(comment.getAetaNumber()).contents(comment.getContents())
-				.createdDate(comment.getCreatedDate()).updatedDate(comment.getUpdatedDate()).build();
+		return Comments.builder()
+						.clientId(comment.getClientId())
+						.commentNumber(comment.getCommentNumber())
+						.aetaNumber(comment.getAetaNumber())
+						.contents(comment.getContents())
+						.createdDate(comment.getCreatedDate())
+						.updatedDate(comment.getUpdatedDate())
+						.build();
 	}
 
 	private List<AetaDTO> changeDTOList(List<Aeta> boardList) {
@@ -764,19 +695,28 @@ public class CommunityService {
 			list.add(changeDTO(aeta));
 		}
 		return list;
-
 	}
 
 	private AetaDTO changeDTO(Aeta aeta) {
-		return AetaDTO.builder().aetaNumber(aeta.getAetaNumber()).title(aeta.getTitle()).contents(aeta.getContents())
-				.clientId(aeta.getClientId()).createdDate(aeta.getCreatedDate()).updatedDate(aeta.getCreatedDate())
-				.views(aeta.getViews()).visibility(aeta.getVisibility()).reportReason(aeta.getReportReason()).build();
+		return AetaDTO.builder()
+						.aetaNumber(aeta.getAetaNumber())
+						.title(aeta.getTitle())
+						.contents(aeta.getContents())
+						.clientId(aeta.getClientId())
+						.createdDate(aeta.getCreatedDate())
+						.updatedDate(aeta.getCreatedDate())
+						.views(aeta.getViews())
+						.visibility(aeta.getVisibility())
+						.reportReason(aeta.getReportReason())
+						.build();
 	}
 
 	private AetaLikes changeEntity(AetaLikesDTO aetaLikesDTO) {
-		return AetaLikes.builder().likeNumber(aetaLikesDTO.getLikeNumber()).aetaNumber(aetaLikesDTO.getAetaNumber())
-				.clientId(aetaLikesDTO.getClientId()).build();
+		return AetaLikes.builder()
+						.likeNumber(aetaLikesDTO.getLikeNumber())
+						.aetaNumber(aetaLikesDTO.getAetaNumber())
+						.clientId(aetaLikesDTO.getClientId())
+						.build();
 	}
-
 
 }

@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.ounwan.dto.AetaDTO;
 import com.ounwan.dto.DanggunDTO;
 import com.ounwan.dto.PaginatingDTO;
 import com.ounwan.dto.ProductImagesDTO;
@@ -49,6 +48,8 @@ public class DanggunService {
 	AmazonS3 amazonS3;
 
 	private static final String BUCKET = "ounwan";
+	private static final int PAGELIMIT = 10; 
+	private static final int BLOCKLIMIT = 10;
 
 	public List<DanggunDTO> searchProduct(String name) {
 		List<DanggunDTO> searchList = new ArrayList<DanggunDTO>();
@@ -67,18 +68,14 @@ public class DanggunService {
 			ProductImagesDTO image = productImageService.selectAllImages(danggun.getDanggunNumber());
 			danggun.setUrl(image.getUrl());
 		}
-
 		return list;
 	}
-
-	int pageLimit = 10; // the number of posts to show on a page
-	int blockLimit = 10; // the number of paginated number on the bottom
 
 	public List<DanggunDTO> pagenatedList(int page, String name) {
 
 		Map<Object, Object> paginateParams = new HashMap<>();
-		paginateParams.put("start", (page - 1) * pageLimit);
-		paginateParams.put("limit", pageLimit);
+		paginateParams.put("start", (page - 1) * PAGELIMIT);
+		paginateParams.put("limit", PAGELIMIT);
 		paginateParams.put("name", name);
 
 		List<DanggunDTO> list = changeDTOList(danggunDAO.paginatedlist(paginateParams));
@@ -88,9 +85,9 @@ public class DanggunService {
 
 	public PaginatingDTO getPages(int page, String inputValue) {
 		int countPosts = danggunDAO.countProducts(inputValue);
-		int maxPageNumber = (int) (Math.ceil((double) countPosts / pageLimit));
-		int startPageNumber = (((int) (Math.ceil((double) page / blockLimit))) - 1) * blockLimit + 1;
-		int endPageNumber = startPageNumber + blockLimit - 1;
+		int maxPageNumber = (int) (Math.ceil((double) countPosts / PAGELIMIT));
+		int startPageNumber = (((int) (Math.ceil((double) page / BLOCKLIMIT))) - 1) * BLOCKLIMIT + 1;
+		int endPageNumber = startPageNumber + BLOCKLIMIT - 1;
 		if (endPageNumber > maxPageNumber) {
 			endPageNumber = maxPageNumber;
 		}
@@ -148,7 +145,6 @@ public class DanggunService {
 
 	public DanggunDTO selectDanggun(String clientId, String adminId, int danggunNumber) {
 		Danggun resultDanggun = danggunDAO.selectDanggun(danggunNumber);
-//		여기서 danggun 결과, tradeHistoryNumber로 거래 결과 나오고, danggunNumber로 이미지랑 찜 리스트 가져오기 
 		DanggunDTO danggun = null;
 		if (resultDanggun != null) {
 			danggun = changeDTO(resultDanggun);
@@ -200,7 +196,6 @@ public class DanggunService {
 
 		int zzimCount = wishListsService.selectCountZzim(danggunNumber);
 		result.put("zzimCount", zzimCount);
-
 		result.put("danggunNumber", danggunNumber);
 
 		return result;
@@ -223,7 +218,6 @@ public class DanggunService {
 		danggun.setTradeHistoryNumber(tradeHistoryNumber);
 		int result = 0;
 		int count = imagesLength + newImagesLength;
-		System.out.println("count : " + count);
 		String[] uploadFileName = new String[count];
 
 		for (int i = 0; i < imagesLength; i++) {
@@ -243,7 +237,6 @@ public class DanggunService {
 
 				amazonS3.putObject(BUCKET, uploadFileName[i], imageFiles[i].getInputStream(), metadata);
 				uploadFileName[i] = amazonS3.getUrl(BUCKET, uploadFileName[i]).toString();
-				System.out.println("update : " + uploadFileName[i]);
 
 				amazonS3.deleteObject(BUCKET, oldImageURL[i]);
 				productImagesDAO.updateDanggunImages(
@@ -259,7 +252,6 @@ public class DanggunService {
 						metadata);
 
 				String url = amazonS3.getUrl(BUCKET, uploadFileName[i]).toString();
-				System.out.println("new : " + url);
 				productImagesDAO
 						.insertNewDetailImages(ProductImages.builder().danggunNumber(danggunNumber).url(url).build());
 				result += 1;
@@ -304,17 +296,28 @@ public class DanggunService {
 	}
 
 	public Danggun changeEntity(DanggunDTO danggun) {
-		return Danggun.builder().danggunNumber(danggun.getDanggunNumber())
-				.tradeHistoryNumber(danggun.getTradeHistoryNumber()).clientId(danggun.getClientId())
-				.productName(danggun.getProductName()).price(danggun.getPrice()).detail(danggun.getDetail())
-				.uploadDate(danggun.getUploadDate()).visibility(danggun.getVisibility()).build();
+		return Danggun.builder()
+						.danggunNumber(danggun.getDanggunNumber())
+						.tradeHistoryNumber(danggun.getTradeHistoryNumber())
+						.clientId(danggun.getClientId())
+						.productName(danggun.getProductName())
+						.price(danggun.getPrice())
+						.detail(danggun.getDetail())
+						.uploadDate(danggun.getUploadDate())
+						.visibility(danggun.getVisibility())
+						.build();
 	}
 
 	public DanggunDTO changeDTO(Danggun danggun) {
 		return DanggunDTO.builder().danggunNumber(danggun.getDanggunNumber())
-				.tradeHistoryNumber(danggun.getTradeHistoryNumber()).clientId(danggun.getClientId())
-				.productName(danggun.getProductName()).price(danggun.getPrice()).detail(danggun.getDetail())
-				.uploadDate(danggun.getUploadDate()).visibility(danggun.getVisibility()).build();
+									.tradeHistoryNumber(danggun.getTradeHistoryNumber())
+									.clientId(danggun.getClientId())
+									.productName(danggun.getProductName())
+									.price(danggun.getPrice())
+									.detail(danggun.getDetail())
+									.uploadDate(danggun.getUploadDate())
+									.visibility(danggun.getVisibility())
+									.build();
 	}
 
 }

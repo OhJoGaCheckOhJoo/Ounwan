@@ -425,6 +425,19 @@ for(var i = 0; i < 5; i++) {
 		}
 	});
 	
+	var modal = document.getElementById("guestModal");
+	var closeBtn = document.getElementById("closeBtn");
+
+	closeBtn.addEventListener("click", function() {
+		modal.classList.add("hidden");
+	});
+
+	modal.addEventListener("click", function(event) {
+		if (event.target === modal) {
+			modal.classList.add("hidden");
+		}
+	});
+	
 	var phone = "";
     $('#guestPhone').on('input', function() {
         if ($(this).val().length < 14) {

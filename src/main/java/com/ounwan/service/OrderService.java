@@ -59,7 +59,7 @@ public class OrderService {
 		}
 		
 		deleteCart(orderDetails, session, client, guest);
-		sendReceipt(orderNumber, orderDTO.getTotalPrice(), orderDetails.get(0).getCoupungDTO().getName(), client, guest);
+		//sendReceipt(orderNumber, orderDTO.getTotalPrice(), orderDetails.get(0).getCoupungDTO().getName(), client, guest);
 		
 		return (result > 0) ? true : false;
 	}
@@ -68,7 +68,7 @@ public class OrderService {
 		List<CartsDTO> guestCarts = (List<CartsDTO>) session.getAttribute("cartList");
 		
 		for (OrderDetailsDTO orderDetail : orderDetails) {
-			if (guest != null) {// 비회원 주문된거 삭제 해주기
+			if (guest != null) {
 				if (guestCarts != null) {
 					for(int i = 0; i < guestCarts.size(); i++) {
 						if(orderDetail.getCoupungNumber() == guestCarts.get(i).getCoupungNumber() 
@@ -139,7 +139,6 @@ public class OrderService {
 	public OrdersDTO getOrders(String orderNumber) {
 		OrdersDTO order = changeDTO(orderDAO.getOrderById(orderNumber));
 		order.setOrderDetails(orderDetailService.getOrderDetails(orderNumber));
-		System.out.println("HERE : " + order);
 		return order;
 	}
 	

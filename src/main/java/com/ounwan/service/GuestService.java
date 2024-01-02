@@ -27,16 +27,12 @@ public class GuestService {
 
 	public OrdersDTO getGuestInfo(GuestsDTO guestDTO) {
 		Map<String, Object> guest = new HashMap<>();
-		System.out.println("email : " + guestDTO.getEmail());
-		System.out.println("orderNumber : " + guestDTO.getOrderNumber());
 		guest.put("guestEmail", guestDTO.getEmail());
 		guest.put("orderNumber", guestDTO.getOrderNumber());
 		
 		int result = guestDAO.getGuestInfo(guest);
-		System.out.println("result : " + result);
 		if (result > 0) 
 			return orderService.getOrders(guestDTO.getOrderNumber());
-		
 		return null;
 	}
 

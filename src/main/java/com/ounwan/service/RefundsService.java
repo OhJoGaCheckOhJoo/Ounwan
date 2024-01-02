@@ -20,7 +20,6 @@ public class RefundsService {
 		if(result > 0 && stateChange > 0) {
 			check =1 ;
 		}
-		
 		return check >0? true : false;
 	}
 }
