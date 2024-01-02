@@ -207,7 +207,7 @@
 	    	</div>
 	    </div>
 	</div>
-	
+	<script src="${appPath}/js/main.js"></script>
 	
 	<script>
 	$('.selectCheckbox').on('change', function() {

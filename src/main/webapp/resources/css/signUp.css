@@ -180,8 +180,9 @@ button:hover, .profile-photo > label:hover {
 
 .profile-info > div > div {
 	width: 315px;
-	color: red;
+	color: var(--main-color-2);
 	text-align: right;
+	visibility: hidden;
 }
 #agreementPersonalData, #agreementAccessTerms {
 	position: absolute;

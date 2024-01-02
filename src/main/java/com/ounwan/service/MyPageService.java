@@ -38,6 +38,7 @@ public class MyPageService {
 	AmazonS3 amazonS3;
 	
 	private static final String BUCKET = "ounwan";
+	private static final String DEFAULT_PROFILE = "https://ounwan.s3.ap-northeast-2.amazonaws.com/1704123555189.png";
 	
 	public boolean changeConfirmState(String orderNumber) {
 		int stateChange = myPageDAO.changeConfirmState(orderNumber);
@@ -164,8 +165,9 @@ public class MyPageService {
 		metadata.setContentType(multipartFile.getContentType());
 		
 		// 기존에 저장되어 있던 사진 삭제
-//		amazonS3.deleteObject(BUCKET, client.getProfileUrl());
-		
+		if (!client.getProfileUrl().equals(DEFAULT_PROFILE))
+			amazonS3.deleteObject(BUCKET, client.getProfileUrl());
+	
 		amazonS3.putObject(BUCKET, newFileName, multipartFile.getInputStream(), metadata);
 		
 		String newProfile = amazonS3.getUrl(BUCKET, newFileName).toString();
