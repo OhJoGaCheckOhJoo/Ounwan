@@ -253,7 +253,7 @@
 			</div>
 		</div>
 	</div>
-	
+	<script src="${appPath}/js/main.js"></script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script>
@@ -349,174 +349,190 @@
 		    }).open();
 		});
 		
+		
+		
 		$('#payment').on('click', function() {
-			var list = '${products}'.split('CoupungDTO');
-			var productName = '${products[0].name}';
-			var len = list.length;
-			if (len > 2) {
-				productName += ' 외 ' + (len - 2) + ' 개';
-			}
-			
-			var coupungNumber = [];
-			$('.coupungNumber').each(function() {
-				coupungNumber.push($(this).val());
-			});
-			
-			var quantities = [];
-			$('.product-quantity').each(function() {
-				quantities.push($(this).text());
-			});
-			
-			var options = [];
-			$('.optionNumber').each(function() {
-				options.push($(this).val());
-			});
-			
-			var price = 0;
-			
-			var priceUrl = "${appPath}/coupung/price?coupungNumbers=" + coupungNumber.join(',') + "&quantities=" + quantities.join(',');
-			var orderer = $('#name-txt').val();
-			var zipCode = $('#zipcode-txt').val();
-			var address = $('#address-txt').val() + " " + $('#address-detail-txt').val();
-			var phoneNumber = $('#phone-txt').val();
-			var email = $('#id-txt').val() + "@" + $('#domain-txt').val();
-			if ($('#creditCard').is(':checked')) {
-				 $.ajax({
-					 url : priceUrl,
-					 type : 'get',
-					 success : function(price) {
-						 IMP.init("imp43370630");
-			             // IMP.request_pay(param, callback) 결제창 호출
-	
-			             IMP.request_pay({ // param
-			                 pg: "kcp",
-			                 amount: price, // 상품 비용
-			                 name: productName, // 상품명
-			                 buyer_email: email, // 주문자 이메일
-			                 buyer_name: orderer, // 주문자 명
-			                 buyer_tel: phoneNumber, // 주문자 번호
-			                 buyer_addr: address, // 주문자 주소
-			                 buyer_postcode: zipCode// 우편번호
-			             }, 
-			             function (rsp) { // callback
-			    			console.log(rsp);
-			             	$.ajax({
-			             		type: "POST",
-			             		url : "${appPath}/coupung/orderCheck?imp_uid=" + rsp.imp_uid 
-			             	}).done(function(data) {
-			             		console.log(data);
-			             		if (rsp.paid_amount === data.response.amount) {
-			             			var orderList = [];
-			             			var totalQuantity = 0;
-			             			for (let i = 0; i < coupungNumber.length; i++) {
-			             				var product = {
-			             					'coupungNumber' : Number(coupungNumber[i]),
-			             					'optionNumber' : Number(options[i]),
-			             					'quantity' : Number(quantities[i])
-			             				}
-			             				orderList.push(product);
-			             				totalQuantity += Number(quantities[i]);
-			             			}
-			             			
-			             			var orders = {
-			             					'totalPrice' : data.response.amount,
-			             					'totalQuantity' : totalQuantity,
-			             					'paymentMethod' : 'card',
-			             					'receiverName' : $('#name-txt-2').val(),
-			             					'receiverPhone' :  $('#phone-txt-2').val(),
-			             					'shippingAddress' : zipCode + " " + address,
-			             					'orderDetails' : orderList
-			             			}
-			             			$.ajax({
-			             				url : "${appPath}/coupung/order",
-			             				type : "post",
-			             				data : JSON.stringify(orders),
-			             				contentType : 'application/json',
-			             				success : function (res) {
-			             					if (res === 'success') {
-			             						alert('success');
-			             					}
-			             				},
-			                            error: function(request, status, error) {
-			                                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-			                            }
-			             			});
-			             		} else {
-			             			alert("결제에 실패하였습니다.");
-			             		}
-			             	});
-			            });
-					 } 
+			if ($('#name-txt').val() === '' || $('#phone-txt').val() === '' || $('#id-txt').val() === '') {
+				alert('주문자 정보를 입력해 주세요');
+				$('#name-txt').focus();
+			} else if ($('#name-txt-2').val() === '' || $('#phone-txt-2').val() === '' 
+					|| $('#id-txt-2').val() === '' || $('#zipcode-txt').val() === '' 
+					|| $('#address-txt').val() === '' || $('#address-detail-txt').val() === '') {
+				alert('배송 정보를 입력해 주세요');
+				$('#name-txt-2').focus();
+			} else if (!$('#agree1').is(':checked') || !$('#agree2').is(':checked') || !$('#agree3').is(':checked')) {
+				alert('필수 동의 사항들을 확인해 주세요');
+			} else if (!$('#creditCard').is(':checked') && !$('#kakaoPay').is(':checked')) {
+				alert('결제 수단을 선택해 주세요');
+			}else {
+				var list = '${products}'.split('CoupungDTO');
+				var productName = '${products[0].name}';
+				var len = list.length;
+				if (len > 2) {
+					productName += ' 외 ' + (len - 2) + ' 개';
+				}
+				
+				var coupungNumber = [];
+				$('.coupungNumber').each(function() {
+					coupungNumber.push($(this).val());
 				});
-			}
-			
-			if($('#kakaoPay').is(':checked')) {
-				$.ajax({
-					 url : priceUrl,
-					 type : 'get',
-					 success : function(price) {
-						 IMP.init("imp43370630");
-			             // IMP.request_pay(param, callback) 결제창 호출
-			             IMP.request_pay({ // param
-			                 pg: "kakaopay",
-			                 amount: price, // 상품 비용
-			                 name: productName, // 상품명
-			                 buyer_email: email, // 주문자 이메일
-			                 buyer_name: orderer, // 주문자 명
-			                 buyer_tel: phoneNumber, // 주문자 번호
-			                 buyer_addr: address, // 주문자 주소
-			                 buyer_postcode: zipCode// 우편번호
-			             }, 
-			             function (rsp) { // callback
-			    			console.log(rsp);
-			             	$.ajax({
-			             		type: "POST",
-			             		url : "${appPath}/coupung/orderCheck?imp_uid=" + rsp.imp_uid 
-			             	}).done(function(data) {
-			             		console.log(data);
-			             		if (rsp.paid_amount === data.response.amount) {
-			             			var orderList = [];
-			             			var totalQuantity = 0;
-			             			for (let i = 0; i < coupungNumber.length; i++) {
-			             				var product = {
-			             					'coupungNumber' : Number(coupungNumber[i]),
-			             					'coupungOptionNumber' : Number(options[i]),
-			             					'quantity' : Number(quantities[i])
-			             				}
-			             				orderList.push(product);
-			             				totalQuantity += Number(quantities[i]);
-			             			}
-			             			
-			             			var orders = {
-			             					'totalPrice' : data.response.amount,
-			             					'totalQuantity' : totalQuantity,
-			             					'paymentMethod' : 'kakaoPay',
-			             					'receiverName' : $('#name-txt-2').val(),
-			             					'receiverPhone' :  $('#phone-txt-2').val(),
-			             					'shippingAddress' : zipCode + " " + address,
-			             					'orderDetails' : orderList
-			             			}
-			             			$.ajax({
-			             				url : "${appPath}/coupung/order",
-			             				type : "post",
-			             				data : JSON.stringify(orders),
-			             				contentType : 'application/json',
-			             				success : function (res) {
-			             					if (res === 'success') {
-			             						alert('success');
-			             					}
-			             				},
-			                            error: function(request, status, error) {
-			                                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-			                            }
-			             			});
-			             		} else {
-			             			alert("결제에 실패하였습니다.");
-			             		}
-			             	});
-			            });
-					 } 
+				
+				var quantities = [];
+				$('.product-quantity').each(function() {
+					quantities.push($(this).text());
 				});
+				
+				var options = [];
+				$('.optionNumber').each(function() {
+					options.push($(this).val());
+				});
+				
+				var price = 0;
+				
+				var priceUrl = "${appPath}/coupung/price?coupungNumbers=" + coupungNumber.join(',') + "&quantities=" + quantities.join(',');
+				var orderer = $('#name-txt').val();
+				var zipCode = $('#zipcode-txt').val();
+				var address = $('#address-txt').val() + " " + $('#address-detail-txt').val();
+				var phoneNumber = $('#phone-txt').val();
+				var email = $('#id-txt').val() + "@" + $('#domain-txt').val();
+				if ($('#creditCard').is(':checked')) {
+					 $.ajax({
+						 url : priceUrl,
+						 type : 'get',
+						 success : function(price) {
+							 IMP.init("imp43370630");
+				             // IMP.request_pay(param, callback) 결제창 호출
+		
+				             IMP.request_pay({ // param
+				                 pg: "kcp",
+				                 amount: price, // 상품 비용
+				                 name: productName, // 상품명
+				                 buyer_email: email, // 주문자 이메일
+				                 buyer_name: orderer, // 주문자 명
+				                 buyer_tel: phoneNumber, // 주문자 번호
+				                 buyer_addr: address, // 주문자 주소
+				                 buyer_postcode: zipCode// 우편번호
+				             }, 
+				             function (rsp) { // callback
+				    			console.log(rsp);
+				             	$.ajax({
+				             		type: "POST",
+				             		url : "${appPath}/coupung/orderCheck?imp_uid=" + rsp.imp_uid 
+				             	}).done(function(data) {
+				             		console.log(data);
+				             		if (rsp.paid_amount === data.response.amount) {
+				             			var orderList = [];
+				             			var totalQuantity = 0;
+				             			for (let i = 0; i < coupungNumber.length; i++) {
+				             				var product = {
+				             					'coupungNumber' : Number(coupungNumber[i]),
+				             					'optionNumber' : Number(options[i]),
+				             					'quantity' : Number(quantities[i])
+				             				}
+				             				orderList.push(product);
+				             				totalQuantity += Number(quantities[i]);
+				             			}
+				             			
+				             			var orders = {
+				             					'totalPrice' : data.response.amount,
+				             					'totalQuantity' : totalQuantity,
+				             					'paymentMethod' : 'card',
+				             					'receiverName' : $('#name-txt-2').val(),
+				             					'receiverPhone' :  $('#phone-txt-2').val(),
+				             					'shippingAddress' : zipCode + " " + address,
+				             					'orderDetails' : orderList
+				             			}
+				             			$.ajax({
+				             				url : "${appPath}/coupung/order",
+				             				type : "post",
+				             				data : JSON.stringify(orders),
+				             				contentType : 'application/json',
+				             				success : function (res) {
+				             					if (res === 'success') {
+				             						alert('success');
+				             					}
+				             				},
+				                            error: function(request, status, error) {
+				                                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+				                            }
+				             			});
+				             		} else {
+				             			alert("결제에 실패하였습니다.");
+				             		}
+				             	});
+				            });
+						 } 
+					});
+				}
+				
+				if($('#kakaoPay').is(':checked')) {
+					$.ajax({
+						 url : priceUrl,
+						 type : 'get',
+						 success : function(price) {
+							 IMP.init("imp43370630");
+				             // IMP.request_pay(param, callback) 결제창 호출
+				             IMP.request_pay({ // param
+				                 pg: "kakaopay",
+				                 amount: price, // 상품 비용
+				                 name: productName, // 상품명
+				                 buyer_email: email, // 주문자 이메일
+				                 buyer_name: orderer, // 주문자 명
+				                 buyer_tel: phoneNumber, // 주문자 번호
+				                 buyer_addr: address, // 주문자 주소
+				                 buyer_postcode: zipCode// 우편번호
+				             }, 
+				             function (rsp) { // callback
+				    			console.log(rsp);
+				             	$.ajax({
+				             		type: "POST",
+				             		url : "${appPath}/coupung/orderCheck?imp_uid=" + rsp.imp_uid 
+				             	}).done(function(data) {
+				             		console.log(data);
+				             		if (rsp.paid_amount === data.response.amount) {
+				             			var orderList = [];
+				             			var totalQuantity = 0;
+				             			for (let i = 0; i < coupungNumber.length; i++) {
+				             				var product = {
+				             					'coupungNumber' : Number(coupungNumber[i]),
+				             					'coupungOptionNumber' : Number(options[i]),
+				             					'quantity' : Number(quantities[i])
+				             				}
+				             				orderList.push(product);
+				             				totalQuantity += Number(quantities[i]);
+				             			}
+				             			
+				             			var orders = {
+				             					'totalPrice' : data.response.amount,
+				             					'totalQuantity' : totalQuantity,
+				             					'paymentMethod' : 'kakaoPay',
+				             					'receiverName' : $('#name-txt-2').val(),
+				             					'receiverPhone' :  $('#phone-txt-2').val(),
+				             					'shippingAddress' : zipCode + " " + address,
+				             					'orderDetails' : orderList
+				             			}
+				             			$.ajax({
+				             				url : "${appPath}/coupung/order",
+				             				type : "post",
+				             				data : JSON.stringify(orders),
+				             				contentType : 'application/json',
+				             				success : function (res) {
+				             					if (res === 'success') {
+				             						alert('success');
+				             					}
+				             				},
+				                            error: function(request, status, error) {
+				                                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+				                            }
+				             			});
+				             		} else {
+				             			alert("결제에 실패하였습니다.");
+				             		}
+				             	});
+				            });
+						 } 
+					});
+				}
 			}
 		});
 		

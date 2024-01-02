@@ -58,7 +58,7 @@ $(document).ready(function() {
 	<br>
 
 		<div class="profile-photo">
-			<img class="profile-photo-file" src="img/default_profile.png" id="profileImage">
+			<img class="profile-photo-file" src="https://ounwan.s3.ap-northeast-2.amazonaws.com/1704123555189.png" id="profileImage">
 			<label for="uploadImageInput">사진등록</label>
 			<input type="file" name="uploadImageInput" id="uploadImageInput" accept="image/*"/>
 			<br>
@@ -317,7 +317,7 @@ $(document).ready(function() {
 	var formData = new FormData();
 	var changeImage = false;
 	var formData = new FormData();
-	var imgUrl = '';
+	var imgUrl = 'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704123555189.png';
 	var readAgreement1 = false;
 	var readAgreement2 = false;
 	

@@ -88,7 +88,7 @@
             </div>
         </div>
     </div>
-	<script src="../js/main.js"></script>
+	<script src="${appPath}/js/main.js"></script>
 	<script>
 	$('.category-detail').click(function() {
 		var id = $(this).find('.categoryValue').val();
