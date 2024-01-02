@@ -263,23 +263,22 @@
 	</div>
 	
 	<script>
-	var readAgreement1 = false; // 변수를 초기화
+	var readAgreement1 = false; 
 
-	// 페이지 로드 시 실행되는 부분
 	$(document).ready(function() {
-	    $("#agreementPersonalData").hide(); // 페이지 로드 시 모달 숨기기
+	    $("#agreementPersonalData").hide();
 	});
 
 	$("#agree").on('click', function(event) {
 	    event.preventDefault();
 	    if (!readAgreement1) {
-	        $("#agreementPersonalData").show(); // '보기' 클릭 시 모달 보이기
+	        $("#agreementPersonalData").show(); 
 	    }
 	});
 
 	$("#agreementPersonalData button").on("click", function() {
 	    readAgreement1 = true;
-	    $("#agreementPersonalData").hide(); // 확인 버튼 클릭 시 모달 다시 숨기기
+	    $("#agreementPersonalData").hide(); 
 	    $("#agree").attr('disabled', true);
 	});
 
