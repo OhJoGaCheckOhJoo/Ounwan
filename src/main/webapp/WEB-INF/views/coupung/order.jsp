@@ -481,7 +481,7 @@
 				             				contentType : 'application/json',
 				             				success : function (res) {
 				             					if (res === 'success') {
-				             						alert('success');
+				             						location.href = "${appPath}/coupung/order/complete";
 				             					}
 				             				},
 				                            error: function(request, status, error) {
@@ -550,7 +550,7 @@
 				             				contentType : 'application/json',
 				             				success : function (res) {
 				             					if (res === 'success') {
-				             						alert('success');
+				             						location.href = "${appPath}/coupung/order/complete";
 				             					}
 				             				},
 				                            error: function(request, status, error) {
