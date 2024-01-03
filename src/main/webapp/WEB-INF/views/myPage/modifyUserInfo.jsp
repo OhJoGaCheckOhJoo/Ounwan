@@ -49,18 +49,20 @@
 	
 			<div id="myModal" class="modal">
 				<div class="modal-content">
-					<span class="close">&times;</span>
+					<span class="close">&times;</span> <br>
 					<div class="profile-password">
 						<label class="modal-attribute-name" for="">비밀번호</label> 
 						<input type="password" class="modal-input-form" id="firstPass" placeholder="비밀번호를 입력하세요"> 
-						<span id="wrongForm-inform">잘못된	형식입니다.</span>
+						<span id="wrongForm-inform">잘못된 형식입니다.</span>
 					</div>
 					<div class="profile-password">
 						<label class="modal-attribute-name" for="">비밀번호 확인</label> 
-						<input type="password" class="modal-input-form" placeholder="비밀번호를 입력하세요"	id="secondPass" required /> 
+						<input type="password" class="modal-input-form" placeholder="비밀번호를 입력하세요" id="secondPass" required /> 
 						<span id="notMatch-inform">비밀번호가 일치하지 않습니다.</span>
 					</div>
-					<button id="savePassword">저장</button>
+					<div class="save-password">
+						<button id="savePassword">저장</button>
+					</div>
 				</div>
 			</div>
 	
@@ -191,7 +193,6 @@
 
 			});
 
-	// 수정 버튼 클릭 시 모달 열기
 	var modal = document.getElementById("myModal");
 	var btn = document.getElementById("modifyPwdBtn");
 	var closeBtn = document.querySelector("#myModal .close")
@@ -204,7 +205,6 @@
 		modal.style.display = "none";
 	}
 
-	// 모달 콘텐츠 외부를 클릭했을 때 모달이 닫히도록 함
 	window.onclick = function(event) {
 	    if (event.target == modal) {
 	        modal.style.display = "none";
@@ -215,26 +215,22 @@
 						var firstPass = $('#firstPass').val();
 						var secondPass = $('#secondPass').val();
 
-						// 비밀번호 확인
 						if (firstPass !== secondPass) {
 							document.getElementById("notMatch-inform").style.display = "block";
-							return; // 비밀번호가 일치하지 않으면 중단
+							return; 
 						}
 
-						// 클라이언트 정보를 담은 DTO
 						var obj = {
-							clientId : "${clientInfo.clientId}", // 클라이언트 ID
+							clientId : "${clientInfo.clientId}", 
 							password : secondPass
-						// 새 비밀번호
 						};
 
 						$.ajax({
-							url : "${appPath}/myPage/modifyUserInfo/pwd", // 정보 변경을 위한 URL
+							url : "${appPath}/myPage/modifyUserInfo/pwd", 
 							type : "post",
-							data : JSON.stringify(obj), // DTO 전달
+							data : JSON.stringify(obj), 
 							contentType : 'application/json',
 							success : function(res) {
-								console.log(res);
 								if (res === 'success') {
 									alert("비밀번호가 변경되었습니다!");
 									modal.style.display = "none";
@@ -295,7 +291,7 @@
 		var addressDetail = $('#addrDetail').val();
 
 		var obj = {
-			clientId : "${clientInfo.clientId}", // 클라이언트 ID
+			clientId : "${clientInfo.clientId}", 
 			phone : phone,
 			address : address,
 			addressDetail : addressDetail
@@ -314,21 +310,18 @@
 		});
 	});
 	
-	// 수정 버튼 클릭 시 모달 열기
 	var modal2 = document.getElementById("myModal2");
 	var btn2 = document.getElementById("withdrawlBtn");
-	var closeBtn2 = document.querySelector("#myModal2 .close"); // '닫기' 버튼 선택 부분을 수정
+	var closeBtn2 = document.querySelector("#myModal2 .close"); 
 
 	btn2.onclick = function() {
 	    modal2.style.display = "block";
 	}
 
-	// '닫기' 버튼을 클릭했을 때 모달이 닫히도록 함
 	closeBtn2.onclick = function() {
 	    modal2.style.display = "none";
 	}
 
-	// 모달 콘텐츠 외부를 클릭했을 때 모달이 닫히도록 함
 	window.onclick = function(event) {
 	    if (event.target == modal2) {
 	        modal2.style.display = "none";
@@ -338,7 +331,6 @@
 	$('#withdrawlCompleted').on('click',function() {
 							var privacyTerms = $('#storagePeriod').val();
 							var clientId = "${clientInfo.clientId}";
-							console.log(privacyTerms);
 						    var obj = {
 						        clientId: clientId,
 						        privacyTerms: privacyTerms
