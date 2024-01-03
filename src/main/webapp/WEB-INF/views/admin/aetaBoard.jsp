@@ -3,9 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
-<div id="admin-wrap">
-	<div id="aeta-list">빈칸</div>
-	<div class="search">
+<div class="product-wrap">
+	<div id="adminProductSearch" class="search">
 		<select name="option">
 
 			<option value="aetaSearchAll"
@@ -27,6 +26,7 @@
 			</c:choose>
 		</form>
 	</div>
+	<div id="aeta-list">빈칸</div>
 </div>
 
 <script>

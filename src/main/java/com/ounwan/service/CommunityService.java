@@ -719,4 +719,8 @@ public class CommunityService {
 						.build();
 	}
 
+	public int aetaBlindPost(int aetaNumber) {
+		return communityDAO.aetaBlindPost(aetaNumber);
+	}
+
 }

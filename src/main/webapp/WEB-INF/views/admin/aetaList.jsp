@@ -4,33 +4,32 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
+
+
 <div id="aetaboardList">
-	<h4>애타 관리자 페이지</h4>
-	<table>
-		<thead>
-			<tr class="top">
-				<th class="num">번호</th>
-				<th class="title">제목</th>
-				<th class="writer">작성자</th>
-				<th class="date">작성일</th>
-				<th class="count">조회수</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="aeta" items="${aetaList}">
-				<tr class="aeta-post">
-					<td class="num">${aeta.aetaNumber}</td>
-					<td class="title">${aeta.title}</td>
-					<td class="writer">${aeta.clientId}</td>
-					<td class="date"><fmt:formatDate value="${aeta.createdDate}" pattern="yyyy-MM-dd" /></td>
-					<td class="count">${aeta.views}</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+	<div class="product-menu">
+		<span>번호</span>
+		<span>제목</span>
+		<span>작성자</span>
+		<span>작성일</span>
+		<span>조회수</span>
+	</div>
+	<div class="">
+		<c:forEach var="aeta" items="${aetaList}">	
+			<div class="product-info">
+				<span class="num">${aeta.aetaNumber}</span>
+				<span class="title">${aeta.title}</span>
+				<span class="writer">${aeta.clientId}</span>
+				<span class="date"><fmt:formatDate value="${aeta.createdDate}" pattern="yyyy-MM-dd" /> </span>
+				<span class="count">${aeta.views}</span>
+				<span><a href="${appPath}/community/aetaPost?aetaNumber=${aeta.aetaNumber}">이동</a></span>
+				<span class="aeta-blind">비공개</span>
+			</div>
+		</c:forEach>
+	</div>
 </div>	
 
-<div id="aeta-pagination" class="aeta-pagination">
+<div id="productPages" class="aeta-pagination">
 	
 
 	<c:choose>
@@ -85,16 +84,19 @@
 	</c:choose>
 </div>
 <script>
-$(".aeta-post").click(function(){
-	var aetaNumber =$(this).find('.num').text();
+  $(".aeta-blind").click(function(){
+	var aetaNumber =$(this).parent().find('.num').text();
 	alert(aetaNumber);
-		$.ajax({
-			url : appPath + "/admin/aeta/aetaPost",
-			data : {"aetaNumber" : aetaNumber},
+		 $.ajax({
+			url : appPath + "/admin/aeta/blind?aetaNumber="+aetaNumber,
 			success : function(res) {
-				$('#admin-wrap').html(res);
-				//"location.href='${appPath}/admin/aeta/aetaPost?aetaNumber=${aeta.aetaNumber}'"
+					$.ajax({
+						url : appPath + "/admin/aeta/aetaBoard",
+						success : function(response) {
+							$('.admin-wrap').html(response);
+						}
+					});
 			}
-		}); 
-}); 
+		});   
+});  
 </script>

@@ -5,34 +5,27 @@
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
 <div id="aetaboardList">
-	<h4>당군 관리자 페이지</h4>
-	<table>
-		<thead>
-			<tr class="top">
-				<th class="">당군번호</th>
-				<th class="">판매자</th>
-				<th class="">상품명</th>
-				<th class="">가격</th>
-				<th class="">업로드일</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="danggun" items="${danggun}">
-				<tr class="danggun-post" >
-					<td class="danggun-number">${danggun.danggunNumber}</td>
-					<td class="client-id">${danggun.clientId}</td>
-					<td class="product-name">${danggun.productName}</td>
-					<td class="price">${danggun.price}</td>
-					<td class="upload-date"><fmt:formatDate value="${danggun.uploadDate}" pattern="yyyy-MM-dd" /></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+	<h4>당군 관리자 페이지</h4>	
+	<div class="top">
+			<span>당군번호</span>
+			<span>판매자</span>
+			<span>상품명</span>
+			<span>가격</span>
+			<span>업로드일</span>
+	</div>
+	<div>
+		<c:forEach var="danggun" items="${danggun}">
+			<div class="danggun-post" >
+				<span class="danggun-number">${danggun.danggunNumber}</span>
+				<span class="client-id">${danggun.clientId}</span>
+				<span class="product-name">${danggun.productName}</span>
+				<span class="price">${danggun.price}</span>
+				<span class="upload-date"><fmt:formatDate value="${danggun.uploadDate}" pattern="yyyy-MM-dd" /></span>
+			</div>
+		</c:forEach>
+	</div>		
 </div>	
-
 <div id="danggun-pagination" class="danggun-pagination">
-	
-
 	<c:choose>
 		<c:when test="${paginating.maxPageNumber==0}"></c:when>
 		<c:when test="${paginating.pageNumber<=1}">
@@ -83,3 +76,16 @@
 		</c:otherwise>
 	</c:choose>
 </div>
+<script>
+ $(".danggun-post").click(function(){
+	var danggunNumber =$(this).find('.danggun-number').text();
+	alert(danggunNumber);
+		 $.ajax({
+			url : appPath + "/danggun/detail",
+			data : {"danggunNumber" : danggunNumber},
+			success : function(res) {
+				location.href='${appPath}/danggun/detail?danggunNumber='+danggunNumber;
+			}
+		});  
+});  
+</script>

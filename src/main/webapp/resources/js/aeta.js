@@ -203,6 +203,7 @@ $(".commentList").on('click', "#deleteCommentBtn", function(){
 
 
 /*애타 게시글수정 */
+
 /* 수정페이지 이동 */
 $("#AetaUpdateBtn").on('click',function(){
 	var aetaNumber=$("#aetaNumber").val();
@@ -217,7 +218,36 @@ $("#AetaUpdateBtn").on('click',function(){
 		}
 	})
 })
-
+/*수정 시 사진 미리보기*/
+imageList = [];
+if(window.location.pathname == '/myapp/community/aetaUpdating') {
+	$("#inputImg").on("change", function(event) {
+		if(event.target.files.length > 0) {
+			$("#imagePreview").html("");
+	        imageList = event.target.files;
+	        for(var i = 0; i < imageList.length; i++) {
+	            $("#imagePreview").append('<img src="/">');
+	            var imageURL = URL.createObjectURL(imageList[i]);
+	            $("#imagePreview img").eq(i).attr("src", imageURL);
+	        }
+		}
+	});
+	
+	$("#imagePreview").on("click", "img", function() {
+		var i = 0;
+		var removeIndex = 0;
+		var temp = [];
+		for(; i < $("#imagePreview img").length; i++) {
+			if($(this).attr('src') == $("#imagePreview img").eq(i).attr('src')) {
+				removeIndex = i;
+			} else {
+				temp.push(imageList[i]);
+			}
+		}
+		$("#imagePreview img").eq(removeIndex).remove();
+		imageList = temp;
+	});
+}
 
 /* 수정 페이지에 데이터 전송*/
 $("#updatePost").on('click',function(){
