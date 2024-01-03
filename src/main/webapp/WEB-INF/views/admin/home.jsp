@@ -28,8 +28,8 @@
     <header class="header">
         <span>OUNWAN</span> 
         <div>
-        	<a href="${appPath}">go ounwan</a>
-        	<span id="logout">logout</span>
+        	<span><a href="${appPath}" class="goOunwan">go ounwan</a></span>
+        	<span id="logout" class="logout">logout</span>
         </div>
     </header>
     <div class="container">

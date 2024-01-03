@@ -24,8 +24,8 @@
 			<c:if test="${product.tradeHistoryNumber eq '6'}"><span>판매중</span></c:if>
 			<c:if test="${product.tradeHistoryNumber eq '7'}"><span>예약중</span></c:if>
 			<c:if test="${product.tradeHistoryNumber eq '8'}"><span>거래완료</span></c:if>
-			<span><a href="${appPath}/danggun/detail?danggunNumber=${product.danggunNumber}">이동</a></span>
-			<span class="danggunBlind">비공개</span>
+			<span><button class="goDanggun" type="button">이동</button></span>
+			<span><button class="danggunBlind" type="button">비공개</button></span>
 		</div>
 	</c:forEach>
 </div>
@@ -83,8 +83,12 @@
 </div>
 
 <script>
+$(".goDanggun").on("click", function(){
+	var danggunNumber = $(this).parent().parent().find(".danggunNumber").val();
+	window.location.href = "${appPath}/danggun/detail?danggunNumber=" + danggunNumber;
+});
 $(".danggunBlind").on("click", function(){
-   	var danggunNumber = $(this).parent().find(".danggunNumber").val();
+   	var danggunNumber = $(this).parent().parent().find(".danggunNumber").val();
    	if(confirm("비공개로 변경하시겠습니까?")){   	
    		$.ajax({
                url : "${appPath}/admin/danggun/blind",
