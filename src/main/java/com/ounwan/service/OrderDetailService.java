@@ -1,7 +1,9 @@
 package com.ounwan.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,12 +27,25 @@ public class OrderDetailService {
 		return (result > 0) ? true : false;
 	}
 	
+	public List<Map<String, Object>> getAdminOrders(int offset) {
+		return orderDetailDAO.getAdminOrders(offset * 20);	
+	}
+	
 	public int getSalesRate(int coupungNumber) {
 		return orderDetailDAO.getSalesRate(coupungNumber);
 	}
 
 	public List<Integer> getTopFiveCoupungNumber() {
 		return orderDetailDAO.getTopFiveCoupungNumber();
+	}
+	
+	public List<Map<String, Object>> getTradeStep() {
+		return orderDetailDAO.getTradeStep();
+	}
+	
+	public int countOrders() {
+		int ordersNum = orderDetailDAO.countOrders();
+		return ordersNum / 20 + (ordersNum % 20 > 0 ? 1 : 0);
 	}
 
 	public List<OrderDetailsDTO> getOrderDetails(String orderNumber) {
@@ -47,6 +62,13 @@ public class OrderDetailService {
 			changedList.add(changeDTO(order));
 		}
 		return changedList;
+	}
+	
+	public String updateTradeStep(String orderNumber, int tradeStep) {
+		Map<String, Object> data = new HashMap<>();
+		data.put("orderNumber", orderNumber);
+		data.put("tradeStep", tradeStep);
+		return orderDetailDAO.updateTradeStep(data) > 0 ? "success" : "fail";
 	}
 
 	public OrderDetailsDTO changeDTO(OrderDetails order) {

@@ -24,4 +24,22 @@
     <select id="getOrderDetails" parameterType="String" resultType="orderDetails">
     	SELECT * FROM ORDER_DETAILS WHERE ORDER_NUMBER = #{orderNumber}
     </select>
+    
+    <select id="getAdminOrders" parameterType="int" resultType="map">
+    	SELECT ORDER_NUMBER, IFNULL(CLIENT_ID, GUEST_NUMBER) AS CLIENT, ORDER_DATE, TOTAL_PRICE, TRADE_STEP 
+    	FROM ORDERS LEFT JOIN TRADE_HISTORY ON ORDERS.TRADE_HISTORY_NUMBER = TRADE_HISTORY.TRADE_HISTORY_NUMBER
+    	ORDER BY ORDERS.TRADE_HISTORY_NUMBER, ORDER_DATE LIMIT 20 OFFSET #{offset}
+    </select>
+    
+    <select id="getTradeStep" resultType="map">
+    	SELECT * FROM TRADE_HISTORY WHERE <![CDATA[ TRADE_HISTORY_NUMBER <= 5 ]]>
+    </select>
+    
+    <select id="countOrders" resultType="int">
+    	SELECT COUNT(*) FROM ORDERS WHERE <![CDATA[ TRADE_HISTORY_NUMBER <= 5 ]]>
+    </select>
+    
+    <update id="updateTradeStep" parameterType="map">
+    	UPDATE ORDERS SET TRADE_HISTORY_NUMBER = #{tradeStep} WHERE ORDER_NUMBER = #{orderNumber}
+    </update>
 </mapper>

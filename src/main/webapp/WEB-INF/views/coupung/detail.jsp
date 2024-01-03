@@ -223,14 +223,14 @@
 		    			</div>
 			    	</div>
 			    	<div class="modal-body-wrap">
-			    	<%@ include file="../guest/guestAgreementTerms.jsp" %>
+			    	<%@ include file="../guest/guestOrderListModal.jsp" %>
 			    		<div class="agreement">
 							<label for="agree1">
 								<input type="checkbox" id="agree1" required>
 								<i class="circle"></i> [필수] 개인정보 수집 및 이용 동의
 							</label>
 						</div>
-						<div  >
+						<div>
 							<div class="modal-input">
 						    	<div>
 						    		<label class="modal-attribute-name" for="">이메일 </label> 

@@ -28,6 +28,7 @@ import com.ounwan.service.AdminService;
 import com.ounwan.service.CommunityService;
 import com.ounwan.service.CoupungService;
 import com.ounwan.service.DanggunService;
+import com.ounwan.service.OrderDetailService;
 import com.ounwan.service.OrderService;
 
 @Controller
@@ -48,6 +49,9 @@ public class AdminController {
 
 	@Autowired
 	CommunityService communityService;
+	
+	@Autowired
+	OrderDetailService orderDetailService;
 
 	@GetMapping("/main.do")
 	public String getMainPage(HttpSession session, Model model) {
@@ -55,9 +59,7 @@ public class AdminController {
 		if (session.getAttribute("admin") == null)
 			return "admin/login";
 		else {
-			model.addAllAttributes(adminService.getTotalPriceByDate());
-			model.addAttribute("communityAct", adminService.getCommunityAct());
-			model.addAllAttributes(adminService.getTotalByCategory());
+			model.addAllAttributes(adminService.getAdminTotal());
 		}
 		return "admin/home";
 	}
@@ -91,12 +93,6 @@ public class AdminController {
 		model.addAttribute("sortOption", sortOption);
 		return "admin/product";
 	}
-	
-	@GetMapping("/coupung/searchProduct")
-	public String searchProduct(@RequestParam String searchOption, @RequestParam String searchValue) {
-
-		return "admin/product";
-	}
 
 	@GetMapping("/ounwangram/reports")
 	public String getGramReportBoards(@RequestParam int offset, Model model) {
@@ -108,6 +104,25 @@ public class AdminController {
 	public String insertProductView(Model model) {
 		model.addAttribute("categories", coupungService.getAllCategories());
 		return "admin/productInsert";
+	}
+	
+	@GetMapping("/coupung/order.do")
+	public String getOrderPage(int offset, Model model) {
+		model.addAttribute("orders", orderDetailService.getAdminOrders(offset));
+		model.addAttribute("tradeStep", orderDetailService.getTradeStep());
+		model.addAttribute("pages", orderDetailService.countOrders());
+		model.addAttribute("offset", offset);
+		return "admin/coupungOrders";
+	}
+	
+	@PostMapping("/coupung/tradeStep.do")
+	public String updateTradeStep(int offset, String orderNumber, String tradeStep, Model model) {
+		model.addAttribute("result", orderDetailService.updateTradeStep(orderNumber, Integer.parseInt(tradeStep)));
+		model.addAttribute("orders", orderDetailService.getAdminOrders(offset));
+		model.addAttribute("tradeStep", orderDetailService.getTradeStep());
+		model.addAttribute("pages", orderDetailService.countOrders());
+		model.addAttribute("offset", offset);
+		return "admin/coupungOrders";
 	}
 	
 	@PostMapping("/coupung/insert.do")
