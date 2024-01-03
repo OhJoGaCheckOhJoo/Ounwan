@@ -21,10 +21,6 @@ public class ProductImagesService {
 		ProductImagesDTO image = changeDTO(productImagesDAO.selectAllImages(danggunNumber));
 		return image;
 	}
-	public ProductImagesDTO paginatedImages(Map<Object,Object> paginateParams) {
-		ProductImagesDTO image = changeDTO(productImagesDAO.paginatedImages(paginateParams));
-		return image;
-	}
 	
 	public List<ProductImagesDTO> selectImages(int danggunNumber) {
 		List<ProductImages> result = productImagesDAO.selectImages(danggunNumber);

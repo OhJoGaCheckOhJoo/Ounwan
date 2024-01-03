@@ -40,7 +40,7 @@ input[type="file"] {
 }
 
 .profile-password label.modal-attribute-name {
-	color: black;
+	color: var(--main-color-1);
 }
 
 .withdrawl-container label.modal-attribute-name {
@@ -48,17 +48,17 @@ input[type="file"] {
 }
 
 .modal-content {
-	color: black; /* 텍스트 색상 */
-	background-color: #fefefe;
+	color: var(--main-color-1); 
+	background-color: var(--main-back);
 	margin: 10% auto;
 	padding: 20px;
 	border-radius: 5px;
-	width: 50%;
+	width: 500px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .close {
-	color: black; /* 텍스트 색상 */
+	color: #777; 
 	float: right;
 	font-size: 28px;
 	font-weight: bold;
@@ -66,7 +66,8 @@ input[type="file"] {
 
 .modal-input-form,
     select {
-    	color: black ;
+    	color: var(--main-color-1);
+		background-color : var(--main-back);
         width: 100%;
         padding: 10px;
         margin: 5px 0 15px 0;
@@ -182,6 +183,14 @@ input[type="password"] {
 	width: 120PX;
 }
 
+.save-password {
+	display: flex;
+	align-items: flex-end;
+}
+
+#savePassword {
+  margin-left: auto;
+}
 
 button {
 	width: 100px;

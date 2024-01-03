@@ -549,7 +549,6 @@
 		AETA_NUMBER =#{aetaNumber};
 	</update>
 
-
 	<select id="FindClientId" parameterType="int">
 		select CLIENT_ID
 		from AETA
@@ -569,6 +568,10 @@
 		REPORT_REASON = NULL
 		WHERE AETA_NUMBER = #{aetaNumber}
 	</update>
+	
+	<delete id="adminAetaDelete" parameterType="int">
+		DELETE FROM AETA WHERE AETA_NUMBER = #{aetaNumber}
+	</delete>
 
 	<update id="aetaBlindPost" parameterType="int">
 		UPDATE AETA

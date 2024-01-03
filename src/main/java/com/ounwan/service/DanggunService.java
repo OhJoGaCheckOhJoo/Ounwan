@@ -48,7 +48,7 @@ public class DanggunService {
 	AmazonS3 amazonS3;
 
 	private static final String BUCKET = "ounwan";
-	private static final int PAGELIMIT = 10; 
+	private static final int PAGELIMIT = 20; 
 	private static final int BLOCKLIMIT = 10;
 
 	public List<DanggunDTO> searchProduct(String name) {
@@ -284,6 +284,11 @@ public class DanggunService {
 
 	public boolean restoreDanggun(Integer danggunNumber) {
 		int result = danggunDAO.restoreDanggun(danggunNumber);
+		return (result > 0) ? true : false;
+	}
+	
+	public boolean adminDanggunDelete(int danggunNumber) {
+		int result = danggunDAO.adminDanggunDelete(danggunNumber);
 		return (result > 0) ? true : false;
 	}
 

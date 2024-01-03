@@ -265,5 +265,9 @@ public class CommunityDAO {
 	public int aetaBlindPost(int aetaNumber) {
 		return sqlSession.update(NAMESPACE+"aetaBlindPost",aetaNumber);
 	}
+	
+	public int adminAetaDelete(int aetaNumber) {
+		return sqlSession.update(NAMESPACE + "adminAetaDelete", aetaNumber);
+	}
 
 }

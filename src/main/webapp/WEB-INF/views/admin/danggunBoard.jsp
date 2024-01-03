@@ -3,14 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
-<div id="admin-wrap">
-	<div id="danggun-list">빈칸</div>
-	<div class="search">
-		<form>
-			<input id="inputValue" placeholder="검색어 입력">
+<div class="product-wrap">
+	<div class="adminProductSearch">
+		<div>
+			<input id="inputValue" placeholder="검색어를 입력하세요.">
 			<input type=button id="searchBtn" value="검색">
-		</form>
+		</div>
 	</div>
+	<div id="danggun-list"></div>
 </div>
 
 <script>

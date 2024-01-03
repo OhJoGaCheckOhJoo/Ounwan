@@ -267,7 +267,7 @@
             setTimeout(function() {
             	alert("판매 중지된 상품입니다.\ncoupung 메인 화면으로 이동합니다");           	
             	location.href="${appPath}/coupung/products";
-            }, 400); 
+            }, 100); 
         }
     });
 

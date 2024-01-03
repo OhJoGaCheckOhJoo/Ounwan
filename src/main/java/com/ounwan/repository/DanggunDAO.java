@@ -67,5 +67,8 @@ public class DanggunDAO {
 	public int restoreDanggun(Integer danggunNumber) {
 		return sqlSession.update(NAMESPACE + "restoreDanggun", danggunNumber);
 	}
+	public int adminDanggunDelete(int danggunNumber) {
+		return sqlSession.update(NAMESPACE + "adminDanggunDelete", danggunNumber);
+	}
 	
 }

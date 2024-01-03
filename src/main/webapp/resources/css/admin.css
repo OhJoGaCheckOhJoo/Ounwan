@@ -23,6 +23,7 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 header > span, header > div, header a {
     color: #fff;
@@ -38,16 +39,33 @@ nav {
     background-color: rgb(57, 46, 179);
     border: 1px solid #fff;
 }
+
 li {
     list-style: none;
 }
+
 input:focus {
     outline: none;
 }
+
 a {
     text-decoration: none;
     color: #000;
 }
+
+.goOunwan{
+	margin : 0px 30px 0px 0px;
+	border : 1px solid white;
+	padding : 0px 10px;
+	border-radius: 10px;
+}
+
+.logout{
+	border : 1px solid white;
+	padding : 0px 10px;
+	border-radius: 10px;
+}
+
 .container {
     height: calc(100% - 67px);
 }
@@ -200,6 +218,7 @@ a {
 .product-wrap {
     height: 100%;
     background-color: #fff;
+    overflow-y: auto;
 }
 .product-wrap * {
     font-size: 22px;
@@ -210,12 +229,30 @@ a {
     padding-left: 50px;
     text-align: center;
 }
+
+.report-info {
+    width: 1500px;
+    margin: 0px auto 8px auto;
+    text-align: center;
+}
+
+.report-menu {
+	width: 1500px;
+    margin: 0px auto 5px auto;
+    text-align: center;
+}
+
 .product-menu input, .product-info input {
     margin-right: 10px;
 }
 .product-info:hover {
     background-color: #ddd;
 }
+
+.report-info:hover {
+    background-color: #ddd;
+}
+
 .product-info span, .product-info select, .product-info button, .product-menu span {
     display: inline-block;
     height: 32px;
@@ -225,15 +262,53 @@ a {
 	text-overflow: ellipsis;
 	vertical-align: top;
 }
+
+.report-info span, .report-info button {
+	font-size : 25px;
+	display: inline-block;
+    height: 32px;
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: top;
+	align-items: center;
+}
+
+.report-menu span{
+	font-size : 30px;
+	display: inline-block;
+    height: 50px;
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: top;
+	padding-bottom: 10px;
+}
+
 .product-info button {
     border: 0;
     height: 32px;
     cursor: pointer;
     border-radius: 5px;
 }
+
+.report-info button {
+    border: 0;
+    height: 32px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
 .product-info button:hover {
     background-color: #ddd;
 }
+
+.report-info button:hover {
+    background-color: #ddd;
+}
+
 .product-info div {
     position: absolute;
     width: 400px;
@@ -453,4 +528,7 @@ a {
 #subImageList button, #detailImageList button {
 	margin: 5px 0px 5px 0px;
 	width: 50px;
+}
+.danggunBlind{
+	cursor: pointer;
 }

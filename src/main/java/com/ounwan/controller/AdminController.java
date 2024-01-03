@@ -178,6 +178,7 @@ public class AdminController {
 	public String danggunBoard() {		
 		return "admin/danggunBoard";
 	}
+	
 	@GetMapping("/danggun/AllList")
 	public String danggunAllList(Model model,
 			@RequestParam(value = "inputValue", defaultValue = "%") String name,
@@ -185,18 +186,15 @@ public class AdminController {
 		
 		model.addAttribute("danggun", danggunService.pagenatedList(page,name));
 		model.addAttribute("paginating", danggunService.getPages(page,name));
-		System.out.println();
 		
 		return "admin/danggunList";
 	}
-//	@GetMapping("/danggun/danggunDetail")
-//	public String danggunDetailModel (
-//			Model model,
-//			@RequestParam Integer danggunNumber) {
-//			danggunService.danggunAdminDetail(danggunNumber);
-//	
-//		return "admin/danggunDetail";
-//	}
+	
+	@PostMapping("/danggun/blind")
+	public @ResponseBody String adminDanggunBlind(@RequestParam("danggunNumber") int danggunNumber) {
+		boolean result = danggunService.updateReport(danggunNumber);
+		return (result) ? "success" : "fail";
+	}
 	
 	@GetMapping("/danggun/report")
 	public String getDanggunReport(Model model) {
@@ -206,9 +204,29 @@ public class AdminController {
 	}
 
 	@PostMapping("/danggun/restore")
-	public @ResponseBody String restoreDanggun(@RequestParam("danggunNumber") Integer danggunNumber) {
+	public @ResponseBody String restoreDanggun(@RequestParam("danggunNumber") int danggunNumber) {
 		boolean result = danggunService.restoreDanggun(danggunNumber);
 		return result ? "success" : "fail";
+	}
+	
+	@PostMapping("/danggun/delete")
+	public @ResponseBody String adminDanggunDelete(@RequestParam("danggunNumber") int danggunNumber, HttpSession session) {
+		AdminDTO admin = (AdminDTO) session.getAttribute("admin");
+		if(admin != null) {
+			boolean result = danggunService.adminDanggunDelete(danggunNumber);
+			return (result) ? "success" : "fail";
+		}
+		return "fail";
+	}
+	
+	@PostMapping("/aeta/delete")
+	public @ResponseBody String adminAetaDelete(@RequestParam("aetaNumber") int aetaNumber, HttpSession session) {
+		AdminDTO admin = (AdminDTO) session.getAttribute("admin");
+		if(admin != null) {
+			boolean result = communityService.adminAetaDelete(aetaNumber);
+			return (result) ? "success" : "fail";
+		}
+		return "fail";
 	}
 
 	@GetMapping("/aeta/report")
