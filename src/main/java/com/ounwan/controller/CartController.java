@@ -27,100 +27,57 @@ public class CartController {
 	CartService cartService;
 	
 	@GetMapping("/cart")
-	public String showClientCart(Model model, HttpSession session) {
-	    Object obj = session.getAttribute("userInfo");
-
-	    List<Map<Object, Object>> UserCartList = new ArrayList<>();
-	    List<CartsDTO> cartList = null;
-	    if (obj == null) {
-	    	cartList = (List<CartsDTO>) session.getAttribute("cartList");
-	        model.addAttribute("GuestCartList", cartList);
-	    } else {
-	        UserCartList = cartService.getCartById(((ClientsDTO) obj).getClientId());
-	        model.addAttribute("clientId", ((ClientsDTO) obj).getClientId());
-	    }
-	    model.addAttribute("UserCartList", UserCartList);
-
-	    int total = 0;
-	    for (Map<Object, Object> map : UserCartList) {
-	        total += (Integer) map.get("price") * (Integer) map.get("QUANTITY");
-	    }
-	    model.addAttribute("total", total);
-
+	public String showClientCart(HttpSession session) {
+	    ClientsDTO client = (ClientsDTO) session.getAttribute("userInfo");
+	    if (client == null) {
+	    	List<CartsDTO> cartList = (List<CartsDTO>) session.getAttribute("cartList");
+	        session.setAttribute("cartList", cartList);
+	    } 
 	    return "coupung/cart";
 	}
 
 	@PostMapping(value = "/cart", produces = "text/plain;charset=UTF-8")
 	public @ResponseBody String addCart(@RequestBody CartsDTO cartsDTO, HttpSession session) {
-		Object obj = session.getAttribute("userInfo");
-		List<CartsDTO> cartList = null;
-		if (obj == null) {
-			Object prevCartList = session.getAttribute("cartList");
-			if (prevCartList == null) {
-				cartList = new ArrayList<>();
-				cartList.add(cartsDTO);
-			} else {
-				cartList = (List<CartsDTO>) prevCartList;
-				boolean updateOK = false;
-				for (CartsDTO dto : cartList) {
-					if (dto.getCoupungNumber() == cartsDTO.getCoupungNumber() && dto.getCoupungOptionNumber() == cartsDTO.getCoupungOptionNumber()) {
-						dto.setQuantity(dto.getQuantity() + cartsDTO.getQuantity());
-						updateOK = true;
-						break;
-					}
-				}
-				if (updateOK == false)
-					cartList.add(cartsDTO);
-			}
+		ClientsDTO client = (ClientsDTO) session.getAttribute("userInfo");
+		if (client == null) {
+			List<CartsDTO> cartList = cartService.addGuestCart((List<CartsDTO>) session.getAttribute("cartList"), cartsDTO);
 			session.setAttribute("cartList", cartList);
-		} else {
-			ClientsDTO client = (ClientsDTO) obj;
-			cartsDTO.setClientId(client.getClientId());
-			cartService.addToCart(cartsDTO);
+			return (cartList != null) ? "success" : "fail"; 
 		}
-		return "success";
+		List<Map<String, Object>> cartList = cartService.addToCart(cartsDTO, client.getClientId());
+		session.setAttribute("userCartList", cartList);
+		return (cartList != null) ? "success" : "fail"; 
 	}
 
 	@GetMapping(value = "/cartUpdate", produces = "text/plain;charset=UTF-8")
-	public @ResponseBody String updateCart(@RequestParam Integer coupungNumber, @RequestParam int quantity,
-			HttpSession session) {
-		Object obj = session.getAttribute("userInfo");
-		CartsDTO cartsDTO = CartsDTO.builder().coupungNumber(coupungNumber).quantity(quantity).build();
-
-		if (obj == null) {
-			List<CartsDTO> cartList = (List<CartsDTO>) session.getAttribute("cartList");
-			if (cartList != null) {
-				for (CartsDTO cart : cartList) {
-					if (cart.getCoupungNumber() == coupungNumber) {
-						cart.setQuantity(quantity);
-						break;
-					}
-				}
-				session.setAttribute("cartList", cartList);
-			}
-		} else {
-			ClientsDTO client = (ClientsDTO) obj;
-			cartsDTO.setClientId(client.getClientId());
-			cartService.updateCart(cartsDTO);
+	public @ResponseBody String updateCart(@RequestParam Integer coupungNumber
+											, @RequestParam int quantity
+											, @RequestParam Integer coupungOptionNumber
+											, HttpSession session) {
+		System.out.println(coupungOptionNumber);
+		ClientsDTO client = (ClientsDTO) session.getAttribute("userInfo");
+		if (client == null) {
+			List<CartsDTO> cartList = cartService.updateGuestCart((List<CartsDTO>) session.getAttribute("cartList"), coupungNumber, coupungOptionNumber,quantity);
+			session.setAttribute("cartList", cartList);
+			return (cartList != null) ? "success" : "fail";
 		}
-		return "cart";
+		List<Map<String, Object>> cartList = cartService.updateCart(coupungNumber, coupungOptionNumber, quantity, client.getClientId());
+		session.setAttribute("userCartList", cartList);
+		return (cartList != null) ? "success" : "fail";
 	}
 
 	@GetMapping(value = "/cartDelete", produces = "text/plain;charset=UTF-8")
-	public @ResponseBody String deleteCart(@RequestParam("coupungNumber") Integer coupungNumber, @RequestParam("optionNumber") Integer optionNumber, HttpSession session) {
-		Object obj = session.getAttribute("userInfo");
-		CartsDTO cartsDTO = CartsDTO.builder().coupungNumber(coupungNumber).coupungOptionNumber(optionNumber).build();
-		if (obj == null) {
-			List<CartsDTO> cartList = (List<CartsDTO>) session.getAttribute("cartList");
-			if (cartList != null) {
-				cartList.removeIf(cart -> ((CartsDTO) cart).getCoupungNumber() == coupungNumber);
-				session.setAttribute("cartList", cartList);
-			}
-		} else {
-			ClientsDTO client = (ClientsDTO) obj;
-			cartsDTO.setClientId(client.getClientId());
-			cartService.deleteCart(cartsDTO);
+	public @ResponseBody String deleteCart(@RequestParam("coupungNumber") Integer coupungNumber
+											, @RequestParam("optionNumber") Integer optionNumber
+											, HttpSession session) {
+		ClientsDTO client = (ClientsDTO) session.getAttribute("userInfo");
+		if (client == null) {
+			List<CartsDTO> cartList = cartService.deleteGuestCart(coupungNumber, optionNumber, (List<CartsDTO>) session.getAttribute("cartList"));
+			session.setAttribute("cartList", cartList);
+			return (cartList != null) ? "success" : "fail"; 
 		}
-		return "cart";
+		List<Map<String, Object>> cartList = cartService.deleteCart(coupungNumber, optionNumber, client.getClientId());
+		session.setAttribute("userCartList", cartList);
+		return (cartList != null) ? "success" : "fail";
 	}
 }

@@ -19,7 +19,6 @@
 </head>
 
 <body>
-
 	<%@ include file="../common/header.jsp" %>
 	<div class="container">
     <%@ include file="../common/nav.jsp" %>
@@ -40,7 +39,7 @@
 		            </thead>
 		            <tbody>
 						<c:choose>
-							<c:when test="${clientId == null}">
+							<c:when test="${userInfo.clientId == null}">
 					            <c:if test="${empty cartList}">
 									<tr class="none-content">
 										<td colspan="5">장바구니가 비어있습니다.</td>
@@ -73,20 +72,18 @@
 							                    	<div class="count">
 														<div class="minus">
 															<input type='hidden' value='${cart.coupungNumber}' class='coupung-num' /> 
-															<input type='hidden' value='${cart.price}' class='coupung-price' /> 
-															<input type='hidden' value='${status.count}' class='index-num' /> -
+															<input type='hidden' value='${cart.coupungOptionNumber}' class='coupung-option' /> -
 														</div>
-														<span id="result${status.count}">${cart.quantity}</span>
+														<span class="product-quantity">${cart.quantity}</span>
 														<div class="plus">
 															<input type='hidden' value='${cart.coupungNumber}' class='coupung-num' /> 
-															<input type='hidden' value='${cart.price}' class='coupung-price' /> 
-															<input type='hidden' value='${status.count}' class='index-num' /> +
+															<input type='hidden' value='${cart.coupungOptionNumber}' class='coupung-option' /> +
 														</div>
 													</div>
 												</div>
 						                    </td>
 						                    <td class="clsit-order-price">
-						                    	<span id="resultPrice${status.count}">금액:${cart.price*cart.quantity}</span>원
+						                    	<span>금액:<span class="product-price">${cart.price*cart.quantity}</span>원</span>
 						                    </td>
 						                    <td>
 						                    <div>
@@ -99,13 +96,13 @@
 								</c:if>
 							</c:when>
 							<c:otherwise>
-								<c:if test="${empty UserCartList}">
+								<c:if test="${empty userCartList}">
 										<tr class="none-content">
 											<td colspan="5">장바구니가 비어있습니다.</td>
 										</tr>
 								</c:if>
-								<c:if test="${not empty UserCartList}">
-									<c:forEach var="cart" items="${UserCartList}" varStatus="status">
+								<c:if test="${not empty userCartList}">
+									<c:forEach var="cart" items="${userCartList}" varStatus="status">
 						                <tr>
 						                	<div>
 							                	<td>
@@ -130,21 +127,19 @@
 							                    	<div class="clist-quantity"> 
 								                    	<div class="count">
 															<div class="minus">
-																<input type='hidden' value='${cart.COUPUNG_NUMBER}' class='coupung-num' /> 
-																<input type='hidden' value='${cart.price}' class='coupung-price' /> 
-																<input type='hidden' value='${status.count}' class='index-num' /> -
+																<input type='hidden' value='${cart.coupungNumber}' class='coupung-num' /> 
+																<input type='hidden' value='${cart.optionNumber}' class='coupung-option' /> -
 															</div>
-															<span id="result${status.count}">${cart.QUANTITY}</span>
+ 															<span class="product-quantity">${cart.QUANTITY}</span>
 															<div class="plus"> 
-																<input type='hidden' value='${cart.COUPUNG_NUMBER}' class='coupung-num' /> 
-																<input type='hidden' value='${cart.price}' class='coupung-price' /> 
-																<input type='hidden' value='${status.count}' class='index-num' /> +
+																<input type='hidden' value='${cart.coupungNumber}' class='coupung-num' /> 
+																<input type='hidden' value='${cart.optionNumber}' class='coupung-option' /> +
 															</div>
 														</div>
 													</div>
 							                    </td>
 							                    <td class="clsit-order-price">
-							                    	<span id="resultPrice${status.count}">${cart.price*cart.QUANTITY}</span>원
+							                    	<span>금액:<span class="product-price">${cart.price * cart.QUANTITY}</span>원</span>
 							                    </td>
 							                    <td>
 							                    <div>
@@ -156,7 +151,7 @@
 					                </c:forEach>
 							 	</c:if>
 				    		</c:otherwise>
-				    	</c:choose>
+						</c:choose>
 		            </tbody>
 		        </table>
 		        <div class="total-amount-container">
@@ -218,16 +213,24 @@
 	<script src="${appPath}/js/main.js"></script>
 	
 	<script>
+		$(function() {
+			$('.selectCheckbox').prop('checked', true);
+			calculateTotalAmount();
+		});
+		
+	
 	$('.selectCheckbox').on('change', function() {
-		  let totalPrice = 0;
+		  calculateTotalAmount();
+	});
+	
+	function calculateTotalAmount() {
+		let totalPrice = 0;
 		  $('.selectCheckbox:checked').each(function() {
-		    var index = $(this).parent().parent().parent().find(".index-num").val();
-		    var resultPriceText = $('#resultPrice' + index).text();
-		    var price = parseInt(resultPriceText.replace(/\D/g,''), 10);
-		    totalPrice += price;
+			  var price = Number($(this).closest('tr').find('.product-price').text());
+			  totalPrice += price;
 		  });
 		  $('#totalAmount').text(totalPrice);
-	});
+	}
 	
 	$(".delete-button").on("click",function(){
 		 var coupungNum = $(this).data("coupung-num");
@@ -253,20 +256,21 @@
 		var totalPrice = 0;
 			
 			$(".plus").on("click", function(){
-				var price = $(this).find(".coupung-price").val();
-				var index = $(this).find(".index-num").val();
 				var coupungNum = $(this).find(".coupung-num").val();
-				var quantity = Number($("#result" + index).html()) + 1;
-				$('#result'+index).html(quantity);totalPrice += price;
+				var quantity = Number($(this).parent().find(".product-quantity").text()) + 1;
+				var optionNumber = $(this).find(".coupung-option").val();
+				alert(quantity);
+				$(this).parent().find(".product-quantity").text(quantity);
 				
 				$.ajax({
 					url:"${appPath}/coupung/cartUpdate",
 					data : {
 						"coupungNumber" : coupungNum,
+						"coupungOptionNumber" : optionNumber,
 						"quantity" : quantity
 					},
 					success : function(res){
-						if(res === "cart"){
+						if(res === "success"){
 							location.href = "${appPath}/coupung/cart";
 						}
 					}
@@ -274,21 +278,22 @@
 			});
 			
 			$(".minus").on("click", function(){
-				var index = $(this).find(".index-num").val();
-				if($("#result" + index).html() > 1) {
-					var price = $(this).find(".coupung-price").val();
+				var quantity = Number($(this).parent().find(".product-quantity").text());
+				if(quantity > 1) {
 					var coupungNum = $(this).find(".coupung-num").val();
-					var quantity = Number($("#result" + index).html()) - 1;
-					$('#result'+index).html(quantity);
+					var optionNumber = $(this).find(".coupung-option").val();
+					quantity = quantity - 1;
+					$(this).parent().find(".product-quantity").text(quantity);
 					
 					$.ajax({
 						url:"${appPath}/coupung/cartUpdate",
 						data : {
 							"coupungNumber" : coupungNum,
+							"coupungOptionNumber" : optionNumber,
 							"quantity" : quantity
 						},
 						success : function(res){
-							if(res === "cart"){
+							if(res === "success"){
 								location.href = "${appPath}/coupung/cart";
 							}
 						}
@@ -385,22 +390,6 @@
 		document.querySelector('#backBtn').addEventListener('click', function() {
 			  window.location.href = '${appPath}';
 			});
-		
-		$(document).ready(function() {
-		    // 모든 selectCheckbox 클래스의 체크박스를 선택됨으로 설정합니다.
-		    $('.selectCheckbox').prop('checked', true);
-
-		    // 페이지 로드 시 총 금액을 계산합니다.
-		    let totalPrice = 0;
-		    $('.selectCheckbox:checked').each(function() {
-		        const index = $(this).parent().parent().parent().find(".index-num").val();
-		        const resultPriceText = $('#resultPrice' + index).text();
-		        const price = parseInt(resultPriceText.replace(/\D/g,''), 10);
-		        totalPrice += price;
-		    });
-		    $('#totalAmount').text(totalPrice);
-		});
-
 		</script>
 </body>
 </html>

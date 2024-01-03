@@ -17,7 +17,7 @@ public class CartDAO {
 
 	private static final String NAMESPACE = "net.ounwan.carts.";
 
-	public List<Map<Object,Object>> getCartById(String clientId) {
+	public List<Map<String,Object>> getCartById(String clientId) {
 		return sqlSession.selectList(NAMESPACE + "getCartById", clientId);
 	}
 

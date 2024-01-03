@@ -2,6 +2,7 @@ package com.ounwan.controller;
 	
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
@@ -63,11 +64,12 @@ public class ClientsController {
             session.setAttribute("userInfo", loginUser);
             if(cartList != null) {
             	for (CartsDTO cart : cartList) {
-            		cart.setClientId(loginUser.getClientId());
-            		cartService.addToCart(cart);
+            		cartService.addToCart(cart, loginUser.getClientId());
             		session.removeAttribute("cartList");
             	}
             }
+            List<Map<String, Object>> userCartList = cartService.getCartById(client.getClientId());
+            session.setAttribute("userCartList", userCartList);
             return "success";
         }
         return "fail";

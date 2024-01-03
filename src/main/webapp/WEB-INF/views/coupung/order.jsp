@@ -36,13 +36,15 @@
 		    var domain = '';
 		    var phone = '';
 		    if ('${userInfo}' != '') {
-				emailId = "${userInfo.email}"; 
+		    	if ('${userInfo.socialType}' === 'GOOGLE' || '${userInfo.socialType}' === 'NAVER' || '${userInfo.socialType}' === 'KAKAO')
+		    		emailId = '${userInfo.email}'.substring(2, '${userInfo.email}'.length);
+		    	else 
+					emailId = "${userInfo.email}"; 
 				phone = '${userInfo.phone}';
 				$('#name-txt').val('${userInfo.name}');	
 				$('#name-txt').attr('readOnly', true);
 			} else if('${guest}' != '') {
-				emailId = '${guest.email}'.split('@')[0];
-				domain = '${guest.email}'.split('@')[1];
+				emailId = '${guest.email}';
 				phone = '${guest.phone}';
 			}
 		    $('#id-txt').val(emailId);

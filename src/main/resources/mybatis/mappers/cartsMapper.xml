@@ -26,12 +26,12 @@
 		COUPUNG_OPTION_NUMBER = #{coupungOptionNumber}
 	</select>
 
-	<select id="updateQuantity" parameterType="carts"
-		resultType="carts">
+	<update id="updateQuantity" parameterType="carts">
 		update CARTS
 		set QUANTITY = #{quantity}
-		where CART_NUMBER = #{cartNumber}
-	</select>
+		where COUPUNG_NUMBER = #{coupungNumber}
+		AND COUPUNG_OPTION_NUMBER = #{coupungOptionNumber}
+	</update>
 
 
 	<insert id="insertCart" parameterType="carts">

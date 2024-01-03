@@ -1,5 +1,6 @@
 package com.ounwan.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,42 +24,85 @@ public class CartService {
 	@Autowired
 	HttpSession session;
 
-	public List<Map<Object, Object>> getCartById(String clientId) {
-		List<Map<Object, Object>> cartList = cartDAO.getCartById(clientId);
-
-		// List<CartsDTO> cartList = changeDTOList(carts);
-
-		/*
-		 * System.out.println("cartList : " + cartList); for (CartsDTO cart : cartList)
-		 * { cart.setCoupung(coupungService.getById(cart.getCoupungNumber())); }
-		 */
-
+	public List<Map<String, Object>> getCartById(String clientId) {
+		List<Map<String, Object>> cartList = cartDAO.getCartById(clientId);
 		return cartList;
 	}
 
-	public int addToCart(CartsDTO cartsDTO) {
+	public List<Map<String, Object>> addToCart(CartsDTO cartsDTO, String clientId) {
+		cartsDTO.setClientId(clientId);
 		Carts cart = cartDAO.getQuantity(changeEntity(cartsDTO));
-		System.out.println("cart : " + cart);
-
+		int result = 0;
 		if (cart != null) {
-			System.out.println("quantity(NEW) : " + cartsDTO.getQuantity());
-			System.out.println("quantity(old) : " + cart.getQuantity());
-			cartsDTO.setQuantity(cartsDTO.getQuantity() + cart.getQuantity());
-			System.out.println("quantity(update) : " + cartsDTO.getQuantity());
-			cartsDTO.setCartNumber(cart.getCartNumber());
-			return cartDAO.updateQuantity(changeEntity(cartsDTO));
+			result = cartDAO.updateQuantity(Carts.builder()	
+												.cartNumber(cart.getCartNumber())
+												.quantity(cartsDTO.getQuantity() + cart.getQuantity())
+												.build());
 		}
-		return cartDAO.insertCart(changeEntity(cartsDTO));
+		result = cartDAO.insertCart(changeEntity(cartsDTO));
+		
+		if (result > 0)
+			return cartDAO.getCartById(clientId);
+		return null;
+	}
+	
+
+
+	public List<CartsDTO> addGuestCart(List<CartsDTO> cartList, CartsDTO cartsDTO) {
+		List<CartsDTO> result = new ArrayList<>();
+		if (cartList == null) {
+			result.add(cartsDTO);
+		} else {
+			boolean check = false;
+			for (CartsDTO cart : cartList) {
+				if (cart.getCoupungNumber() == cartsDTO.getCoupungNumber() 
+						&& cart.getCoupungOptionNumber() == cartsDTO.getCoupungOptionNumber()) {
+					cart.setQuantity(cart.getQuantity() + cartsDTO.getQuantity());
+					check = true;
+				} 
+				result.add(cart);
+			}
+			if (!check) result.add(cartsDTO);
+		}
+		return result;
 	}
 
-	public boolean updateCart(CartsDTO cartsDTO) {
-		int result = cartDAO.updateCart(changeEntity(cartsDTO));
-		return (result > 0) ? true : false;
+	public List<Map<String, Object>> updateCart(int coupungNumber, int coupungOptionNumber, int quantity, String clientId) {
+		int result = cartDAO.updateCart(Carts.builder()
+												.clientId(clientId)
+												.coupungNumber(coupungNumber)
+												.coupungOptionNumber(coupungOptionNumber)
+												.quantity(quantity)
+												.build());
+		return (result > 0) ? cartDAO.getCartById(clientId) : null;
+	}
+	
+	public List<CartsDTO> updateGuestCart(List<CartsDTO> cartList, int coupungNumber, int coupungOptionNumber,int quantity) {
+		if (cartList != null) {
+			for (CartsDTO cart : cartList) {
+				if (cart.getCoupungNumber() == coupungNumber && cart.getCoupungOptionNumber() == coupungOptionNumber) {
+					cart.setQuantity(quantity);
+				}
+			}
+		}
+		return cartList;
 	}
 
-	public boolean deleteCart(CartsDTO cartsDTO) {
-		int result = cartDAO.deleteCart(changeEntity(cartsDTO));
-		return (result > 0) ? true : false;
+	public List<Map<String, Object>> deleteCart(int coupungNumber, int optionNumber, String clientId) {
+		int result = cartDAO.deleteCart(Carts.builder()
+												.clientId(clientId)
+												.coupungNumber(coupungNumber)
+												.coupungOptionNumber(optionNumber)
+												.build());
+		return (result > 0) ? cartDAO.getCartById(clientId) : null;
+	}
+	
+	public List<CartsDTO> deleteGuestCart(int coupungNumber, int optionNumber, List<CartsDTO> cartList) {
+		for (CartsDTO cart : cartList) {
+			if (cart.getCoupungNumber() == coupungNumber && cart.getCoupungOptionNumber() == optionNumber)
+				cartList.remove(cart);
+		}
+		return cartList;
 	}
 
 	private CartsDTO changeDTO(Carts cart) {

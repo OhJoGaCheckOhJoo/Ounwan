@@ -32,7 +32,6 @@
 					</c:forEach>
 				</div>
 				<div class="product-img-1">
-					<!-- <%-- 메인 이미지 수정--%> -->
 					<img src="${detail.image[0].url }">
 				</div>
 				<div class="product-box">
@@ -50,12 +49,9 @@
 						<span class="review-count">(<span id="reviewTotalCount"></span>)
 						</span>
 					</div>
-					<div class="delivery">
-						<span>당일 배송</span>
-					</div>
 					<div class="product-info">
-						<div class="product-point">
-							<img src="./poing.png"> <span>구매시 15 포인트로 적립</span>
+						<div class="delivery">
+							<span>당일 배송</span>
 						</div>
 						<div class="product-unit-price">
 							<span id="unitPrice">${detail.price }</span>원
@@ -255,7 +251,7 @@
 		    	</div>
 	    	</div>
 	    </div>
-	<script src="../js/main.js"></script>
+	<script src="${appPath }/js/main.js"></script>
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

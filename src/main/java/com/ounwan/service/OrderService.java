@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.ounwan.dto.CartsDTO;
@@ -37,7 +40,7 @@ public class OrderService {
 		return changeDTOList(orderDAO.getOrderList(clientId));
 	}
 
-	public boolean setOrder(OrdersDTO orderDTO, ClientsDTO client, GuestsDTO guest, HttpSession session) {
+	public boolean setOrder(OrdersDTO orderDTO, ClientsDTO client, GuestsDTO guest, HttpSession session) throws MessagingException {
 		List<OrderDetailsDTO> orderDetails = orderDTO.getOrderDetails();
 		
 		for (OrderDetailsDTO product : orderDetails) {
@@ -59,7 +62,7 @@ public class OrderService {
 		}
 		
 		deleteCart(orderDetails, session, client, guest);
-		//sendReceipt(orderNumber, orderDTO.getTotalPrice(), orderDetails.get(0).getCoupungDTO().getName(), client, guest);
+		sendReceipt(orderNumber,orderDTO, client, guest);
 		
 		return (result > 0) ? true : false;
 	}
@@ -78,25 +81,38 @@ public class OrderService {
 					session.setAttribute("cartList", guestCarts);
 				}
 			} else {
-				List<Map<Object, Object>> clientCarts = cartService.getCartById(client.getClientId());
+				List<Map<String, Object>> clientCarts = cartService.getCartById(client.getClientId());
 				if (clientCarts != null) {
-					for (Map<Object, Object> cart : clientCarts) {
+					for (Map<String, Object> cart : clientCarts) {
 						if (orderDetail.getCoupungNumber() == cart.get("coupungNumber") 
 								&& orderDetail.getCoupungOptionNumber() == cart.get("optionNumber"))
-							cartService.deleteCart(CartsDTO.builder()
-															.clientId(client.getClientId())
-															.coupungNumber(orderDetail.getCoupungNumber())
-															.coupungOptionNumber(orderDetail.getCoupungOptionNumber())
-															.build());
+							clientCarts = cartService.deleteCart(orderDetail.getCoupungNumber(), orderDetail.getCoupungOptionNumber(), client.getClientId());
 					}
 				}
+				session.setAttribute("userCartList", clientCarts);
 			}
 		}
 	}
 	
-	private void sendReceipt(String orderNumber, int totalPrice, String productName, ClientsDTO client, GuestsDTO guest) {
-//		String productName = 
-//		String html = getEmailHTML(null, null, null);
+	private void sendReceipt(String orderNumber, OrdersDTO orderDTO, ClientsDTO client, GuestsDTO guest) throws MessagingException {
+		String pageUrl = "";
+		if (client != null)
+			pageUrl = "http://localhost:9090/myapp/myPage";
+		else 
+			pageUrl = "http://localhost:9090/myapp/guest";
+		String html = getEmailHTML(orderNumber, orderDTO.getTotalPrice(), pageUrl);
+		
+		MimeMessage mimeMessage = sender.createMimeMessage();
+		MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+		
+		messageHelper.setFrom("ounwan50@gmail.com");
+		if (client != null)
+			messageHelper.setTo(client.getEmail());
+		else 
+			messageHelper.setTo(guest.getEmail());
+		messageHelper.setText("text/html", html);
+		
+		sender.send(mimeMessage);
 	}
 	
 	public List<OrdersDTO> getAdminOrderList() {
@@ -184,7 +200,7 @@ public class OrderService {
 				.build();
 	}
 	
-	public String getEmailHTML(OrdersDTO order, String mypageUrl, String productName) {
+	public String getEmailHTML(String orderNumber, int totalPrice, String mypageUrl) {
 		return "<!DOCTYPE HTML\n"
 				+ "  PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional //EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
 				+ "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\"\n"
@@ -405,65 +421,7 @@ public class OrderService {
 				+ "                              <div\n"
 				+ "                                style=\"font-size: 15px; color: #eee7d8; line-height: 140%; text-align: left; word-wrap: break-word;\">\n"
 				+ "                                <p style=\"line-height: 140%;\">"
-				+ order.getOrderNumber()
-				+ "</p>\n"
-				+ "                              </div>\n"
-				+ "                            </td>\n"
-				+ "                          </tr>\n"
-				+ "                        </tbody>\n"
-				+ "                      </table>\n"
-				+ "                    </div>\n"
-				+ "                  </div>\n"
-				+ "                </div>\n"
-				+ "              </div>\n"
-				+ "            </div>\n"
-				+ "          </div>\n"
-				+ "          <div class=\"u-row-container\" style=\"padding: 0px;background-color: transparent\">\n"
-				+ "            <div class=\"u-row\"\n"
-				+ "              style=\"margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;\">\n"
-				+ "              <div\n"
-				+ "                style=\"border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;\">\n"
-				+ "                <div class=\"u-col u-col-33p33\"\n"
-				+ "                  style=\"max-width: 320px;min-width: 200px;display: table-cell;vertical-align: top;\">\n"
-				+ "                  <div\n"
-				+ "                    style=\"background-color: #333333;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;\">\n"
-				+ "                    <div\n"
-				+ "                      style=\"box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;\">\n"
-				+ "                      <table style=\"font-family:arial,helvetica,sans-serif;\" role=\"presentation\" cellpadding=\"0\"\n"
-				+ "                        cellspacing=\"0\" width=\"100%\" border=\"0\">\n"
-				+ "                        <tbody>\n"
-				+ "                          <tr>\n"
-				+ "                            <td class=\"v-container-padding-padding\"\n"
-				+ "                              style=\"overflow-wrap:break-word;word-break:break-word;padding:16px 16px 16px 40px;font-family:arial,helvetica,sans-serif;\"\n"
-				+ "                              align=\"left\">\n"
-				+ "                              <div\n"
-				+ "                                style=\"font-size: 15px; font-weight: 700; color: #eee7d8; line-height: 140%; text-align: left; word-wrap: break-word;\">\n"
-				+ "                                <p style=\"line-height: 140%;\">상품명</p>\n"
-				+ "                              </div>\n"
-				+ "                            </td>\n"
-				+ "                          </tr>\n"
-				+ "                        </tbody>\n"
-				+ "                      </table>\n"
-				+ "                    </div>\n"
-				+ "                  </div>\n"
-				+ "                </div>\n"
-				+ "                <div class=\"u-col u-col-66p67\"\n"
-				+ "                  style=\"max-width: 320px;min-width: 400px;display: table-cell;vertical-align: top;\">\n"
-				+ "                  <div\n"
-				+ "                    style=\"background-color: #333333;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;\">\n"
-				+ "                    <div\n"
-				+ "                      style=\"box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;\">\n"
-				+ "                      <table style=\"font-family:arial,helvetica,sans-serif;\" role=\"presentation\" cellpadding=\"0\"\n"
-				+ "                        cellspacing=\"0\" width=\"100%\" border=\"0\">\n"
-				+ "                        <tbody>\n"
-				+ "                          <tr>\n"
-				+ "                            <td class=\"v-container-padding-padding\"\n"
-				+ "                              style=\"overflow-wrap:break-word;word-break:break-word;padding:16px;font-family:arial,helvetica,sans-serif;\"\n"
-				+ "                              align=\"left\">\n"
-				+ "                              <div\n"
-				+ "                                style=\"font-size: 15px; color: #eee7d8; line-height: 140%; text-align: left; word-wrap: break-word;\">\n"
-				+ "                                <p style=\"line-height: 140%;\">"
-				+ productName
+				+ orderNumber
 				+ "</p>\n"
 				+ "                              </div>\n"
 				+ "                            </td>\n"
@@ -521,7 +479,7 @@ public class OrderService {
 				+ "                              <div\n"
 				+ "                                style=\"font-size: 15px; color: #eee7d8; line-height: 140%; text-align: left; word-wrap: break-word;\">\n"
 				+ "                                <p style=\"line-height: 140%;\">"
-				+ order.getTotalPrice()
+				+ totalPrice + " 원"
 				+ "</p>\n"
 				+ "                              </div>\n"
 				+ "                            </td>\n"

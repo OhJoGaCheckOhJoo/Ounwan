@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,7 +118,7 @@ public class CoupungController {
 	}
 
 	@PostMapping("/order")
-	public @ResponseBody String setOrder(@RequestBody OrdersDTO order, HttpSession session) {
+	public @ResponseBody String setOrder(@RequestBody OrdersDTO order, HttpSession session) throws MessagingException {
 		ClientsDTO client = (ClientsDTO) session.getAttribute("userInfo");
 		GuestsDTO guest = (GuestsDTO) session.getAttribute("guest");
 
@@ -135,6 +136,9 @@ public class CoupungController {
 	public String getOrderCompletePage(HttpSession session, Model model) {
 		GuestsDTO guest = (GuestsDTO) session.getAttribute("guest");
 		ClientsDTO client = (ClientsDTO) session.getAttribute("userInfo");
+		if (guest == null && client == null) {
+			return "login";
+		}
 		String orderNumber = orderService.getOrderNumber(client, guest);
 		model.addAttribute("orderNumber", orderNumber);
 		return "coupung/complete";

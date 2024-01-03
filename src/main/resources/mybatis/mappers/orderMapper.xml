@@ -37,7 +37,7 @@
     	LIMIT 1
     </select>
     
-    <select id="getGuestLatestOrderNumber" parameterType="String" resultType="String">
+    <select id="getGuestLatestOrderNumber" parameterType="int" resultType="String">
     	SELECT ORDER_NUMBER
     	FROM ORDERS
     	WHERE GUEST_NUMBER = #{guestId}
