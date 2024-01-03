@@ -18,26 +18,33 @@
 		WHERE VISIBILITY = 1
 		order by AETA_NUMBER DESC
 		limit #{start},#{limit}
+		
+		
 	</select>
 
 	<select id="AetaSearchAll" parameterType="map" resultType="aeta">
 		select 
-		AETA_NUMBER ,
-		CLIENT_ID ,
-		TITLE ,	
-		TO_CHAR(CREATED_DATE, 'YYYY-MM-DD') AS createdDate,
-		VIEWS,
-		VISIBILITY
-		from AETA
+		A.AETA_NUMBER,
+   		A.CLIENT_ID,
+    	A.TITLE,
+    	TO_CHAR(A.CREATED_DATE, 'YYYY-MM-DD') AS createdDate,
+    	A.VIEWS,
+    	A.VISIBILITY,
+    	COUNT(C.AETA_NUMBER) AS commentCount
+		from AETA A
+		LEFT JOIN
+    	COMMENTS C ON A.AETA_NUMBER = C.AETA_NUMBER
 		where
 		VISIBILITY=1
 		and
-		(title like
+		(A.title like
 		CONCAT('%',#{inputValue},'%')
 		or
-		CLIENT_ID like
+		A.CLIENT_ID like
 		CONCAT('%',#{inputValue},'%'))
-		order by AETA_NUMBER DESC
+		GROUP BY
+    	A.AETA_NUMBER, A.CLIENT_ID, A.TITLE, A.CREATED_DATE, A.VIEWS, A.VISIBILITY
+		order by A.AETA_NUMBER DESC
 		limit
 		#{start},#{limit}
 	</select>
@@ -300,34 +307,41 @@
 		select count(*) from
 		AETA
 		where
-		VISIBILITY=1 and
+		VISIBILITY=1 
+		and(
 		title like
 		CONCAT('%',#{inputValue},'%')
 		or
 		CLIENT_ID like
 		CONCAT('%',#{inputValue},'%')
+		)
 	</select>
 	<select id="AetaCountSearchTitle" parameterType="String"
 		resultType="int">
 		select count(*) from
 		AETA
-		where VISIBILITY=1 and
+		where VISIBILITY=1 
+		and(
 		title like
 		CONCAT('%',#{inputValue},'%')
 		or
 		CLIENT_ID like
 		CONCAT('%',#{inputValue},'%')
+		)
 	</select>
 	<select id="AetaCountSearchId" parameterType="String"
 		resultType="int">
 		select count(*) from
 		AETA
-		where VISIBILITY=1 and
+		where VISIBILITY=1 
+		and 
+		(
 		title like
 		CONCAT('%',#{inputValue},'%')
 		or
 		CLIENT_ID like
 		CONCAT('%',#{inputValue},'%')
+		)
 	</select>
 
 	<insert id="AetaInsertPost" parameterType="aeta">
@@ -556,5 +570,11 @@
 		WHERE AETA_NUMBER = #{aetaNumber}
 	</update>
 
+	<update id="aetaBlindPost" parameterType="int">
+		UPDATE AETA
+		SET
+		VISIBILITY = 0
+		WHERE AETA_NUMBER = #{aetaNumber}
+	</update>
 </mapper>
 

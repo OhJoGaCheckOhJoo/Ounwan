@@ -243,14 +243,19 @@ public class AdminController {
 		return "admin/aetaList";
 	}
 
-	@GetMapping("/aeta/aetaPost")
-	public String aetaReadPost(@RequestParam Integer aetaNumber, Model model) {
-		model.addAttribute("aetaPost", communityService.aetaReadPost(aetaNumber));		
-		model.addAttribute("aetaComments", communityService.aetaReadComments(aetaNumber));
-		model.addAttribute("aetaCountLikes", communityService.aetaCountLikes(aetaNumber));
-		model.addAttribute("aetaCountComments", communityService.aetaCountComments(aetaNumber));
-		
-		return "/admin/aetaPost";
+//	@GetMapping("/aeta/aetaPost")
+//	public String aetaReadPost(@RequestParam Integer aetaNumber, Model model) {
+//		model.addAttribute("aetaPost", communityService.aetaReadPost(aetaNumber));		
+//		model.addAttribute("aetaComments", communityService.aetaReadComments(aetaNumber));
+//		model.addAttribute("aetaCountLikes", communityService.aetaCountLikes(aetaNumber));
+//		model.addAttribute("aetaCountComments", communityService.aetaCountComments(aetaNumber));
+//		
+//		return "/admin/aetaPost";
+//	}
+	
+	@GetMapping("/aeta/blind")
+	public @ResponseBody int aetaBlindPost(@RequestParam int aetaNumber){
+		return communityService.aetaBlindPost(aetaNumber);
 	}
 	
 	@RequestMapping("/logout")

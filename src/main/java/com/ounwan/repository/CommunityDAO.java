@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ounwan.dto.AetaDTO;
 import com.ounwan.entity.Aeta;
 import com.ounwan.entity.AetaLikes;
 import com.ounwan.entity.Comments;
@@ -259,6 +260,10 @@ public class CommunityDAO {
 
 	public int restoreAeta(Integer aetaNumber) {
 		return sqlSession.update(NAMESPACE + "restoreAeta", aetaNumber);
+	}
+
+	public int aetaBlindPost(int aetaNumber) {
+		return sqlSession.update(NAMESPACE+"aetaBlindPost",aetaNumber);
 	}
 
 }

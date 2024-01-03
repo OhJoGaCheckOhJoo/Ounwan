@@ -39,7 +39,6 @@ public class CommunityController {
 
 		List<AetaDTO> aetaList = communityService.aetaList(page, inputValue, selectedOption);
 		PaginatingDTO paginating = communityService.getPages(page, inputValue, selectedOption);
-
 		model.addAttribute("aetaList", aetaList);
 		model.addAttribute("paginating", paginating);
 		model.addAttribute("inputValue", inputValue);

@@ -29,7 +29,7 @@
 			<div>
 				<div id="aetaTitle">${aetaPost[0].TITLE}</div>
 				<span>
-					<img src="${aetaPost[0].PROFILE_URL}"/>
+					<img class="aeta-profile" src="${aetaPost[0].PROFILE_URL}"/>
 				</span>
 				<span id="aetaWriter">${aetaPost[0].CLIENT_ID}</span>
 				<div>
