@@ -21,7 +21,7 @@
 					</div>
 					<div class="fax-info">
 						<img class="fax" src="${appPath}/images/fax_icon.png" alt="fax" />
-						<span>(123)456-7890</span>
+						<span>ounwan50@gmail.com</span>
 					</div>
 				</div>
 				<div class="social-media">

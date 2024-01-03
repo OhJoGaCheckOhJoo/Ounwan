@@ -270,7 +270,8 @@ button:hover {
 
 .price-container span {
 	margin: 17px;
-	font-size: 30px;
+	font-size: 27px;
+	color: var(--red);
 }
 
 #payment {

@@ -14,7 +14,7 @@
 <link href="${appPath }/css/header.css" rel="stylesheet">
 <link href="${appPath }/css/nav.css" rel="stylesheet">
 <link href="${appPath }/css/order.css" rel="stylesheet"/>
-
+<link href="${appPath }/css/coupung/agreementPersonalData.css" rel="stylesheet"/>
 </head>
 <body>
 	<script>
@@ -229,7 +229,7 @@
 							<label for="agree1">
 								<input type="checkbox" id="agree1" required>
 								<i class="circle"></i> [필수] 개인정보 수집 및 이용 동의
-								<a id="agree">보기</a>
+								<a id="agree" onclick="openPersonalData()">보기</a>
 							</label>
 						</div>
 						<br>
@@ -261,11 +261,17 @@
 		<%@ include file="../common/agreementPersonalData.jsp" %>
 		<button>확인</button>
 	</div>
+	<div id="agreementOverlay" class="agreement-overlay"></div>
 	
 	<script>
 	var readAgreement1 = false; 
 
-	$(document).ready(function() {
+	function openPersonalData() {
+		document.getElementById("agreementPersonalData").style.display = "block";
+		document.getElementById("agreementOverlay").style.display = "block";
+		
+	}
+/* 	$(document).ready(function() {
 	    $("#agreementPersonalData").hide();
 	});
 
@@ -274,11 +280,12 @@
 	    if (!readAgreement1) {
 	        $("#agreementPersonalData").show(); 
 	    }
-	});
+	}); */
 
 	$("#agreementPersonalData button").on("click", function() {
 	    readAgreement1 = true;
 	    $("#agreementPersonalData").hide(); 
+	    $("#agreementOverlay").hide(); 
 	    $("#agree").attr('disabled', true);
 	});
 
