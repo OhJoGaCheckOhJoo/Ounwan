@@ -226,6 +226,7 @@ $("#updatePost").on('click',function(){
 
 	var title=$('#inputTitle').val();
 	var content=$('#inputContent').val();
+	var fomattedContent= content.replace(/\n/g, '<br>');
 	var aetaNumber=$('#aetaNumber').val();
 	//var oldImagesLength = document.getElementById('aetaCountImages').value;
 	
@@ -242,7 +243,7 @@ $("#updatePost").on('click',function(){
 		}
 	}
 	formData.append('title',title);
-	formData.append('contents',content);
+	formData.append('contents',fomattedContent);
 	formData.append('aetaNumber', aetaNumber);
 	console.log(formData);
 	
