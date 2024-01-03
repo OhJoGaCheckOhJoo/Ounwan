@@ -577,7 +577,6 @@ $(window).on("load", function() {
 					followModal.style.display = "block";
 				}
 			})
-			console.log(window.location.search);
 		});
 		
 		$("#following").on("click", function() {
@@ -588,7 +587,6 @@ $(window).on("load", function() {
 					followModal.style.display = "block";
 				}
 			})
-			console.log(window.location.search);
 		});
 		
 		$("#myInbodyButton").on("click", function() {
