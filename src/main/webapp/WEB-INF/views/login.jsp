@@ -4,7 +4,7 @@
 <c:set var="appPath" value="${pageContext.request.contextPath}"></c:set>
 <html>
 <head>
-<title>ounwan1</title>
+<title>오운완</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link href="${appPath}/css/main.css" rel="stylesheet" />
 <link href="${appPath}/css/main2.css" rel="stylesheet" />
@@ -31,12 +31,12 @@
             <div class="login-wrap-1 float-right">
                 <form>
                     <div class="login">
-                        <input type="text" id="loginId" required >
+                        <input type="text" id="loginId" autocomplete="off" required >
                         <label>아이디</label>
                         <span></span>
                     </div>
                     <div class="login">
-                        <input type="password" id="loginPassword" required>
+                        <input type="password" id="loginPassword" autocomplete="off" required>
                         <label>비밀번호</label>
                         <span></span>
                     </div>
