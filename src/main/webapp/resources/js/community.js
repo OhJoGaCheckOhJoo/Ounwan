@@ -11,6 +11,7 @@ var gramContent = "";
 var gramHashTag = "";
 var changImage = false;
 var gramPath = "/myapp/community";
+var tag = "";
 
 $(window).on("load", function() {
 
@@ -64,6 +65,7 @@ $(window).on("load", function() {
         });
         
         $("#gramSearchResult").on("click", "#searchTag", function() {
+        	gramEnd = false;
         	countGramTag = 0;
         	$("#ounwangramBoard").html("");
         	$("#gramWholeBoard").removeClass("ounwangram_selected");
@@ -72,6 +74,7 @@ $(window).on("load", function() {
         });
         
         $("#ounwangramBoard").on("click", "#searchTag", function() {
+        	gramEnd = false;
         	countGramTag = 0;
         	$("#ounwangramBoard").html("");
         	$("#gramWholeBoard").removeClass("ounwangram_selected");
@@ -115,7 +118,7 @@ $(window).on("load", function() {
                             } else if($("#gramFollowBoard").attr("class").toString().includes("ounwangram_selected")) {
                                 loadGramFollowBoard();
                             } else {
-                            	loadGramTagBoard();
+                            	loadGramTagBoard(tag);
                             }   
                             timer = null;
                         }, 500);
@@ -431,6 +434,7 @@ $(window).on("load", function() {
 		});
 		
 		$("#boardDetail").on("click", "#searchTag", function() {
+			gramEnd = false;
         	countGramTag = 0;
         	$("#ounwangramBoard").html("");
         	$("#gramWholeBoard").removeClass("ounwangram_selected");
@@ -489,7 +493,7 @@ $(window).on("load", function() {
 				url: gramPath + "/checkFollowing" + window.location.search,
 				success: function(res) {
 					if(res > 0) {
-						if(confirm("정말 팔로우를 취소하시겠습니까?")) {
+						if(confirm("팔로우를 취소하시겠습니까?")) {
 							$.ajax({
 								url: gramPath + "/cancelFollowing" + window.location.search,
 								success: function(res) {
@@ -659,6 +663,7 @@ var loadGramTagBoard = function(tagName) {
         success : function(res) {
             loadBoard(res);
             countGramTag += 1;
+            tag = tagName;
         }
     })
 }

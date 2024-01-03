@@ -5,13 +5,11 @@
 		var obj={
 			"aetaNumber":aetaNumber
 		}
-		console.log(aetaNumber);
 	$.ajax({
 		url : appPath+"/community/likeButton",
 		type : 'post',
 		data : obj,
 		success : function(data){
-			console.log(data);
 				if(data.like === true){
 					$("#aeta-like-png").attr("src",appPath+"/images/likeImages/like.png");
 					$("#count-likes").html(data.likesCount);

@@ -490,7 +490,7 @@ nav .ounwangram {
 }
 
 #followButton:hover {
-	background-color: #ddd;
+	background-color: #444;
 }
 
 #myProfileInfo {
@@ -743,7 +743,7 @@ nav .ounwangram {
   padding: 30px 30px;
   margin: 0 auto;
   border: 1px solid #777;
-  background-color: #fff;
+  background-color: var(--main-back);
 }
 
 #modalBody hr {
@@ -785,7 +785,7 @@ nav .ounwangram {
   padding: 30px 30px;
   margin: 0 auto;
   border: 1px solid #777;
-  background-color: #fff;
+  background-color: var(--main-back);
   overflow-y: auto; 
 }
 
@@ -836,14 +836,14 @@ nav .ounwangram {
 	margin: 10px 0px 0px 25px;
 	border: 0;
 	border-radius: 15px;
-	background-color: var(--main-color);
-	color: #fff;
+	background-color: #444;
+	color: var(--main-color-1);
 	font-size: 20px;
 	font-weight: bold;
 }
 
 #reportReason button:hover {
-	color: #ddd;
+	color: var(--main-color-2);
 }
 #inbodyInsertBody {
 	margin-top: 50px;
@@ -879,5 +879,5 @@ nav .ounwangram {
 	cursor: pointer;
 }
 .selectedFollow {
-	border-bottom: 1px solid var(--main-color);
+	border-bottom: 2px solid var(--main-color-2);
 }

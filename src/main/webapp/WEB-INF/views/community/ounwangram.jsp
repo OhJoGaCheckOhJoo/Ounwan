@@ -61,7 +61,7 @@
 	      		</div>
 	      		<div>
 		      		<span class="reportId">신고자</span>
-		      		<span>|&nbsp;${clientInfo.clientId}</span>
+		      		<span>|&nbsp;${userInfo.clientId}</span>
 	      		</div>
 	      		<div>
 	      			<span class="reportId">피신고자</span>
