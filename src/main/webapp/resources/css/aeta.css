@@ -5,19 +5,23 @@
 }
 tr {
 	height: 30px;
-	vertical-align: top;
+	vertical-align: middle;
+}
+.top > th {
+	font-size: 23px;
+    padding: 15px 10px;
+    text-align: center;
+    background-color: #444;
+    font-weight: normal;
 }
 tbody tr {
 	cursor: pointer;
 }
 tbody tr:hover {
-	background-color: #444;
-}
-tr th {
-	width: 280px;
+	background-color: rgba(0, 0, 0, 0.1);
 }
 tr td {
-	text-align: center;
+	padding: 25px 0px;
 }
 input {
 	background-color: var(--main-back);
@@ -35,6 +39,7 @@ textarea:focus {
 .search {
 	text-align: center;
 	padding: 30px;
+	margin-bottom: 20px;
 }
 .search select, .search input {
 	background-color: var(--main-back);
@@ -43,17 +48,26 @@ textarea:focus {
 	display: inline-block;
 	width: 500px;
 }
-.num, .count {
+.num {
 	width: 60px;
 }
 .title {
-	padding-left: 20px;
-	width: 400px;
+	padding: 0px 20px;
+	width: 580px;
 	text-align: left;
+}
+.writer {
+	width: 200px;
+}
+.date {
+	width: 150px;	
+}
+.count {
+	width: 80px;
 }
 .aeta-title > button {
 	position: relative;
-	border: 1px solid #fff;
+	border: 1px solid var(--main-color-1);
 	padding: 10px 20px 10px 20px;
 	border-radius: 5px;
 	cursor: pointer;
@@ -61,28 +75,30 @@ textarea:focus {
 	left: 1050px;
 }
 .aeta-title > button:hover {
-	background-color: #222;
+	background-color: var(--main-color-2);
+	border: 1px solid var(--main-color-2);
+	color: var(--main-back);
 }
 .aeta-title {
 	width: 1150px;
 	height: 60px;
-	border-bottom: 1px solid #666;
-	margin: 0px auto 10px auto;
-	padding: 30px 50px 10px 50px;
+	margin: auto;
+	padding: 60px 50px;
 }
 .aeta-title strong {
-	font-size: 32px;
+	font-size: 40px;
 }
 .aeta-title p {
 	color: #666;
+	font-size: 20px;
 }
 .aeta-pagination {
 	text-align: center;
-	margin: 10px auto 10px auto;
-	width: 1150px;
-	padding: 10px;
-	border-top: 1px solid #999;
-	border-bottom: 1px solid #999;
+	margin: auto;
+	width: 1250px;
+    padding: 20px 0px;
+    border-top: 1px solid #555;
+    border-bottom: 1px solid #555;
 }
 .aeta-pagination span {
 	cursor: pointer;
@@ -96,9 +112,6 @@ textarea:focus {
 	width: 20px;
 	height: 20px;
 	border-radius: 50%;
-}
-.aeta-like-png{
-	height: 20px;
 }
 .selected {
 	font-weight: bold;
@@ -117,6 +130,11 @@ textarea:focus {
 	border-radius: 5px;
 	padding: 5px 10px 5px 10px;
 	cursor: pointer;
+}
+.search #searchBtn:hover {
+	background-color: var(--main-color-2);
+	border: 1px solid var(--main-color-2);
+	color: var(--main-back);
 }
 .search select {
 	padding: 5px 0px 5px 0px;
@@ -152,11 +170,6 @@ textarea:focus {
 }
 .aeta-comment {
 	margin-top: 10px;
-}
-.commentContent {
-	margin-top: 5px;
-	padding-bottom: 5px;
-	border-bottom: 1px solid #666;
 }
 .input-comment-wrap {
 	padding: 10px 0px 10px 0px;
@@ -222,7 +235,6 @@ textarea:focus {
 
 #aetaboardList {
 	margin: auto;
-	height: 350px;
 	text-align: center;
 }
 #aetaboardList > table {
@@ -295,19 +307,6 @@ textarea:focus {
     height: 300px;
     font-size: 16px;
 }
-#aetaPostDetail {
-	width: 900px;
-	margin: 30px auto 0px auto;
-}
-#aetaTitle {
-	font-size: 32px;
-}
-#aetaWriter, #aetaPostDate {
-	display: inline-block;
-}
-#aetaContent {
-	padding: 20px 0px 20px 0px;
-}
 .overlay{
 	display: none;
     position: fixed;
@@ -317,4 +316,141 @@ textarea:focus {
     height: 100%;
     background: rgba(0, 0, 0, 0.7);
     z-index: 9999;
+}
+.aeta-post-detail {
+	width: 1250px;
+    margin: auto;
+}
+.host-head {
+	padding: 5px 5px 40px 25px;
+}
+.host-title {
+	font-size: 40px;
+	padding: 10px 0px;
+}
+.host-info {
+	display: flex;
+	align-items: center;
+	padding: 10px 0px;
+}
+.host-image {
+	width: 30px;
+	height: 30px;
+	margin-right: 15px;
+}
+.host-id {
+}
+.host-create-date {
+	display: inline-block;
+}
+.modal-button {
+	position: relative;
+    border: 1px solid var(--main-color-1);
+    padding: 10px 20px 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    bottom: -170px;
+    left: 1140px;
+}
+.modal-button:hover {
+	background-color: var(--main-color-2);
+	border: 1px solid var(--main-color-2);
+	color: var(--main-back);
+}
+.non-report-button {
+	height: 40px;
+}
+.post-photos {
+	width: 1050px;
+    margin: auto;
+}
+.post-photo {
+	display: inline-block;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px 10px;
+}
+.post-content {
+	padding: 10px;
+	min-height: 300px;
+	font-size: 20px;
+}
+.post-buttons {
+	text-align: right;
+}
+.post-button {
+	padding: 10px 5px;
+	cursor: pointer;
+}
+.post-button:hover {
+	color: var(--main-color-2);
+}
+.comment-title {
+	font-size: 21px;
+}
+.comment-ment {
+	font-weight: normal;
+	color: #777;
+}
+.comment-list {
+	margin: 10px 0px
+}
+.post-textarea {
+	background-color: var(--main-back);
+    resize: none;
+    width: 1130px;
+    height: 50px;
+    padding: 10px;
+}
+.post-register-button {
+    border: 1px solid var(--main-color-1);
+    padding: 10px 20px 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+}
+.post-register-button:hover {
+	background-color: var(--main-color-2);
+	border: 1px solid var(--main-color-2);
+	color: #333;
+}
+.delete-comment-button {
+	cursor: pointer;
+}
+.delete-comment-button:hover {
+	color: var(--main-color-2);
+}
+.post-footer {
+	margin: 20px 5px;
+}
+.post-comment {
+	padding: 10px 0px;
+    border-bottom: 1px solid #555;
+}
+.comment-content {
+    padding: 10px;
+}
+.commemter-info {
+	display: flex;
+	text-align: center;
+	margin: 5px 0px 0px 0px;
+}
+.comment-profile {
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+.aeta-like-png {
+	width: 30px;
+    height: 30px;
+    cursor: pointer; 
+    margin-right: 10px; 
+}
+.like-container {
+	display: flex;
+	text-align: center;
+}
+.count-likes {
+	padding-top: 3px;
 }
