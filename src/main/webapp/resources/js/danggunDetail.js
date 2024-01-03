@@ -1,7 +1,6 @@
 var appPath = '/myapp';
 
 $(function() {
-	// 상세이미지 클릭하였을 때, 메인이미지와 변경
 	$(".photos").on("click", ".detail-img", function() {
 	    var detailsrc = $(this).attr("src");
 	    $(this).attr("src", $(".product-img-1 img").attr("src"));
@@ -25,10 +24,7 @@ $(function() {
 				dataType : 'text',
 				data : JSON.stringify(obj),
 				success : function(responseData) {
-					alert(responseData);
-				},
-				error : function() {
-					alert("존재하지 않는 상품입니다.");
+					alert("삭제에 성공하였습니다.");
 				}
 			});
 		}

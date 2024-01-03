@@ -34,9 +34,7 @@ function openReviewModal(detailNumber, url, productName, option) {
 	});
 
 	var filledStar = 0;
-	$(".score-setting").on(
-			"click",
-			function() {
+	$(".score-setting").on("click",function() {
 				filledStar = 0;
 				for (var i = 0; i < 5; i++) {
 					if (i < $(this).val()) {

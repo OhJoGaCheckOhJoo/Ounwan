@@ -124,7 +124,6 @@ $(window).on("load", function() {
             }
         });
 		
-		
 		$("#ounwangramBoard").on("click", "#ounwanLikeBtn", function() {
             $(this).disabled = true;
             var img = $(this).children('img');
@@ -159,7 +158,6 @@ $(window).on("load", function() {
         $("#ounwangramBoard").on("click", "#deleteGramBoard", function() {
             if(confirm("삭제하시겠습니까?")){
             	var communityNumber = $(this).val();
-            	console.log("delete : " + communityNumber);
             	$.ajax({
                 	url: gramPath + "/ounwangram/deleteBoard",
                 	data: { "communityNumber" : communityNumber },
@@ -172,10 +170,7 @@ $(window).on("load", function() {
                         }
                 	}
                 })
-            } else {
-            	console.log("삭제취소");
             }
-            
         });
 
         $("#ounwangramBoard").on("click", "#reportGramBoard", function() {
@@ -349,7 +344,6 @@ $(window).on("load", function() {
                     hashTagArray.push($("#ounwanGramHashTag").val());
                 }
             }
-            console.log(hashTagArray);
             formData.append('communityNumber', $('#updateButton').val());
             if(changImage) {
                 formData.append('image', $("input[name='uploadImageInput']")[0].files[0]);
@@ -453,7 +447,6 @@ $(window).on("load", function() {
         $("#boardDetail").on("click", "#deleteGramBoard", function() {
             if(confirm("삭제하시겠습니까?")){
             	var communityNumber = $(this).val();
-            	console.log("delete : " + communityNumber);
             	$.ajax({
                 	url: gramPath + "/ounwangram/deleteBoard",
                 	data: { "communityNumber" : communityNumber },
@@ -466,10 +459,7 @@ $(window).on("load", function() {
                         }
                 	}
                 })
-            } else {
-            	console.log("삭제취소");
-            }
-            
+            } 
         })
 		
 		$("#myProfileBoards").on("click", ".myProfileBoardImage", function() {

@@ -1,10 +1,8 @@
-// 모달 열기
 function openShareModal() {
 	document.getElementById("shareModal").style.display = "block";
 	document.getElementById("shareModalOverlay").style.display = "block";
 }
 
-// 모달 닫기
 function closeShareModal() {
 	document.getElementById("shareModal").style.display = "none";
 	document.getElementById("shareModalOverlay").style.display = "none";

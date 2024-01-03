@@ -1,5 +1,4 @@
 var appPath = '/myapp';
-// 모달 열기
 function openModal(tradeHistoryNumber) {
 	document.getElementById("myModal").style.display = "block";
 	document.getElementById("modalOverlay").style.display = "block";
@@ -16,7 +15,6 @@ function openModal(tradeHistoryNumber) {
 	$("#modalInputText").text(($("#modalInputText").val()).replace(/<br>/g, '\n'));
 }
 
-// 모달 닫기
 function closeModal() {
 	document.getElementById("myModal").style.display = "none";
 	document.getElementById("modalOverlay").style.display = "none";
@@ -55,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 });
 
-// 초기 이미지 설정 
 var initialImageArr = []; // 초기 이미지에 저장에 사용 
 var formImage = [];
 
@@ -75,7 +72,6 @@ function setMainInitialImageURL(productImageNumber){
     }
 }
 
-// 메인 이미지
 function updateMainImage(mainImage, productImageNumber) {
     const input = document.getElementById("uploadImageInput");
     const img = document.getElementById("mainImage");
@@ -110,12 +106,10 @@ function updateMainImage(mainImage, productImageNumber) {
     updateFormImageArray(changeImageInfo);
 }
 
-// 상세 이미지
 function updateDetailImage(productImageNumber) {
 	var input = document.getElementById("uploadDetailImageInput" + productImageNumber);
     var img = document.getElementById("detailImage" + productImageNumber);
 	
-    // 초기 이미지 URL이 설정되어 있지 않으면 설정
     if (!initialImageArr[productImageNumber]) {
    		setInitialImageURL(productImageNumber);
 	}	
@@ -198,8 +192,6 @@ $(function() {
 			success : function(responseData) {
 				if(responseData == true){
 					alert("상품의 정보가 수정되었습니다.");
-					
-				
 					window.location.href = appPath + "/danggun/detail?danggunNumber="+danggunNumber;
 				}
 				else{

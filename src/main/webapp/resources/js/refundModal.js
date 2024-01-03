@@ -33,11 +33,9 @@
 				success : function(res) {
 					if(res === "success") {
 						alert("환불 접수가 완료되었습니다.");
-					}
-					else {
+					} else {
 						alert("환불 중 문제가 발생했습니다." )
 					}
-					
 					$.ajax({
 						type : "GET",
 						url : appPath + "/myPage/coupungOrderList",
@@ -45,7 +43,6 @@
 							$("#content").html(res);
 						}
 					});
-					
 				}
 			});
 			closeRefundModal();

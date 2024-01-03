@@ -1,12 +1,10 @@
 var appPath = '/myapp';
 
-// 모달 열기
 function openReportModal() {
 	document.getElementById("reportModal").style.display = "block";
 	document.getElementById("reportModalOverlay").style.display = "block";
 }
 
-// 모달 닫기
 function closeReportModal() {
 	document.getElementById("reportModal").style.display = "none";
 	document.getElementById("reportModalOverlay").style.display = "none";
@@ -25,9 +23,6 @@ function submitReport() {
       	"reportReason" : reportReason
     };
     
-    console.log(obj);
-    console.log(aetaNumber);
-    
     $.ajax({
       	url : appPath + '/community/report',
       	type : 'post',
@@ -37,9 +32,7 @@ function submitReport() {
       		alert(responseData);
 			location.href=appPath+'/community/aetaBoard';
        }
-      	
     });
   
 }
-  // '신고하기' 버튼에 이벤트 리스너 추가
-  document.getElementById('reportSubmit').addEventListener('click', submitReport);
+document.getElementById('reportSubmit').addEventListener('click', submitReport);
