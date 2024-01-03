@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div>
+<div class="agreement-content">
 	1. 수집하는 개인정보 항목<br>
 	(1) 오운완은 최초 회원 가입시 원활한 고객상담, 서비스 제공을 위해 아래와 같은 최소한의 개인정보를 필수항목으로 수집하고 있습니다.<br>
 	개인 회원: 이름, 아이디, 이메일, 연락처, 비밀번호, 생년월일, 주소<br>

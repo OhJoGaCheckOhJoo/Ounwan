@@ -14,6 +14,7 @@
     <link href="${appPath }/css/header.css" rel="stylesheet">
     <link href="${appPath }/css/nav.css" rel="stylesheet">
     <link href="${appPath }/css/coupung/coupung.css" rel="stylesheet">
+    <link href="${appPath }/css/footer.css" rel="stylesheet">
 </head>
 <body>
     <%@ include file="../common/header.jsp" %>
@@ -88,6 +89,7 @@
             </div>
         </div>
     </div>
+    <%@ include file="../common/footer.jsp"%>
 	<script src="${appPath}/js/main.js"></script>
 	<script>
 	$('.category-detail').click(function() {

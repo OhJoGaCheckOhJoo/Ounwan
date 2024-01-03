@@ -14,6 +14,7 @@
 <link href="${appPath}/css/danggunUpdateModal.css" rel="stylesheet" />
 <link href="${appPath}/css/danggunReportModal.css" rel="stylesheet" />
 <link href="${appPath}/css/danggunShareModal.css" rel="stylesheet" />
+<link href="${appPath}/css/footer.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <meta charset="UTF-8">
