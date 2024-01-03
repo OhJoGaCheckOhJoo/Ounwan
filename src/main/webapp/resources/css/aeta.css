@@ -1,4 +1,8 @@
 @charset "UTF-8";
+
+.aeta{
+	margin-top: 60px;
+}
 tr {
 	height: 30px;
 	vertical-align: top;
@@ -23,6 +27,7 @@ input:focus {
 }
 textarea {
 	background-color: var(--main-back);
+	resize: none;
 }
 textarea:focus {
 	outline: none;	
@@ -160,17 +165,38 @@ textarea:focus {
 	width: 800px;
 	height: 50px;
 }
-.input-comment-wrap > button {
-	width: 50px;
-	height: 50px;
-	border: 1px solid var(--main-color-1);
-	border-radius: 10px;
-	float: right;
-	vertical-align: top;
+.aeta-post button {
+	margin: 45px 0px;
+    font-size: 20px;
+    width: 100px;
+    padding: 10px;
+    background-color: #444;
+    border: 1px solid #ccc5b6;
+    border-radius: 5px;
+    cursor: pointer;
 }
+
+.aeta-update-wrap button{
+	margin: 45px 5px 0px;
+    font-size: 20px;
+    width: 100px;
+    padding: 10px;
+    background-color: #444;
+    border: 1px solid #ccc5b6;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.aeta-post button:hover {
+	background-color: var(--main-color-2); 
+	color: var(--main-back);
+	border-color: var(--main-color-2); 
+}
+
 .input-comment-wrap > button:hover {
-	color: var(--main-color-2);
-	border: 1px solid var(--main-color-2);
+	background-color: var(--main-color-2); 
+	color: var(--main-back);
+	border-color: var(--main-color-2); 
 }
 #aeta-post-likes {
 	margin-top: 21px;
@@ -179,11 +205,21 @@ textarea:focus {
 	float: right;
 }
 #aetaPost {
+	margin-top: 60px;
 	text-align: center;
 	padding: 30px;
 	border-bottom: 1px solid #fff;
 	margin-bottom: 30px;
 }
+
+#aetaUpdate{
+	margin-top: 60px;
+	text-align: center;
+	padding: 30px;
+	border-bottom: 1px solid #fff;
+	margin-bottom: 30px;	
+}
+
 #aetaboardList {
 	margin: auto;
 	height: 350px;
@@ -254,9 +290,10 @@ textarea:focus {
 	display: block;
 }
 #inputContent {
-	width: 800px;
-	height: 300px;
-	font-size: 16px;
+	padding: 15px;
+    width: 780px;
+    height: 300px;
+    font-size: 16px;
 }
 #aetaPostDetail {
 	width: 900px;

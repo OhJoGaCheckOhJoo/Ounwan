@@ -19,6 +19,7 @@
 <link href="${appPath}/css/nav.css" rel="stylesheet">
 <link href="${appPath}/css/mypagemain.css" rel="stylesheet">
 <link href="${appPath}/css/aetaList.css" rel="stylesheet">
+<link href="${appPath }/css/footer.css" rel="stylesheet">
 </head>
 
 <body>
@@ -255,7 +256,6 @@
 			</div>
 		</div>
 		</div>
-		<hr class="footer-line">
 		<%@ include file="../common/footer.jsp"%>
 
 		<script src="./js/main.js"></script>

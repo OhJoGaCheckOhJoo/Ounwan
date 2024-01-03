@@ -9,6 +9,7 @@
 <link href="${appPath}/css/header.css" rel="stylesheet" />
 <link href="${appPath}/css/nav.css" rel="stylesheet" />
 <link href="${appPath}/css/aeta.css" rel="stylesheet" />
+<link href="${appPath}/css/footer.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>애타 게시글 작성</title>
@@ -35,14 +36,15 @@
 
 			<div id="aetaInputContentWrap">
 				<label for="inputContent">내용</label>
+				<br>
 				<textarea id="inputContent"></textarea>
 			</div>
-			<div>
+			<div class="aeta-post">
 				<button type="button" id="PostingBtn" onclick="validateForm()">등록</button>
 			</div>
 		</div>
-		
 	</div>
+	<%@include file="../../common/footer.jsp"%>
 	<script src="../js/main.js"></script>
 	<script src="../js/community.js"></script>
 	<script src="../js/aeta.js"></script>

@@ -14,6 +14,7 @@
     <link href="./css/header.css" rel="stylesheet">
     <link href="./css/nav.css" rel="stylesheet">
     <link href="./css/faq.css" rel="stylesheet">
+    <link href="${appPath }/css/footer.css" rel="stylesheet">
 </head>
 <body>
     <%@ include file="../common/header.jsp" %>
@@ -55,6 +56,7 @@
     	<img src="${appPath}/images/help.jpg" />
     </a>
     
+    <%@ include file="../common/footer.jsp"%>
     <%@ include file="../danggun/danggunProhibitedListModal.jsp"%>
     
     <script src="./js/main.js"></script>
