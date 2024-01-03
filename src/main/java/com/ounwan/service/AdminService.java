@@ -30,39 +30,47 @@ public class AdminService {
 		return null;
 	}
 	
-	public Map<String, Object> getTotalPriceByDate() {
+	public Map<String, Object> getAdminTotal() {
 		Map<String, Object> result = new HashMap<>();
 		List<String> dates = new ArrayList<>();
 		List<Integer> totalPrice = new ArrayList<>();
-		for(Map<String, Object> row : adminDAO.getTotalPriceByDate()) {
-			dates.add("'" + row.get("DATE").toString() + "'");
-			totalPrice.add(Integer.parseInt(String.valueOf(row.get("TOTAL_PRICE"))));
-		}
-		result.put("date", dates);
-		result.put("totalPrice", totalPrice);
-		return result;
-	}
-	
-	public List<Integer> getCommunityAct() {
 		List<Integer> communityAct = new ArrayList<>();
+		List<String> categories = new ArrayList<>();
+		List<Integer> totalPriceCategory = new ArrayList<>();
+		List<Integer> totalDanggun = new ArrayList<>();
+		List<Integer> communityCnt = new ArrayList<>();
+		List<Integer> storeCnt = new ArrayList<>();
+		
+		for(Map<String, Object> row : adminDAO.getTotalPriceByDate()) {
+			dates.add(0, "'" + row.get("DATE").toString() + "'");
+			totalPrice.add(0, Integer.parseInt(String.valueOf(row.get("TOTAL_PRICE"))));
+		}
 		for(Map<String, Object> row : adminDAO.getCommunityAct()) {
 			communityAct.add(Integer.parseInt(String.valueOf(row.get("CNT"))));
 		}
-		return communityAct;
-	}
-	
-	public Map<String, Object> getTotalByCategory() {
-		Map<String, Object> result = new HashMap<>();
-		List<String> categories = new ArrayList<>();
-		List<Integer> totalPrice = new ArrayList<>();
 		for(Map<String, Object> row : adminDAO.getTotalByCategory()) {
-			categories.add("'" + row.get("CATEGORY").toString() + "'");
-			totalPrice.add(Integer.parseInt(String.valueOf(row.get("TOTAL_PRICE"))));
+			categories.add(0, "'" + row.get("CATEGORY").toString() + "'");
+			totalPriceCategory.add(0, Integer.parseInt(String.valueOf(row.get("TOTAL_PRICE"))));
 		}
+		for(Map<String, Object> row : adminDAO.getDanggunTotal()) {
+			totalDanggun.add(0, Integer.parseInt(String.valueOf(row.get("CNT"))));
+		}
+		for(Map<String, Object> row : adminDAO.getReportTotal()) {
+			communityCnt.add(0, Integer.parseInt(String.valueOf(row.get("COMMUNITY_CNT"))));
+			storeCnt.add(0, Integer.parseInt(String.valueOf(row.get("STORE_CNT"))));
+		}
+		
+		result.put("date", dates);
+		result.put("totalPrice", totalPrice);
+		result.put("communityAct", communityAct);
 		result.put("categories", categories);
-		result.put("totalPriceCategory", totalPrice);
+		result.put("totalPriceCategory", totalPriceCategory);
+		result.put("totalDanggun", totalDanggun);
+		result.put("communityCnt", communityCnt);
+		result.put("storeCnt", storeCnt);
+		
 		return result;
-	}
+	}	
 	
 	public AdminDTO changeDTO(Admin admin) {
 		return AdminDTO.builder()

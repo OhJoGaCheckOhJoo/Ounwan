@@ -40,6 +40,7 @@
                     <ul class="submenu">
                         <li><a id="coupungProductList" href="#">상품 확인</a></li>
                         <li><a id="coupungAddProduct" href="#">상품 추가</a></li>
+                        <li><a id="coupungOrders" href="#">주문 조회</a></li>
                     </ul>
                 </li>
                 <li>
@@ -73,8 +74,16 @@
 	            	<div><canvas id="categorySales" width="300px" height="300px"></canvas></div>
 	        	</div>
 	        	<div>
+	        		<h3>당군 판매 물품 수</h3>
+	            	<div><canvas id="DanggunSales" width="600px" height="300px"></canvas></div>
+	        	</div>
+	        	<div>
 	        		<h3>커뮤니티 활동 추이</h3>
 	            	<div><canvas id="communityAct" width="600px" height="300px"></canvas></div>
+	        	</div>
+	        	<div>
+	        		<h3>신고 변동</h3>
+	            	<div><canvas id="totalReports" width="600px" height="300px"></canvas></div>
 	        	</div>
         	</div>         
         </div>
@@ -125,6 +134,26 @@
 		});
 		
 		var context = document
+		   .getElementById('DanggunSales')
+		   .getContext('2d');
+		var myChart = new Chart(context, {
+		    type: 'bar',
+		    data: {
+		        labels: ${date},
+		        datasets: [
+		            {
+		                label: '당군 거래물품 수',
+		                data: ${totalDanggun},
+		                backgroundColor: 'rgb(255, 99, 132)'
+		            }
+		        ]
+		    },
+		    options: {
+		        responsive: false
+		    }
+		});
+		
+		var context = document
 		   .getElementById('communityAct')
 		   .getContext('2d');
 		var myChart = new Chart(context, {
@@ -136,6 +165,31 @@
 		                label: '커뮤니티 활동',
 		                data: ${communityAct},
 		                backgroundColor: 'rgb(50,10,20)'
+		            }
+		        ]
+		    },
+		    options: {
+		        responsive: false
+		    }
+		});
+		
+		var context = document
+		   .getElementById('totalReports')
+		   .getContext('2d');
+		var myChart = new Chart(context, {
+		    type: 'line',
+		    data: {
+		        labels: ${date},
+		        datasets: [
+		            {
+		                label: '커뮤니티 관련 신고',
+		                data: ${communityCnt},
+		                borderColor: 'rgb(50,10,20)'
+		            },
+		            {
+		            	label: '상품 관련 신고',
+		            	data: ${storeCnt},
+		            	borderColor: 'rgb(10,50,20)'
 		            }
 		        ]
 		    },
@@ -254,6 +308,16 @@
         			}
         		}
         	})
+        });
+        
+        $("#coupungOrders").on("click", function() {
+        	$.ajax({
+        		url: "${appPath}/admin/coupung/order.do",
+        		data: {'offset': 0},
+        		success: function(res) {
+        			$(".admin-wrap").html(res);
+        		}
+        	});
         });
     </script>
 </body>

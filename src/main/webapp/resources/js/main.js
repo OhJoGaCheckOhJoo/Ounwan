@@ -5,7 +5,6 @@ var router = new Map([
 ]);
 
 $(function() {
-    loadBanner(array_banner);
 
     $("#profileImage").on("click", function() {
         if($(".header-sub-menu").css("visibility") == 'hidden'){

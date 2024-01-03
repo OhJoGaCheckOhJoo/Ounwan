@@ -32,4 +32,12 @@ public class AdminDAO {
 	public List<Map<String, Object>> getTotalByCategory() {
 		return sqlSession.selectList(NAMESPACE + "selectTotalByCategory");
 	}
+	
+	public List<Map<String, Object>> getDanggunTotal() {
+		return sqlSession.selectList(NAMESPACE + "selectDanggunTotal");
+	}
+	
+	public List<Map<String, Object>> getReportTotal() {
+		return sqlSession.selectList(NAMESPACE + "selectReportTotal");
+	}
 }	

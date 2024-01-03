@@ -118,7 +118,7 @@ $(window).on("load", function() {
                             	loadGramTagBoard();
                             }   
                             timer = null;
-                        }, 300);
+                        }, 500);
                     }
                 }
             }

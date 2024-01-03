@@ -204,7 +204,7 @@ a {
 .product-wrap * {
     font-size: 22px;
 }
-.product-menu, .product-info {
+.product-menu, .product-info, .order-menu, .order-info {
     width: 1500px;
     margin: 5px auto 5px auto;
     padding-left: 50px;
@@ -268,6 +268,29 @@ a {
 }
 .admin-main-wrap > div {
 	display: inline-block;
+}
+.order-wrap {
+	background-color: #fff;
+	height: 100%;
+}
+.order-wrap * {
+    font-size: 28px;
+}
+.order-menu span, .order-info span, .order-info select {
+	display: inline-block;
+	width: 200px;
+}
+.tradeStep {
+	width: 252px !important;
+}
+.order-info button {
+	width: 50px;
+	border: 0;
+	border-radius: 10px;
+	cursor: pointer;
+}
+.order-info button:hover {
+	background-color: #ccc;
 }
 #productInput {
     width: 300px;
@@ -453,4 +476,7 @@ a {
 #subImageList button, #detailImageList button {
 	margin: 5px 0px 5px 0px;
 	width: 50px;
+}
+#orderPages {
+	text-align: center;
 }
