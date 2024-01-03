@@ -192,6 +192,9 @@ public class CommunityService {
 		data.put("communityNumber", communityNumber);
 		data.put("reason", reasonBuilder.toString());
 		if (communityDAO.reportBoard(data) > 0) {
+			if(communityDAO.countGramReports(communityNumber) % 5 == 0) {
+				communityDAO.updateGramVisibility(communityNumber);
+			}
 			return "success";
 		} else {
 			return "fail";

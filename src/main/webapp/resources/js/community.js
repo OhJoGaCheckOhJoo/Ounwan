@@ -127,7 +127,6 @@ $(window).on("load", function() {
             }
         });
 		
-		
 		$("#ounwangramBoard").on("click", "#ounwanLikeBtn", function() {
             $(this).disabled = true;
             var img = $(this).children('img');

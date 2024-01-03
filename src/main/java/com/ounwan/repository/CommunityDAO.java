@@ -201,6 +201,10 @@ public class CommunityDAO {
 	public OunwanGram selectOunwangramBoardDetail(Map<String, Object> data) {
 		return sqlSession.selectOne(NAMESPACE + "selectOunwangramBoardDetail", data);
 	}
+	
+	public int countGramReports(int communityNumber) {
+		return sqlSession.selectOne(NAMESPACE + "countGramReports", communityNumber);
+	}
 
 	public int addLikeOunwanBoard(OunwanGramLikes likes) {
 		return sqlSession.insert(NAMESPACE + "insertgGramLikeBoard", likes);
@@ -250,6 +254,10 @@ public class CommunityDAO {
 		return sqlSession.update(NAMESPACE + "updateGramBoard", board);
 	}
 
+	public int updateGramVisibility(int communityNumber) {
+		return sqlSession.update(NAMESPACE + "updateGramVisibility", communityNumber);
+	}
+	
 	public int updateInbody(Inbody inbody) {
 		return sqlSession.update(NAMESPACE + "updateInbody", inbody);
 	}

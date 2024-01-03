@@ -94,6 +94,10 @@
 	<select id="getAdminReportReason" parameterType="int" resultType="map">
 		SELECT * FROM COMMUNITY_REPORTS WHERE COMMUNITY_NUMBER = #{communityNumber}
 	</select>
+	
+	<select id="countGramReports" parameterType="int" resultType="int">
+		SELECT COUNT(*) AS CNT FROM COMMUNITY_REPORTS WHERE COMMUNITY_NUMBER = #{communityNumber}
+	</select>
 
 	<select id="getProfileImage" parameterType="String" resultType="string">
 		SELECT PROFILE_URL FROM CLIENTS WHERE CLIENT_ID = #{profileId}
@@ -292,6 +296,10 @@
 		UPDATE INBODY SET HEIGHT = #{height}, WEIGHT = #{weight}, SKELETAL_MUSCLES_MASS = #{skeletalMusclesMass}, 
 		BODY_WATER = #{bodyWater}, BMR = #{bmr}, BMI = #{bmi}, INBODY_SCORE = #{inbodyScore} 
 		WHERE INBODY_NUMBER = #{inbodyNumber} AND CLIENT_ID = #{clientId}
+	</update>
+
+	<update id="updateGramVisibility" parameterType="int">
+		UPDATE OUNWAN_COMMUNITY SET VISIBILITY = false WHERE COMMUNITY_NUMBER = #{communityNumber}
 	</update>
 
 	<select id="AetaCountAllPosts" resultType="int">
