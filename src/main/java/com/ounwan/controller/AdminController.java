@@ -204,9 +204,29 @@ public class AdminController {
 	}
 
 	@PostMapping("/danggun/restore")
-	public @ResponseBody String restoreDanggun(@RequestParam("danggunNumber") Integer danggunNumber) {
+	public @ResponseBody String restoreDanggun(@RequestParam("danggunNumber") int danggunNumber) {
 		boolean result = danggunService.restoreDanggun(danggunNumber);
 		return result ? "success" : "fail";
+	}
+	
+	@PostMapping("/danggun/delete")
+	public @ResponseBody String adminDanggunDelete(@RequestParam("danggunNumber") int danggunNumber, HttpSession session) {
+		AdminDTO admin = (AdminDTO) session.getAttribute("admin");
+		if(admin != null) {
+			boolean result = danggunService.adminDanggunDelete(danggunNumber);
+			return (result) ? "success" : "fail";
+		}
+		return "fail";
+	}
+	
+	@PostMapping("/aeta/delete")
+	public @ResponseBody String adminAetaDelete(@RequestParam("aetaNumber") int aetaNumber, HttpSession session) {
+		AdminDTO admin = (AdminDTO) session.getAttribute("admin");
+		if(admin != null) {
+			boolean result = communityService.adminAetaDelete(aetaNumber);
+			return (result) ? "success" : "fail";
+		}
+		return "fail";
 	}
 
 	@GetMapping("/aeta/report")

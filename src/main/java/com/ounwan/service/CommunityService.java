@@ -661,6 +661,11 @@ public class CommunityService {
 		int result = communityDAO.restoreAeta(aetaNumber);
 		return (result > 0) ? true : false;
 	}
+	
+	public boolean adminAetaDelete(int aetaNumber) {
+		int result = communityDAO.adminAetaDelete(aetaNumber);
+		return (result > 0) ? true : false;
+	}
 
 	private Aeta changeEntity(AetaDTO aeta) {
 		return Aeta.builder()

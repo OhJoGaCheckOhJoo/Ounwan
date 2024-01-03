@@ -175,7 +175,7 @@
 		SELECT count(*)
 		FROM DANGGUN 
 		WHERE VISIBILITY = 1
-		and PRODUCT_NAME like CONCAT('%',#{name},'%') 
+		and (PRODUCT_NAME LIKE CONCAT('%',#{name},'%') OR CLIENT_ID LIKE CONCAT('%',#{name},'%'))
 		order by DANGGUN_NUMBER desc
 	</select>
 	
@@ -184,9 +184,13 @@
 		SELECT * FROM DANGGUN 
 		WHERE VISIBILITY = 1 
 		AND 
-		PRODUCT_NAME like CONCAT('%',#{name},'%')
+		(PRODUCT_NAME like CONCAT('%',#{name},'%') OR CLIENT_ID LIKE CONCAT('%',#{name},'%'))
 		ORDER BY DANGGUN_NUMBER DESC
 		limit #{start},#{limit}
 	</select>
+	
+	<delete id="adminDanggunDelete" parameterType="int">
+		DELETE FROM DANGGUN WHERE DANGGUN_NUMBER = #{danggunNumber}
+	</delete>
 	
 </mapper>

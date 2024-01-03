@@ -261,4 +261,8 @@ public class CommunityDAO {
 		return sqlSession.update(NAMESPACE + "restoreAeta", aetaNumber);
 	}
 
+	public int adminAetaDelete(int aetaNumber) {
+		return sqlSession.update(NAMESPACE + "adminAetaDelete", aetaNumber);
+	}
+
 }
