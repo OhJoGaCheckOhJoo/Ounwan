@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="appPath" value="${pageContext.request.contextPath}"></c:set>
-
 <html>
 <head>
 <title>오운완</title>

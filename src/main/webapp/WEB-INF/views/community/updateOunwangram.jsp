@@ -13,7 +13,7 @@
     <link href="${appPath}/css/nav.css" rel="stylesheet" />
     <link href="${appPath}/css/community.css" rel="stylesheet" >
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <title>오늘운동했다그램</title>
+    <title>오운완</title>
 </head>
 <body>
 	<%@ include file="../common/header.jsp" %>

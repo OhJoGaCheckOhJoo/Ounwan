@@ -15,6 +15,7 @@
 <link href="${appPath }/css/nav.css" rel="stylesheet">
 <link href="${appPath }/css/order.css" rel="stylesheet"/>
 <link href="${appPath }/css/coupung/agreementPersonalData.css" rel="stylesheet"/>
+<title>오운완</title>
 </head>
 <body>
 	<script>

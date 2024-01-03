@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
-    <title>Admin Login</title>
+    <title>오운완 관리자</title>
     <style>
         * {
             font-family: 'Dongle', sans-serif;

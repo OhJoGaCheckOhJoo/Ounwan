@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +46,7 @@ $(document).ready(function() {
 	}
 });
 </script>
-<title>오운완 회원가입</title>
+<title>오운완</title>
 </head>
 <body>
 	<%@ include file="./common/header.jsp" %>

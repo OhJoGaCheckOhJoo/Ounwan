@@ -13,7 +13,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>오운완</title>
 <link rel="stylesheet" href="${appPath}/css/bixSiri/chat.css" />
 
 </head>

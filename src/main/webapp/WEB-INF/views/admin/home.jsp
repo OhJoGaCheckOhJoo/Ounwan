@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
     <link href="${appPath}/css/admin.css" rel="stylesheet">
     <link rel="stylesheet" href="${appPath}/css/bixSiri/adminChat.css" />
-    <title>Ounwan Admin</title>
+    <title>오운완 관리자</title>
     <script>
     	$(document).ready(function() {
     		if('${admin.adminId}' == null) {

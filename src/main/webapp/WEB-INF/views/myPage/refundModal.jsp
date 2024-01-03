@@ -4,7 +4,6 @@
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
 <link href="${appPath}/css/refundModal.css" rel="stylesheet">
-<%-- 모달 --%>
 <div id="refundModal" class="refund-modal">
   <div id="modalContent">
     <div id="modalBody">

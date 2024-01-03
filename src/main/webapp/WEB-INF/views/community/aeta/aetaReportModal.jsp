@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
-<%-- 모달 --%>
 <div id="reportModal" class="reportModal">
   <div id="modalContent">
     <div id="modalBody">

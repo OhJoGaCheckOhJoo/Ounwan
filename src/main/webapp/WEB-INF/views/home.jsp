@@ -8,13 +8,10 @@ prefix="c" %>
   value="${pageContext.request.contextPath}"
 />
 <!DOCTYPE html>
-
 <html>
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>오운완</title>
-
-<head>
 	<c:set var="appPath" scope="application"  value="${pageContext.request.contextPath}" />
     <link href="${appPath}/css/main.css" rel="stylesheet" />
     <link href="${appPath}/css/main2.css" rel="stylesheet" />
