@@ -91,6 +91,10 @@
 		ON OUNWAN_COMMUNITY.COMMUNITY_NUMBER = COMMUNITY_REPORTS.COMMUNITY_NUMBER WHERE CNT > 0 LIMIT 20 OFFSET #{offset}
 	</select>
 	
+	<select id="selectReportGramCount" resultType="int">
+		SELECT COUNT(*) AS CNT FROM COMMUNITY_REPORTS WHERE COMMUNITY_NUMBER IS NOT NULL GROUP BY COMMUNITY_NUMBER
+	</select>
+	
 	<select id="getAdminReportReason" parameterType="int" resultType="map">
 		SELECT * FROM COMMUNITY_REPORTS WHERE COMMUNITY_NUMBER = #{communityNumber}
 	</select>
@@ -299,7 +303,11 @@
 	</update>
 
 	<update id="updateGramVisibility" parameterType="int">
-		UPDATE OUNWAN_COMMUNITY SET VISIBILITY = false WHERE COMMUNITY_NUMBER = #{communityNumber}
+		UPDATE OUNWAN_COMMUNITY SET VISIBILITY = FALSE WHERE COMMUNITY_NUMBER = #{communityNumber}
+	</update>
+	
+	<update id="updateAdminGramVisibility" parameterType="int">
+		UPDATE OUNWAN_COMMUNITY SET VISIBILITY = TRUE WHERE COMMUNITY_NUMBER = #{communityNumber}
 	</update>
 
 	<select id="AetaCountAllPosts" resultType="int">

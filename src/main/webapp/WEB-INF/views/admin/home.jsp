@@ -57,7 +57,7 @@
                     <ul class="submenu">
                         <li><a id="danggunReport" href="#">오늘의 당군</a></li>
                         <li><a id="aetaReport" href="#">오늘의 애타</a></li>
-                        <li><a id="gramReportBoards" href="#">오늘의 운동했다그램</a></li>
+                        <li><a id="gramReportBoards" href="#">오늘 운동했다그램</a></li>
                     </ul>
                 </li>
             </ul>

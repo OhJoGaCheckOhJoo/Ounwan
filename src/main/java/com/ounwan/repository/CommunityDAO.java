@@ -258,6 +258,10 @@ public class CommunityDAO {
 		return sqlSession.update(NAMESPACE + "updateGramVisibility", communityNumber);
 	}
 	
+	public int updateAdminGramVisibility(int communityNumber) {
+		return sqlSession.update(NAMESPACE + "updateAdminGramVisibility", communityNumber);
+	}
+	
 	public int updateInbody(Inbody inbody) {
 		return sqlSession.update(NAMESPACE + "updateInbody", inbody);
 	}
@@ -276,6 +280,10 @@ public class CommunityDAO {
 	
 	public int adminAetaDelete(int aetaNumber) {
 		return sqlSession.update(NAMESPACE + "adminAetaDelete", aetaNumber);
+	}
+
+	public int getReportGramCount() {
+		return sqlSession.selectOne(NAMESPACE + "selectReportGramCount");
 	}
 
 }

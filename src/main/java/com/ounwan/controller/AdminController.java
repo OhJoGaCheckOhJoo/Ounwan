@@ -96,8 +96,20 @@ public class AdminController {
 
 	@GetMapping("/ounwangram/reports")
 	public String getGramReportBoards(@RequestParam int offset, Model model) {
-		model.addAttribute("boards", communityService.getReportGramBoard(offset));
+		model.addAttribute("boards", communityService.getReportGramBoard(offset * 20));
+		model.addAttribute("pages", communityService.getReportGramCount());
+		model.addAttribute("offset", offset);
 		return "admin/gramReportBoards";
+	}
+	
+	@GetMapping("/ounwangram/update")
+	public @ResponseBody String updateGramBoard(@RequestParam int communityNumber, @RequestParam boolean status) {
+		return communityService.updateGramBoard(communityNumber, status);
+	}
+	
+	@GetMapping("/ounwangram/delete")
+	public @ResponseBody String deleteGramBoard(@RequestParam int communityNumber) {
+		return communityService.deleteGramBoard(communityNumber);
 	}
 
 	@GetMapping("/coupung/insert.do")
