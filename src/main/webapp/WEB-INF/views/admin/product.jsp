@@ -225,7 +225,7 @@
     $("#productList").on("click", ".product-info > button", function() {
     	var button = $(this);
         if(button.html() == "판매중") {
-            if(confirm("정말 판매 중지하시겠습니까?")) {
+            if(confirm("판매를 중지하시겠습니까?")) {
                 var obj = {
                     "productList": [$(this).val()]
                 };
@@ -238,11 +238,14 @@
                 			button.html('판매 중단');
                 			alert("해당 물품을 판매 중지하였습니다.");
                 		}
-                	}
+                	},
+    				error: function(request, status, error) {
+    	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+    	            }
                 });
             }
         } else {
-            if(confirm("판매 시작하시겠습니까?")) {
+            if(confirm("판매를 시작하시겠습니까?")) {
                 var obj = {
                     "productList": [$(this).val()]
                 };
@@ -252,7 +255,7 @@
                 	traditional: true,
                 	success: function(res) {
                 		if(res == 'success') {
-                			alert("해당 물품을 판매 시작하였습니다.");
+                			alert("해당 물품을 판매 시작했습니다.");
                 			$.ajax({
                         		url: "${appPath}/admin/coupung/product.do",
                         		data: {
@@ -263,10 +266,16 @@
                         		},
                        			success: function(res) {
                        				$(".admin-wrap").html(res);
-                       			}
+                       			},
+                				error: function(request, status, error) {
+                	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                	            }
                         	});
                 		}
-                	}
+                	},
+    				error: function(request, status, error) {
+    	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+    	            }
                 });
             }
         }
@@ -274,7 +283,7 @@
     
     $("#productList").on("click", ".stopBtn", function() {
     	var button = $(this);
-    	if(confirm("정말 판매 중지하시겠습니까?")) {
+    	if(confirm("판매를 중지하시겠습니까?")) {
             var obj = {
                 "productList": [$(this).val()]
             };
@@ -295,17 +304,23 @@
                     		},
                    			success: function(res) {
                    				$(".admin-wrap").html(res);
-                   			}
+                   			},
+            				error: function(request, status, error) {
+            	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            	            }
                     	});
             		}
-            	}
+            	},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
             });
         }
     });
     
 	$("#productList").on("click", ".restartBtn", function() {
 		var button = $(this);
-		if(confirm("판매 재개하시겠습니까?")) {
+		if(confirm("판매를 재개하시겠습니까?")) {
             var obj = {
                 "productList": [$(this).val()]
             };
@@ -317,7 +332,10 @@
             		if(res == 'success') {
             			alert("해당 물품을 판매 시작하였습니다.");
             		}
-            	}
+            	},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
             });
         }
     });
@@ -349,7 +367,10 @@
         	data: obj,
         	success: function(res) {
         		$(".admin-wrap").html(res);
-        	}
+        	},
+			error: function(request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
         });
     });
 
@@ -364,13 +385,15 @@
             "searchValue": searchValue,
             "sortOption": sortOption
         };
-        console.log(obj);
         $.ajax({
         	url: "${appPath}/admin/coupung/product.do",
         	data: obj,
         	success: function(res) {
         		$(".admin-wrap").html(res);
-        	}
+        	},
+			error: function(request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
         });
     });
 
@@ -403,10 +426,16 @@
                         		},
                        			success: function(res) {
                        				$(".admin-wrap").html(res);
-                       			}
+                       			},
+                				error: function(request, status, error) {
+                	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                	            }
                         	});
                 		}
-                	}
+                	},
+    				error: function(request, status, error) {
+    	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+    	            }
                 });
             } else {
                 alert("선택된 상품이 없습니다.");
@@ -443,10 +472,16 @@
                         		},
                        			success: function(res) {
                        				$(".admin-wrap").html(res);
-                       			}
+                       			},
+                				error: function(request, status, error) {
+                	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                	            }
                         	});
                 		}
-                	}
+                	},
+    				error: function(request, status, error) {
+    	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+    	            }
                 });
             } else {
                 alert("선택된 상품이 없습니다.");
@@ -459,7 +494,10 @@
        		url: "${appPath}/admin/coupung/insert.do",
       			success: function(res) {
       				$(".admin-wrap").html(res);
-      			}
+      			},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
        	});
     });
 </script>

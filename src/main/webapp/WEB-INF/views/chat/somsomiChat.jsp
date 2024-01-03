@@ -33,7 +33,6 @@
 				토/일/공휴일 휴무</span>
 		</div>
 		<div id="chat" class="chat"></div>
-		<!-- 채팅저장출력 -->
 		<script id="temp" type="text/x-handlebars-template">
 		{{#each .}}
        <div class="{{printLeftRight sender}}">
@@ -45,7 +44,6 @@
        </div>
 		{{/each}}
        </script>
-		<!-- 새로운채팅출력 -->
 		<script id="temp1" type="text/x-handlebars-template">
        <div class="{{printLeftRight sender}}">
             <div class="sender">{{sender}}</div>
@@ -94,14 +92,17 @@
 			success : function(responseData) {
 				var temp = Handlebars.compile($("#temp").html());
 				$("#chat").html(temp(responseData));
-			}
+			},
+			error: function(request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
 		})
 	}
 
 	$("#chat").on("click", ".message a", function(e) {
 		e.preventDefault();
 		var messageId = $(this).attr("href");
-		if (!confirm(messageId + "을(를) 삭제하실래요?"))
+		if (!confirm("메세지를 삭제하시겠습니까?"))
 			return;
 		$.ajax({
 			type : "post",
@@ -112,7 +113,10 @@
 			},
 			success : function() {
 				sock.send("delete");
-			}
+			},
+			error: function(request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
 		})
 	})
 
@@ -139,7 +143,10 @@
 				},
 				success : function(messageId) {
 					sock.send(clientId + "|" + message + "|" + messageId);
-				}
+				},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
 			});
 		}
 
@@ -157,7 +164,10 @@
 					var quitMessage = "<div id='quitMessage' class='quit-message'>관리자와의 채팅이 종료되었습니다.</div>";
 					$("#chat").append($(quitMessage));
 					window.scrollTo(0, $("#chat").prop("scrollHeight"))
-				}
+				},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
 			});
 		}
 	});

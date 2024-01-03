@@ -86,7 +86,6 @@
 <script>
   $(".aeta-blind").click(function(){
 	var aetaNumber =$(this).parent().find('.num').text();
-	alert(aetaNumber);
 		 $.ajax({
 			url : appPath + "/admin/aeta/blind?aetaNumber="+aetaNumber,
 			success : function(res) {
@@ -94,9 +93,15 @@
 						url : appPath + "/admin/aeta/aetaBoard",
 						success : function(response) {
 							$('.admin-wrap').html(response);
-						}
+						},
+						error: function(request, status, error) {
+			                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			            }
 					});
-			}
+			},
+			error: function(request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
 		});   
 });  
 </script>

@@ -274,11 +274,9 @@
 						alert("이미지가 성공적으로 업데이트되었습니다!");
 						location.href = '${appPath}/myPage';
 					},
-					error : function(request, status, error) {
-						alert("code:" + request.status + "\n" + "message:"
-								+ request.responseText + "\n" + "error:"
-								+ error);
-					}
+					error: function(request, status, error) {
+		                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		            }
 				});
 			}
 		}
@@ -308,7 +306,10 @@
 					alert("회원정보가 수정되었습니다!");
 					location.href = '${appPath}/myPage';
 				}
-			}
+			},
+			error: function(request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
 		});
 	});
 	
@@ -344,10 +345,13 @@
 								contentType : 'application/json',
 								success : function(res) {
 									if (res === 'success') {
-										alert("탈퇴가 완료되었습니다!");
+										alert("탈퇴가 완료되었습니다.");
 										location.href = "${appPath}/myPage";
 									}
-								}
+								},
+								error: function(request, status, error) {
+					                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+					            }
 							});
 					});
 	

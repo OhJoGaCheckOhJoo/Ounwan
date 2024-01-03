@@ -23,9 +23,6 @@
 	
 	<div class="container">
 		<%@ include file="../../common/nav.jsp" %>
-	<!-- <script>
-	console.log("${aetaUpdate}");
-</script> -->
 	
 	<h1 id='aetaUpdate'>애타 수정하기</h1>
 	
@@ -67,7 +64,7 @@
 
 	</div>
 	<%@include file="../../common/footer.jsp"%>
-	<script src="../js/aeta.js"></script>
+	<script src="${appPath}/js/aeta.js"></script>
 	<script src="${appPath}/js/main.js"></script>
 	<script>
 		var appPath = "${appPath}";

@@ -171,7 +171,10 @@
         		},
        			success: function(res) {
        				$(".admin-wrap").html(res);
-       			}
+       			},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
         	});
         });
         
@@ -180,7 +183,10 @@
         		url: "${appPath}/admin/coupung/insert.do",
        			success: function(res) {
        				$(".admin-wrap").html(res);
-       			}
+       			},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
         	});
         });
         
@@ -192,7 +198,10 @@
         		},
         		success: function(res) {
         			$(".admin-wrap").html(res);
-        		}
+        		},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
         	});
         });
         
@@ -201,7 +210,10 @@
         		url: "${appPath}/admin/clients/chat.do",
        			success: function(res) {
        				$(".admin-wrap").html(res);
-       			}
+       			},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
         	});
         });
         
@@ -210,7 +222,10 @@
         		url: "${appPath}/admin/danggun/danggunBoard",
        			success: function(res) {
        				$(".admin-wrap").html(res);
-       			}
+       			},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
         	});
         });
         
@@ -219,7 +234,10 @@
         		url: "${appPath}/admin/danggun/report",
        			success: function(res) {
        				$(".admin-wrap").html(res);
-       			}
+       			},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
         	});
         });
         
@@ -228,7 +246,10 @@
         		url: "${appPath}/admin/aeta/aetaBoard",
        			success: function(res) {
        				$(".admin-wrap").html(res);
-       			}
+       			},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
         	});
         });
         $("#aetaReport").on("click", function() {
@@ -236,7 +257,10 @@
         		url: "${appPath}/admin/aeta/report",
        			success: function(res) {
        				$(".admin-wrap").html(res);
-       			}
+       			},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
         	});
         });
         
@@ -252,7 +276,10 @@
         				alert("로그아웃에 성공하였습니다.");
         				window.location.href = "${appPath}/admin/login.do";
         			}
-        		}
+        		},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
         	})
         });
     </script>

@@ -19,7 +19,6 @@
 	<%@ include file = "../common/header.jsp" %>
     ​
     <div class="container">
-        <!-- nav -->
         <%@ include file = "../common/nav.jsp" %>
         
         <div class="ounwangram" id="ounwangram">
@@ -51,7 +50,6 @@
     </div>
     <hr>
     
-    <%-- 모달 --%>
     <div id="modalWrap">
 	  <div id="modalContent">
 	    <div id="modalBody">

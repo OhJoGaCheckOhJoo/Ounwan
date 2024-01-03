@@ -59,13 +59,13 @@
     <%@ include file="../common/footer.jsp"%>
     <%@ include file="../danggun/danggunProhibitedListModal.jsp"%>
     
-    <script src="./js/main.js"></script>
+    <script src="${appPath}/js/main.js"></script>
     <script>    	
 	    $("#adminChatting").on("click",function(e){
 	    	e.preventDefault();
 	    	if(!"${userInfo.clientId}"){
 	    		alert("로그인을 해주세요!");
-	    		window.location.href = "${appPath}/clients/login";
+	    		location.href = "${appPath}/clients/login";
 	    	}else{
 	    		window.open("${appPath}/somsomi/chat","/chat/somsomiChat","width=500, height=800, top=200, left=200");
 	    	}
@@ -133,7 +133,10 @@
         		},
         		success: function(res) {
         			$("#faqList").html(res);
-        		}
+        		},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
         	});
         }
         
@@ -146,7 +149,10 @@
         		},
         		success: function(res) {
         			$(".faq-page").html(res);
-        		}
+        		},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
         	});
         }
     </script>

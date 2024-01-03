@@ -30,7 +30,6 @@
 <script>
 	$("#confirmButton").on("click", function() {
 		var enteredPassword = $('#pwd-checkPassword').val();
-		console.log(enteredPassword);
 		$.ajax({
 			url : "${appPath}/myPage/checkPwd",
 			type : "POST",
@@ -39,17 +38,17 @@
 			},
 			success : function(res) {
 				if (res === "success") {
-
 					$.ajax({
 						type : "GET",
 						url : "${appPath}/myPage/modifyUserInfo",
 						success : function(res) {
 							$("#content").html(res);
-						}
+						},
+						error: function(request, status, error) {
+			                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			            }
 					});
-
 				} else {
-					// 비밀번호 확인 실패 처리
 					alert("비밀번호가 일치하지 않습니다.");
 				}
 			}

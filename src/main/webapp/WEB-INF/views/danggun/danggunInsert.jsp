@@ -20,12 +20,10 @@
 <title>오운완</title>
 </head>
 <body>
-	<!-- header -->
 	<%@ include file="../common/header.jsp"%>
 
 	<div class="container">
 		<%@ include file="../common/nav.jsp"%>
-		<!-- 여기 아래에 추가 -->
 		<div class="danggun-container">
 			<div>
 				<div class="register-container">
@@ -110,8 +108,8 @@
 		​<%@ include file="../common/footer.jsp"%>
 		<%@ include file="./danggunProhibitedListModal.jsp"%>
 
-		<script src="../js/danggunProhibitedListModal.js"></script>
-		<script src="../js/main.js"></script>
+		<script src="${appPath}/js/danggunProhibitedListModal.js"></script>
+		<script src="${appPath}/js/main.js"></script>
 		<script>
 			var detailImageCount = 0;
 
@@ -158,8 +156,7 @@
 										}
 									}
 
-									formData
-											.append(
+									formData.append(
 													'image',
 													$("input[id='imageInput']")[0].files[0]);
 									formData.append('clientId',
@@ -179,7 +176,10 @@
 												success : function(res) {
 													alert(res);
 													location.href = "${appPath}/danggun/main";
-												}
+												},
+												error: function(request, status, error) {
+									                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+									            }
 											});
 								})
 			});
@@ -252,15 +252,10 @@
 				} else {
 
 					mainImage = $(event.target).clone(true);
-					console.log("cloneImage: " + mainImage);
-
 					reader.onload = function(event) {
 						img.src = event.target.result;
 					}
-					reader
-							.readAsDataURL(document
-									.getElementById("imageInput").files[0]);
-					console.log("mainImage: " + $('#imageInput')[0].files[0]);
+					reader.readAsDataURL(document.getElementById("imageInput").files[0]);
 				}
 			}
 
@@ -309,22 +304,18 @@
 						}
 
 						detailImgaes = $(event.target).clone(true);
-						console.log("cloneImage: " + detailImgaes);
 
 						for (var i = 0; i < Math.min(inputDetail.files.length,
 								imgDetail.length); i++) {
 							readerDetail = new FileReader();
 
 							(function(index) {
-								console.log(index + "번 onload");
 								readerDetail.onload = function(e) {
 									var image = imgDetail[index];
 									image.src = e.target.result;
-									console.log("O");
 								}
 							})(i);
 							readerDetail.readAsDataURL(inputDetail.files[i]);
-							console.log("올라감");
 						}
 					}
 				}

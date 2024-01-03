@@ -57,17 +57,5 @@
             </div>
             </c:forEach>
         </div>
-        <%--
-        <div id="productPages">
-        	<c:forEach var="index" begin="1" end="${pages}">
-        		<c:if test="${index eq offset}">
-        			<a href="#" class="selected">${index}</a>
-        		</c:if>
-        		<c:if test="${index ne offset}">
-        			<a href="#">${index}</a>
-        		</c:if>
-        	</c:forEach>
-        </div>
-         --%>
     </div>
 </div>

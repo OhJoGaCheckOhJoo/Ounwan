@@ -39,6 +39,5 @@
     </div>
   </div>
 </div>
-<!-- 배경 회색 불투명도 -->
 <div id="reportModalOverlay" class="report-modal-overlay" onclick="closeReportModal()"></div>
 <div id="reportSelectModal" postClientId="${post.clientId}" aetaNumber="${post.aetaNumber}" sessionClientId="${userInfo.clientId}"></div>

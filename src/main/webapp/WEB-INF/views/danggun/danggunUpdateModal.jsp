@@ -4,9 +4,7 @@
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
 <c:set var="imageCounter" value="0" />
-<!-- 모달 창 -->
 <div id="myModal" class="modal">
-	<!-- 여기 아래에 추가 -->
 	<div class="danggun-container">
 
 		<div class="register-container">
@@ -14,9 +12,7 @@
 			<div class="register-required">*필수입력사항</div>
 		</div>
 
-		<!-- 상품 등록 전체 form -->
 		<div class="register-content">
-			<!-- 대표 이미지 라인 -->
 			<div class="danggun-product">
 				<div class="product-explain">
 					대표 이미지 <span class="star">*</span>
@@ -34,7 +30,6 @@
 				</div>
 			</div>
 
-			<!-- 상세 이미지 라인 -->
 			<div class="danggun-product">
 				<div class="product-explain">
 					상세 이미지<br /> (최대 3장 추가 가능)
@@ -71,7 +66,6 @@
 					</c:if>
 				</div>
 			</div>
-			<!-- 상품명 라인 -->
 			<div class="danggun-product">
 				<div class="product-explain">
 					상품명 <span class="star">*</span>
@@ -84,7 +78,6 @@
 					<div id="name-count" class="name-count count"></div>
 				</div>
 			</div>
-			<!-- 거래현황 라인 -->
 			<div class="danggun-product">
 				<div class="product-explain">
 					거래 현황 <span class="star">*</span>
@@ -97,7 +90,6 @@
 					</select>
 				</div>
 			</div>
-			<!-- 가격 라인 -->
 			<div class="danggun-product">
 				<div class="product-explain">
 					가격<span class="star"> *</span>
@@ -107,7 +99,6 @@
 						value="${post.price}" required type="number" />
 				</div>
 			</div>
-			<!-- 설명 라인 -->
 			<div class="danggun-product">
 				<div class="product-explain">
 					설명 <span class="star">*</span>
@@ -124,7 +115,6 @@
 		</div>
 	</div>
 </div>
-<!-- 배경 회색 불투명도 -->
 <div id="modalOverlay" class="modal-overlay" onclick="closeModal()"></div>
 
 <script>

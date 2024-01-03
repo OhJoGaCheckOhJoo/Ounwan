@@ -61,7 +61,6 @@
 		</div>
 	</div>
 	
-	<%-- 인바디 모달 --%>
     <div id="modalWrap">
 	  <div id="inbodyModal">
 	    <div id="inbodyModalBody">
@@ -73,7 +72,6 @@
 	  </div>
 	</div>
 	
-	<%-- 팔로잉 목록 모달 --%>
 	<div id="followModalWrap">
 		<div id="followModal">
 			<div id=followModalBody>
@@ -87,7 +85,6 @@
 		</div>
 	</div>
 	
-	<%-- 게시물 모달 --%>
 	<div id="boardModalWrap">
 		<div id="boardModal">
 			<div id=boardModalBody>

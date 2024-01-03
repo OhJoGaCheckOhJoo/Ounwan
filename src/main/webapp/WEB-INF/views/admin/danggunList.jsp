@@ -85,7 +85,7 @@
 <script>
 $(".goDanggun").on("click", function(){
 	var danggunNumber = $(this).parent().parent().find(".danggunNumber").val();
-	window.location.href = "${appPath}/danggun/detail?danggunNumber=" + danggunNumber;
+	location.href = "${appPath}/danggun/detail?danggunNumber=" + danggunNumber;
 });
 $(".danggunBlind").on("click", function(){
    	var danggunNumber = $(this).parent().parent().find(".danggunNumber").val();
@@ -101,10 +101,16 @@ $(".danggunBlind").on("click", function(){
             			   url : "${appPath}/admin/danggun/danggunBoard",
             			   success : function(res){
             				   $(".admin-wrap").html(res);
-            			   }
+            			   },
+           				error: function(request, status, error) {
+        	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        	            }
             		   });
             	   }
-               }
+               },
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
            });
    	}
    });

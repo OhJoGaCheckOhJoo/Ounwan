@@ -26,7 +26,6 @@
 		    function calculateTotalPrice() {
 		        var totalPrice = 0;
 		        $('.price-value').each(function() {
-		        	console.log($(this).text());
 		            totalPrice += parseInt($(this).text(), 10);
 		        });
 		        $('#totalPrice').text(totalPrice);
@@ -273,16 +272,6 @@
 		document.getElementById("agreementOverlay").style.display = "block";
 		
 	}
-/* 	$(document).ready(function() {
-	    $("#agreementPersonalData").hide();
-	});
-
-	$("#agree").on('click', function(event) {
-	    event.preventDefault();
-	    if (!readAgreement1) {
-	        $("#agreementPersonalData").show(); 
-	    }
-	}); */
 
 	$("#agreementPersonalData button").on("click", function() {
 	    readAgreement1 = true;
@@ -290,8 +279,6 @@
 	    $("#agreementOverlay").hide(); 
 	    $("#agree").attr('disabled', true);
 	});
-
-
 	</script>
 	
 	<script src="${appPath}/js/main.js"></script>
@@ -311,7 +298,6 @@
 					$detailsContent.slideUp(500);
 				}
 			});
-			// 초기에 숨겨진 상태로 시작
 			$detailsContent.hide();
 		});
 		
@@ -372,11 +358,9 @@
 		                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
 		                    extraAddr += data.bname;
 		                }
-		              
 		                if(data.buildingName !== '' && data.apartment === 'Y'){
 		                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
 		                }
-		              
 		                if(extraAddr !== ''){
 		                    extraAddr = ' (' + extraAddr + ')';
 		                }
@@ -417,12 +401,10 @@
 				$('.coupungNumber').each(function() {
 					coupungNumber.push($(this).val());
 				});
-				
 				var quantities = [];
 				$('.product-quantity').each(function() {
 					quantities.push($(this).text());
 				});
-				
 				var options = [];
 				$('.optionNumber').each(function() {
 					options.push($(this).val());
@@ -442,25 +424,22 @@
 						 type : 'get',
 						 success : function(price) {
 							 IMP.init("imp43370630");
-				             // IMP.request_pay(param, callback) 결제창 호출
 		
-				             IMP.request_pay({ // param
+				             IMP.request_pay({ 
 				                 pg: "kcp",
-				                 amount: price, // 상품 비용
-				                 name: productName, // 상품명
-				                 buyer_email: email, // 주문자 이메일
-				                 buyer_name: orderer, // 주문자 명
-				                 buyer_tel: phoneNumber, // 주문자 번호
-				                 buyer_addr: address, // 주문자 주소
-				                 buyer_postcode: zipCode// 우편번호
+				                 amount: price, 
+				                 name: productName, 
+				                 buyer_email: email, 
+				                 buyer_name: orderer, 
+				                 buyer_tel: phoneNumber, 
+				                 buyer_addr: address, 
+				                 buyer_postcode: zipCode
 				             }, 
-				             function (rsp) { // callback
-				    			console.log(rsp);
+				             function (rsp) { 
 				             	$.ajax({
 				             		type: "POST",
 				             		url : "${appPath}/coupung/orderCheck?imp_uid=" + rsp.imp_uid 
 				             	}).done(function(data) {
-				             		console.log(data);
 				             		if (rsp.paid_amount === data.response.amount) {
 				             			var orderList = [];
 				             			var totalQuantity = 0;
@@ -473,7 +452,6 @@
 				             				orderList.push(product);
 				             				totalQuantity += Number(quantities[i]);
 				             			}
-				             			
 				             			var orders = {
 				             					'totalPrice' : data.response.amount,
 				             					'totalQuantity' : totalQuantity,
@@ -512,18 +490,17 @@
 						 type : 'get',
 						 success : function(price) {
 							 IMP.init("imp43370630");
-				             // IMP.request_pay(param, callback) 결제창 호출
-				             IMP.request_pay({ // param
+				             IMP.request_pay({ 
 				                 pg: "kakaopay",
-				                 amount: price, // 상품 비용
-				                 name: productName, // 상품명
-				                 buyer_email: email, // 주문자 이메일
-				                 buyer_name: orderer, // 주문자 명
-				                 buyer_tel: phoneNumber, // 주문자 번호
-				                 buyer_addr: address, // 주문자 주소
-				                 buyer_postcode: zipCode// 우편번호
+				                 amount: price, 
+				                 name: productName, 
+				                 buyer_email: email, 
+				                 buyer_name: orderer,
+				                 buyer_tel: phoneNumber,
+				                 buyer_addr: address,
+				                 buyer_postcode: zipCode
 				             }, 
-				             function (rsp) { // callback
+				             function (rsp) {
 				    			console.log(rsp);
 				             	$.ajax({
 				             		type: "POST",
@@ -577,7 +554,6 @@
 			}
 		});
 		
-		// 클릭 이벤트 핸들러 함수
 		function toggleOrderList() {
 		    var orderListBody = document.querySelector('.order-list-body');
 		    if (orderListBody.style.display === 'none') {
@@ -587,14 +563,12 @@
 		    }
 		}
 
-		// 버튼 요소를 찾아 클릭 이벤트 연결
 		var toggleButton = document.getElementById('toggleButton');
 
 		toggleButton.addEventListener('click', function() {
-		    toggleOrderList(); // 주문 목록 토글 함수 호출
+		    toggleOrderList(); 
 		});
 
-		// 초기에 주문 목록 숨기기
 		document.addEventListener('DOMContentLoaded', function() {
 		    var orderListBody = document.querySelector('.order-list-body');
 		    orderListBody.style.display = 'none';

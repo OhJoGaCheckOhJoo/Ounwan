@@ -269,10 +269,16 @@
                 		},
                			success: function(res) {
                				$(".admin-wrap").html(res);
-               			}
+               			},
+        				error: function(request, status, error) {
+        	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        	            }
                 	});
         		}
-        	}
+        	},
+			error: function(request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
         });
     });
 </script>

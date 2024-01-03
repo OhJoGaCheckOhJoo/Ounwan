@@ -51,7 +51,7 @@
 		</div>
 	</div>
 	<%@ include file="../common/footer.jsp"%>​
-	<script src="../js/main.js"></script>
+	<script src="${appPath}/js/main.js"></script>
 	<script>
 		$(function() {
 			function search() {
@@ -64,7 +64,6 @@
 							url : "${appPath}/danggun/main",
 							data : obj,
 							success : function(responseData) {
-								console.log(responseData);
 								var output = "";
 								if (responseData.length === 0) {
 									output += "<div class='none-search-list'>검색 결과가 없습니다.</div>"
@@ -82,7 +81,10 @@
 									}
 								}
 								$("#danggunProductList").html(output);
-							}
+							},
+							error: function(request, status, error) {
+				                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+				            }
 						});
 			}
 
@@ -98,7 +100,7 @@
 			});
 
 			$("#registerButton").click(function() {
-				window.location.href = "${appPath}/danggun/insert";
+				location.href = "${appPath}/danggun/insert";
 			})
 
 			$("#upButton").click(function() {

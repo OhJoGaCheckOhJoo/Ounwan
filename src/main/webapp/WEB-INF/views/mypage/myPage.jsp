@@ -266,7 +266,10 @@
 					url : "${appPath}/myPage/coupungOrderList",
 					success : function(res) {
 						$("#content").html(res);
-					}
+					},
+					error: function(request, status, error) {
+		                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		            }
 				});
 			}
 
@@ -276,7 +279,10 @@
 					url : "${appPath}/myPage/danggunSaleList",
 					success : function(res) {
 						$("#content").html(res);
-					}
+					},
+					error: function(request, status, error) {
+		                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		            }
 				});
 			}
 
@@ -286,7 +292,10 @@
 					url : "${appPath}/myPage/danggunWishList",
 					success : function(res) {
 						$("#content").html(res);
-					}
+					},
+					error: function(request, status, error) {
+		                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		            }
 				})
 			}
 
@@ -296,7 +305,10 @@
 					url : "${appPath}/myPage/aetaList",
 					success : function(res) {
 						$("#content").html(res);
-					}
+					},
+					error: function(request, status, error) {
+		                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		            }
 				})
 			}
 
@@ -306,7 +318,10 @@
 					url : "${appPath}/myPage/coupungReviewList",
 					success : function(res) {
 						$("#content").html(res);
-					}
+					},
+					error: function(request, status, error) {
+		                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		            }
 				});
 			}
 
@@ -316,7 +331,10 @@
 					url : "${appPath}/myPage/checkPwd",
 					success : function(res) {
 						$("#content").html(res);
-					}
+					},
+					error: function(request, status, error) {
+		                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		            }
 				});
 			}
 			function chatList() {
@@ -325,7 +343,10 @@
 					url : "${appPath}/myPage/chatList",
 					success : function(res) {
 						$("#content").html(res);
-					}
+					},
+					error: function(request, status, error) {
+		                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		            }
 				});
 			}
 		</script>

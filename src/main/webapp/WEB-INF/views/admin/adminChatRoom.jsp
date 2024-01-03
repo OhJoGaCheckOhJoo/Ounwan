@@ -3,7 +3,6 @@
 
 <div class="chat-container" id="chatContainer">
 	<div id="chat" class="chat"></div>
-		<!-- 채팅저장출력 -->
 		<script id="temp" type="text/x-handlebars-template">
 		{{#each .}}
        <div class="{{printLeftRight sender}}">
@@ -15,7 +14,6 @@
        </div>
 		{{/each}}
        </script>
-		<!-- 새로운채팅출력 -->
 		<script id="temp1" type="text/x-handlebars-template">
        <div class="{{printLeftRight sender}}">
           <div class="sender">{{sender}}</div>
@@ -63,7 +61,10 @@
 			success : function(responseData) {
 				var temp = Handlebars.compile($("#temp").html());
 				$("#chat").html(temp(responseData));
-			}
+			},
+			error: function(request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
 		});
 	}
 
@@ -81,12 +82,14 @@
 			},
 			success : function() {
 				sock.send("delete");
-			}
+			},
+			error: function(request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
 		})
 	})
 
 	$("#txtMessage").off("keydown").on("keydown", function(e) {
-		
 		if (e.keyCode == 13 && !e.shiftKey) {
 			e.preventDefault();
 			var sender = "admin";
@@ -111,13 +114,15 @@
 				success : function(messageId) {
 					e.preventDefault();
 					sock.send(sender + "|" + message + "|" + messageId);
-				}
+				},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
 			});
 		}
 
 	});
 
-	// 서버로부터 메세지 받기
 	function onMessage(msg) {
 		var items = msg.data.split("|");
 		var sender = items[0];

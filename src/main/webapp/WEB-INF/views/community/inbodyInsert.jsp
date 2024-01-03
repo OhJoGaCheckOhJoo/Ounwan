@@ -19,7 +19,6 @@
 	<%@ include file = "../common/header.jsp" %>
     ​
     <div class="container">
-        <!-- nav -->
         <%@ include file = "../common/nav.jsp" %>
         
         <div id="inbodyInsertBody">

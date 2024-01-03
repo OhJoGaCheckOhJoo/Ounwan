@@ -105,8 +105,6 @@
     				"adminId" : $('#adminId').val(),
     				"password" : $('#adminPass').val()
     		}
-    		
-    		console.log(obj);
     		$.ajax({
     			url : '${appPath}/admin/login.do',
     			type : 'post',
@@ -114,12 +112,15 @@
     			data : JSON.stringify(obj),
     			success : function (res) {
     				if (res === 'success') {
-    					alert('어서오소');
+    					alert('관리자님 어서오세요.');
     					location.href = "${appPath}/admin/main.do"
     				} else {
     					alert('아이디 / 비밀번호가 틀렸습니다.');
     				}
-    			}
+    			},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
     		});
     	});
     </script>

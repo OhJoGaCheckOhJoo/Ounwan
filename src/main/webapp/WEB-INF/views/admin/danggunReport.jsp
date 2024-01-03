@@ -39,7 +39,6 @@
 <script>
 $(".restoreDanggun").on("click", function(){
    	var danggunNumber = $(this).parent().parent().find(".danggunNumber").val();
-   	alert(danggunNumber);
    	if(confirm("정말로 복구하시겠습니까?")){   	
    		$.ajax({
                url : "${appPath}/admin/danggun/restore",
@@ -75,11 +74,17 @@ $(".deleteDanggun").on("click", function(){
             			   url : "${appPath}/admin/danggun/report",
             			   success : function(res){
             				   $(".admin-wrap").html(res);
-            			   }
+            			   },
+           				error: function(request, status, error) {
+        	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        	            }
             		   });
             	   }
                       
-               }
+               },
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
            });
    	}
    });

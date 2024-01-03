@@ -138,12 +138,15 @@
 				},
 				success : function(res) {
 					if (res === "success") {
-						alert("구매확정 완료되었습니다. 리뷰를 작성해 중세요");
+						alert("구매확정 완료되었습니다. 리뷰를 작성해 주세요.");
 					} else {
 						alert("구매확정 중 문제가 발생했습니다.");
 					}
 					orderList();
-				}
+				},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
 			});
 		}
 	}

@@ -44,7 +44,10 @@
 			data : obj,
 			success : function(response) {
 				$('#aeta-list').html(response);
-			}
+			},
+			error: function(request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
 		});
 	}
 
@@ -62,7 +65,4 @@
 	$(function() {
 		search(1);
 	});
-	
-	
-	
 </script>

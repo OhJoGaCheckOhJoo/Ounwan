@@ -112,7 +112,6 @@
     <script>
     $(function(){
         $("#loginButton").on("click",function(){
-            console.log("안녕");
             var obj = {
                 "clientId" : $("#loginId").val(),
                 "password" : $("#loginPassword").val()
@@ -125,8 +124,8 @@
                 dataType : 'text',
                 success : function(responseData){
                     if(responseData === "success"){
-                        alert("어서오소 ");
-                        window.location.href = "${appPath}/"
+                        alert("오운완에 오신 것을 환영합니다.");
+                        location.href = "${appPath}/"
                     } else if (responseData === "unAuthorized") {
                     	alert('이메일 인증을 완료해 주세요!');
                     	location.href = "${appPath}";
@@ -134,16 +133,15 @@
                     	alert("탈퇴한 회원입니다!");
                     	location.href = "${appPath}";
                     } else {
-                        alert("로그인 실패");
-                        console.log(responseData);
+                        alert("아이디/비밀번호가 일치하지 않습니다.");
                     }
                 },
-                error : function(){
-                }
-            })
-            console.log(obj.clientId);
-        })
-    })
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
+            });
+        });
+    });
     </script>
 </body>
 </html>

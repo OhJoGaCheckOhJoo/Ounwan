@@ -101,18 +101,12 @@
             	"categoryNum" : id	
             },
             success: function(res) {
-                // Remove the existing product area zone
-$('.productList').html('');
-                
+				$('.productList').html('');
                 var inside = '';
-                
                 if(res.length == 0) {
                 	inside += '<div>상품이 존재하지 않습니다</div>';
                 } else {
-
-                	// Loop through each product in the response and construct HTML
                 	res.forEach(function(product) {
-                		console.log(product.image[0].url);
 	                    inside += '<div class="product"><a><input type="hidden" value="' + product.coupungNumber + '"class="item-number">' + 
 	                    '<img class="product-image" src="' + product.image[0].url + '">' + 
 	                    '<div class="product-name">' + product.name + '</div>' + 
@@ -137,16 +131,11 @@ $('.productList').html('');
             	"text" : txt	
             },
             success: function(res) {
-                // Remove the existing product area zone
                 $('.productList').html('');
-                
                 var inside = '';
-                
                 if(res.length == 0) {
                 	inside += '<div class="product">상품이 존재하지 않습니다</div>';
                 } else {
-
-                	// Loop through each product in the response and construct HTML
                 	res.forEach(function(product) {
 	                    inside += '<div class="product"><a><input type="hidden" value="' + product.coupungNumber + '"class="item-number">' + 
 	                    '<img class="product-image" src="' + product.image[0].url + '">' + 
@@ -160,13 +149,10 @@ $('.productList').html('');
                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
             }
         })
-	
 	});
 	
 	$('.productList').on('click', '.product', function() {
 		var cNum = $(this).find('.item-number').val();
-		console.log($(this).html());
-		console.log(cNum);
 		location.href="${appPath}/coupung/product/detail?coupungId=" + cNum;
 	});
 </script>

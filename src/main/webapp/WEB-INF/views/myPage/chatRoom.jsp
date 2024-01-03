@@ -87,14 +87,17 @@
 			success : function(responseData) {
 				var temp = Handlebars.compile($("#temp").html());
 				$("#chat").html(temp(responseData));
-			}
+			},
+			error: function(request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
 		});
 	}
 
 	$("#chat").on("click", ".message a", function(e) {
 		e.preventDefault();
 		var messageId = $(this).attr("href");
-		if (!confirm(messageId + "을(를) 삭제하실래요?"))
+		if (!confirm("메세지를 삭제하시겠습니까?"))
 			return;
 		$.ajax({
 			type : "post",
@@ -105,7 +108,10 @@
 			},
 			success : function() {
 				sock.send("delete");
-			}
+			},
+			error: function(request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
 		})
 	})
 
@@ -134,13 +140,15 @@
 				success : function(messageId) {
 					e.preventDefault();
 					sock.send(clientId + "|" + message + "|" + messageId);
-				}
+				},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
 			});
 		}
 
 	});
 
-	// 서버로부터 메세지 받기
 	function onMessage(msg) {
 		var items = msg.data.split("|");
 		var sender = items[0];

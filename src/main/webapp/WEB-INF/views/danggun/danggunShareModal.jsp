@@ -15,7 +15,6 @@
 		<div class="link-share-button">
 			<a id="clip-btn" href="javascript:clipboardShare()">해당 링크 복사하기</a>
 		</div>
-		<div>카카오톡으로 공유하기</div>
 	</div>
 </div>
 <div id="shareModalOverlay" class="share-modal-overlay"

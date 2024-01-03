@@ -16,9 +16,6 @@
 <link href="${appPath}/css/footer.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script>
-	console.log("${aetaList}");
-</script>
 <title>오운완</title>
 </head>
 <body>
@@ -61,7 +58,7 @@
 	<hr>
 	<%@ include file="../../common/footer.jsp"%>
 
-<script src="../js/aeta.js"></script>
+<script src="${appPath}/js/aeta.js"></script>
 <script src="${appPath}/js/main.js"></script>
 	<script>
 		var appPath = "${appPath}";

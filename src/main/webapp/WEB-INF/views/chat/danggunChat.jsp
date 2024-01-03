@@ -42,7 +42,6 @@
 		</div>
 
 		<div id="chat" class="chat"></div>
-		<!-- 채팅저장출력 -->
 		<script id="temp" type="text/x-handlebars-template">
 		{{#each .}}
        <div class="{{printLeftRight sender}}">
@@ -54,7 +53,6 @@
        </div>
 		{{/each}}
        </script>
-		<!-- 새로운채팅출력 -->
 		<script id="temp1" type="text/x-handlebars-template">
        <div class="{{printLeftRight sender}}">
           <div class="sender">{{sender}}</div>
@@ -103,21 +101,27 @@
 			success : function(responseData) {
 				var temp = Handlebars.compile($("#temp").html());
 				$("#chat").html(temp(responseData));
-			}
+			},
+			error: function(request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
 		})
 	}
 	
 	$("#chat").on("click", ".message a", function(e){
 		e.preventDefault();
 		var messageId = $(this).attr("href");
-		if(!confirm(messageId + "을(를) 삭제하실래요?")) return;
+		if(!confirm("메세지를 삭제하시겠습니까?")) return;
 		$.ajax({
 			type: "post",
 			url : "${appPath}/danggun/bixSiri/chat/delete",
 			data : {"sender" : clientId ,"messageId" : messageId},
 			success : function(){
 				sock.send("delete");
-			}
+			},
+			error: function(request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
 		})
 	})
 
@@ -135,7 +139,6 @@
 
 			$("#txtMessage").val("");
 
-			// db로 보내기
 			$.ajax({
 				type : 'post',
 				url : '${appPath}/danggun/bixSiri/chat/insertMessage',
@@ -146,13 +149,15 @@
 				},
 				success : function(messageId) {
 					sock.send(clientId + "|" + message + "|" + messageId); 
-				}
+				},
+				error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	            }
 			});
 		}
 
 	});
 
-	// 서버로부터 메세지 받기
 	function onMessage(msg) {
 		var items = msg.data.split("|");
 		var sender = items[0];

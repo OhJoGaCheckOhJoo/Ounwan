@@ -75,7 +75,7 @@ $("#adminChat").on("click",function(e){
 	e.preventDefault();
 	if(!"${userInfo.clientId}"){
 		alert("로그인을 해주세요!");
-		window.location.href = "${appPath}/clients/login";
+		location.href = "${appPath}/clients/login";
 	}else{
 		window.open("${appPath}/somsomi/chat","/chat/somsomiChat","width=500, height=800, top=200, left=200");
 	}

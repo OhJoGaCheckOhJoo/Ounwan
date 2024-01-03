@@ -180,7 +180,6 @@ $(document).ready(function() {
 
     $('#checkId').on('click', function() {
         var id = $('#clientId').val();
-        alert(id);
         var idFormat = /^[a-z]+[a-z0-9]{5,11}$/g;
         if (!idFormat.test(id)) {
             alert('형식에 맞게 작성해 주세요 (6 ~ 12자리)');

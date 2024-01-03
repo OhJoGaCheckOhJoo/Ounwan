@@ -73,7 +73,6 @@
 								</div>
 							</c:if>
 						</div>
-						<!-- product_top -->
 						<div class="seller" id="seller">판매자 : ${post.clientId}</div>
 						<div class="product-price" id="product-price">가격 :
 							${post.price}원</div>
@@ -130,7 +129,7 @@
 			$(".overlay").show();
 			setTimeout(function() {
 	            alert("판매가 중지된 상품입니다.");
-	            window.location.href= "${appPath}/danggun/main";
+	            location.href= "${appPath}/danggun/main";
 	        }, 100); 
 	    }
 		
