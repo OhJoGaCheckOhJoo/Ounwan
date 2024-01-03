@@ -186,14 +186,8 @@ public class MyPageController {
 		return "fail";
 	}
 	
-	@RequestMapping(value = "/modifyUserInfo", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
-	public String showUserInfo(HttpSession session, Model model) {
-		
-		ClientsDTO userInfo = (ClientsDTO) session.getAttribute("userInfo");
-		String clientId = userInfo.getClientId();	
-		
-		ClientsDTO clientInfo = myPageService.getUserInfo(clientId);
-		model.addAttribute("clientInfo", clientInfo);
+	@GetMapping("/modifyUserInfo")
+	public String showUserInfo() {
 		return "myPage/modifyUserInfo";
 	}
 

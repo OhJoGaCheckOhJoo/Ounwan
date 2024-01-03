@@ -282,8 +282,7 @@
 
 	<select id="getUserInfo" parameterType="String"
 		resultType="clients">
-		SELECT CLIENT_ID, NAME, EMAIL, PHONE, ADDRESS,
-		ADDRESS_DETAIL, ZIP_CODE,PROFILE_URL
+		SELECT *
 		FROM CLIENTS WHERE CLIENT_ID =
 		#{clientId}
 	</select>

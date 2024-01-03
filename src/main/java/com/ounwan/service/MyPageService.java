@@ -133,10 +133,6 @@ public class MyPageService {
 		return null;
 	}
 
-	public ClientsDTO getUserInfo(String clientId) {
-		return changeDTO(myPageDAO.getUserInfo(clientId));
-	}
-
 	public int modifyPwd(ClientsDTO client) {
 		String newPassword = hashPassword(client.getPassword());
 		client.setPassword(newPassword);

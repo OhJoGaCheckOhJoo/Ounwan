@@ -12,7 +12,7 @@
 	
  	<div class="modifyUserInfo-container-wrap">
 		<div class="profile-photo">
-			<img class="profile-photo-file" src="${clientInfo.profileUrl}" id="registerProfileImage">
+			<img class="profile-photo-file" src="${userInfo.profileUrl}" id="registerProfileImage">
 			<label for="uploadImageInput" class="custom-file-upload">
 	    		<i class="fas fa-cloud-upload-alt"></i> 사진수정
 			</label>
@@ -25,21 +25,21 @@
 			<div class="profile-name">
 	
 				<label class="attribute-name" for=""> 이름</label> <input type="text"
-					class="input-form" value="${clientInfo.name}" readonly />
+					class="input-form" value="${userInfo.name}" readonly />
 			</div>
 			<div class="profile-id">
 				<label class="attribute-name" for="">아이디</label> <input type="text"
-					class="input-form" value="${clientInfo.clientId}" readonly />
+					class="input-form" value="${userInfo.clientId}" readonly />
 			</div>
 	
 			<div class="profile-email">
 				<label class="attribute-name" for="">이메일</label> <input type="email"
-					class="input-form" value="${clientInfo.email}" readonly />
+					class="input-form" value="${userInfo.email}" readonly />
 	
 			</div>
 			<div class="profile-phone">
 				<label class="attribute-name" for="">연락처</label> <input type="text"
-					class="input-form" value="${clientInfo.phone}" id="phoneNum" />
+					class="input-form" value="${userInfo.phone}" id="phoneNum" />
 			</div>
 			
 			<div class="profile-password">
@@ -68,14 +68,14 @@
 	
 			<div class="profile-address">
 				<label class="attribute-name" for="">주소</label> <input
-					class="form-address-" size="10" id="zipCode"
-					value="${clientInfo.zipCode}" />
+					class="form-address" size="10" id="zipCode"
+					value="${userInfo.zipCode}" />
 				<button id="findAddr" type="button" class="zip-code-button">우편번호 검색</button>
 				<br> <label class="attribute-name" for=""></label> <input
-					class="form-address" size="35" id="addr" value="${clientInfo.address}" />
+					class="form-address" size="35" id="addr" value="${userInfo.address}" />
 				<br> <label class="attribute-name" for=""></label> <input
 					class="form-address" size="35" id="addrDetail"
-					value="${clientInfo.addressDetail}" />
+					value="${userInfo.addressDetail}" />
 			</div>
 	
 			<br>
@@ -221,7 +221,7 @@
 						}
 
 						var obj = {
-							clientId : "${clientInfo.clientId}", 
+							clientId : "${userInfo.clientId}", 
 							password : secondPass
 						};
 
@@ -248,7 +248,7 @@
 
 	var formData = new FormData();
 	var imgUrl = '';
-	var clientId = "${clientInfo.clientId}";
+	var clientId = "${userInfo.clientId}";
 
 	$("#uploadImageInput").on("change", function() {
 		var imgTag = $("#registerProfileImage");
@@ -289,12 +289,14 @@
 		var phone = $('#phoneNum').val();
 		var address = $('#addr').val();
 		var addressDetail = $('#addrDetail').val();
+		var zipCode = $('#zipCode').val();
 
 		var obj = {
-			clientId : "${clientInfo.clientId}", 
+			clientId : "${userInfo.clientId}", 
 			phone : phone,
 			address : address,
-			addressDetail : addressDetail
+			addressDetail : addressDetail,
+			zipCode : zipCode
 		};
 		$.ajax({
 			url : "${appPath}/myPage/modifyUserInfo",
@@ -330,7 +332,7 @@
 
 	$('#withdrawlCompleted').on('click',function() {
 							var privacyTerms = $('#storagePeriod').val();
-							var clientId = "${clientInfo.clientId}";
+							var clientId = "${userInfo.clientId}";
 						    var obj = {
 						        clientId: clientId,
 						        privacyTerms: privacyTerms
