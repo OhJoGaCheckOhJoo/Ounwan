@@ -27,7 +27,9 @@ public class CoupungOptionsService {
 	public int insertOption(Integer coupungNumber, String[] options) {
 		int result = 1;
 		for(String name : options) {
-			result *= coupungOptionsDAO.insertOption(CoupungOptions.builder().coupungNumber(coupungNumber).name(name).build());
+			if(name.length() > 0) {
+				result *= coupungOptionsDAO.insertOption(CoupungOptions.builder().coupungNumber(coupungNumber).name(name).build());
+			}
 		}
 		return result;
 	}
