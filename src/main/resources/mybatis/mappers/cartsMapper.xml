@@ -29,8 +29,7 @@
 	<update id="updateQuantity" parameterType="carts">
 		update CARTS
 		set QUANTITY = #{quantity}
-		where COUPUNG_NUMBER = #{coupungNumber}
-		AND COUPUNG_OPTION_NUMBER = #{coupungOptionNumber}
+		where CART_NUMBER = #{cartNumber}
 	</update>
 
 

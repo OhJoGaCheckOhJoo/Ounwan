@@ -15,6 +15,7 @@
 <link href="${appPath }/css/main2.css" rel="stylesheet">
 <link href="${appPath }/css/header.css" rel="stylesheet">
 <link href="${appPath }/css/nav.css" rel="stylesheet">
+<link href="${appPath}/css/footer.css" rel="stylesheet" />
 <link href="${appPath }/css/coupung/complete.css" rel="stylesheet">
 </head>
 <body>
@@ -32,7 +33,6 @@
             </div>
         </div>		
 	</div>
-	<hr>
-	<%@ include file="../common/footer.jsp"%>
+	<%@include file="../common/footer.jsp"%>
 </body>
 </html>

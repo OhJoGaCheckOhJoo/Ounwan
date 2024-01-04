@@ -80,7 +80,7 @@
 			                		<input type="hidden" value="${product.coupungNumber}"class="item-number">
 			                		<img class="product-image" src="${product.image[0].url }">
 			                		<div class='product-name'>${product.name}</div>
-			                		<div><span>${product.price }</span>원</div>
+			                		<div><span id="productPrice">${product.price }</span>원</div>
 		                		</a>
 		            		</div>
 						</c:forEach>
@@ -92,6 +92,17 @@
     <%@ include file="../common/footer.jsp"%>
 	<script src="${appPath}/js/main.js"></script>
 	<script>
+	$(document).ready(function() {
+	    $(".product").each(function() {
+	        var productPriceElement = $(this).find("#productPrice");
+	        var productPriceValue = productPriceElement.text();
+	        var formattedProductPrice = makeComma(parseFloat(productPriceValue));
+	        productPriceElement.text(formattedProductPrice);
+	    });
+	});	
+	function makeComma(n) {
+		return n.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+	}
 	$('.category-detail').click(function() {
 		var id = $(this).find('.categoryValue').val();
 		$.ajax({

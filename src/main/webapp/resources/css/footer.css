@@ -25,9 +25,9 @@ footer div {
 footer .logo {
     display: inline-block;
     height: 100px;
-    width: 247px;
+    width: 300px;
     margin-left: 30px;
-    background-image: url("../images/Google_icon.png");
+    background-image: url("https://ounwan.s3.ap-northeast-2.amazonaws.com/1704307286927.png");
     background-size: contain;
     background-repeat: no-repeat;
 }

@@ -38,9 +38,9 @@ public class CartService {
 												.cartNumber(cart.getCartNumber())
 												.quantity(cartsDTO.getQuantity() + cart.getQuantity())
 												.build());
+		} else {
+			result = cartDAO.insertCart(changeEntity(cartsDTO));
 		}
-		result = cartDAO.insertCart(changeEntity(cartsDTO));
-		
 		if (result > 0)
 			return cartDAO.getCartById(clientId);
 		return null;
@@ -99,8 +99,10 @@ public class CartService {
 	
 	public List<CartsDTO> deleteGuestCart(int coupungNumber, int optionNumber, List<CartsDTO> cartList) {
 		for (CartsDTO cart : cartList) {
-			if (cart.getCoupungNumber() == coupungNumber && cart.getCoupungOptionNumber() == optionNumber)
+			if (cart.getCoupungNumber() == coupungNumber && cart.getCoupungOptionNumber() == optionNumber) {
 				cartList.remove(cart);
+				break;
+			}
 		}
 		return cartList;
 	}

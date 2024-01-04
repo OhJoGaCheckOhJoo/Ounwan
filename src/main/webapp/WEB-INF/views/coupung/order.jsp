@@ -28,9 +28,12 @@
 		        $('.price-value').each(function() {
 		            totalPrice += parseInt($(this).text(), 10);
 		        });
-		        $('#totalPrice').text(totalPrice);
-		        $('#totalOrderPrice').text(totalPrice);
+		        $('#totalPrice').text(makeComma(totalPrice));
+		        $('#totalOrderPrice').text(makeComma(totalPrice));
 		    }
+			function makeComma(n) {
+				return n.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			}
 		    var emailId = '';
 		    var domain = '';
 		    var phone = '';
@@ -51,6 +54,15 @@
 		    $('#domain-list').attr('disable', true);
 		    $('#phone-txt').val(phone);	
 		    $('#phone-txt').attr('readOnly', true);
+		    
+		    $(".detail-price, .price-value").each(function() {
+		        var priceElement = $(this);
+		        var priceValue = priceElement.text();
+		        var numericValue = priceValue.replace(/[^0-9.-]/g, '');
+		        var formattedValue = makeComma(parseFloat(numericValue));
+
+		        priceElement.text(formattedValue + "원");
+		    });
 		});
 		
 	</script>
@@ -91,7 +103,7 @@
 																	<span class="text-container">
 																		<p>-[옵션] : ${product.options[0].name}</p>												
 																	</span>
-																	<span>${product.price}원</span>
+																	<span class="detail-price">${product.price}원</span>
 															</div>
 								                    	</div>
 								                    </td>

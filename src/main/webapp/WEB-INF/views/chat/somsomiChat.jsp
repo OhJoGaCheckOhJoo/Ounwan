@@ -15,7 +15,7 @@
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 <link rel="stylesheet" href="${appPath}/css/bixSiri/chat.css" />
-
+<link rel="shortcut icon" href="https://ounwan.s3.ap-northeast-2.amazonaws.com/1704307233380.png" />
 </head>
 <body>
 	<div class="chat-wrap">

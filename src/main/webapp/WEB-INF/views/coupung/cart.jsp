@@ -62,7 +62,7 @@
 							                		<img src="${cart.url}" alt="productImage">
 							                    	<div class="product-info">
 								                    	 <span>${cart.name}</span>
-														 <span>${cart.price}원</span>
+														 <span id="cartPrice" class="cart-price">${cart.price}원</span>
 														 <span>구매옵션 : ${cart.option }</span>
 													</div>
 												</div>
@@ -83,11 +83,11 @@
 												</div>
 						                    </td>
 						                    <td class="clsit-order-price">
-						                    	<span>금액:<span class="product-price">${cart.price*cart.quantity}</span>원</span>
+						                    	<span>금액:<span class="product-price" id="productPrice">${cart.price*cart.quantity}</span>원</span>
 						                    </td>
 						                    <td>
 						                    <div>
-						                    	<button class="delete-button" data-coupung-num="${cart.coupungNumber}" data-option-num="${cart.coupungOptionNumber}">&times;</button>
+						                    	<button class="delete-button" data-coupung-num="${cart.coupungNumber}" data-option-num="${cart.coupungOptionNumber}" data-coupung-name="${cart.name}">&times;</button>
 						                    </div>
 						                    </td>
 						                </tr>
@@ -113,12 +113,12 @@
 														<input type="hidden" value="${cart.QUANTITY}" class="productQuantity" />
 													</div>
 							                	</td>
-							                    <td>
+							                    <td class="product-detail">
 								                 	<div class="clist-product-info">
 									                   	<img src="${cart.URL}" alt="productImage">
 									                    <div class="product-info">
 									                    		<span>${cart.name}</span>
-																<span>${cart.price}원</span>
+																<span id="cartPrice" class="cart-price">${cart.price}원</span>
 																<span>구매옵션 : ${cart.option }</span>
 														</div>
 													</div>
@@ -139,11 +139,11 @@
 													</div>
 							                    </td>
 							                    <td class="clsit-order-price">
-							                    	<span>금액:<span class="product-price">${cart.price * cart.QUANTITY}</span>원</span>
+							                    	<span>금액:<span class="product-price" id="productPrice">${cart.price * cart.QUANTITY}</span>원</span>
 							                    </td>
 							                    <td>
 							                    <div>
-							                    	<button class="delete-button" data-coupung-num="${cart.COUPUNG_NUMBER}" data-option-num="${cart.COUPUNG_OPTION_NUMBER}">&times;</button>
+							                    	<button class="delete-button" data-coupung-num="${cart.COUPUNG_NUMBER}" data-option-num="${cart.COUPUNG_OPTION_NUMBER}" data-coupung-name="${cart.name}">&times;</button>
 							                    </div>
 							                    </td>
 						                	</div>
@@ -181,7 +181,6 @@
 		    			</div>
 			    	</div>
 			    	<div class="modal-body-wrap">
-			    	<%@ include file="../guest/guestOrderListModal.jsp" %>
 			    		<div class="agreement">
 							<label for="agree1">
 								<input type="checkbox" id="agree1" required>
@@ -213,29 +212,53 @@
 	<script src="${appPath}/js/main.js"></script>
 	
 	<script>
-		$(function() {
-			$('.selectCheckbox').prop('checked', true);
-			calculateTotalAmount();
-		});
-		
+	$(document).ready(function() {
+	    $(".cart-price").each(function() {
+	        var priceElement = $(this);
+	        var priceValue = priceElement.text();
+	        var formattedValue = makeComma(parseFloat(priceValue));
+	        priceElement.text(formattedValue + "원");
+	    });
+	    
+	    $(".product-price").each(function() {
+	        var priceElement = $(this);
+	        var priceValue = priceElement.text();
+	        var formattedValue = makeComma(parseFloat(priceValue));
+	        priceElement.text(formattedValue);
+	    });
+	});
+	
+	function makeComma(n) {
+	    return n.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+	}
+	
+	$(function() {
+		$('.selectCheckbox').prop('checked', true);
+		calculateTotalAmount();
+	});		
 	
 	$('.selectCheckbox').on('change', function() {
 		  calculateTotalAmount();
 	});
 	
 	function calculateTotalAmount() {
-		let totalPrice = 0;
-		  $('.selectCheckbox:checked').each(function() {
-			  var price = Number($(this).closest('tr').find('.product-price').text());
-			  totalPrice += price;
-		  });
-		  $('#totalAmount').text(totalPrice);
+	    let totalPrice = 0;
+	    $('.selectCheckbox:checked').each(function() {
+	        var priceText = $(this).closest('tr').find('.product-price').text();
+	        var numericPrice = parseFloat(priceText.replace(/[^0-9.-]/g, ''));
+	        
+	        if (!isNaN(numericPrice)) {
+	            totalPrice += numericPrice;
+	        }
+	    });
+	    $('#totalAmount').text(makeComma(totalPrice));
 	}
 	
 	$(".delete-button").on("click",function(){
 		 var coupungNum = $(this).data("coupung-num");
 		 var optionNum = $(this).data('option-num');
-		 alert(optionNum);
+		 var coupungName = $(this).data('coupung-name');
+		 alert(coupungName + "이(가) 삭제되었습니다.");
 			$.ajax({
 				url:"${appPath}/coupung/cartDelete",
 				data : {
@@ -243,13 +266,12 @@
 					"optionNumber" : optionNum
 				},
 				success : function(res){
-					if(res === "cart"){
+					if(res === "success"){
 						location.href = "${appPath}/coupung/cart";
 					}
 				}
 			}); 	
-		});
-	
+		});	
 	</script>
 
 	<script>
@@ -259,7 +281,6 @@
 				var coupungNum = $(this).find(".coupung-num").val();
 				var quantity = Number($(this).parent().find(".product-quantity").text()) + 1;
 				var optionNumber = $(this).find(".coupung-option").val();
-				alert(quantity);
 				$(this).parent().find(".product-quantity").text(quantity);
 				
 				$.ajax({
@@ -284,7 +305,6 @@
 					var optionNumber = $(this).find(".coupung-option").val();
 					quantity = quantity - 1;
 					$(this).parent().find(".product-quantity").text(quantity);
-					
 					$.ajax({
 						url:"${appPath}/coupung/cartUpdate",
 						data : {
@@ -314,29 +334,30 @@
 				optionList.push(optionNum);
 				quantityList.push(quantity);
 		    });
-		    
-			if('${userInfo.clientId}' === '') {
-				if(confirm('비회원으로 주문하시겠습니까?')) {
-					$('#guestModal').removeClass('hidden'); // 모달을 띄우는 부분
+		    if(('${cartList}' == '[]' || '${cartList}' == '') && ('${userCartList}' == '' || '${userCartList}' == '[]')) {
+		    	alert("장바구니가 비어있습니다.");
+		    }
+		    else {
+		    	if('${userInfo.clientId}' === '') {
+					if(confirm('비회원으로 주문하시겠습니까?')) {
+						$('#guestModal').removeClass('hidden'); // 모달을 띄우는 부분
+					} else {
+						location.href="${appPath}/clients/login";
+					}
 				} else {
-					location.href="${appPath}/clients/login";
+					location.href = '${appPath}/coupung/order?productList=' + productList + '&optionList=' + optionList +'&quantityList=' + quantityList;
 				}
-			} else {
-				
-				location.href = '${appPath}/coupung/order?productList=' + productList + '&optionList=' + optionList +'&quantityList=' + quantityList;
-			}
+		    }
+			
 		});
 		
-		// 모달 요소 가져오기
 		var modal = document.getElementById("guestModal");
 		var closeBtn = document.getElementById("closeBtn");
 
-		// 닫기 버튼 클릭 시 모달 닫기
 		closeBtn.addEventListener("click", function() {
 		  modal.classList.add("hidden");
 		});
 
-		// 모달 외부를 클릭하면 모달 닫기
 		modal.addEventListener("click", function(event) {
 		  if (event.target === modal) {
 		    modal.classList.add("hidden");
@@ -359,12 +380,22 @@
 		$('#guestSubmitBtn').on('click', function() {
 			var email = $('#guestEmail').val();
 			var emailFormat = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-			
+			var phone = $('#guestPhone').val();
+			var phoneFormat = /(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g;
 			if (!emailFormat.test(email)) {
 				alert('잘못된 이메일 형식입니다!');
 				$('#guestEmail').val('');
 				$('#guestEmail').focus();
-			} else {
+			}
+			else if(!$('#agree1').is(':checked')) {
+				alert('필수 동의 사항을 확인해 주세요');
+			} 
+			else if(!phoneFormat.test(phone)) {
+				alert('잘못된 전화번호 형식입니다.');
+				$('#guestPhone').val('');
+				$('#guestPhone').focus();
+			}
+			else {
 				var obj = {
 						'email' : email,
 						'phone' : phone
@@ -387,9 +418,14 @@
 			}
 		});
 		
+		$('.clist-product-info').on('click', function() {
+			var productNum = $(this).parent().parent().find('.productNum').val();
+			location.href = "${appPath}/coupung/product/detail?coupungId=" + productNum;
+		});
+		
 		document.querySelector('#backBtn').addEventListener('click', function() {
-			  window.location.href = '${appPath}';
-			});
+			  location.href = '${appPath}/coupung/products';
+		});
 		</script>
 </body>
 </html>

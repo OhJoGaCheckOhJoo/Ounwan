@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <link href="${appPath}/css/guest/guestCheck.css" rel="stylesheet">
 
+
 <div class="guest-check-container">
 	<div class="guest-check-title">비회원 주문 조회</div>
 	<div class="guest-check-content">
