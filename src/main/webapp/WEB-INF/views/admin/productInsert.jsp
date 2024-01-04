@@ -121,11 +121,7 @@
     });
     
     $("#optionUpdate").on("click", "div > button", function() {
-    	if($(this).val() > 0) {
-    		deleteOptions.push($(this).val());
-    	} else {
-    		addOptions[$(this).val() * -1] = "";
-    	}
+    	options[$(this).val() * -1] = "";
     	$("#options option[value='" + $(this).val() + "']").remove();
     	$(this).parent().css({"visibility": "hidden", "height": "0"});
     });
@@ -136,7 +132,7 @@
     		$("#optionUpdate > input").val('');
     		$("#optionList").append(`<div>\${newOption}<button value="\${optionNum}">삭제</button></div>  `);
     		$("#options").append(`<option value="\${optionNum}">\${newOption}</option>`);
-    		addOptions.push(newOption);
+    		options.push(newOption);
     		optionNum -= 1;
     	}
     });
@@ -228,7 +224,7 @@
     		alert("옵션을 추가해주세요.");
     	} else {
     		var obj = {
-   	    		'coupungCategoryNumber': $("#category").val(),
+   	    		'coupungCategoryNumber': $("#selectCategory option:selected").val(),
    	    		'name': $("#productName").val(),
    	    		'price': $("#productPrice").val(),
    	    		'availableStock': $('#availableStock').val(),
@@ -243,7 +239,7 @@
    	        	traditional: true,
    	        	success: function(res) {
    	        		if(res == 'success') {
-   	        			alert("수정하였습니다.");
+   	        			alert("상품을 추가하였습니다.");
    	        			$.ajax({
    	                		url: "${appPath}/admin/coupung/product.do",
    	                		data: {

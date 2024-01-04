@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.ounwan.productImage">
     <select id="selectProductImageByCoupungId" parameterType="int" resultType="productImages">
-    	SELECT * FROM PRODUCT_IMAGES WHERE COUPUNG_NUMBER = #{coupungNumber} AND (TYPE = 0 OR TYPE = 1)
+    	SELECT * FROM PRODUCT_IMAGES WHERE COUPUNG_NUMBER = #{coupungNumber} AND (TYPE = 0 OR TYPE = 1) ORDER BY TYPE
     </select>
     
     <select id="selectDetailImageByCoupungId" parameterType="int" resultType="productImages">

@@ -33,7 +33,7 @@
     	</div>
         <div>
         	<div>메인 이미지</div>
-	        <img id="mainImg" src="${product.image[0].url}">
+	        <img id="mainImg" class="${product.image[0].productImageNumber}" src="${product.image[0].url}">
 	        <div id="mainImgInput">
 	        	<div>메인 이미지 수정</div>
 	        	<input type="text">
@@ -121,6 +121,9 @@
     });
 
     $("#mainImgUpdate").on("click", function() {
+    	if(images[0] == '.') {
+    		deleteImage.push($("#mainImg").attr("class"));
+    	}
     	images[0] = $('#mainImgInput input').val();
     	$("#mainImgInput").css("visibility", "hidden");
     	$("#mainImg").attr('src', $('#mainImgInput input').val());

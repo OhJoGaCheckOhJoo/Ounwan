@@ -170,6 +170,15 @@ public class CommunityService {
 		}
 		return result;
 	}
+	
+	public int getReportGramCount() {
+		int pages = communityDAO.getReportGramCount();
+		return pages / 20 + (pages % 20 > 0 ? 1 : 0);
+	}
+	
+	public String updateGramBoard(int communityNumber, boolean status) {
+		return (status ? communityDAO.updateAdminGramVisibility(communityNumber) : communityDAO.updateGramVisibility(communityNumber)) > 0 ? "success" : "fail";
+	}
 
 	public String reportBoard(String clientId, int communityNumber, int[] reason) {
 		Map<String, Object> data = new HashMap<>();
@@ -192,10 +201,17 @@ public class CommunityService {
 		data.put("communityNumber", communityNumber);
 		data.put("reason", reasonBuilder.toString());
 		if (communityDAO.reportBoard(data) > 0) {
+			if(communityDAO.countGramReports(communityNumber) % 5 == 0) {
+				communityDAO.updateGramVisibility(communityNumber);
+			}
 			return "success";
 		} else {
 			return "fail";
 		}
+	}
+	
+	public String updateAdminGramVisibility(int communityNumber) {
+		return communityDAO.updateAdminGramVisibility(communityNumber) > 0 ? "success" : "fail";
 	}
 
 	public List<OunwanGramDTO> gramFollowBoard(String clientId, int rowNum) {

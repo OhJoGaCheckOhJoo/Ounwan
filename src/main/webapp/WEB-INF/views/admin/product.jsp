@@ -115,7 +115,7 @@
                     <img src="${product.image[0].url}">
                     <button class="updateBtn" value="${product.coupungNumber}">상품 수정</button>
                     <c:if test="${product.availableCheck}">
-                    	<button class="stopBtn" value="${product.coupungNumber}">상품 중단</button>
+                    	<button class="stopBtn" value="${product.coupungNumber}">판매 중단</button>
                     </c:if>
                     <c:if test="${!product.availableCheck}">
                     	<button class="restartBtn" value="${product.coupungNumber}">판매 재개</button>
