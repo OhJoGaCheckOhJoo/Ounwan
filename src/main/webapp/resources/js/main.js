@@ -3,8 +3,18 @@ var appPath = '/myapp';
 var router = new Map([
 	['/ounwan/html/login.html', '/' + appPath + '/clients/login']
 ]);
+var arrayBanner = [
+	'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704252314009.png',
+	'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704252595798.png',
+	'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704252703729.png',
+	'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704305918409.png',
+	'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704305940177.png',
+	'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704305967157.png',
+	'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704306067755.png'
+];
 
 $(function() {
+	loadBanner(arrayBanner);
 
     $("#profileImage").on("click", function() {
         if($(".header-sub-menu").css("visibility") == 'hidden'){
@@ -137,7 +147,7 @@ function loadBanner(arr) {
     setInterval(function() {
         i = (i + 1) % arr.length;
         $("#main-banner").html("<img src = '" + arr[i] + "'>");
-    }, 3000);
+    }, 5000);
 }
 
 function populars(arr) {

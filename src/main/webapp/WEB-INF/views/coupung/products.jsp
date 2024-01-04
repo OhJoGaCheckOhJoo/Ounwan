@@ -27,9 +27,9 @@
                 <a class="banner-pointer-left" href="#"></a>
                 <a class="banner-pointer-right" href="#"></a>
                 <span class="banner-page">
-                    <span>1</span>
+                    <span>0</span>
                     <span>/</span>
-                    <span>7</span>
+                    <span>0</span>
                 </span>
             </div>
             <div class="category">
@@ -93,6 +93,41 @@
 	<%@ include file="../common/footer.jsp"%>
 	<script src="${appPath}/js/main.js"></script>
 	<script>
+	var i = 0;
+	var bannerArray = [
+		'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704252243721.png',
+		'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704252279831.png',
+		'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704252340637.png',
+		'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704305838617.png',
+		'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704305894754.png',
+		'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704306006291.png'
+	];
+	$(".banner-page span").eq(0).html(1);
+	$(".banner-page span").eq(2).html(bannerArray.length);
+	
+	var bannerFunction = function() {
+    	i = (i + 1) % bannerArray.length;
+        $(".banner-page span").eq(0).html(i + 1);
+        $(".banner").css('background-image', 'url(' + bannerArray[i] + ')');
+    }
+    let bannerInterval = setInterval(bannerFunction, 5000);
+    
+    $(".banner-pointer-left").on("click", function() {
+    	clearInterval(bannerInterval);
+    	i = i > 0 ? i - 1 : bannerArray.length - 1;
+    	$(".banner-page span").eq(0).html(i + 1);
+        $(".banner").css('background-image', 'url(' + bannerArray[i] + ')');
+        bannerInterval = setInterval(bannerFunction, 5000);
+    });
+    
+    $(".banner-pointer-right").on("click", function() {
+    	clearInterval(bannerInterval);
+    	i = i == bannerArray.length - 1 ? 1 : i + 1;
+    	$(".banner-page span").eq(0).html(i + 1);
+        $(".banner").css('background-image', 'url(' + bannerArray[i] + ')');
+        bannerInterval = setInterval(bannerFunction, 5000);
+    });
+	
 	$(document).ready(function() {
 	    $(".product").each(function() {
 	        var productPriceElement = $(this).find("#productPrice");

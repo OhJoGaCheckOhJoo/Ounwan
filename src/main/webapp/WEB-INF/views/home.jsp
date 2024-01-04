@@ -86,7 +86,7 @@ prefix="c" %>
         <%@ include file="./common/nav.jsp" %>
 
         <div id="main-banner" class="main-banner">
-            <img src = './images/v616_37.png'>
+            <img src = 'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704306067755.png'>
         </div>
         <div>
             <div class="text-1">
