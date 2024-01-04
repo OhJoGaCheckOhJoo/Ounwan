@@ -221,7 +221,7 @@ a {
     overflow-y: auto;
 }
 .product-wrap * {
-    font-size: 22px;
+    font-size: 28px;
 }
 .product-menu, .product-info, .order-menu, .order-info {
     width: 1500px;
@@ -538,7 +538,7 @@ a {
     background-color: #ccc;
 }
 #productPages {
-    margin-top: 10px;
+    margin: 10px 0px 20px 0px;
     text-align: center;
 }
 #productInput img {

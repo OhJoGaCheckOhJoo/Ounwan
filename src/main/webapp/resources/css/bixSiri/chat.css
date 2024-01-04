@@ -114,13 +114,10 @@
 	text-align: center;
 }
 .chat-header .logo {
-	width: 60px;
-    height: 60px;
-    padding: 4px 15px;
+	width: 55px;
+    height: 25px;
+    padding: 10px 15px;
     display: inline-block;
-    background-image: url("../images/logo.png");
-    background-size: contain;
-    background-repeat: no-repeat;
 }
 button {
 	margin-bottom: 20px;

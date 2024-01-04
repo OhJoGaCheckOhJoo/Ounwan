@@ -22,9 +22,8 @@
 		<div class="chat-header">
 			<div class="chat-header-wrap">
 				<div>
-					<img class="logo" />
+					<img class="logo" src="https://ounwan.s3.ap-northeast-2.amazonaws.com/1704307286927.png"/>
 				</div>
-				<div>오운완</div>
 			</div>
 		</div>
 		<div class="chat-notice">

@@ -88,7 +88,7 @@ prefix="c" %>
         <div id="main-banner" class="main-banner">
             <img src = 'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704306067755.png'>
         </div>
-        <div>
+        <div class="sort">
             <div class="text-1">
             	<span>인기상품</span>
             	<a href='${appPath}/coupung/products'>전체보기</a>
@@ -96,7 +96,7 @@ prefix="c" %>
             <div id="populars" class="main-product"></div>
         </div>
         <br>
-        <div>
+        <div class="sort">
             <div class="text-1">
             	<span>중고상품</span>
             	<a href='${appPath}/danggun/main'>전체보기</a>
@@ -104,7 +104,7 @@ prefix="c" %>
             <div id="secondhands" class="main-product"></div>
         </div>
         <br>
-        <div class="main-community-wrap">
+        <div class="main-community-wrap sort">
         	<div class='text-1'>오운완 커뮤니티 함께하기</div>
         	<a class='main-community' href="${appPath}/community/ounwangram">
         		<img src="https://src.hidoc.co.kr/image/lib/2023/10/10/1696929851545_0.jpg">

@@ -139,6 +139,8 @@
 
 .submit-button:hover {
   border: 1px solid var(--main-color-2);
+  background-color: var(--main-color-2);
+  color: var(--main-back);
 }
 
 input,

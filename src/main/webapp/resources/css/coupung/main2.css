@@ -42,3 +42,6 @@ input:focus {
     width: 1250px;
     margin: auto;
 }
+.sort {
+	margin-bottom: 20px;
+}
