@@ -175,7 +175,6 @@ $(document).ready(function() {
         } else {
             $(this).val(phone);
         }
-
     });
 
     $('#checkId').on('click', function() {

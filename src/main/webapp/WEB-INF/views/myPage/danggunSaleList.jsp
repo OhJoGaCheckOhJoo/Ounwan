@@ -54,3 +54,8 @@
 		</c:if>
 	</tbody>
 </table>
+<script>
+	for(var i = 0; i < $('.price').length; i++) {
+		$('.price').eq(i).html($('.price').eq(i).html().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
+	}
+</script>

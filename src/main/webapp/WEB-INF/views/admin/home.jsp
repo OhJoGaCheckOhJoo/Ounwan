@@ -40,7 +40,7 @@
                     <ul class="submenu">
                         <li><a id="coupungProductList" href="#">상품 확인</a></li>
                         <li><a id="coupungAddProduct" href="#">상품 추가</a></li>
-                        <li><a id="coupungOrders" href="#">주문 조회</a></li>
+                        <li><a id="coupungOrders" href="#">주문 관리</a></li>
                     </ul>
                 </li>
                 <li>

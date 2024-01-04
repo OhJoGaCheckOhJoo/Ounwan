@@ -127,6 +127,10 @@
 <script src="${appPath}/js/reviewModal.js"></script>
 
 <script>
+	for(var i = 0; i < $('.send-order-price').length; i++) {
+		$('.send-order-price').eq(i).html($('.send-order-price').eq(i).html().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
+	}
+
 	function confirmPurchase(orderNumber) {
 		var confirmCheck = confirm("구매 확정하시겠습니까?");
 		if (confirmCheck) {

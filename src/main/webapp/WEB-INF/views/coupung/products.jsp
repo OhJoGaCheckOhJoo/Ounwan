@@ -65,7 +65,7 @@
                 </a>
             </div>
             <form class="search">
-                <input class="searchProduct" id="inputBox" type="text" placeholder="상품 검색">
+                <input class="searchProduct" id="inputBox" type="text" placeholder="상품 검색" autocomplete="none">
                 <button id="findButton" type="button"></button>
                 <span></span>
             </form>
@@ -168,8 +168,7 @@
         })
     });
 	
-	$('.search').on('submit', function() {
-		event.preventDefault();
+	$('#findButton').on('click', function() {
 		var txt = $('#inputBox').val();
 		$.ajax({
             url : "${appPath}/coupung/product/name",
@@ -186,7 +185,7 @@
                 	res.forEach(function(product) {
 	                    inside += '<div class="product"><a><input type="hidden" value="' + product.coupungNumber + '"class="item-number">' + 
 	                    '<img class="product-image" src="' + product.image[0].url + '">' + 
-	                    '<div>' + product.name + '</div>' + 
+	                    '<div class="product-name">' + product.name + '</div>' + 
 	                    '<div><span>' + product.price + '</span>원</div></a></div>';
                 	});
                 }

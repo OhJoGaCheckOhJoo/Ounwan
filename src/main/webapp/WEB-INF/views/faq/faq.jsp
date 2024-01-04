@@ -55,7 +55,7 @@
     </div>
     
     <a id="adminChatting" class="help" href="#">
-    	<img src="${appPath}/images/help.jpg" />
+    	<img src="${appPath}/images/help.png" />
     </a>
     
     <%@ include file="../common/footer.jsp"%>

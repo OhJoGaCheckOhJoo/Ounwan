@@ -128,7 +128,7 @@ $('#PostingBtn').on('click',function(){
 		contentType : false,
 		success : function(response) {
 			if(response=="success"){
-				alert("게시물등록완료");
+				alert("게시글을 등록하였습니다.");
 				location.href=appPath+"/community/aetaBoard";
 			}else{
 				alert("failed");
@@ -151,7 +151,7 @@ $("#insertCommentBtn").click(function(){
 		data : JSON.stringify(obj),
 		contentType : "application/json",
 		success : function(response) {
-			alert(response);
+			alert("게시글을 작성 완료하였습니다.");
 			location.href=appPath+"/community/aetaPost?aetaNumber="+aetaNumber;
 		}
 	});
@@ -170,7 +170,7 @@ $("#commentList").on('click', "#deleteCommentBtn", function(){
 		data:JSON.stringify(obj),
 		contentType : "application/json",
 		success:function(res){
-			alert("delete "+res);
+			alert("해당 댓글을 삭제하였습니다.");
 			location.href=appPath+"/community/aetaPost?aetaNumber="+aetaNumber;
 		}
 	})
@@ -249,10 +249,10 @@ $("#updatePost").on('click',function(){
 	contentType : false,
 	success : function(response) {
 		if(response=="success"){
-			alert("게시물수정완료");
+			alert("해당 게시물을 수정하였습니다.");
 			location.href=appPath+"/community/aetaPost?aetaNumber="+aetaNumber;
 		}else{
-			alert("failed");
+			alert("게시물 수정에 실패하였습니다.");
 		}
 	}
 	})

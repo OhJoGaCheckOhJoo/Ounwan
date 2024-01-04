@@ -189,7 +189,6 @@ $('#logoutBtn').on('click', function() {
 			type : "post",
 			success : function (res) {
 				if (res === 'success') {
-					alert('어서가소');
 					location.href = appPath;
 				}
 			}

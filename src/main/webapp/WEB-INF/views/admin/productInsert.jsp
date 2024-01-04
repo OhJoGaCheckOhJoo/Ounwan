@@ -76,7 +76,7 @@
     <div id="productPreview">
     	<div>미리보기</div>
         <div id="namePreview">상품명</div>
-        <img id="mainPreview" src="/">
+        <img id="mainPreview" src="${appPath}/images/white.jpg">
         <div id="subPreview"></div>
         <div id="pricePreview">0</div>
         <div id="explanationPreview"></div>

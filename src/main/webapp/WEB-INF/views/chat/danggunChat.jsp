@@ -83,9 +83,10 @@
 	</div>
 </body>
 <script>
+	$('.product-info-price').html($('.product-info-price').html().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
 	getList();
 	var clientId = "${userInfo.clientId}";
-	var sock = new SockJS("http://localhost:9090/myapp/danggunEcho");
+	var sock = new SockJS("http://www.ounwan.com:9090/myapp/danggunEcho");
 	sock.onmessage = onMessage;
 	
 	function getList() {

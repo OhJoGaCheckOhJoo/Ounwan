@@ -259,6 +259,13 @@
 
 		<script src="./js/main.js"></script>
 		<script>
+			for(var i = 0; i < $('.recent-order-price').length; i++) {
+				$('.recent-order-price').eq(i).html($('.recent-order-price').eq(i).html().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
+			}
+			for(var i = 0; i < $('.recent-cart-info-price').length; i++) {
+				$('.recent-cart-info-price').eq(i).html($('.recent-cart-info-price').eq(i).html().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
+			}
+		
 			function orderList() {
 				$.ajax({
 					type : "GET",

@@ -69,6 +69,7 @@ td {
     align-items: flex-start;
     justify-content: space-between;
     flex-direction: column;
+    width: 550px;
 }
 .product-info span{
 	display: flex;

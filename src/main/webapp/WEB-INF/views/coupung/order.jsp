@@ -300,6 +300,31 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script>
+		var phone = "";
+		var phone2 = "";
+		
+		$('#phone-txt').on('input', function() {
+		    if ($(this).val().length < 14) {
+		        $(this).val($(this).val()
+		            .replace(/[^0-9]/g, '')
+		            .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3"));
+		        phone = $(this).val();
+		    } else {
+		        $(this).val(phone);
+		    }
+		});
+		
+		$('#phone-txt-2').on('input', function() {
+		    if ($(this).val().length < 14) {
+		        $(this).val($(this).val()
+		            .replace(/[^0-9]/g, '')
+		            .replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3"));
+		        phone = $(this).val();
+		    } else {
+		        $(this).val(phone);
+		    }
+		});
+
 		$(document).ready(function() {
 			let isVisible = false;
 			const $detailsContent = $('#order-details .view-3');
@@ -398,6 +423,10 @@
 		
 		
 		$('#payment').on('click', function() {
+			var email = $('#id-txt').val();
+			var email2 = $('#id-txt-2').val();
+			var emailFormat = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+			
 			if ($('#name-txt').val() === '' || $('#phone-txt').val() === '' || $('#id-txt').val() === '') {
 				alert('주문자 정보를 입력해 주세요');
 				$('#name-txt').focus();
@@ -410,7 +439,13 @@
 				alert('필수 동의 사항들을 확인해 주세요');
 			} else if (!$('#creditCard').is(':checked') && !$('#kakaoPay').is(':checked')) {
 				alert('결제 수단을 선택해 주세요');
-			}else {
+			} else if (!emailFormat.test(email)) {
+				alert('이메일이 잘못된 형식입니다!');
+				$('#id-txt').val('');
+			} else if(!emailFormat.test(email2)) {
+				alert('이메일이 잘못된 형식입니다!');
+				$('#id-txt-2').val('');
+			} else {
 				var list = '${products}'.split('CoupungDTO');
 				var productName = '${products[0].name}';
 				var len = list.length;
@@ -438,7 +473,6 @@
 				var zipCode = $('#zipcode-txt').val();
 				var address = $('#address-txt').val() + " " + $('#address-detail-txt').val();
 				var phoneNumber = $('#phone-txt').val();
-				var email = $('#id-txt').val() + "@" + $('#domain-txt').val();
 				if ($('#creditCard').is(':checked')) {
 					 $.ajax({
 						 url : priceUrl,
@@ -467,7 +501,7 @@
 				             			for (let i = 0; i < coupungNumber.length; i++) {
 				             				var product = {
 				             					'coupungNumber' : Number(coupungNumber[i]),
-				             					'optionNumber' : Number(options[i]),
+				             					'coupungOptionNumber' : Number(options[i]),
 				             					'quantity' : Number(quantities[i])
 				             				}
 				             				orderList.push(product);

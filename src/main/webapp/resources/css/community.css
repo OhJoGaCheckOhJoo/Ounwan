@@ -412,6 +412,7 @@ nav .ounwangram {
 	border: 0;
 	border-radius: 10px;
 	background-color: #ddd;
+	color: var(--main-back);
 	cursor: pointer;
 }
 .follow button:hover {

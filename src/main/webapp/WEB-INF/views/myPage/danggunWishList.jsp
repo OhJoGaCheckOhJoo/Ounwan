@@ -47,7 +47,7 @@
 										</div>
 									</div>
 							</a></td>
-							<td class="td-wish-list price">${wishInfo.PRICE}</td>
+							<td class="td-wish-list price">${wishInfo.PRICE}원</td>
 							<td class="td-wish-list upload-date"><fmt:formatDate
 									value="${wishInfo.UPLOAD_DATE}" pattern="yyy-MM-dd" /></td>
 							<td class="td-wish-list state">
@@ -115,6 +115,10 @@
 	<button id="deleteWishListButton" class="delete-button">삭제</button>
 </div>
 <script>
+	for(var i = 0; i < $('.price').length; i++) {
+		$('.price').eq(i).html($('.price').eq(i).html().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
+	}
+	
 	$(document).ready(function() {
 		$('#deleteWishListButton').click(function() {
 			var selectedWishLists = [];

@@ -165,11 +165,12 @@ public class DanggunService {
 			List<Integer> zzimList = wishListsDAO.hasZzim(clientId);
 			if (zzimList.contains(danggunNumber)) {
 				danggun.setWishListImg(1);
+			} else {
+				danggun.setWishListImg(0);
 			}
 		} else {
 			danggun.setWishListImg(0);
 		}
-
 		return danggun;
 	}
 

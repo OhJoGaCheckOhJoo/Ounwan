@@ -5,16 +5,15 @@
 	value="${pageContext.request.contextPath}" />
 <div class="product-wrap">
 	<div id="adminProductSearch" class="search">
-		<select name="option">
-
-			<option value="aetaSearchAll"
-				${selectedOption eq 'aetaSearchAll' ? 'selected' : ''}>전체(제목+작성자)</option>
-			<option value="aetaSearchTitle"
-				${selectedOption eq 'aetaSearchTitle' ? 'selected' : ''}>제목</option>
-			<option value="aetaSearchId"
-				${selectedOption eq 'aetaSearchId' ? 'selected' : ''}>작성자</option>
-		</select>
 		<form>
+			<select name="option">
+				<option value="aetaSearchAll"
+					${selectedOption eq 'aetaSearchAll' ? 'selected' : ''}>전체(제목+작성자)</option>
+				<option value="aetaSearchTitle"
+					${selectedOption eq 'aetaSearchTitle' ? 'selected' : ''}>제목</option>
+				<option value="aetaSearchId"
+					${selectedOption eq 'aetaSearchId' ? 'selected' : ''}>작성자</option>
+			</select>
 			<input id="inputValue" placeholder="검색어 입력">
 			<c:choose>
 				<c:when test="${selectedOption eq 'choose'}">

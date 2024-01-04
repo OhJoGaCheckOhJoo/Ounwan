@@ -349,6 +349,7 @@ a {
 .order-wrap {
 	background-color: #fff;
 	height: 100%;
+	overflow-Y: auto;
 }
 .order-wrap * {
     font-size: 28px;
@@ -397,12 +398,24 @@ a {
 	display: none;
 	background-color: #fff;
 	width: 650px;
+	max-height: 700px;
 	padding: 50px;
 	text-align: center;
-	top: calc(50% - 300px);
+	top: 100px;
 	left: calc(50% - 325px);
 	border: 1px solid #aaa;
 	border-radius: 50px;
+	overflow-Y: auto;
+}
+.gram-board-info > div > div {
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 10px;
+}
+.gram-board-info > div > div > div {
+	border-top: 1px solid #ccc;
+}
+.gram-board-info > div > div > div > span {
+	vertical-align: middle;
 }
 .gram-board-info > div > img {
 	display: inline-block;
@@ -619,4 +632,13 @@ a {
 }
 #orderPages {
 	text-align: center;
+}
+#adminProductSearch select {
+	margin-right: 3px;
+}
+.adminProductSearch {
+	width: 1350px;
+	margin: auto;
+	padding: 10px 0px 10px 0px;
+	text-align: right;
 }

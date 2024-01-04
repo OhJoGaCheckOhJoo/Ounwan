@@ -38,7 +38,6 @@ $(function() {
 			type: "get",
 			success: function(responseData){
 				if(responseData.likesCheck < 2) {
-					alert(responseData.zzimCount);
 					$("#wishListImg").attr("src","../images/danggun_wishlist_" + responseData.likesCheck + ".png");
 					$("#small").text(responseData.zzimCount);
 				} else {

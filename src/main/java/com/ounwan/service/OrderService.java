@@ -324,7 +324,7 @@ public class OrderService {
 				+ "                              <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n"
 				+ "                                <tr>\n"
 				+ "                                  <td style=\"padding-right: 0px;padding-left: 0px;\" align=\"center\">\n"
-				+ "                                    <img align=\"center\" border=\"0\" src=\"images/image-1.png\" alt=\"image\" title=\"image\"\n"
+				+ "                                    <img align=\"center\" border=\"0\" src=\"https://ounwan.s3.ap-northeast-2.amazonaws.com/1704307286927.png\" alt=\"image\" title=\"image\"\n"
 				+ "                                      style=\"outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 306px;\"\n"
 				+ "                                      width=\"306\" />\n"
 				+ "                                  </td>\n"
