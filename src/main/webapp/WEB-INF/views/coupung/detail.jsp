@@ -223,7 +223,6 @@
 		    			</div>
 			    	</div>
 			    	<div class="modal-body-wrap">
-			    	<%@ include file="../guest/guestOrderListModal.jsp" %>
 			    		<div class="agreement">
 							<label for="agree1">
 								<input type="checkbox" id="agree1" required>

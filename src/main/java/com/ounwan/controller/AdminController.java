@@ -273,6 +273,7 @@ public class AdminController {
 		model.addAttribute("paginating", paginating);
 		model.addAttribute("inputValue", inputValue);
 		model.addAttribute("selectedOption", selectedOption);
+		model.addAttribute("page",page);
 		return "admin/aetaList";
 	}
 

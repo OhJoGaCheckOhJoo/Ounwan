@@ -29,14 +29,24 @@ public class CommunityDAO {
 	public List<Aeta> aetaSearchAll(Map<String, Object> paginateParams) {
 		return sqlSession.selectList(NAMESPACE + "AetaSearchAll", paginateParams);
 	}
+	public List<Integer> aetaSearchAllCountComments(Map<String,Object> paginateParams){
+		return sqlSession.selectList(NAMESPACE + "aetaSearchAllCountComments",paginateParams);
+	}
 
 	public List<Aeta> aetaSearchTitle(Map<String, Object> paginateParams) {
 		return sqlSession.selectList(NAMESPACE + "AetaSearchTitle", paginateParams);
+	}
+	public List<Integer> aetaSearchTitleCountComments(Map<String, Object> paginateParams) {
+		return sqlSession.selectList(NAMESPACE + "aetaSearchTitleCountComments", paginateParams);
 	}
 
 	public List<Aeta> aetaSearchId(Map<String, Object> paginateParams) {
 		return sqlSession.selectList(NAMESPACE + "AetaSearchId", paginateParams);
 	}
+	public List<Integer> aetaSearchIdCountComments(Map<String, Object> paginateParams) {
+		return sqlSession.selectList(NAMESPACE + "aetaSearchIdCountComments", paginateParams);
+	}
+	
 
 	public List<Map<String, Object>> aetaReadPost(int aetaNumber) {
 		return sqlSession.selectList(NAMESPACE + "AetaReadPost", aetaNumber);

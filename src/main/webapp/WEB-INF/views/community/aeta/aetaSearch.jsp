@@ -4,6 +4,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
+<style>
+    .commentCount {
+        color: var(--main-color-2);
+    }
+</style>
 <div id="aetaboardList">
 	<table>
 		<thead>
@@ -16,10 +21,16 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="aeta" items="${aetaList}">
+			<c:forEach var="aeta" items="${aetaList}" varStatus="loop">
+				<c:set var="currentPage" value="${(page / 10) + 1}" />
+    			<c:set var="displayedNumber" value="${(page - 1) * 10 + loop.index + 1}" />
 				<tr class="content" onclick="location.href='${appPath}/community/aetaPost?aetaNumber=${aeta.aetaNumber}'">
-					<td class="num">${aeta.aetaNumber}</td>
-					<td class="title">${aeta.title} <span>[ </span> <span>] </span></td>
+					<td class="num">${displayedNumber}</td>
+					<td class="title">${aeta.title}
+						<c:if test="${countComments[loop.index]>0}">
+							<span class="commentCount">[${countComments[loop.index]}]</span>
+						</c:if>					
+					</td>
 					<td class="writer">${aeta.clientId}</td>
 					<td class="date"><fmt:formatDate value="${aeta.createdDate}" pattern="yyyy-MM-dd" /></td>
 					<td class="count">${aeta.views}</td>
@@ -30,8 +41,6 @@
 </div>	
 
 <div id="aeta-pagination" class="aeta-pagination">
-	
-
 	<c:choose>
 		<c:when test="${paginating.maxPageNumber==0}"></c:when>
 		<c:when test="${paginating.pageNumber<=1}">
@@ -41,7 +50,6 @@
 			<a href="javascript:search(1)">[<<]</a>
 		</c:otherwise>
 	</c:choose>
-
 	<c:choose>
 		<c:when test="${paginating.maxPageNumber==0}"></c:when>
 		<c:when test="${paginating.pageNumber<=1}">
@@ -51,7 +59,6 @@
 			<a href="javascript:search(${paginating.pageNumber-1})">[<]</a>
 		</c:otherwise>
 	</c:choose>
-
 	<c:forEach begin="${paginating.startPageNumber}"
 		end="${paginating.endPageNumber}" var="i" step="1">
 		<c:if test="${paginating.pageNumber eq i}">
@@ -60,9 +67,7 @@
 		<c:if test="${paginating.pageNumber ne i}">
 			<a href="javascript:search(${i})">${i}</a>
 		</c:if>
-		
 	</c:forEach>
-
 	<c:choose>
 		<c:when test="${paginating.maxPageNumber==0}"></c:when>
 		<c:when test="${paginating.pageNumber==paginating.maxPageNumber}">
@@ -72,7 +77,6 @@
 			<a href="javascript:search(${paginating.pageNumber+1})">[>]</a>
 		</c:otherwise>
 	</c:choose>
-
 	<c:choose>
 		<c:when test="${paginating.maxPageNumber==0}"></c:when>
 		<c:when test="${paginating.pageNumber==paginating.maxPageNumber}">
@@ -82,5 +86,4 @@
 			<a href="javascript:search(${paginating.maxPageNumber})">[>>]</a>
 		</c:otherwise>
 	</c:choose>
-
 </div>

@@ -33,14 +33,14 @@ import com.siot.IamportRestClient.response.Payment;
 @Controller
 @RequestMapping("/coupung")
 public class CoupungController {
-	
-	@Autowired
-	CoupungService coupungService;
-	@Autowired
-	OrderService orderService;
-	
-	private static final String IAMPORT_REST_APIKEY = "00";
-    private static final String IAMPORT_SECRET = "00";
+    
+    @Autowired
+    CoupungService coupungService;
+    @Autowired
+    OrderService orderService;
+    
+    private static final String IAMPORT_REST_APIKEY = "5513076060511402";
+    private static final String IAMPORT_SECRET = "q2msNn419Vpqmnt0AgwiEpmMZUnG8JClPwUfzv8Axs0sVMONQOzRspBcmgJVA1ZZjAEAAftBbkkWj8hY";
     private IamportClient api = new IamportClient(IAMPORT_REST_APIKEY, IAMPORT_SECRET);
     
 	@GetMapping("/products")
