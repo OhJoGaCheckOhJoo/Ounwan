@@ -16,6 +16,7 @@
 <link href="${appPath }/css/cart.css" rel="stylesheet">
 <link href="${appPath }/css/coupung/modal.css" rel="stylesheet">
 <title>오운완</title>
+<link rel="shortcut icon" href="https://ounwan.s3.ap-northeast-2.amazonaws.com/1704307233380.png" />
 </head>
 
 <body>
@@ -210,6 +211,7 @@
 	    	</div>
 	    </div>
 	</div>
+	<%@ include file="../common/footer.jsp"%>
 	<script src="${appPath}/js/main.js"></script>
 	
 	<script>

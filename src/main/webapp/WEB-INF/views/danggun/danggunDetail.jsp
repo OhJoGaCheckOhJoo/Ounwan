@@ -19,7 +19,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>오운완</title>
-<link rel="icon" href="../images/logo.png" type="image/x-icon">
+<link rel="shortcut icon" href="https://ounwan.s3.ap-northeast-2.amazonaws.com/1704307233380.png" />
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -108,7 +108,6 @@
 			<div class="here">${post.detail}</div>
 		</div>
 	</div>
-	<hr />
 	<div id="danggunModal" danggunNumber="${post.danggunNumber}"
 		clientId="${post.clientId}"></div>
 	<%@ include file="../common/footer.jsp"%>

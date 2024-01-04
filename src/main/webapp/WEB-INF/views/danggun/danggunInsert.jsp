@@ -18,6 +18,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>오운완</title>
+<link rel="shortcut icon" href="https://ounwan.s3.ap-northeast-2.amazonaws.com/1704307233380.png" />
 </head>
 <body>
 	<%@ include file="../common/header.jsp"%>
@@ -105,7 +106,7 @@
 			</div>
 		</div>
 	</div>
-		​<%@ include file="../common/footer.jsp"%>
+	<%@ include file="../common/footer.jsp"%>
 		<%@ include file="./danggunProhibitedListModal.jsp"%>
 
 		<script src="${appPath}/js/danggunProhibitedListModal.js"></script>

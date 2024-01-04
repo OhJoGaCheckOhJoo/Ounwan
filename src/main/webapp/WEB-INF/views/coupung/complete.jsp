@@ -11,6 +11,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <title>오운완</title>
+<link rel="shortcut icon" href="https://ounwan.s3.ap-northeast-2.amazonaws.com/1704307233380.png" />
 <link href="${appPath }/css/main.css" rel="stylesheet">
 <link href="${appPath }/css/main2.css" rel="stylesheet">
 <link href="${appPath }/css/header.css" rel="stylesheet">
@@ -32,7 +33,6 @@
             </div>
         </div>		
 	</div>
-	<hr>
 	<%@ include file="../common/footer.jsp"%>
 </body>
 </html>

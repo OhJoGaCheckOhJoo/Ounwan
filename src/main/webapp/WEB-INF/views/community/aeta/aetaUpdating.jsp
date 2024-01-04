@@ -15,7 +15,8 @@
 <link href="${appPath}/css/footer.css" rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<title>애타 게시글 수정</title>
+<title>오운완</title>
+<link rel="shortcut icon" href="https://ounwan.s3.ap-northeast-2.amazonaws.com/1704307233380.png" />
 </head>
 <body>
 	<div class="overlay"></div>
@@ -63,7 +64,7 @@
 	</div>
 
 	</div>
-	<%@include file="../../common/footer.jsp"%>
+	<%@ include file="../../common/footer.jsp"%>
 	<script src="${appPath}/js/aeta.js"></script>
 	<script src="${appPath}/js/main.js"></script>
 	<script>

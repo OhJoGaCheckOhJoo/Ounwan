@@ -18,6 +18,7 @@
     	const check = "${userProfileInfo.CLIENT_ID eq clientInfo.clientId}";
     </script>
     <title>오운완</title>
+	<link rel="shortcut icon" href="https://ounwan.s3.ap-northeast-2.amazonaws.com/1704307233380.png" />
 </head>
 <body>
 	<%@ include file = "../common/header.jsp" %>​

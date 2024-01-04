@@ -16,6 +16,7 @@
 <link href="${appPath}/css/danggunMain.css" rel="stylesheet" />
 <link href="${appPath}/css/footer.css" rel="stylesheet" />
 <title>오운완</title>
+<link rel="shortcut icon" href="https://ounwan.s3.ap-northeast-2.amazonaws.com/1704307233380.png" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 

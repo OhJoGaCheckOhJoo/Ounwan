@@ -10,7 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>오운완</title>
-    <link href="./css/main2.css" rel="stylesheet">
+	<link rel="shortcut icon" href="https://ounwan.s3.ap-northeast-2.amazonaws.com/1704307233380.png" />
+    <link href="${appPath}/css/main.css" rel="stylesheet">
+    <link href="${appPath}/css/main2.css" rel="stylesheet">
     <link href="./css/header.css" rel="stylesheet">
     <link href="./css/nav.css" rel="stylesheet">
     <link href="./css/faq.css" rel="stylesheet">
