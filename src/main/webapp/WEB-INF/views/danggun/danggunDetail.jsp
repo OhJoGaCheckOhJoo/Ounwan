@@ -75,7 +75,7 @@
 						</div>
 						<div class="seller" id="seller">판매자 : ${post.clientId}</div>
 						<div class="product-price" id="product-price">가격 :
-							${post.price}원</div>
+							<sapn id="danggunPrice">${post.price}</sapn>원</div>
 						<div class="registered-date" id="registered-date">등록일 :
 							${post.uploadDate}</div>
 						<div class="trade_step">${post.tradeStep}</div>
@@ -92,11 +92,9 @@
 								</button>
 								<button class="chatting main-button" id="chatting" type="button">
 									채팅하기</button>
-
 							</c:if>
 							<c:if test="${userInfo.clientId == post.clientId}">
-								<!-- session의 clientid와 작성자의 clientid가 같을 때 -->
-								<button class="modal-button white-button"
+								<button class="white-button"
 									onclick="openModal(${post.tradeHistoryNumber})">수정하기</button>
 								<button class="danggun-delete main-button" id="danggunDelete"
 									type="submit">삭제하기</button>
@@ -120,9 +118,20 @@
 	<script src="${appPath}/js/main.js"></script>
 	<script src="${appPath}/js/danggunDetail.js"></script>
 	<script>
-		function toggle() {
-			$("#smallMenu").toggle();
-		}
+	$(document).ready(function() {
+	    var danggunPriceElement = $("#danggunPrice");
+	    var danggunPriceValue = danggunPriceElement.text();
+	    var formattedDanggunPrice = makeComma(parseFloat(danggunPriceValue));
+	    danggunPriceElement.text(formattedDanggunPrice);
+	});
+
+	function makeComma(n) {
+	    return n.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+	}	
+	
+	function toggle() {
+		$("#smallMenu").toggle();
+	}
 	$(function() {
 		if ('${post.visibility}'==0 && '${admin}' == "") {
 			$(".overlay").show();

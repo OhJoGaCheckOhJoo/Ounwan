@@ -15,6 +15,7 @@
 <meta charset="EUC-KR">
 <title>오운완</title>
 <link rel="stylesheet" href="${appPath}/css/bixSiri/danggunChat.css" />
+<link rel="shortcut icon" href="https://ounwan.s3.ap-northeast-2.amazonaws.com/1704307233380.png" />
 
 </head>
 <body>

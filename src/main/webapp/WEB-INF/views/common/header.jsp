@@ -10,7 +10,7 @@
                 <a id="signUp" href="${appPath}/clients/signUp"></a>
                 <a id="loginSelect" href="${appPath}/clients/login"></a>
                 <button id="cart" onClick="location.href='${appPath}/coupung/cart'"></button>
-                <c:if test="${cartList ne null}">
+                <c:if test="${not empty cartList}">
                 	<div id="cartNotice"></div>
                 </c:if>
             </div>
@@ -22,7 +22,9 @@
                 </a>
                 <span>${userInfo.name}님 환영합니다</span>
                 <button id="cart" onClick="location.href='${appPath}/coupung/cart'"></button>
-                <div id="cartNotice"></div>
+                <c:if test="${not empty userCartList}">
+               		 <div id="cartNotice"></div>
+                </c:if>
                 <div id="userAction">
                 	<a href="${appPath }/myPage">마이페이지</a>
                 	<a href="#" id="logoutBtn">로그아웃</a>

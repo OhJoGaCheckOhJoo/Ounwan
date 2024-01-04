@@ -56,7 +56,7 @@
 							<span>당일 배송</span>
 						</div>
 						<div class="product-unit-price">
-							<span id="unitPrice">${detail.price }</span>원
+							<span id="unitPrice">${detail.price}</span>원
 						</div>
 					</div>
 					<div class="product-select">
@@ -215,22 +215,31 @@
 		</div>
 	</div>
 	<div id="block"></div>
-	  <div id="guestModal" class="hidden">
-	    	<div class="modal-content">
-		    	<div class="modal-body">
-			    	<div class="modal-title">
-			    		<div>비회원 개인정보 수집 및 이용동의</div>
-			    		<div class="modal-close">
-		    				<span id="closeBtn" class="close-button">&times;</span>
-		    			</div>
-			    	</div>
-			    	<div class="modal-body-wrap">
-			    	<%@ include file="../guest/guestOrderListModal.jsp" %>
-			    		<div class="agreement">
-							<label for="agree1">
-								<input type="checkbox" id="agree1" required>
-								<i class="circle"></i> [필수] 개인정보 수집 및 이용 동의
-							</label>
+	<div id="guestModal" class="hidden">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="modal-title">
+					<div>비회원 개인정보 수집 및 이용동의</div>
+					<div class="modal-close">
+						<span id="closeBtn" class="close-button">&times;</span>
+					</div>
+				</div>
+				<div class="modal-body-wrap">
+					<div class="agreement">
+						<label for="agree1"> <input type="checkbox" id="agree1"
+							required> <i class="circle"></i> [필수] 개인정보 수집 및 이용 동의
+						</label>
+					</div>
+					<div>
+						<div class="modal-input">
+							<div>
+								<label class="modal-attribute-name" for="">이메일 </label> <input
+									class="box" type="text" id="guestEmail" required />
+							</div>
+							<div>
+								<label class="modal-attribute-name" for="">연락처 </label> <input
+									class="box" type="text" id="guestPhone" required />
+							</div>
 						</div>
 						<div>
 							<div class="modal-input">
@@ -277,7 +286,11 @@
 	</script>
 	<script>
 const unitPrice = $("#unitPrice").html().replaceAll(",",""); // jsp에서는 DB에서 가져온 가격으로 설정
+$("#unitPrice").html(makeComma(unitPrice));
 
+function makeComma(n) {
+	return n.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
 const scoreList = [
     <c:forEach var="score" items="${scoreList}" varStatus="loopStatus">
         ${score}<c:if test="${!loopStatus.last}">, </c:if>
@@ -375,7 +388,6 @@ for(var i = 0; i < 5; i++) {
 		} else {
 			var option = $('#productOption option:selected').val();
 			var quantity = (Number)($('#quantity').val());
-			alert(quantity);
 			var obj = {
 					'coupungNumber' : ${detail.coupungNumber},
 					'quantity' : quantity,
@@ -453,12 +465,23 @@ for(var i = 0; i < 5; i++) {
 	$('#guestSubmitBtn').on('click', function() {
 		var email = $('#guestEmail').val();
 		var emailFormat = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-		
+		var phone = $('#guestPhone').val();
+		var phoneFormat = /(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g;
+		console.log("len: " + phone.length);
 		if (!emailFormat.test(email)) {
 			alert('잘못된 이메일 형식입니다!');
 			$('#guestEmail').val('');
 			$('#guestEmail').focus();
-		} else {
+		}  
+		else if(!$('#agree1').is(':checked')) {
+			alert('필수 동의 사항을 확인해 주세요');
+		} 
+		else if(!phoneFormat.test(phone)) {
+			alert('잘못된 전화번호 형식입니다.');
+			$('#guestPhone').val('');
+			$('#guestPhone').focus();
+		}
+		else {
 			var obj = {
 					'email' : email,
 					'phone' : phone

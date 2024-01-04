@@ -34,13 +34,16 @@ td {
     align-items: center;
     margin-bottom: 18px;
   }
-
+.minus, .plus, .delete-button {
+	cursor: pointer;
+}
 .section-title {
     margin: 0;
   }
 .clist-product-info{
 	display: flex;
     align-items: center;
+    cursor: pointer;
 }
 .clist-quantity {
     width: 200px;

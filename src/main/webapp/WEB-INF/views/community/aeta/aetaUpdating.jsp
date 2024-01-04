@@ -69,6 +69,7 @@
 	<script src="${appPath}/js/main.js"></script>
 	<script>
 		var appPath = "${appPath}";
+		$("#inputContent").text(($("#inputContent").val()).replace(/<br>/g, '\n'));
 	</script>
 </body>
 </html>

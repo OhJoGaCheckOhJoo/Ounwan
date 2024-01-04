@@ -54,6 +54,19 @@
 	<%@ include file="../common/footer.jsp"%>​
 	<script src="${appPath}/js/main.js"></script>
 	<script>
+	$(document).ready(function() {
+	    $(".danggun-price").each(function() {
+	        var danggunPriceElement = $(this);
+	        var danggunPriceValue = danggunPriceElement.text();
+	        var formattedDanggunPrice = makeComma(parseFloat(danggunPriceValue));
+	        danggunPriceElement.text(formattedDanggunPrice + "원");
+	    });
+	});
+
+	function makeComma(n) {
+	    return n.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+	}
+	
 		$(function() {
 			function search() {
 				var obj = {

@@ -13,10 +13,9 @@ header {
 }
 header .logo {
     display: inline-block;
-    height: 100px;
-    width: 247px;
-    margin: 10px;
-    background-image: url("../images/logo.png");
+    height: 70px;
+    margin: 30px 10px 10px 10px;
+    background-image: url("https://ounwan.s3.ap-northeast-2.amazonaws.com/1704307286927.png");
     background-size: contain;
     background-repeat: no-repeat;
 }
