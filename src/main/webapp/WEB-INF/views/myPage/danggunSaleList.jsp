@@ -45,7 +45,7 @@
 							test="${saleInfo.TRADE_HISTORY_NUMBER eq 6}">
 							<div>판매중</div>
 						</c:if> <c:if test="${saleInfo.TRADE_HISTORY_NUMBER eq 7}">
-							<div>거래중</div>
+							<div>예약중</div>
 						</c:if> <c:if test="${saleInfo.TRADE_HISTORY_NUMBER eq 8}">
 							<div>거래완료</div>
 						</c:if></td>

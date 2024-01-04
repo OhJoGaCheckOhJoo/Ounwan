@@ -88,6 +88,7 @@
 			success : function(responseData) {
 				var temp = Handlebars.compile($("#temp").html());
 				$("#chat").html(temp(responseData));
+				$("#chat").scrollTop($("#chat")[0].scrollHeight);
 			},
 			error: function(request, status, error) {
                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -168,6 +169,6 @@
 		}
 		var temp = Handlebars.compile($("#temp1").html());
 		$("#chat").append(temp(data));
-		window.scrollTo(0, $("#chat").prop("scrollHeight"))
+		$("#chat").scrollTop($("#chat")[0].scrollHeight);
 	}
 </script>

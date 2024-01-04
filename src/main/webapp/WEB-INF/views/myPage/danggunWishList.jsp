@@ -77,7 +77,7 @@
 							<td class="td-wish-list upload-date"><fmt:formatDate
 									value="${wishInfo.UPLOAD_DATE}" pattern="yyy-MM-dd" /></td>
 							<td class="td-wish-list state">
-								<div>거래중</div>
+								<div>예약중</div>
 							</td>
 						</tr>
 					</c:if>
