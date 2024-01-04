@@ -72,7 +72,12 @@
 	      	<hr>
 	      	<div id="reportReason">
 	      		<div>신고 사유를 선택해주세요.</div>
-	      		<div><input class="reason" value="0" type="checkbox">스팸홍보/도배글입니다.</div>
+	      		<div>
+					<label for="orderCheckBox">
+						<input type="checkbox" id="report0" name="checkbox" class="reason" value="0">
+						<i class="circle"></i>스팸홍보/도배글입니다.
+					</label>
+				</div>
 	      		<div><input class="reason" value="1" type="checkbox">음란물입니다.</div>
 	      		<div><input class="reason" value="2" type="checkbox">불법정보를 포함하고 있습니다.</div>
 	      		<div><input class="reason" value="3" type="checkbox">청소년에게 유해한 내용입니다.</div>

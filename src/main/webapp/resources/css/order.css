@@ -176,6 +176,14 @@ button:hover {
     height: 30px;
     display: flex;
     align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+#toggleButton:hover {
+	background-color: var(--main-back);
+	color: var(--main-color-2);
+	border: 0;
 }
 /* .checkbox {
 	display: flex;
@@ -305,7 +313,7 @@ button:hover {
 	font-size: 14px;
 }
 
-img {
+.product-info-container img {
 	height: 70px;
 	margin-right: 30px;
 	margin-left: 30px;

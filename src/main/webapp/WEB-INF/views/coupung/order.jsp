@@ -79,7 +79,7 @@
 					<div id="orderList" class="order-list">
 						<div class="order-list-title">
 						    <div class="order-list-detail">
-						        <div>주문서</div>
+						        <div>주문서&nbsp;&nbsp;</div>
 						        <div><button id="toggleButton">&gt;</button></div>
 						    </div>
 						</div>
@@ -160,7 +160,7 @@
 							<div class="delivery-info">
 								<div class=" overlap-group">배송 정보</div>
 								<div class="view-11">
-									<label for="infoCheck">
+									<label for="orderCheckBox">
 										<input type="checkbox" id="orderCheckBox" name="checkbox" class="checkbox">
 										<i class="circle"></i>주문자 정보와 동일
 									</label>
@@ -575,6 +575,8 @@
 			}
 		});
 		
+		var toggleButton = document.getElementById('toggleButton');
+		
 		function toggleOrderList() {
 		    var orderListBody = document.querySelector('.order-list-body');
 		    if (orderListBody.style.display === 'none') {
@@ -583,8 +585,6 @@
 		        orderListBody.style.display = 'none';
 		    }
 		}
-
-		var toggleButton = document.getElementById('toggleButton');
 
 		toggleButton.addEventListener('click', function() {
 		    toggleOrderList(); 
