@@ -215,31 +215,21 @@
 		</div>
 	</div>
 	<div id="block"></div>
-	<div id="guestModal" class="hidden">
-		<div class="modal-content">
-			<div class="modal-body">
-				<div class="modal-title">
-					<div>비회원 개인정보 수집 및 이용동의</div>
-					<div class="modal-close">
-						<span id="closeBtn" class="close-button">&times;</span>
-					</div>
-				</div>
-				<div class="modal-body-wrap">
-					<div class="agreement">
-						<label for="agree1"> <input type="checkbox" id="agree1"
-							required> <i class="circle"></i> [필수] 개인정보 수집 및 이용 동의
-						</label>
-					</div>
-					<div>
-						<div class="modal-input">
-							<div>
-								<label class="modal-attribute-name" for="">이메일 </label> <input
-									class="box" type="text" id="guestEmail" required />
-							</div>
-							<div>
-								<label class="modal-attribute-name" for="">연락처 </label> <input
-									class="box" type="text" id="guestPhone" required />
-							</div>
+	  <div id="guestModal" class="hidden">
+	    	<div class="modal-content">
+		    	<div class="modal-body">
+			    	<div class="modal-title">
+			    		<div>비회원 개인정보 수집 및 이용동의</div>
+			    		<div class="modal-close">
+		    				<span id="closeBtn" class="close-button">&times;</span>
+		    			</div>
+			    	</div>
+			    	<div class="modal-body-wrap">
+			    		<div class="agreement">
+							<label for="agree1">
+								<input type="checkbox" id="agree1" required>
+								<i class="circle"></i> [필수] 개인정보 수집 및 이용 동의
+							</label>
 						</div>
 						<div>
 							<div class="modal-input">
@@ -272,7 +262,6 @@
 
 	<script>
     document.addEventListener("DOMContentLoaded", function() {
-        // 페이지 로딩 후 실행될 코드
         if(!${detail.availableCheck} && '${admin}' == "") {
             document.getElementById('block').style.display = 'block';
             
@@ -285,7 +274,7 @@
 
 	</script>
 	<script>
-const unitPrice = $("#unitPrice").html().replaceAll(",",""); // jsp에서는 DB에서 가져온 가격으로 설정
+const unitPrice = $("#unitPrice").html().replaceAll(",",""); 
 $("#unitPrice").html(makeComma(unitPrice));
 
 function makeComma(n) {
@@ -297,8 +286,8 @@ const scoreList = [
     </c:forEach>
 ];
 
-	const scoreNum = scoreList.reduce((acc, cur) => {return acc + cur}, 0); // 총 리뷰 개수
-	const productScore = (scoreList[0]*1 + scoreList[1]*2 + scoreList[2]*3 + scoreList[3]*4 + scoreList[4]*5) /scoreNum;  // 평균 별점
+	const scoreNum = scoreList.reduce((acc, cur) => {return acc + cur}, 0); 
+	const productScore = (scoreList[0]*1 + scoreList[1]*2 + scoreList[2]*3 + scoreList[3]*4 + scoreList[4]*5) /scoreNum;  
 	console.log("scoreNum:"+scoreNum);
 	$("#reviewTotalCount").text(scoreNum);
 
@@ -424,7 +413,7 @@ for(var i = 0; i < 5; i++) {
 			alert('수량을 선택해 주세요');
 		}  else if('${userInfo}' === '') {
 			if(confirm('비회원으로 주문하시겠습니까?')) {
-				$('#guestModal').removeClass('hidden'); // 모달을 띄우는 부분
+				$('#guestModal').removeClass('hidden'); 
 			} else {
 				location.href="${appPath}/clients/login";
 			}

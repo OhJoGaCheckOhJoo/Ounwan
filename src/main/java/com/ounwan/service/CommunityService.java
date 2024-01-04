@@ -437,25 +437,37 @@ public class CommunityService {
 	int pageLimit = 10; 
 	int blockLimit = 10; 
 
-	public List<AetaDTO> aetaList(int page, String inputValue, String selectedOption) {
-
+	public Map<String,Object> paginateParams(int page, String inputValue){
 		int pageStartNum = (page - 1) * pageLimit;
-
 		Map<String, Object> paginateParams = new HashMap<String, Object>();
-
+		
 		paginateParams.put("start", pageStartNum);
 		paginateParams.put("limit", pageLimit);
 		paginateParams.put("inputValue", inputValue);
+		
+		return paginateParams;
+	}	
+
+	public List<AetaDTO> aetaList(int page, String inputValue, String selectedOption) {
 
 		if (selectedOption.equals("aetaSearchAll"))
-			return changeDTOList(communityDAO.aetaSearchAll(paginateParams));
+			return changeDTOList(communityDAO.aetaSearchAll(paginateParams(page,inputValue)));
 		if (selectedOption.equals("aetaSearchTitle"))
-			return changeDTOList(communityDAO.aetaSearchTitle(paginateParams));
+			return changeDTOList(communityDAO.aetaSearchTitle(paginateParams(page,inputValue)));
 		if (selectedOption.equals("aetaSearchId"))
-			return changeDTOList(communityDAO.aetaSearchId(paginateParams));
-		return changeDTOList(communityDAO.AetaList(paginateParams)); // 애타 게시판메인
+			return changeDTOList(communityDAO.aetaSearchId(paginateParams(page,inputValue)));
+		return changeDTOList(communityDAO.AetaList(paginateParams(page,inputValue))); // 애타 게시판메인
 	}
-
+	public List<Integer> aetaCountComments(int page, String inputValue, String selectedOption){
+		if (selectedOption.equals("aetaSearchAll"))
+			return communityDAO.aetaSearchAllCountComments(paginateParams(page,inputValue));
+		if (selectedOption.equals("aetaSearchTitle"))
+			return communityDAO.aetaSearchTitleCountComments(paginateParams(page,inputValue));
+		if (selectedOption.equals("aetaSearchId"))
+			return communityDAO.aetaSearchIdCountComments(paginateParams(page,inputValue));
+		return communityDAO.aetaSearchAllCountComments(paginateParams(page,inputValue));
+	}
+	
 	public PaginatingDTO getPages(int page, String inputValue, String selectedOption) {
 		int countPosts = 0;
 		switch (selectedOption) {

@@ -15,9 +15,11 @@
 		<span>조회수</span>
 	</div>
 	<div class="">
-		<c:forEach var="aeta" items="${aetaList}">	
+		<c:forEach var="aeta" items="${aetaList}" varStatus="loop">
+			<c:set var="currentPage" value="${(page / 10) + 1}" />
+    		<c:set var="displayedNumber" value="${(page - 1) * 10 + loop.index + 1}" />
 			<div class="product-info">
-				<span class="num">${aeta.aetaNumber}</span>
+				<span class="num">${displayedNumber}</span>
 				<span class="title">${aeta.title}</span>
 				<span class="writer">${aeta.clientId}</span>
 				<span class="date"><fmt:formatDate value="${aeta.createdDate}" pattern="yyyy-MM-dd" /> </span>

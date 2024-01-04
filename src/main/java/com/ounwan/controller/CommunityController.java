@@ -41,9 +41,11 @@ public class CommunityController {
 		PaginatingDTO paginating = communityService.getPages(page, inputValue, selectedOption);
 		model.addAttribute("aetaList", aetaList);
 		model.addAttribute("paginating", paginating);
+		model.addAttribute("countComments",communityService.aetaCountComments(page,inputValue,selectedOption));
 		model.addAttribute("inputValue", inputValue);
 		model.addAttribute("selectedOption", selectedOption);
-
+		model.addAttribute("page",page);
+		
 		return "community/aeta/aetaSearch";
 	}
 

@@ -250,7 +250,7 @@ $("#updatePost").on('click',function(){
 	success : function(response) {
 		if(response=="success"){
 			alert("게시물수정완료");
-			location.href=appPath+"/community/aetaBoard";
+			location.href=appPath+"/community/aetaPost?aetaNumber="+aetaNumber;
 		}else{
 			alert("failed");
 		}
