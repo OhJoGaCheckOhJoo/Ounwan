@@ -82,10 +82,10 @@ public class ClientsController {
 		return "findId";
 	}
 	
-	@SuppressWarnings("static-access")
 	@RequestMapping("/findPassword")
-	public String findPassword(@RequestParam("id") String id, @RequestParam("email") String email) throws MessagingException {
-		return clientService.findPassword(id, email);
+	public String findPassword(@RequestParam("id") String id, @RequestParam("email") String email, Model model) throws MessagingException {
+		model.addAttribute("result", clientService.findPassword(id, email));
+		return "findPassword";
 	}
 	
 	@SuppressWarnings("static-access")

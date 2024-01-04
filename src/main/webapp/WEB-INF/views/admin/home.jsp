@@ -106,7 +106,14 @@
 		        ]
 		    },
 		    options: {
-		        responsive: false
+		        responsive: false,
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero: true
+		                }
+		            }]
+		        }
 		    }
 		});
 		
@@ -149,7 +156,14 @@
 		        ]
 		    },
 		    options: {
-		        responsive: false
+		        responsive: false,
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero: true
+		                }
+		            }]
+		        }
 		    }
 		});
 		
@@ -164,12 +178,19 @@
 		            {
 		                label: '커뮤니티 활동',
 		                data: ${communityAct},
-		                backgroundColor: 'rgb(50,10,20)'
+		                backgroundColor: '#ff69b4'
 		            }
 		        ]
 		    },
 		    options: {
-		        responsive: false
+		        responsive: false,
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero: true
+		                }
+		            }]
+		        }
 		    }
 		});
 		
@@ -194,7 +215,14 @@
 		        ]
 		    },
 		    options: {
-		        responsive: false
+		        responsive: false,
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero: true
+		                }
+		            }]
+		        }
 		    }
 		});
     

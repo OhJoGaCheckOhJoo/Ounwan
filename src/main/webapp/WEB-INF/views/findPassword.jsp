@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,13 +23,12 @@
 			margin: 30px;
 		}
 		hr {
-			border: 3px solid black;
+			border: 2px solid var(--main-color-1);
 			margin: 20px 0px 20px 0px;
 			border-radius: 5px;
 		}
 		div {
 			text-align: center;
-			margin: 40px 0px 40px 0px;
 		}
 		h1 {
 			margin-left: 10px;
@@ -73,17 +73,33 @@
 	</style>
 </head>
 <body>
-	<h1>오운완 회원 안내</h1>
-	<hr>
-	<div class="margin-2">
-		<div class="font-1">인증 받으신 이메일 주소로 비밀번호가 발송되었습니다.</div>
-		<div class="margin-1">
-			<div class="font-2">*이메일 주소로 발송된 비밀번호를 확인하신 후 로그인해주세요.</div>
+	<c:if test='${result eq "success"}'>
+		<h1>오운완 회원 안내</h1>
+		<hr>
+		<div class="margin-2">
+			<div class="font-1">인증 받으신 이메일 주소로 비밀번호가 발송되었습니다.</div>
+			<div class="margin-1">
+				<div class="font-2">*이메일 주소로 발송된 비밀번호를 확인하신 후 로그인해주세요.</div>
+			</div>
 		</div>
-	</div>
-	<hr>
-	<div class="margin-2">
-		<button class="button-2" onclick="window.close()">확인</button>
-	</div>
+		<hr>
+		<div class="margin-2">
+			<button id="findPWButton" class="button-2">확인</button>
+		</div>
+	</c:if>
+	<c:if test='${result ne "success"}'>
+		<h1>오운완 회원 안내</h1>
+		<hr>
+		<div class="margin-2">
+			<div class="font-1">일치하는 회원정보가 없습니다.</div>
+			<div class="margin-1">
+				<div class="font-2">*회원정보를 다시 입력해주세요.</div>
+			</div>
+		</div>
+		<hr>
+		<div class="margin-2">
+			<button id="findPWButton" class="button-2">확인</button>
+		</div>
+	</c:if>
 </body>
 </html>

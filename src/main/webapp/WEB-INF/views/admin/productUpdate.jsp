@@ -11,7 +11,7 @@
 		</div>
         <div>
         	<div>가격</div>
-        	<input id="productPrice" placeholoder="가격을 입력해주세요" value="${product.price}">
+        	<input id="productPrice" type="number" placeholoder="가격을 입력해주세요" value="${product.price}">
         </div>
         <div>
 	        <div>재고 수량</div>

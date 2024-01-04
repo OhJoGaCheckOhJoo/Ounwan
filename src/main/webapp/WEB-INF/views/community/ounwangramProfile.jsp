@@ -97,5 +97,9 @@
 	
     <script src="${appPath}/js/main.js"></script>
     <script src="${appPath}/js/community.js"></script>
+    <script>
+    	function randomColor() { return "#" + Math.round(Math.random() * 0xffffff).toString(16); };
+    	$("#myProfileImage > img").css("border", "1.5px solid " + randomColor());
+    </script>
 </body>
 </html>

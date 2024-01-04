@@ -23,6 +23,11 @@ $(function() {
             $(".header-sub-menu").css("visibility", 'hidden');
         }
     })
+    
+    $("body").on("click", "#findPWButton", function() {
+    	$("#findIdModalWrap").css("display", "none");
+    	location.href = "/myapp/clients/login";
+    });
 
     $("#findAccount").click(function() {
         $("#findAccount").addClass("login-menu-selected");
@@ -36,33 +41,6 @@ $(function() {
         $("#loginAccount").addClass("login-menu-selected");
         $("#findAccountSelected").hide();
         $("#loginAccountSelected").show();
-    });
-
-    $("#findIdEmail").on("input", function() {
-        var emails = [
-            '@naver.com',
-            '@gmail.com',
-            '@daum.net',
-            '@hanmail.net',
-            '@yahoo.com',
-            '@outlook.com',
-            '@nate.com',
-            '@kakao.com'
-        ];
-        if($(this).val().indexOf('@') > 1) {
-            const id = $(this).val().slice(0, $(this).val().indexOf('@'));
-            const mailAddress = $(this).val().slice($(this).val().indexOf('@'));
-            const htmltag = emails.reduce((a,b) => {
-                if(b.indexOf(mailAddress) > -1 && b != mailAddress) {
-                    return a + "<a class='mail-menu' href='javascript:mailSelected(" + '"' + id + b + '"' + ");'>" + id + b + "</a><br>";
-                } else {
-                    return a;
-                }
-            }, "");
-            $("#emailAutocomplete").html(htmltag);
-        } else {
-            $("#emailAutocomplete").html("");
-        }
     });
 
     $("#loginSelect").click(function() {
@@ -94,32 +72,31 @@ $(function() {
     })
 
     $("#findPassword").on("click", function() {
-    	$("#findPassword").attr("disabled");
-    	$("#findPWBtnDiv").hide();
-    	$("#loading").show();
-        var obj = {
-            "clientId" : $("#findPwId").val(),
-            "email" : $("#findPwEmail").val()
-        }
-        $.ajax({
-            url : appPath + '/clients/findPassword',
-            type : 'GET',
-            data : obj,
-            contentType : "text/plain;charset=utf-8",
-            dataType : "text",
-            success : function(res) {
-            	if(res == '변경성공') {
-            		var openWindow = window.open(appPath + "/findPassword",'','width=700px,height=450px,location=no,status=no');
-                	$("body").html(loginPage);
-            	} else {
-            		$("#findPassword").removeAttr("disabled");
-            		$("#loading").hide();
-            		$("#findPWBtnDiv").show();
-            		alert("일치하는 회원 정보가 없습니다.");
-            	}
-            }
-        })
-    })
+    	if($("#findPwId").val().length == 0) {
+    		alert("아이디를 입력해주세요");
+    	} else if($("#findPwEmail").val().length == 0) {
+    		alert("이메일을 입력해주세요");
+    	} else {
+    		$("#findPassword").attr("disabled");
+	    	$("#findPWBtnDiv").hide();
+	    	$("#loading").show();
+	        var obj = {
+	            "id" : $("#findPwId").val(),
+	            "email" : $("#findPwEmail").val()
+	        };
+	        $.ajax({
+	            url : appPath + '/clients/findPassword',
+	            type : 'GET',
+	            data : obj,
+	            contentType : "text/plain;charset=utf-8",
+	            dataType : "text",
+	            success : function(res) {
+	            	$("#findIdModalBody").html(res);
+        			$("#findIdModalWrap").css("display", "block");
+	            }
+	        });
+    	}
+    });
 
     $("#loginButton").on("click", function() {
         var userInfo = {

@@ -118,12 +118,12 @@ public class ClientsService {
 			client.setPassword(hashPassword(newPassword));
 			int result = clientsDAO.updateRandomPassword(client);
 			if(result > 0) {
-				return "변경성공";
+				return "success";
 			} else {
-				return "변경실패";
+				return "fail";
 			}
 		} else {
-			return "회원조회실패";
+			return "fail";
 		}
 	}
 	

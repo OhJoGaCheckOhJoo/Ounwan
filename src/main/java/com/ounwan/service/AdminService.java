@@ -46,7 +46,7 @@ public class AdminService {
 			totalPrice.add(0, Integer.parseInt(String.valueOf(row.get("TOTAL_PRICE"))));
 		}
 		for(Map<String, Object> row : adminDAO.getCommunityAct()) {
-			communityAct.add(Integer.parseInt(String.valueOf(row.get("CNT"))));
+			communityAct.add(0, Integer.parseInt(String.valueOf(row.get("CNT"))));
 		}
 		for(Map<String, Object> row : adminDAO.getTotalByCategory()) {
 			categories.add(0, "'" + row.get("CATEGORY").toString() + "'");
