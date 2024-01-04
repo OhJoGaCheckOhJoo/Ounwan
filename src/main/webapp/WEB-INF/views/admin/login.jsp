@@ -85,7 +85,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="#">
+        <img src="${appPath}/images/admin_logo.png">
         <div><span>Ounwan</span> LogIn</div>
         <div>
 			<form>

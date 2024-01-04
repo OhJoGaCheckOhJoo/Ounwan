@@ -147,7 +147,7 @@
 	</select>
 	
 	<select id="selectReportGramCount" resultType="int">
-		SELECT COUNT(*) AS CNT FROM COMMUNITY_REPORTS WHERE COMMUNITY_NUMBER IS NOT NULL GROUP BY COMMUNITY_NUMBER
+		SELECT COUNT(COMMUNITY_NUMBER) AS CNT FROM COMMUNITY_REPORTS WHERE COMMUNITY_NUMBER IS NOT NULL
 	</select>
 	
 	<select id="getAdminReportReason" parameterType="int" resultType="map">

@@ -390,6 +390,7 @@ a {
 .gram-board-info, .gram-board-menu {
 	width: 1350px;
 	margin: auto;
+	padding: 5px 0px 5px 0px;
 }
 .gram-board-info > div {
 	position:absolute;
