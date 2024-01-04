@@ -225,6 +225,7 @@
 		    			</div>
 			    	</div>
 			    	<div class="modal-body-wrap">
+			    	    <%@ include file="../guest/guestAgreementTerms.jsp" %>
 			    		<div class="agreement">
 							<label for="agree1">
 								<input type="checkbox" id="agree1" required>
@@ -235,11 +236,11 @@
 							<div class="modal-input">
 						    	<div>
 						    		<label class="modal-attribute-name" for="">이메일 </label> 
-						    		<input class="box" type="text" id="guestEmail" required/>
+						    		<input class="box" type="text" id="guestEmail" autocomplete="none" required/>
 						    	</div>
 						    	<div>
 						    		<label class="modal-attribute-name" for="">연락처 </label> 
-						    		<input class="box" type="text" id="guestPhone" required/>
+						    		<input class="box" type="text" id="guestPhone" autocomplete="none" required/>
 						    	</div>
 					    	</div>
 					    	<div class="modal-check">
@@ -455,7 +456,7 @@ for(var i = 0; i < 5; i++) {
 		var email = $('#guestEmail').val();
 		var emailFormat = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
 		var phone = $('#guestPhone').val();
-		var phoneFormat = /(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g;
+		var phoneFormat = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
 		console.log("len: " + phone.length);
 		if (!emailFormat.test(email)) {
 			alert('잘못된 이메일 형식입니다!');

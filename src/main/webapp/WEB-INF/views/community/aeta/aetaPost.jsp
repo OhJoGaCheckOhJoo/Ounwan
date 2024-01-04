@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="appPath" scope="application"
 	value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -120,7 +121,9 @@
 										<img class="comment-profile" src="${aeta.PROFILE_URL}" />
 										<div>${aeta.CLIENT_ID}</div>
 									</div>
-									<span class='comment-date'>${aeta.CREATED_DATE }</span>
+									<span class='comment-date'>
+					                    ${fn:substring(aeta.CREATED_DATE, 0, 10)}
+					                </span>
 								</div>
 
 								<c:if test="${aeta.CLIENT_ID == userInfo.clientId}">

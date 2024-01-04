@@ -154,6 +154,10 @@ input[type="password"] {
 	margin-block: 10px;
 }
 
+.input-form:focus, .input-form:hover {
+	border-bottom: 1px solid var(--main-color-2) !important;
+}
+
 .form-address {
 	font-size: 14px;
 	color: #eee7d8;

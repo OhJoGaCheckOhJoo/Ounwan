@@ -51,6 +51,7 @@
 }
 .box:focus, .box:hover {
 	border-bottom: 1px solid var(--main-color-2);
+	border-radius: 0px;
 }
 .modal-check{
 	display: flex;

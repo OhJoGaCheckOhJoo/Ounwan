@@ -39,7 +39,7 @@
 			</div>
 			<div class="profile-phone">
 				<label class="attribute-name" for="">연락처</label> <input type="text"
-					class="input-form" value="${userInfo.phone}" id="phoneNum" />
+					class="input-form" value="${userInfo.phone}" id="phoneNum" autocomplete="none"/>
 			</div>
 			
 			<div class="profile-password">
@@ -52,12 +52,12 @@
 					<span class="close">&times;</span> <br>
 					<div class="profile-password">
 						<label class="modal-attribute-name" for="">비밀번호</label> 
-						<input type="password" class="modal-input-form" id="firstPass" placeholder="비밀번호를 입력하세요"> 
+						<input type="password" class="modal-input-form" id="firstPass" placeholder="비밀번호를 입력하세요" autocomplete="none"> 
 						<span id="wrongForm-inform">잘못된 형식입니다.</span>
 					</div>
 					<div class="profile-password">
 						<label class="modal-attribute-name" for="">비밀번호 확인</label> 
-						<input type="password" class="modal-input-form" placeholder="비밀번호를 입력하세요" id="secondPass" required /> 
+						<input type="password" class="modal-input-form" placeholder="비밀번호를 입력하세요" id="secondPass" autocomplete="none" required /> 
 						<span id="notMatch-inform">비밀번호가 일치하지 않습니다.</span>
 					</div>
 					<div class="save-password">
@@ -69,13 +69,13 @@
 			<div class="profile-address">
 				<label class="attribute-name" for="">주소</label> <input
 					class="form-address" size="10" id="zipCode"
-					value="${userInfo.zipCode}" />
+					value="${userInfo.zipCode}" autocomplete="none"/>
 				<button id="findAddr" type="button" class="zip-code-button">우편번호 검색</button>
 				<br> <label class="attribute-name" for=""></label> <input
-					class="form-address" size="35" id="addr" value="${userInfo.address}" />
+					class="form-address" size="35" id="addr" value="${userInfo.address}" autocomplete="none"/>
 				<br> <label class="attribute-name" for=""></label> <input
 					class="form-address" size="35" id="addrDetail"
-					value="${userInfo.addressDetail}" />
+					value="${userInfo.addressDetail}" autocomplete="none"/>
 			</div>
 	
 			<br>

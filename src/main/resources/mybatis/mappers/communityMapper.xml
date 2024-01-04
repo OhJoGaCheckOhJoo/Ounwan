@@ -85,7 +85,7 @@
 	</select>
 	
 	<select id="aetaSearchAllCountComments" parameterType="map" resultType="int">
-		select 
+		select
 		COUNT(C.AETA_NUMBER) AS countComments
 		from AETA A
 		LEFT JOIN
@@ -104,6 +104,7 @@
 		limit
 		#{start},#{limit}
 	</select>
+
 	<select id="aetaSearchTitleCountComments" parameterType="map" resultType="int">
 		select 
 		COUNT(C.AETA_NUMBER) AS countComments

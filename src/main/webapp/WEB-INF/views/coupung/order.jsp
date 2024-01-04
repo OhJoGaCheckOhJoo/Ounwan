@@ -194,7 +194,7 @@
 									<div>
 										<div class="purchaser-zipcode">
 											<input class="box" id="zipcode-txt" type="text" readOnly required />
-											<button id="findAddr" type="button">우편번호 검색</button>
+											<button id="findAddr" class="button" type="button">우편번호 검색</button>
 										</div>
 										<div>
 											<input class="box" id="address-txt" type="text" readOnly required />
@@ -265,7 +265,7 @@
 						</div>
 					</div>
 					<div>
-						<button id="payment">결제하기</button>
+						<button id="payment" class="button">결제하기</button>
 					</div>	
 				</div>							
 			</div>
@@ -349,11 +349,17 @@
 			    }
 			} else {
 				$('#id-txt-2').val('');
+				$('#id-txt-2').attr('readOnly', false);
 				$('#phone-txt-2').val('');
+				$('#phone-txt-2').attr('readOnly', false);
 				$('#name-txt-2').val('');
+				$('#name-txt-2').attr('readOnly', false);
 				$('#zipcode-txt').val('');
+				$('#zipcode-txt').attr('readOnly', false);
 				$('#address-txt').val('');
+				$('#address-txt').attr('readOnly', false);
 				$('#address-detail-txt').val('');
+				$('#address-detail-txt').attr('readOnly', false);
 				$('#findAddr').attr('disabled', false);
 			}
 		});

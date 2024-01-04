@@ -17,7 +17,7 @@
 	
 		</div>
 		<div class="pwd-check">
-			<input id="pwd-checkPassword" type="password" required > <label>비밀번호</label> <span></span>
+			<input id="pwd-checkPassword" type="password" autocomplete="none" required > <label>비밀번호</label> <span></span>
 		</div>
 	
 		<div class="button-container">

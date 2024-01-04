@@ -337,6 +337,7 @@ textarea:focus {
 	width: 30px;
 	height: 30px;
 	margin-right: 15px;
+	border-radius: 50%;
 }
 .host-id {
 }

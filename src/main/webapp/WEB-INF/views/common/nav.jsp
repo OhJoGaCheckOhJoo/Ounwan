@@ -18,7 +18,7 @@
             	<a href="${appPath}/coupung/products?categoryNum=1">의류</a>
             	<a href="${appPath}/coupung/products?categoryNum=2">건강 보조 식품</a>
             	<a href="${appPath}/coupung/products?categoryNum=4">헬스 이용권</a>
-                <a href="${appPath}/coupung/products?categoryNum=3">운동 기구</a>
+                <a href="${appPath}/coupung/products?categoryNum=3">운동 용품</a>
             </div>
         </div>
         <div>
@@ -51,7 +51,7 @@
                 <a href="${appPath}/coupung/products?categoryNum=1">의류</a>
             	<a href="${appPath}/coupung/products?categoryNum=2">건강 보조 식품</a>
             	<a href="${appPath}/coupung/products?categoryNum=4">헬스 이용권</a>
-                <a href="${appPath}/coupung/products?categoryNum=3">운동 기구</a>
+                <a href="${appPath}/coupung/products?categoryNum=3">운동 용품</a>
             </div>
             <div>
                 <a href="${appPath}/danggun/main">전체 보기</a>

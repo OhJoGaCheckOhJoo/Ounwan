@@ -48,7 +48,6 @@
 		limit
 		#{start},#{limit}
 	</select>
-
 	<select id="AetaSearchTitle" parameterType="map"
 		resultType="aeta">
 		select 
@@ -81,6 +80,62 @@
 		and
 		CLIENT_ID like CONCAT('%',#{inputValue},'%')
 		order by AETA_NUMBER DESC
+		limit
+		#{start},#{limit}
+	</select>
+	
+	<select id="aetaSearchAllCountComments" parameterType="map" resultType="int">
+		select
+		COUNT(C.AETA_NUMBER) AS countComments
+		from AETA A
+		LEFT JOIN
+		COMMENTS C ON A.AETA_NUMBER = C.AETA_NUMBER
+		where
+		VISIBILITY=1
+		and
+		(A.title like
+		CONCAT('%',#{inputValue},'%')
+		or
+		A.CLIENT_ID like
+		CONCAT('%',#{inputValue},'%'))
+		GROUP BY
+		A.AETA_NUMBER, A.CLIENT_ID, A.TITLE, A.CREATED_DATE, A.VIEWS, A.VISIBILITY
+		order by A.AETA_NUMBER DESC
+		limit
+		#{start},#{limit}
+	</select>
+
+	<select id="aetaSearchTitleCountComments" parameterType="map" resultType="int">
+		select 
+		COUNT(C.AETA_NUMBER) AS countComments
+		from AETA A
+		LEFT JOIN
+		COMMENTS C ON A.AETA_NUMBER = C.AETA_NUMBER
+		where
+		VISIBILITY=1
+		and
+		A.title like
+		CONCAT('%',#{inputValue},'%')
+		GROUP BY
+		A.AETA_NUMBER, A.CLIENT_ID, A.TITLE, A.CREATED_DATE, A.VIEWS, A.VISIBILITY
+		order by A.AETA_NUMBER DESC
+		limit
+		#{start},#{limit}
+	</select>
+	<select id="aetaSearchIdCountComments" parameterType="map" resultType="int">
+		select 
+		COUNT(C.AETA_NUMBER) AS countComments
+		from AETA A
+		LEFT JOIN
+		COMMENTS C ON A.AETA_NUMBER = C.AETA_NUMBER
+		where
+		VISIBILITY=1
+		and
+		A.CLIENT_ID like
+		CONCAT('%',#{inputValue},'%')
+		GROUP BY
+		A.AETA_NUMBER, A.CLIENT_ID, A.TITLE, A.CREATED_DATE, A.VIEWS, A.VISIBILITY
+		order by A.AETA_NUMBER DESC
 		limit
 		#{start},#{limit}
 	</select>

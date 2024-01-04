@@ -61,7 +61,7 @@
                     <div class="machine">
                     	<input type="hidden" value="3" class="categoryValue" />
                     </div>
-                    <span>운동 기구</span>
+                    <span>운동 용품</span>
                 </a>
             </div>
             <form class="search">
