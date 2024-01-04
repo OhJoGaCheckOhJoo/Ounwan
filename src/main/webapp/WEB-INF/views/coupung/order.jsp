@@ -160,10 +160,10 @@
 							<div class="delivery-info">
 								<div class=" overlap-group">배송 정보</div>
 								<div class="view-11">
-									<div class="checkbox">
-										<input type="checkbox" id="orderCheckBox" name="checkbox"
-											class="checkbox"><span>주문자 정보와 동일</span>
-									</div>
+									<label for="infoCheck">
+										<input type="checkbox" id="orderCheckBox" name="checkbox" class="checkbox">
+										<i class="circle"></i>주문자 정보와 동일
+									</label>
 								</div>
 							</div>
 							<div class="name-info">
@@ -215,9 +215,9 @@
 							<div class="purchaser-payment-wrap">
 								<div class="purchaser-payment">결제 방법</div>
 								<div class="pay-option-wrap">
-									<input type="checkbox" class="paymentMethod" id="creditCard">
+									<input type="radio" class="paymentMethod" id="creditCard">
 									<div >신용카드</div>
-									<input type="checkbox" class="paymentMethod" id="kakaoPay">
+									<input type="radio" class="paymentMethod" id="kakaoPay">
 									<div >카카오페이</div>				
 								</div>
 							</div>

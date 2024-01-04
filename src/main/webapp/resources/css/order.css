@@ -1,3 +1,7 @@
+:root{
+	accent-color: var(--main-color-2);
+}
+
 .hidden {
   display: none;
 }
@@ -173,11 +177,11 @@ button:hover {
     display: flex;
     align-items: center;
 }
-.checkbox {
+/* .checkbox {
 	display: flex;
 	justify-content: flex-end;
 	padding-bottom: 10px;
-}
+} */
 
 .pay-option {
 	margin: 90px 0px;
@@ -196,6 +200,10 @@ button:hover {
 
 .pay-option-wrap input {
 	margin-left: 20px;
+}
+
+.pay-option-wrap div {
+	margin-left: 10px;
 }
 
 .total-payment-conatiner {
@@ -240,6 +248,13 @@ button:hover {
 	border-bottom: 1px solid;
 }
 
+.delivery-info{
+	display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+
 .name-info {
 	border-top: 1px solid;
 }
@@ -269,9 +284,9 @@ button:hover {
 }
 
 .price-container span {
-	margin: 17px;
-	font-size: 27px;
-	color: var(--red);
+    margin: 17px;
+    font-size: 25px;
+    color: var(--main-color-2);
 }
 
 #payment {
@@ -307,9 +322,44 @@ img {
 	cursor: pointer;
 	line-height: 1.5;
 }
-.agreement input[type="checkbox"] {
-	display: none; /* 기본 체크박스 감추기 */
+
+.view-11 label {
+	display: block;
+	position: relative;
+	padding-left: 30px; 체크박스와 텍스트 간의 여백 조절
+	cursor: pointer;
+	line-height: 1.5;
+} 
+
+.view-11 input[type="checkbox"]{
+	display: none;
 }
+
+.view-11 .circle {
+	display: inline-block;
+	position: absolute;
+	left: 0;
+	width: 22px;
+	height: 22px;
+	border: 2px solid #666;
+	box-sizing: border-box;
+	border-radius: 50%;
+	cursor: pointer;
+	background-color: var(--main-color-1);
+}
+
+.view-11 input[type="checkbox"]:checked + .circle {
+	border-color: var(--main-color-1);
+	background-color: var(--main-back);
+	background-image: url(https://blog.kakaocdn.net/dn/t7a2D/btrhtVgLYmG/dUxzAkBy9hIZ4gHmyllQrk/img.png);
+	background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.agreement input[type="checkbox"] {
+	display: none;
+}
+
 .agreement .circle {
 	display: inline-block;
 	position: absolute;

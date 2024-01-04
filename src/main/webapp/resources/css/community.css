@@ -722,6 +722,7 @@ nav .ounwangram {
 	color: red;
 }
 
+
 #modalWrap, #followModalWrap, #boardModalWrap {
   position: fixed; /* Stay in place */
   z-index: 50; /* Sit on top */

@@ -1,3 +1,7 @@
+:root{
+	accent-color: var(--main-color-2);
+}
+
 .refund-modal {
 	display: none;
 	position: fixed;
