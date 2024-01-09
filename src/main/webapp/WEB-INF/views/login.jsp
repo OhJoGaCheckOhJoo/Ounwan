@@ -25,9 +25,9 @@
 
         <div class="login-container" id="loginAccountSelected">
             <div class="social-wrap">
-                <a href="/clients/login/google"><img class="login login-radius" src="../images/google.png"></a><br>
-                <a href="/clients/login/naver"><img class="login login-radius" src="../images/naver_btn.png"></a><br>
-                <a href="/clients/login/kakao"><img class="login login-radius" src="../images/kakao_btn.png"></a><br>
+                <a href="${appPath}/clients/login/google"><img class="login login-radius" src="../images/google.png"></a><br>
+                <a href="${appPath}/clients/login/naver"><img class="login login-radius" src="../images/naver_btn.png"></a><br>
+                <a href="${appPath}/clients/login/kakao"><img class="login login-radius" src="../images/kakao_btn.png"></a><br>
             </div>
             <div class="login-wrap-1 float-right">
                 <form>

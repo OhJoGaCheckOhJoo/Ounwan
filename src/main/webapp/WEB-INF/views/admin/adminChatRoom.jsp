@@ -48,7 +48,7 @@
 <script>
 	getList();
 	var clientId = "${userInfo.clientId}";
-	var sock = new SockJS("3.36.64.49:8080/myapp/echo");
+	var sock = new SockJS("http://localhost:9090/myapp/echo");
 	sock.onmessage = onMessage;
 	function getList() {
 		var roomId = "${roomId}";

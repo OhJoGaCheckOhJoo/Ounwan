@@ -1,4 +1,4 @@
-var appPath = '';
+var appPath = '/myapp';
 
 $(function() {
 	$(".photos").on("click", ".detail-img", function() {
