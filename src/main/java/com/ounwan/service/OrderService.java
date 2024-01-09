@@ -69,29 +69,31 @@ public class OrderService {
 
 	public void deleteCart(List<OrderDetailsDTO> orderDetails, HttpSession session, ClientsDTO client, GuestsDTO guest) {
 		List<CartsDTO> guestCarts = (List<CartsDTO>) session.getAttribute("cartList");
-		
+		List<Map<String, Object>> clientCarts = null;
 		for (OrderDetailsDTO orderDetail : orderDetails) {
-			if (guest != null) {
-				if (guestCarts != null) {
-					for(int i = 0; i < guestCarts.size(); i++) {
-						if(orderDetail.getCoupungNumber() == guestCarts.get(i).getCoupungNumber() 
-								&& orderDetail.getCoupungOptionNumber() == guestCarts.get(i).getCoupungOptionNumber())
-							guestCarts.remove(i);
-					}
-					session.setAttribute("cartList", guestCarts);
-				}
-			} else {
-				List<Map<String, Object>> clientCarts = cartService.getCartById(client.getClientId());
-				if (clientCarts != null) {
-					for (Map<String, Object> cart : clientCarts) {
-						if (orderDetail.getCoupungNumber() == cart.get("coupungNumber") 
-								&& orderDetail.getCoupungOptionNumber() == cart.get("optionNumber"))
-							clientCarts = cartService.deleteCart(orderDetail.getCoupungNumber(), orderDetail.getCoupungOptionNumber(), client.getClientId());
+			if (guestCarts != null) {
+				for(int i = 0; i < guestCarts.size(); i++) {
+					if(orderDetail.getCoupungNumber().equals(guestCarts.get(i).getCoupungNumber()) 
+							&& orderDetail.getCoupungOptionNumber().equals(guestCarts.get(i).getCoupungOptionNumber())) {
+						guestCarts.remove(i);
+						System.out.println("guestCart compare : " + guestCarts);
+						break;
 					}
 				}
-				session.setAttribute("userCartList", clientCarts);
+			}
+			else if (clientCarts != null) {
+				clientCarts = cartService.getCartById(client.getClientId());
+				for (Map<String, Object> cart : clientCarts) {
+					if (orderDetail.getCoupungNumber().equals(cart.get("coupungNumber")) 
+							&& orderDetail.getCoupungOptionNumber().equals(cart.get("optionNumber"))) {
+						clientCarts = cartService.deleteCart(orderDetail.getCoupungNumber(), orderDetail.getCoupungOptionNumber(), client.getClientId());
+						break;
+					}
+				}
 			}
 		}
+		if (guest != null) session.setAttribute("cartList", guestCarts);
+		else session.setAttribute("userCartList", clientCarts);
 	}
 	
 	private void sendReceipt(String orderNumber, OrdersDTO orderDTO, ClientsDTO client, GuestsDTO guest) throws MessagingException {

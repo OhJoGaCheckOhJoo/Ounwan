@@ -120,8 +120,5 @@ prefix="c" %>
     
     <%@ include file="./common/footer.jsp" %>
     <script src="${appPath}/js/main.js"></script>
-    <script>
-		history.replaceState(null,null,'/');
-    </script>
   </body>
 </html>

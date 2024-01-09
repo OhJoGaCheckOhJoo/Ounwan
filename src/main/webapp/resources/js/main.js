@@ -1,5 +1,4 @@
 var appPath = '/myapp';
-var host = window.location.host + '/';
 var arrayBanner = [
 	'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704252314009.png',
 	'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704252595798.png',
