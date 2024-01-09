@@ -20,10 +20,7 @@ prefix="c" %>
     <link href="${appPath}/css/footer.css" rel="stylesheet" />
     <link rel="shortcut icon" href="https://ounwan.s3.ap-northeast-2.amazonaws.com/1704307233380.png" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <title>오운완</title>
-</head>
-<body>
-	<script>
+    <script>	
 		$(function() {
 			$.ajax({
 				url : "${appPath}/coupung/product/top-five",
@@ -80,6 +77,10 @@ prefix="c" %>
 		    return n.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 		}
 	</script>
+    <title>오운완</title>
+</head>
+<body>
+	
     <%@ include file="./common/header.jsp" %>
 
     <div class="container">
@@ -117,8 +118,10 @@ prefix="c" %>
         </div>
     </div>
     
-    
     <%@ include file="./common/footer.jsp" %>
     <script src="${appPath}/js/main.js"></script>
+    <script>
+		history.replaceState(null,null,'/');
+    </script>
   </body>
 </html>

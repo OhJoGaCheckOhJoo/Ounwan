@@ -1,8 +1,5 @@
 var host = window.location.host + '/';
-var appPath = '/myapp';
-var router = new Map([
-	['/ounwan/html/login.html', '/' + appPath + '/clients/login']
-]);
+var appPath = 'http://3.36.64.49:8080';
 var arrayBanner = [
 	'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704252314009.png',
 	'https://ounwan.s3.ap-northeast-2.amazonaws.com/1704252595798.png',
@@ -26,7 +23,7 @@ $(function() {
     
     $("body").on("click", "#findPWButton", function() {
     	$("#findIdModalWrap").css("display", "none");
-    	location.href = "/myapp/clients/login";
+    	location.href = "/clients/login";
     });
 
     $("#findAccount").click(function() {
@@ -180,7 +177,7 @@ burger.each(function(index){
 
 $(".faq-delivery").on("click", function() {
 	faqCategory = 1;
-	location.href = "/myapp/faq";
+	location.href = "/faq";
 });
 
 $('#logoutBtn').on('click', function() {

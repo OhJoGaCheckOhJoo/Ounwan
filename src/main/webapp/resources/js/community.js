@@ -10,7 +10,7 @@ var gramContentsInput = $(".writeGramContents").children("input");
 var gramContent = "";
 var gramHashTag = "";
 var changImage = false;
-var gramPath = "/myapp/community";
+var gramPath = "/community";
 var tag = "";
 
 $(window).on("load", function() {

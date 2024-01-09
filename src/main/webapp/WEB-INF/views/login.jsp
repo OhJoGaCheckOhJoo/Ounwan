@@ -14,7 +14,7 @@
 <body>
     <header>
     	<div class="header">
-	    	<a class="logo" href= "${appPath}"></a>
+	    	<a class="logo" href= "${appPath}/"></a>
 	    </div>
     </header>
     <div class="container">
@@ -25,9 +25,9 @@
 
         <div class="login-container" id="loginAccountSelected">
             <div class="social-wrap">
-                <a href="/myapp/clients/login/google"><img class="login login-radius" src="../images/google.png"></a><br>
-                <a href="/myapp/clients/login/naver"><img class="login login-radius" src="../images/naver_btn.png"></a><br>
-                <a href="/myapp/clients/login/kakao"><img class="login login-radius" src="../images/kakao_btn.png"></a><br>
+                <a href="/clients/login/google"><img class="login login-radius" src="../images/google.png"></a><br>
+                <a href="/clients/login/naver"><img class="login login-radius" src="../images/naver_btn.png"></a><br>
+                <a href="/clients/login/kakao"><img class="login login-radius" src="../images/kakao_btn.png"></a><br>
             </div>
             <div class="login-wrap-1 float-right">
                 <form>

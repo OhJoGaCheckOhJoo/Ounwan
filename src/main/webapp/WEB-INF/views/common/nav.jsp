@@ -40,7 +40,7 @@
             <div id="navSubmenu" class="nav-submenu">
                 <a href="${appPath}/faq">FAQ</a>
                 <c:if test="${admin eq null }">
-                	<a href="#" id="adminChat">솜솜이</a>
+                	<a href="#" class="adminChat">솜솜이</a>
                 </c:if>
             </div>
         </div>
@@ -58,20 +58,20 @@
                 <a href="${appPath}/danggun/insert">상품 등록</a>
             </div>
             <div>
-                <a class="ounwangram" href="${appPath}/community/ounwangram">오운완 커뮤니티</a>
-                <a href="${appPath}/community/aetaBoard">고민 게시판</a>
+                <a class="ounwangram" href="${appPath}/community/ounwangram">운동했다그램</a>
+                <a href="${appPath}/community/aetaBoard">애타</a>
             </div>
             <div>
                 <a href="${appPath}/faq">FAQ</a>
-                <c:if test="${admin eq null }">
-                	<a href="#" id="adminChat">솜솜이</a>
+                <c:if test="${admin eq null}">
+                	<a href="#" class="adminChat">솜솜이</a>
                 </c:if>
             </div>
         </div>
     </div>
 </nav>
 <script>
-$("#adminChat").on("click",function(e){
+$(".adminChat").on("click",function(e){
 	e.preventDefault();
 	if(!"${userInfo.clientId}"){
 		alert("로그인을 해주세요!");

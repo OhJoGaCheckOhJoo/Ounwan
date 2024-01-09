@@ -50,7 +50,7 @@
 			sock.close();
 		}
 
-		sock = new SockJS("http://www.ounwan.com:9090/myapp/echo");
+		sock = new SockJS("http://3.36.64.49:8080/echo");
 
 		$.ajax({
 			type : "GET",

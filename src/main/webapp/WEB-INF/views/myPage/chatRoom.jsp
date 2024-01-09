@@ -75,7 +75,7 @@
 	$('.product-info-price').html($('.product-info-price').html().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
 	getList();
 	var clientId = "${userInfo.clientId}";
-	var sock = new SockJS("http://www.ounwan.com:9090/myapp/danggunEcho");
+	var sock = new SockJS("http://15.164.224.143:8080/danggunEcho");
 	sock.onmessage = onMessage;
 	function getList() {
 		var roomId = "${roomId}";
@@ -110,6 +110,7 @@
 			},
 			success : function() {
 				sock.send("delete");
+				getList();
 			},
 			error: function(request, status, error) {
                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -142,6 +143,7 @@
 				success : function(messageId) {
 					e.preventDefault();
 					sock.send(clientId + "|" + message + "|" + messageId);
+					getList();
 				},
 				error: function(request, status, error) {
 	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);

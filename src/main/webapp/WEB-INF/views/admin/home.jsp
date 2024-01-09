@@ -16,7 +16,7 @@
     <link href="${appPath}/css/admin.css" rel="stylesheet">
     <link rel="stylesheet" href="${appPath}/css/bixSiri/adminChat.css" />
     <title>오운완 관리자</title>
-    <script>
+    <script>    
     	$(document).ready(function() {
     		if('${admin.adminId}' == null) {
     			location.href = "${appPath}/admin/login.do";

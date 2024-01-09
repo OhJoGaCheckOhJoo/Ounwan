@@ -80,7 +80,7 @@
 <script>
 	getList();
 	var clientId = "${userInfo.clientId}";
-	var sock = new SockJS("http://www.ounwan.com:9090/myapp/echo");
+	var sock = new SockJS("3.36.64.49:8080/echo");
 	sock.onmessage = onMessage;
 
 	function getList() {
@@ -114,6 +114,7 @@
 			},
 			success : function() {
 				sock.send("delete");
+				getList();
 			},
 			error: function(request, status, error) {
                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -144,6 +145,7 @@
 				},
 				success : function(messageId) {
 					sock.send(clientId + "|" + message + "|" + messageId);
+					getList();
 				},
 				error: function(request, status, error) {
 	                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);

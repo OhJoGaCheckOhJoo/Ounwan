@@ -55,7 +55,7 @@ function getChatRoom(roomId) {
         sock.close();
     }
 
-    sock = new SockJS("http://www.ounwan.com:9090/myapp/danggunEcho");
+    sock = new SockJS("http://15.164.224.143:8080/danggunEcho");
     
     $.ajax({
         type : "GET",

@@ -122,7 +122,7 @@
     
     $(".banner-pointer-right").on("click", function() {
     	clearInterval(bannerInterval);
-    	i = i == bannerArray.length - 1 ? 1 : i + 1;
+    	i = i == bannerArray.length - 1 ? 0 : i + 1;
     	$(".banner-page span").eq(0).html(i + 1);
         $(".banner").css('background-image', 'url(' + bannerArray[i] + ')');
         bannerInterval = setInterval(bannerFunction, 5000);
