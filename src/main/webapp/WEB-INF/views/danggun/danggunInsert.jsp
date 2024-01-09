@@ -175,7 +175,6 @@
 												processData : false,
 												contentType : false,
 												success : function(res) {
-													alert(res);
 													location.href = "${appPath}/danggun/main";
 												},
 												error: function(request, status, error) {
@@ -221,8 +220,7 @@
 										text = text.substring(0, maxLength);
 										inputElement.value = text;
 									}
-									counterElement.textContent = text.length
-											+ "/" + maxLength;
+									counterElement.textContent = text.length + "/" + maxLength;
 								}
 							});
 

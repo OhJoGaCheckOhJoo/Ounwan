@@ -556,12 +556,10 @@
 				                 buyer_postcode: zipCode
 				             }, 
 				             function (rsp) {
-				    			console.log(rsp);
 				             	$.ajax({
 				             		type: "POST",
 				             		url : "${appPath}/coupung/orderCheck?imp_uid=" + rsp.imp_uid 
 				             	}).done(function(data) {
-				             		console.log(data);
 				             		if (rsp.paid_amount === data.response.amount) {
 				             			var orderList = [];
 				             			var totalQuantity = 0;

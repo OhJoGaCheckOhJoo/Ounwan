@@ -289,7 +289,6 @@ const scoreList = [
 
 	const scoreNum = scoreList.reduce((acc, cur) => {return acc + cur}, 0); 
 	const productScore = (scoreList[0]*1 + scoreList[1]*2 + scoreList[2]*3 + scoreList[3]*4 + scoreList[4]*5) /scoreNum;  
-	console.log("scoreNum:"+scoreNum);
 	$("#reviewTotalCount").text(scoreNum);
 
 if(scoreNum != 0) {
@@ -457,7 +456,6 @@ for(var i = 0; i < 5; i++) {
 		var emailFormat = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
 		var phone = $('#guestPhone').val();
 		var phoneFormat = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
-		console.log("len: " + phone.length);
 		if (!emailFormat.test(email)) {
 			alert('잘못된 이메일 형식입니다!');
 			$('#guestEmail').val('');

@@ -49,20 +49,16 @@ public class DanggunController {
 	@Autowired
 	StoreReportsService storeReportsService;
 	
-	// 채팅 방으로 seller 데리고 이동
 	@GetMapping("/bixSiri/chat")
 	public String chat(@RequestParam(name = "danggunNumber") Integer danggunNumber, @RequestParam(name = "seller") String seller, Model model) {
 		DanggunDTO danggun = danggunService.selectDanggun(seller, null, danggunNumber);
-		System.out.println("step = " + danggun.getTradeStep());
 		model.addAttribute("post", danggun);
 		return "/chat/danggunChat";
 	}
 
-//	당군 메인 페이지로 이동
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String mainGet(Model model) {
 		model.addAttribute("list", danggunService.listAll());
-		
 		return "/danggun/danggunMain";
 	}
 
@@ -97,7 +93,6 @@ public class DanggunController {
 		return danggunService.danggunInsert(detailImagesLength, detailImages, image, clientId, productName, price, detail)>0 ? "sucess" : "fail";
 	}
 
-//	상품 상세 목록 조회하기 
 	@GetMapping(value = "/detail")
 	public ModelAndView danggunDetail(@RequestParam("danggunNumber") int danggunNumber, HttpSession session) {
 		ClientsDTO clients = (ClientsDTO) session.getAttribute("userInfo");
@@ -151,7 +146,7 @@ public class DanggunController {
 		boolean result;
 		if (clientId.equals(danggun.getClientId())) {
 			result = danggunService.deleteDanggun(danggun);
-		} else { // 다를 때
+		} else { 
 			result = false;
 		}
 		return (result) ? "success" : "fail";
@@ -165,7 +160,6 @@ public class DanggunController {
 		return (result) ? "success" : "fail";
 	}
 	
-	// 메인 페이지에 보여줄 인기상품 5개
 	@GetMapping("/product/top-five")
 	public @ResponseBody List<DanggunDTO> getTopFive() {
 		return danggunService.getTopFive();

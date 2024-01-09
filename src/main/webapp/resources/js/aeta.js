@@ -35,7 +35,6 @@ function search(page) {
 				data : obj,
 				type:"get",
 				success : function(response) {
-					console.log("button works");
 					$('#aeta-list').html(response);
 				},
 				error : function() {
