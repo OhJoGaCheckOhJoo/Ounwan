@@ -411,7 +411,6 @@
 					contentType : 'application/json',
 					success : function(res) {
 						if (res === 'success') {
-							alert("성공하셨습니다.");
 							location.href = '${appPath}/coupung/order?productList=' + productList + '&optionList=' + optionList +'&quantityList=' + quantityList;
 						}
 					},

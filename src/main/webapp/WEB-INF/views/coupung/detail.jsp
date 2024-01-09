@@ -481,7 +481,6 @@ for(var i = 0; i < 5; i++) {
 				contentType : 'application/json',
 				success : function(res) {
 					if (res === 'success') {
-						alert("성공하셨습니다.");
 						var productList = [${detail.coupungNumber}];
 						var optionList = [$('#productOption option:selected').val()];
 						var quantityList = [$('#quantity').val()];
